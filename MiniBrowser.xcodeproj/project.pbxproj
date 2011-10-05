@@ -1,0 +1,315 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		266D67A9143CCE8D0025F929 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266D67A8143CCE8D0025F929 /* UIKit.framework */; };
+		266D67AB143CCE8D0025F929 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266D67AA143CCE8D0025F929 /* Foundation.framework */; };
+		266D67AD143CCE8D0025F929 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266D67AC143CCE8D0025F929 /* CoreGraphics.framework */; };
+		266D67B3143CCE8D0025F929 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 266D67B1143CCE8D0025F929 /* InfoPlist.strings */; };
+		266D67B5143CCE8D0025F929 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67B4143CCE8D0025F929 /* main.m */; };
+		266D67B9143CCE8D0025F929 /* MiniBrowserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67B8143CCE8D0025F929 /* MiniBrowserAppDelegate.m */; };
+		266D67BD143CCE8D0025F929 /* MiniBrowserAppDelegate_iPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67BC143CCE8D0025F929 /* MiniBrowserAppDelegate_iPhone.m */; };
+		266D67C0143CCE8D0025F929 /* MainWindow_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 266D67BE143CCE8D0025F929 /* MainWindow_iPhone.xib */; };
+		266D67C4143CCE8D0025F929 /* MiniBrowserAppDelegate_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67C3143CCE8D0025F929 /* MiniBrowserAppDelegate_iPad.m */; };
+		266D67C7143CCE8E0025F929 /* MainWindow_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 266D67C5143CCE8E0025F929 /* MainWindow_iPad.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		266D67A4143CCE8D0025F929 /* MiniBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MiniBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		266D67A8143CCE8D0025F929 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		266D67AA143CCE8D0025F929 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		266D67AC143CCE8D0025F929 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		266D67B0143CCE8D0025F929 /* MiniBrowser-Info.plist */ = {isa = PBXFileReference; path = "MiniBrowser-Info.plist"; sourceTree = "<group>"; };
+		266D67B2143CCE8D0025F929 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		266D67B4143CCE8D0025F929 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		266D67B6143CCE8D0025F929 /* MiniBrowser-Prefix.pch */ = {isa = PBXFileReference; path = "MiniBrowser-Prefix.pch"; sourceTree = "<group>"; };
+		266D67B7143CCE8D0025F929 /* MiniBrowserAppDelegate.h */ = {isa = PBXFileReference; path = MiniBrowserAppDelegate.h; sourceTree = "<group>"; };
+		266D67B8143CCE8D0025F929 /* MiniBrowserAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MiniBrowserAppDelegate.m; sourceTree = "<group>"; };
+		266D67BB143CCE8D0025F929 /* MiniBrowserAppDelegate_iPhone.h */ = {isa = PBXFileReference; name = MiniBrowserAppDelegate_iPhone.h; path = iPhone/MiniBrowserAppDelegate_iPhone.h; sourceTree = "<group>"; };
+		266D67BC143CCE8D0025F929 /* MiniBrowserAppDelegate_iPhone.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MiniBrowserAppDelegate_iPhone.m; path = iPhone/MiniBrowserAppDelegate_iPhone.m; sourceTree = "<group>"; };
+		266D67BF143CCE8D0025F929 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = iPhone/en.lproj/MainWindow_iPhone.xib; sourceTree = "<group>"; };
+		266D67C2143CCE8D0025F929 /* MiniBrowserAppDelegate_iPad.h */ = {isa = PBXFileReference; name = MiniBrowserAppDelegate_iPad.h; path = iPad/MiniBrowserAppDelegate_iPad.h; sourceTree = "<group>"; };
+		266D67C3143CCE8D0025F929 /* MiniBrowserAppDelegate_iPad.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MiniBrowserAppDelegate_iPad.m; path = iPad/MiniBrowserAppDelegate_iPad.m; sourceTree = "<group>"; };
+		266D67C6143CCE8E0025F929 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = iPad/en.lproj/MainWindow_iPad.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		266D67A1143CCE8D0025F929 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				266D67A9143CCE8D0025F929 /* UIKit.framework in Frameworks */,
+				266D67AB143CCE8D0025F929 /* Foundation.framework in Frameworks */,
+				266D67AD143CCE8D0025F929 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		266D6799143CCE8D0025F929 = {
+			isa = PBXGroup;
+			children = (
+				266D67AE143CCE8D0025F929 /* MiniBrowser */,
+				266D67A7143CCE8D0025F929 /* Frameworks */,
+				266D67A5143CCE8D0025F929 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		266D67A5143CCE8D0025F929 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				266D67A4143CCE8D0025F929 /* MiniBrowser.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		266D67A7143CCE8D0025F929 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				266D67A8143CCE8D0025F929 /* UIKit.framework */,
+				266D67AA143CCE8D0025F929 /* Foundation.framework */,
+				266D67AC143CCE8D0025F929 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		266D67AE143CCE8D0025F929 /* MiniBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				266D67B7143CCE8D0025F929 /* MiniBrowserAppDelegate.h */,
+				266D67B8143CCE8D0025F929 /* MiniBrowserAppDelegate.m */,
+				266D67BA143CCE8D0025F929 /* iPhone */,
+				266D67C1143CCE8D0025F929 /* iPad */,
+				266D67AF143CCE8D0025F929 /* Supporting Files */,
+			);
+			path = MiniBrowser;
+			sourceTree = "<group>";
+		};
+		266D67AF143CCE8D0025F929 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				266D67B0143CCE8D0025F929 /* MiniBrowser-Info.plist */,
+				266D67B1143CCE8D0025F929 /* InfoPlist.strings */,
+				266D67B4143CCE8D0025F929 /* main.m */,
+				266D67B6143CCE8D0025F929 /* MiniBrowser-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		266D67BA143CCE8D0025F929 /* iPhone */ = {
+			isa = PBXGroup;
+			children = (
+				266D67BB143CCE8D0025F929 /* MiniBrowserAppDelegate_iPhone.h */,
+				266D67BC143CCE8D0025F929 /* MiniBrowserAppDelegate_iPhone.m */,
+				266D67BE143CCE8D0025F929 /* MainWindow_iPhone.xib */,
+			);
+			name = iPhone;
+			sourceTree = "<group>";
+		};
+		266D67C1143CCE8D0025F929 /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+				266D67C2143CCE8D0025F929 /* MiniBrowserAppDelegate_iPad.h */,
+				266D67C3143CCE8D0025F929 /* MiniBrowserAppDelegate_iPad.m */,
+				266D67C5143CCE8E0025F929 /* MainWindow_iPad.xib */,
+			);
+			name = iPad;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		266D67A3143CCE8D0025F929 /* MiniBrowser */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 266D67CA143CCE8E0025F929 /* Build configuration list for PBXNativeTarget "MiniBrowser" */;
+			buildPhases = (
+				266D67A0143CCE8D0025F929 /* Sources */,
+				266D67A1143CCE8D0025F929 /* Frameworks */,
+				266D67A2143CCE8D0025F929 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MiniBrowser;
+			productName = MiniBrowser;
+			productReference = 266D67A4143CCE8D0025F929 /* MiniBrowser.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		266D679B143CCE8D0025F929 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Штрих-М";
+			};
+			buildConfigurationList = 266D679E143CCE8D0025F929 /* Build configuration list for PBXProject "MiniBrowser" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 266D6799143CCE8D0025F929;
+			productRefGroup = 266D67A5143CCE8D0025F929 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				266D67A3143CCE8D0025F929 /* MiniBrowser */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		266D67A2143CCE8D0025F929 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				266D67B3143CCE8D0025F929 /* InfoPlist.strings in Resources */,
+				266D67C0143CCE8D0025F929 /* MainWindow_iPhone.xib in Resources */,
+				266D67C7143CCE8E0025F929 /* MainWindow_iPad.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		266D67A0143CCE8D0025F929 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				266D67B5143CCE8D0025F929 /* main.m in Sources */,
+				266D67B9143CCE8D0025F929 /* MiniBrowserAppDelegate.m in Sources */,
+				266D67BD143CCE8D0025F929 /* MiniBrowserAppDelegate_iPhone.m in Sources */,
+				266D67C4143CCE8D0025F929 /* MiniBrowserAppDelegate_iPad.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		266D67B1143CCE8D0025F929 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				266D67B2143CCE8D0025F929 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		266D67BE143CCE8D0025F929 /* MainWindow_iPhone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				266D67BF143CCE8D0025F929 /* en */,
+			);
+			name = MainWindow_iPhone.xib;
+			sourceTree = "<group>";
+		};
+		266D67C5143CCE8E0025F929 /* MainWindow_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				266D67C6143CCE8E0025F929 /* en */,
+			);
+			name = MainWindow_iPad.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		266D67C8143CCE8E0025F929 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		266D67C9143CCE8E0025F929 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		266D67CB143CCE8E0025F929 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MiniBrowser/MiniBrowser-Prefix.pch";
+				INFOPLIST_FILE = "MiniBrowser/MiniBrowser-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		266D67CC143CCE8E0025F929 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MiniBrowser/MiniBrowser-Prefix.pch";
+				INFOPLIST_FILE = "MiniBrowser/MiniBrowser-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		266D679E143CCE8D0025F929 /* Build configuration list for PBXProject "MiniBrowser" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				266D67C8143CCE8E0025F929 /* Debug */,
+				266D67C9143CCE8E0025F929 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		266D67CA143CCE8E0025F929 /* Build configuration list for PBXNativeTarget "MiniBrowser" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				266D67CB143CCE8E0025F929 /* Debug */,
+				266D67CC143CCE8E0025F929 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 266D679B143CCE8D0025F929 /* Project object */;
+}
