@@ -2,8 +2,8 @@
 //  MiniBrowserAppDelegate.m
 //  MiniBrowser
 //
-//  Created by Антон Помозов on 05.10.11.
-//  Copyright 2011 Штрих-М. All rights reserved.
+//  Created by Anton Pomozov on 05.10.11.
+//  Copyright 2011 Alma. All rights reserved.
 //
 
 #import "MiniBrowserAppDelegate.h"
@@ -11,10 +11,21 @@
 @implementation MiniBrowserAppDelegate
 
 @synthesize window = _window;
+@synthesize browserController = _browserController;
+@synthesize nibName = _nibName;
+
+- (BrowserController *)browserController
+{
+    if (!_browserController) {
+        _browserController = [[BrowserController alloc] initWithNibName:self.nibName bundle:nil];
+    }
+    
+    return _browserController;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    [self.window addSubview:self.browserController.view];
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -60,6 +71,7 @@
 
 - (void)dealloc
 {
+    self.browserController = nil;
     [_window release];
     [super dealloc];
 }
