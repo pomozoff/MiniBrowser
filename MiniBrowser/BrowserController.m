@@ -8,7 +8,24 @@
 
 #import "BrowserController.h"
 
+@interface BrowserController()
+
+@property (nonatomic, retain) IBOutlet UIWebView *webView;
+
+@end
+
 @implementation BrowserController
+
+@synthesize webView = _webView;
+
+- (UIWebView *)webView
+{
+    if (!_webView) {
+        _webView = [[UIWebView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    }
+    
+    return _webView;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
