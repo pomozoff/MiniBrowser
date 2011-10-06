@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BrowserController : UIViewController
+@interface BrowserController : UIViewController <UIWebViewDelegate>
+
+@property (nonatomic, retain) IBOutlet UIView *navigationView;
+@property (nonatomic, retain) IBOutlet UIButton *backButton;
+@property (nonatomic, retain) IBOutlet UIButton *forwardButton;
+@property (nonatomic, retain) IBOutlet UITextField *urlField;
+@property (nonatomic, retain) IBOutlet UILabel *urlLabel;
 
 @end

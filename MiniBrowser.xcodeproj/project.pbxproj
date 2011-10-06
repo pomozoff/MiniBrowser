@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		260E1F55143CD4730098D141 /* iPhoneBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 260E1F54143CD4730098D141 /* iPhoneBrowserView.xib */; };
 		260E1F58143CD4A90098D141 /* iPadBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 260E1F57143CD4A90098D141 /* iPadBrowserView.xib */; };
+		265CCEC1143D85B9005F348A /* arrowBackGray.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBA143D85B9005F348A /* arrowBackGray.png */; };
+		265CCEC2143D85B9005F348A /* arrowBackLight.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBB143D85B9005F348A /* arrowBackLight.png */; };
+		265CCEC3143D85B9005F348A /* arrowForwardGray.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBC143D85B9005F348A /* arrowForwardGray.png */; };
+		265CCEC4143D85B9005F348A /* arrowForwardLight.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBD143D85B9005F348A /* arrowForwardLight.png */; };
+		265CCEC5143D85B9005F348A /* clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBE143D85B9005F348A /* clock.png */; };
+		265CCEC6143D85B9005F348A /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBF143D85B9005F348A /* heart.png */; };
+		265CCEC7143D85B9005F348A /* preferences.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEC0143D85B9005F348A /* preferences.png */; };
 		266D67A9143CCE8D0025F929 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266D67A8143CCE8D0025F929 /* UIKit.framework */; };
 		266D67AB143CCE8D0025F929 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266D67AA143CCE8D0025F929 /* Foundation.framework */; };
 		266D67AD143CCE8D0025F929 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266D67AC143CCE8D0025F929 /* CoreGraphics.framework */; };
@@ -25,6 +32,13 @@
 /* Begin PBXFileReference section */
 		260E1F54143CD4730098D141 /* iPhoneBrowserView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = iPhoneBrowserView.xib; sourceTree = "<group>"; };
 		260E1F57143CD4A90098D141 /* iPadBrowserView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = iPadBrowserView.xib; sourceTree = "<group>"; };
+		265CCEBA143D85B9005F348A /* arrowBackGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowBackGray.png; sourceTree = "<group>"; };
+		265CCEBB143D85B9005F348A /* arrowBackLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowBackLight.png; sourceTree = "<group>"; };
+		265CCEBC143D85B9005F348A /* arrowForwardGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowForwardGray.png; sourceTree = "<group>"; };
+		265CCEBD143D85B9005F348A /* arrowForwardLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowForwardLight.png; sourceTree = "<group>"; };
+		265CCEBE143D85B9005F348A /* clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock.png; sourceTree = "<group>"; };
+		265CCEBF143D85B9005F348A /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
+		265CCEC0143D85B9005F348A /* preferences.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = preferences.png; sourceTree = "<group>"; };
 		266D67A4143CCE8D0025F929 /* MiniBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MiniBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		266D67A8143CCE8D0025F929 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		266D67AA143CCE8D0025F929 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -59,6 +73,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		265CCEB9143D85B9005F348A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				265CCEBA143D85B9005F348A /* arrowBackGray.png */,
+				265CCEBB143D85B9005F348A /* arrowBackLight.png */,
+				265CCEBC143D85B9005F348A /* arrowForwardGray.png */,
+				265CCEBD143D85B9005F348A /* arrowForwardLight.png */,
+				265CCEBE143D85B9005F348A /* clock.png */,
+				265CCEBF143D85B9005F348A /* heart.png */,
+				265CCEC0143D85B9005F348A /* preferences.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		266D6799143CCE8D0025F929 = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +123,7 @@
 				266D67C1143CCE8D0025F929 /* iPad */,
 				266D67CD143CCF720025F929 /* BrowserController.h */,
 				266D67CE143CCF720025F929 /* BrowserController.m */,
+				265CCEB9143D85B9005F348A /* Resources */,
 				266D67AF143CCE8D0025F929 /* Supporting Files */,
 			);
 			path = MiniBrowser;
@@ -188,6 +217,13 @@
 				266D67C7143CCE8E0025F929 /* MainWindow_iPad.xib in Resources */,
 				260E1F55143CD4730098D141 /* iPhoneBrowserView.xib in Resources */,
 				260E1F58143CD4A90098D141 /* iPadBrowserView.xib in Resources */,
+				265CCEC1143D85B9005F348A /* arrowBackGray.png in Resources */,
+				265CCEC2143D85B9005F348A /* arrowBackLight.png in Resources */,
+				265CCEC3143D85B9005F348A /* arrowForwardGray.png in Resources */,
+				265CCEC4143D85B9005F348A /* arrowForwardLight.png in Resources */,
+				265CCEC5143D85B9005F348A /* clock.png in Resources */,
+				265CCEC6143D85B9005F348A /* heart.png in Resources */,
+				265CCEC7143D85B9005F348A /* preferences.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
