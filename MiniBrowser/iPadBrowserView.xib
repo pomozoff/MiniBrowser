@@ -13,6 +13,7 @@
 		<object class="NSArray" key="IBDocument.IntegratedClassDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<string>IBUILabel</string>
+			<string>IBUIWebView</string>
 			<string>IBUIButton</string>
 			<string>IBUIView</string>
 			<string>IBUITextField</string>
@@ -44,7 +45,6 @@
 				<int key="NSvFlags">274</int>
 				<string key="NSFrame">{{0, 20}, {768, 1004}}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">1</int>
@@ -57,7 +57,7 @@
 			</object>
 			<object class="IBUIView" id="806558741">
 				<reference key="NSNextResponder"/>
-				<int key="NSvFlags">288</int>
+				<int key="NSvFlags">290</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="IBUIButton" id="673554258">
@@ -65,7 +65,6 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{0, 13}, {30, 44}}</string>
 						<reference key="NSSuperview" ref="806558741"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="103907089"/>
 						<string key="NSReuseIdentifierKey">_NS:237</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -105,7 +104,6 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{38, 13}, {30, 44}}</string>
 						<reference key="NSSuperview" ref="806558741"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="800095244"/>
 						<string key="NSReuseIdentifierKey">_NS:237</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -132,10 +130,9 @@
 					</object>
 					<object class="IBUITextField" id="800095244">
 						<reference key="NSNextResponder" ref="806558741"/>
-						<int key="NSvFlags">292</int>
+						<int key="NSvFlags">290</int>
 						<string key="NSFrame">{{73, 20}, {688, 31}}</string>
 						<reference key="NSSuperview" ref="806558741"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:310</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -167,10 +164,9 @@
 					</object>
 					<object class="IBUILabel" id="103907089">
 						<reference key="NSNextResponder" ref="806558741"/>
-						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 0}, {728, 19}}</string>
+						<int key="NSvFlags">290</int>
+						<string key="NSFrameSize">{768, 19}</string>
 						<reference key="NSSuperview" ref="806558741"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="353445429"/>
 						<string key="NSReuseIdentifierKey">_NS:327</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -197,9 +193,8 @@
 						<int key="IBUITextAlignment">1</int>
 					</object>
 				</object>
-				<string key="NSFrameSize">{768, 60}</string>
+				<string key="NSFrameSize">{768, 57}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="673554258"/>
 				<string key="NSReuseIdentifierKey">_NS:195</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
@@ -207,6 +202,22 @@
 					<bytes key="NSRGB">MCAwIDAgMAA</bytes>
 				</object>
 				<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+			</object>
+			<object class="IBUIWebView" id="876025267">
+				<reference key="NSNextResponder"/>
+				<int key="NSvFlags">274</int>
+				<string key="NSFrameSize">{100, 100}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
+				<reference key="NSNextKeyView"/>
+				<string key="NSReuseIdentifierKey">_NS:668</string>
+				<object class="NSColor" key="IBUIBackgroundColor">
+					<int key="NSColorSpace">1</int>
+					<bytes key="NSRGB">MSAxIDEAA</bytes>
+				</object>
+				<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+				<int key="IBUIDataDetectorTypes">1</int>
+				<bool key="IBUIDetectsPhoneNumbers">YES</bool>
 			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -267,6 +278,22 @@
 						<reference key="destination" ref="800095244"/>
 					</object>
 					<int key="connectionID">28</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="876025267"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">30</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">webView</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="876025267"/>
+					</object>
+					<int key="connectionID">31</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -329,6 +356,11 @@
 						<reference key="object" ref="103907089"/>
 						<reference key="parent" ref="806558741"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">29</int>
+						<reference key="object" ref="876025267"/>
+						<reference key="parent" ref="0"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -347,6 +379,7 @@
 					<string>19.IBUIButtonInspectorSelectedStateConfigurationMetadataKey</string>
 					<string>20.IBPluginDependency</string>
 					<string>21.IBPluginDependency</string>
+					<string>29.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -360,6 +393,7 @@
 					<real value="0.0"/>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<real value="0.0"/>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				</object>
@@ -376,7 +410,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">28</int>
+			<int key="maxID">31</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -393,6 +427,7 @@
 							<string>navigationView</string>
 							<string>urlField</string>
 							<string>urlLabel</string>
+							<string>webView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -401,6 +436,7 @@
 							<string>UIView</string>
 							<string>UITextField</string>
 							<string>UILabel</string>
+							<string>UIWebView</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -412,6 +448,7 @@
 							<string>navigationView</string>
 							<string>urlField</string>
 							<string>urlLabel</string>
+							<string>webView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -434,6 +471,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">urlLabel</string>
 								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">webView</string>
+								<string key="candidateClassName">UIWebView</string>
 							</object>
 						</object>
 					</object>

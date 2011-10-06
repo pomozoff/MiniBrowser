@@ -15,5 +15,6 @@
 @property (nonatomic, retain) IBOutlet UIButton *forwardButton;
 @property (nonatomic, retain) IBOutlet UITextField *urlField;
 @property (nonatomic, retain) IBOutlet UILabel *urlLabel;
+@property (nonatomic, retain) IBOutlet UIWebView *webView;
 
 @end

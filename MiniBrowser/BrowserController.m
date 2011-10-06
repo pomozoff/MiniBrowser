@@ -8,12 +8,6 @@
 
 #import "BrowserController.h"
 
-@interface BrowserController()
-
-@property (nonatomic, retain) IBOutlet UIWebView *webView;
-
-@end
-
 @implementation BrowserController
 
 @synthesize webView = _webView;
@@ -23,15 +17,7 @@
 @synthesize urlField = _urlField;
 @synthesize urlLabel = _urlLabel;
 
-- (UIWebView *)webView
-{
-    if (!_webView) {
-        _webView = [[UIWebView alloc] init];
-        _webView.delegate = self;
-    }
-    
-    return _webView;
-}
+BOOL isLoadingPage = NO;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -82,7 +68,11 @@
         Some other action occurred.
     */
     
-    return sourceUrl;
+    self.urlField.text = sourceUrl;
+//    NSString *outUrl = [NSString stringWithFormat:@"%@?", sourceUrl];
+    NSString *outUrl = @"http://www.google.com/";
+    
+    return outUrl;
 }
 
 - (void)setButtonsStatus
@@ -122,6 +112,7 @@
     self.backButton = nil;
     self.forwardButton = nil;
     self.urlField = nil;
+    self.urlLabel = nil;
 }
 
 #pragma mark - View lifecycle
@@ -169,15 +160,17 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     NSString *readyUrl = [self correctUrl:textField.text];
+    readyUrl = [readyUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:readyUrl]]];
     [textField resignFirstResponder];
+    isLoadingPage = NO;
     
     return YES;
 }
@@ -187,20 +180,27 @@
     self.backButton.enabled = YES;
     self.forwardButton.enabled = NO;
     
-    NSString *callBackString = [self urlCallBack:request.URL.absoluteString navigationType:navigationType];
-    request = [NSURLRequest requestWithURL:[NSURL URLWithString:callBackString]];
+    NSString *callBackUrl = [self urlCallBack:request.URL.absoluteString navigationType:navigationType];
+    if (!isLoadingPage) {
+        isLoadingPage = YES;
+        callBackUrl = [callBackUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:callBackUrl]]];
+    }
     
-    return YES;
+    return isLoadingPage;
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     [self setButtonsStatus];
     self.urlLabel.text = [self.webView stringByEvaluatingJavaScriptFromString:@"document.title"];
+    
+    isLoadingPage = NO;
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
+    /*
     self.urlLabel.text = @"Error";
     NSString *logString = [NSString stringWithFormat:@"Error: %@", error.localizedDescription];
     
@@ -212,6 +212,7 @@
     
     [alert show];
     [alert release];
+    */
 }
 
 @end
