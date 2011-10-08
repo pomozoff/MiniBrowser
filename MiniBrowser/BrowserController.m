@@ -17,7 +17,7 @@
 @synthesize urlField = _urlField;
 @synthesize urlLabel = _urlLabel;
 
-BOOL isLoadingPage = NO;
+BOOL userInitiatedJump = NO;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -68,9 +68,8 @@ BOOL isLoadingPage = NO;
         Some other action occurred.
     */
     
-    self.urlField.text = sourceUrl;
-//    NSString *outUrl = [NSString stringWithFormat:@"%@?", sourceUrl];
-    NSString *outUrl = @"http://www.google.com/";
+    NSString *outUrl = [NSString stringWithFormat:@"%@", sourceUrl];
+//    NSString *outUrl = @"http://www.google.com/";
     
     return outUrl;
 }
@@ -83,12 +82,14 @@ BOOL isLoadingPage = NO;
 
 - (void)backPressed:(id)sender
 {
+    userInitiatedJump = YES;
     [self.webView goBack];
     [self setButtonsStatus];
 }
 
 - (void)forwardPressed:(id)sender
 {
+    userInitiatedJump = YES;
     [self.webView goForward];
     [self setButtonsStatus];
 }
@@ -170,7 +171,7 @@ BOOL isLoadingPage = NO;
     
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:readyUrl]]];
     [textField resignFirstResponder];
-    isLoadingPage = NO;
+    userInitiatedJump = YES;
     
     return YES;
 }
@@ -180,30 +181,49 @@ BOOL isLoadingPage = NO;
     self.backButton.enabled = YES;
     self.forwardButton.enabled = NO;
     
-    NSString *callBackUrl = [self urlCallBack:request.URL.absoluteString navigationType:navigationType];
-    if (!isLoadingPage) {
-        isLoadingPage = YES;
-        callBackUrl = [callBackUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:callBackUrl]]];
-    }
+    userInitiatedJump = userInitiatedJump || (navigationType != UIWebViewNavigationTypeOther);
     
-    return isLoadingPage;
+    if (userInitiatedJump) {
+        userInitiatedJump = NO;
+     
+        NSString *sourceUrl = request.URL.absoluteString;
+        NSString *callBackUrl = [self urlCallBack:sourceUrl navigationType:navigationType];
+        NSString *escapedCallBackUrl = [callBackUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        
+        [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:escapedCallBackUrl]]];
+        
+        return NO;
+    }
+
+    return YES;
+}
+
+- (void)setLabel:(NSString *)label andUrl:(NSString *)url
+{
+    self.urlLabel.text = label;
+    self.urlField.text = url;
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     [self setButtonsStatus];
-    self.urlLabel.text = [self.webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     
-    isLoadingPage = NO;
+    NSString *label = [self.webView stringByEvaluatingJavaScriptFromString:@"document.title"];
+    NSString *sourceUrl = self.webView.request.URL.absoluteString;
+    
+    [self setLabel:label andUrl:sourceUrl];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    /*
-    self.urlLabel.text = @"Error";
-    NSString *logString = [NSString stringWithFormat:@"Error: %@", error.localizedDescription];
+    [self setButtonsStatus];
     
+    NSString *logString = [NSString stringWithFormat:@"Error: %@", error.localizedDescription];
+    NSString *sourceUrl = self.webView.request.URL.absoluteString;
+
+    [self setLabel:logString andUrl:sourceUrl];
+    
+    /*
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"error loading url"
                                                     message:logString
                                                    delegate:self
