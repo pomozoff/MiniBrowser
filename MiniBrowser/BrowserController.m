@@ -10,12 +10,15 @@
 
 @implementation BrowserController
 
-@synthesize webView = _webView;
-@synthesize navigationView = _navigationView;
+@synthesize navigationBar = _navigationBar;
+@synthesize navigationToolbar = _navigationView;
+@synthesize searchBar = _searchBar;
 @synthesize backButton = _backButton;
 @synthesize forwardButton = _forwardButton;
+@synthesize bookmarkButton = _bookmarkButton;
 @synthesize urlField = _urlField;
 @synthesize urlLabel = _urlLabel;
+@synthesize webView = _webView;
 
 BOOL userInitiatedJump = NO;
 
@@ -80,14 +83,14 @@ BOOL userInitiatedJump = NO;
     self.forwardButton.enabled = self.webView.canGoForward;
 }
 
-- (void)backPressed:(id)sender
+- (IBAction)backPressed:(id)sender
 {
     userInitiatedJump = YES;
     [self.webView goBack];
     [self setButtonsStatus];
 }
 
-- (void)forwardPressed:(id)sender
+- (IBAction)forwardPressed:(id)sender
 {
     userInitiatedJump = YES;
     [self.webView goForward];
@@ -108,12 +111,15 @@ BOOL userInitiatedJump = NO;
 
 - (void)freeProperties
 {
-    self.webView = nil;
-    self.navigationView = nil;
+    self.navigationBar = nil;
+    self.navigationToolbar = nil;
+    self.searchBar = nil;
     self.backButton = nil;
     self.forwardButton = nil;
+    self.bookmarkButton = nil;
     self.urlField = nil;
     self.urlLabel = nil;
+    self.webView = nil;
 }
 
 #pragma mark - View lifecycle
@@ -129,21 +135,18 @@ BOOL userInitiatedJump = NO;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self.backButton addTarget:self action:@selector(backPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.forwardButton addTarget:self action:@selector(forwardPressed:) forControlEvents:UIControlEventTouchUpInside];
 
-    [self.view addSubview:self.navigationView];
-    [self.view addSubview:self.webView];
+    [self setButtonsStatus];
+    
+//    [self.view addSubview:self.navigationToolbar];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    CGRect statusBarRect = [[UIApplication sharedApplication] statusBarFrame];
-    self.view.frame = CGRectOffset(self.view.frame, 0, statusBarRect.size.height);
-    self.webView.frame = CGRectOffset([UIScreen mainScreen].bounds, 0, self.navigationView.bounds.size.height);
+    CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
+    self.view.frame = CGRectOffset(self.view.frame, 0, statusBarHeight);
 }
 
 - (void)viewDidUnload
@@ -152,9 +155,6 @@ BOOL userInitiatedJump = NO;
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
     
-    [self.backButton removeTarget:self action:@selector(backPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.forwardButton removeTarget:self action:@selector(forwardPressed:) forControlEvents:UIControlEventTouchUpInside];
-
     [self freeProperties];
 }
 

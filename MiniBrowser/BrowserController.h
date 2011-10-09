@@ -10,9 +10,12 @@
 
 @interface BrowserController : UIViewController <UIWebViewDelegate>
 
-@property (nonatomic, retain) IBOutlet UIView *navigationView;
-@property (nonatomic, retain) IBOutlet UIButton *backButton;
-@property (nonatomic, retain) IBOutlet UIButton *forwardButton;
+@property (nonatomic, retain) IBOutlet UINavigationBar *navigationBar;
+@property (nonatomic, retain) IBOutlet UIToolbar *navigationToolbar;
+@property (nonatomic, retain) IBOutlet UISearchBar *searchBar;
+@property (nonatomic, retain) IBOutlet UIBarItem *backButton;
+@property (nonatomic, retain) IBOutlet UIBarItem *forwardButton;
+@property (nonatomic, retain) IBOutlet UIBarItem *bookmarkButton;
 @property (nonatomic, retain) IBOutlet UITextField *urlField;
 @property (nonatomic, retain) IBOutlet UILabel *urlLabel;
 @property (nonatomic, retain) IBOutlet UIWebView *webView;
