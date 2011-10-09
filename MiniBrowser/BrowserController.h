@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BrowserController : UIViewController <UIWebViewDelegate>
+@interface BrowserController : UIViewController <UIWebViewDelegate, UISearchBarDelegate>
 
 @property (nonatomic, retain) IBOutlet UINavigationBar *navigationBar;
 @property (nonatomic, retain) IBOutlet UIToolbar *navigationToolbar;

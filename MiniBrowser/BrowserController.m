@@ -7,6 +7,15 @@
 //
 
 #import "BrowserController.h"
+#import "SettingsController.h"
+#import "SearchEngine.h"
+
+@interface BrowserController()
+
+@property (nonatomic, retain) SettingsController *settingsController;
+@property (nonatomic, retain) SearchEngine *searchEngine;
+
+@end
 
 @implementation BrowserController
 
@@ -20,7 +29,28 @@
 @synthesize urlLabel = _urlLabel;
 @synthesize webView = _webView;
 
+@synthesize settingsController = _settingsController;
+@synthesize searchEngine = _searchEngine;
+
 BOOL userInitiatedJump = NO;
+
+- (SettingsController *)settingsController
+{
+    if (!_settingsController) {
+        _settingsController = [[SettingsController alloc] init];
+    }
+    
+    return _settingsController;
+}
+
+- (SearchEngine *)searchEngine
+{
+    if (!_searchEngine) {
+        _searchEngine = [self.settingsController currentSearchEngine];
+    }
+    
+    return _searchEngine;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -120,6 +150,9 @@ BOOL userInitiatedJump = NO;
     self.urlField = nil;
     self.urlLabel = nil;
     self.webView = nil;
+    
+    self.settingsController = nil;
+    self.searchEngine = nil;
 }
 
 #pragma mark - View lifecycle
@@ -169,15 +202,17 @@ BOOL userInitiatedJump = NO;
     NSString *readyUrl = [self correctUrl:textField.text];
     readyUrl = [readyUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:readyUrl]]];
     [textField resignFirstResponder];
     userInitiatedJump = YES;
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:readyUrl]]];
     
     return YES;
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
     self.backButton.enabled = YES;
     self.forwardButton.enabled = NO;
     
@@ -188,7 +223,11 @@ BOOL userInitiatedJump = NO;
      
         NSString *sourceUrl = request.URL.absoluteString;
         NSString *callBackUrl = [self urlCallBack:sourceUrl navigationType:navigationType];
-        NSString *escapedCallBackUrl = [callBackUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *escapedCallBackUrl = callBackUrl;
+        
+        if (navigationType == UIWebViewNavigationTypeOther) {
+            escapedCallBackUrl = [callBackUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        }
         
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:escapedCallBackUrl]]];
         
@@ -212,6 +251,8 @@ BOOL userInitiatedJump = NO;
     NSString *sourceUrl = self.webView.request.URL.absoluteString;
     
     [self setLabel:label andUrl:sourceUrl];
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
@@ -233,6 +274,21 @@ BOOL userInitiatedJump = NO;
     [alert show];
     [alert release];
     */
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
+- (void)searchTheText:(NSString *)text
+{
+    userInitiatedJump = YES;
+    
+    NSURL *searchUrl = [self.searchEngine searchUrlForText:text];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:searchUrl]];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
+    [self searchTheText:self.searchBar.text];
+}
 @end
