@@ -7,8 +7,9 @@
 *.mode2v3
 *.perspectivev3
 *.xcuserstate
-project.xcworkspace/
-xcuserdata/
+Breakpoints.xcbkptlist
+project.xcworkspace/*
+xcuserdata/*
 
 # Generated files
 build/
