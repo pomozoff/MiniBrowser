@@ -32,4 +32,11 @@
     return self;
 }
 
+- (void)dealloc
+{
+    self.currentSearchEngine = nil;
+    
+    [super dealloc];
+}
+
 @end

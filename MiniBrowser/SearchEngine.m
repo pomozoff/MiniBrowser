@@ -27,4 +27,11 @@
     return nil;
 }
 
+- (void)dealloc
+{
+    self.searchUrl = nil;
+    
+    [super dealloc];
+}
+
 @end
