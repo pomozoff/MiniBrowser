@@ -1,21 +1,21 @@
 //
-//  SearchEngineGoogle.m
+//  SearchEngineYahoo.m
 //  MiniBrowser
 //
-//  Created by Антон Помозов on 09.10.11.
+//  Created by Антон Помозов on 10.10.11.
 //  Copyright 2011 Alma. All rights reserved.
 //
 
-#import "SearchEngineGoogle.h"
+#import "SearchEngineYahoo.h"
 
-@implementation SearchEngineGoogle
+@implementation SearchEngineYahoo
 
 @synthesize placeholder = _placeholder;
 
 - (NSString *)placeholder
 {
     if (!_placeholder) {
-        _placeholder = @"Google";
+        _placeholder = @"Yahoo";
     }
     
     return _placeholder;
@@ -23,7 +23,7 @@
 
 - (NSURL *)searchUrlForText:(NSString *)text
 {
-    self.searchUrl = @"http://www.google.com/search?q=%@&ie=utf-8&oe=utf-8";
+    self.searchUrl = @"http://search.yahoo.com/search?p=%@";
     NSString *readyUrl = [NSString stringWithFormat:self.searchUrl, text];
     readyUrl = [readyUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     

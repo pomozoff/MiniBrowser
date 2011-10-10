@@ -170,8 +170,7 @@ BOOL userInitiatedJump = NO;
     [super viewDidLoad];
 
     [self setButtonsStatus];
-    
-//    [self.view addSubview:self.navigationToolbar];
+    self.searchBar.placeholder = self.searchEngine.placeholder;
 }
 
 - (void)viewWillAppear:(BOOL)animated

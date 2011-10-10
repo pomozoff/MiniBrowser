@@ -91,7 +91,7 @@
 							<object class="IBUIBarButtonItem" id="556530575">
 								<object class="NSCustomResource" key="IBUIImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">bookmark.png</string>
+									<string key="NSResourceName">Bookmark-iPhone.png</string>
 								</object>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<reference key="IBUIToolbar" ref="186746870"/>
@@ -176,7 +176,7 @@
 						<string key="NSReuseIdentifierKey">_NS:571</string>
 						<int key="IBUIContentMode">3</int>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBPlaceholder">Google</string>
+						<string key="IBPlaceholder">Search</string>
 						<object class="IBUITextInputTraits" key="IBTextInputTraits">
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						</object>
@@ -836,16 +836,16 @@
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSArray" key="dict.sortedKeys">
 				<bool key="EncodedWithXMLCoder">YES</bool>
+				<string>Bookmark-iPhone.png</string>
 				<string>arrowBackGray.png</string>
 				<string>arrowForwardGray.png</string>
-				<string>bookmark.png</string>
 				<string>plus.png</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
+				<string>{24, 16}</string>
 				<string>{26, 26}</string>
 				<string>{26, 26}</string>
-				<string>{32, 32}</string>
 				<string>{26, 26}</string>
 			</object>
 		</object>

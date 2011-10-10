@@ -8,6 +8,7 @@
 
 #import "SettingsController.h"
 #import "SearchEngineGoogle.h"
+#import "SearchEngineYahoo.h"
 
 @implementation SettingsController
 
@@ -16,7 +17,7 @@
 - (SearchEngine *)currentSearchEngine
 {
     if (!_currentSearchEngine) {
-        _currentSearchEngine = [[SearchEngineGoogle alloc] init];
+        _currentSearchEngine = [[SearchEngineYahoo alloc] init];
     }
     
     return _currentSearchEngine;

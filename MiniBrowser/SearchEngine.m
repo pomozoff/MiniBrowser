@@ -11,6 +11,7 @@
 @implementation SearchEngine
 
 @synthesize searchUrl = _searchUrl;
+@synthesize placeholder = _placeholder;
 
 - (id)init
 {
