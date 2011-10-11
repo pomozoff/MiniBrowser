@@ -12,9 +12,10 @@
 
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *url;
+@property (nonatomic, readonly) BOOL group;
 @property (nonatomic, copy, readonly) NSString *itemId;
 @property (nonatomic, copy) NSString *parentId;
 
-- (id)initWithName:(NSString *)name url:(NSString *)url parent:(NSString *)parentId;
+- (id)initWithName:(NSString *)name url:(NSString *)url group:(BOOL)isThisAGroup parentId:(NSString *)parentId;
 
 @end

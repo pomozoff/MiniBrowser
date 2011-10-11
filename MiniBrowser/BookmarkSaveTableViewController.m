@@ -8,6 +8,7 @@
 
 #import "BookmarkSaveTableViewController.h"
 #import "BookmarkSaveModel.h"
+#import "BookmarksStorageProtocol.h"
 
 @interface BookmarkSaveTableViewController()
 

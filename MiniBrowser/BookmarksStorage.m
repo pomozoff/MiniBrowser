@@ -10,14 +10,16 @@
 
 @interface BookmarksStorage()
 
-@property (nonatomic, retain) NSArray *bookmarksList;
-//@property (nonatomic, retain) NSDictionary *bookmarksDetails;
+@property (nonatomic, retain) NSArray *bookmarksTree;
+@property (nonatomic, retain) NSDictionary *bookmarksList;
 
 @end
 
 @implementation BookmarksStorage
 
 @synthesize sectionsCount = _sectionsCount;
+
+@synthesize bookmarksTree = _bookmarksTree;
 @synthesize bookmarksList = _bookmarksList;
 
 NSString *const savedBookmarks = @"savedBookmarks";
@@ -27,19 +29,50 @@ NSString *const savedBookmarks = @"savedBookmarks";
     return 1;
 }
 
-- (NSArray *)bookmarksList
+- (NSArray *)bookmarksTree
 {
-    if (!_bookmarksList) {
+    if (!_bookmarksTree) {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults synchronize];
         
         NSArray *tmpBookmarks = [defaults objectForKey:savedBookmarks];
         
         if (!tmpBookmarks) {
-            _bookmarksList = [[NSArray alloc] init];
+            _bookmarksTree = [[NSArray alloc] init];
         } else {
-            _bookmarksList = [tmpBookmarks retain];
+            _bookmarksTree = [tmpBookmarks retain];
         }
+    }
+    
+    return _bookmarksTree;
+}
+
+- (void)generateBookmarksList:(NSMutableDictionary *)list fromTree:(NSArray *)tree
+{
+    for (NSDictionary *subItem in tree) {
+        NSString *itemId = [subItem objectForKey:@"itemId"];
+        NSString *name = [subItem objectForKey:@"name"];
+        NSString *url = [subItem objectForKey:@"url"];
+        BOOL group = [[subItem objectForKey:@"group"] boolValue];
+        NSString *parentId = [subItem objectForKey:@"name"];
+        
+        BookmarkItem *item = [[BookmarkItem alloc] initWithName:name url:url group:group parentId:parentId];
+        [list setObject:item forKey:itemId];
+        [item release];
+        
+        NSArray *content = [subItem objectForKey:@"content"];
+        [self generateBookmarksList:list fromTree:content];
+    }
+}
+
+- (NSDictionary *)bookmarksList
+{
+    if (!_bookmarksList) {
+        NSMutableDictionary *tmpList = [[NSMutableDictionary alloc] init];
+        [self generateBookmarksList:tmpList fromTree:self.bookmarksTree];
+        
+        _bookmarksList = tmpList;
+        [tmpList release];
     }
     
     return _bookmarksList;
@@ -57,18 +90,27 @@ NSString *const savedBookmarks = @"savedBookmarks";
 
 - (NSInteger)bookmarksCount
 {
-    return self.bookmarksList.count;
+    return self.bookmarksTree.count;
 }
 
-- (void)addBookmark:(BookmarkItem *)bookmark
+- (void)addBookmark:(BookmarkItem *)bookmark toGroup:(NSString *)groupId
 {
-    NSMutableArray *mutBookmarks = [self.bookmarksList mutableCopy];
+    NSMutableArray *mutBookmarks = [self.bookmarksTree mutableCopy];
+
+    
+    
+    self.bookmarksTree = mutBookmarks;
     [mutBookmarks release];
+}
+
+- (NSArray *)treeOfTheBookmarks
+{
+    return nil;
 }
 
 - (void)dealloc
 {
-    self.bookmarksList = nil;
+    self.bookmarksTree = nil;
     
     [super dealloc];
 }

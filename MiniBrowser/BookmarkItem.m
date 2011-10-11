@@ -12,10 +12,14 @@
 
 @synthesize name = _name;
 @synthesize url = _url;
+@synthesize group = _group;
 @synthesize itemId = _itemId;
 @synthesize parentId = _parentId;
 
-- (id)initWithName:(NSString *)name url:(NSString *)url parent:(NSString *)parentId
+- (id)initWithName:(NSString *)name
+               url:(NSString *)url
+             group:(BOOL)isThisAGroup
+          parentId:(NSString *)parentId
 {
     self = [super init];
     if (self) {
@@ -23,6 +27,8 @@
         _itemId = (NSString *)CFUUIDCreateString(nil, uuidObj);
         CFRelease(uuidObj);
 
+        _group = isThisAGroup;
+        
         self.name = name;
         self.url = url;
         self.parentId = parentId;
@@ -33,9 +39,25 @@
 
 - (id)init
 {
-    self = [self initWithName:@"" url:@"" parent:nil];
+    self = [self initWithName:@"" url:@"" group:NO parentId:nil];
     
     return self;
+}
++ (NSDictionary *)itemAsDictionaryWithName:(NSString *)name
+                                       url:(NSString *)url
+                                     group:(BOOL)isThisAGroup
+                                    parent:(NSString *)parentId
+                                   content:(NSArray *)content
+{
+    NSArray *keys = [[NSArray alloc] initWithObjects:@"name", @"url", @"group", @"parent", @"content", nil];
+    NSArray *objects = [[NSArray alloc] initWithObjects:name, url, [NSNumber numberWithBool:isThisAGroup], parentId, content, nil];
+    
+    NSDictionary *dictionary = [[NSDictionary alloc] initWithObjects:objects forKeys:keys];
+    
+    [objects release];
+    [keys release];
+    
+    return [dictionary autorelease];
 }
 
 @end

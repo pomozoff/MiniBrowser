@@ -14,6 +14,8 @@
 @property (nonatomic, readonly) NSInteger sectionsCount;
 
 - (NSInteger)bookmarksCount;
-- (void)addBookmark:(BookmarkItem *)bookmark;
+- (void)addBookmark:(BookmarkItem *)bookmark toGroup:(NSString *)groupId;
+
+- (NSArray *)treeOfTheBookmarks;
 
 @end

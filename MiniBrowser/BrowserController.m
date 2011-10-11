@@ -259,8 +259,8 @@ BOOL userInitiatedJump = NO;
         switch (buttonIndex) {
             case 0: { // Add bookmark button
                 /*
-                BookmarkItem *item = [[BookmarkItem alloc] initWithName:@"" url:@"" parent:nil];
-                [self.bookmarksStorage addBookmark:item];
+                BookmarkItem *item = [[BookmarkItem alloc] initWithName:@"" url:@"" thisIsAGroup:NO parent:nil];
+                [self.bookmarksStorage addBookmark:item toGroup:groupId];
                 [item release];
                 */
                 

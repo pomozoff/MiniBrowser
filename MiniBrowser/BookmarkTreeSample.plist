@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Bookmarks</key>
+	<dict>
+		<key>id</key>
+		<string>root_id_here</string>
+		<key>name</key>
+		<string>Root</string>
+		<key>url</key>
+		<string></string>
+		<key>group</key>
+		<true/>
+		<key>content</key>
+		<array>
+			<dict>
+				<key>id</key>
+				<string>yahoo_id_here</string>
+				<key>name</key>
+				<string>Yahoo</string>
+				<key>url</key>
+				<string>http://yahoo.com</string>
+				<key>group</key>
+				<false/>
+				<key>content</key>
+				<array/>
+			</dict>
+			<dict>
+				<key>id</key>
+				<string>job_id_here</string>
+				<key>name</key>
+				<string>Job</string>
+				<key>url</key>
+				<string></string>
+				<key>group</key>
+				<true/>
+				<key>content</key>
+				<array>
+					<dict>
+						<key>id</key>
+						<string>google_id_here</string>
+						<key>name</key>
+						<string>Google</string>
+						<key>url</key>
+						<string>http://google.com</string>
+						<key>group</key>
+						<false/>
+						<key>content</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>id</key>
+						<string>id_empty_group_here</string>
+						<key>name</key>
+						<string>Empty group</string>
+						<key>url</key>
+						<string></string>
+						<key>group</key>
+						<true/>
+						<key>content</key>
+						<array/>
+					</dict>
+				</array>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>
