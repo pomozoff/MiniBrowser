@@ -20,6 +20,9 @@
 		265CCEC5143D85B9005F348A /* clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBE143D85B9005F348A /* clock.png */; };
 		265CCEC6143D85B9005F348A /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBF143D85B9005F348A /* heart.png */; };
 		265CCEC7143D85B9005F348A /* preferences.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEC0143D85B9005F348A /* preferences.png */; };
+		266C914914440DAD00444BAC /* BookmarksTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266C914814440DAD00444BAC /* BookmarksTableViewController.m */; };
+		266C914D1444115200444BAC /* BookmarksStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 266C914C1444115200444BAC /* BookmarksStorage.m */; };
+		266C91511444171200444BAC /* BookmarkItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 266C91501444171200444BAC /* BookmarkItem.m */; };
 		266D67A9143CCE8D0025F929 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266D67A8143CCE8D0025F929 /* UIKit.framework */; };
 		266D67AB143CCE8D0025F929 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266D67AA143CCE8D0025F929 /* Foundation.framework */; };
 		266D67AD143CCE8D0025F929 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266D67AC143CCE8D0025F929 /* CoreGraphics.framework */; };
@@ -31,6 +34,9 @@
 		266D67C4143CCE8D0025F929 /* MiniBrowserAppDelegate_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67C3143CCE8D0025F929 /* MiniBrowserAppDelegate_iPad.m */; };
 		266D67C7143CCE8E0025F929 /* MainWindow_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 266D67C5143CCE8E0025F929 /* MainWindow_iPad.xib */; };
 		266D67CF143CCF720025F929 /* BrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67CE143CCF720025F929 /* BrowserController.m */; };
+		26B578D5144429FB004657E2 /* BookmarkSaveTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B578D4144429FB004657E2 /* BookmarkSaveTableViewController.m */; };
+		26B578D914443290004657E2 /* BookmarkSaveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B578D814443290004657E2 /* BookmarkSaveModel.m */; };
+		26B578DC1444376E004657E2 /* BookmarkSaveTable.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26B578DB1444376E004657E2 /* BookmarkSaveTable.plist */; };
 		26FE56BD1443269D001622F2 /* Bookmark-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 26FE56BC1443269D001622F2 /* Bookmark-iPad.png */; };
 		26FE56BF144326FB001622F2 /* Bookmark-iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 26FE56BE144326FB001622F2 /* Bookmark-iPhone.png */; };
 		26FE56C614432A7A001622F2 /* SearchEngineYahoo.m in Sources */ = {isa = PBXBuildFile; fileRef = 26FE56C514432A7A001622F2 /* SearchEngineYahoo.m */; };
@@ -55,6 +61,13 @@
 		265CCEBE143D85B9005F348A /* clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock.png; sourceTree = "<group>"; };
 		265CCEBF143D85B9005F348A /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
 		265CCEC0143D85B9005F348A /* preferences.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = preferences.png; sourceTree = "<group>"; };
+		266C914714440DAD00444BAC /* BookmarksTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarksTableViewController.h; sourceTree = "<group>"; };
+		266C914814440DAD00444BAC /* BookmarksTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarksTableViewController.m; sourceTree = "<group>"; };
+		266C914B1444115200444BAC /* BookmarksStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarksStorage.h; sourceTree = "<group>"; };
+		266C914C1444115200444BAC /* BookmarksStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarksStorage.m; sourceTree = "<group>"; };
+		266C914E144411B000444BAC /* BookmarksStorageProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarksStorageProtocol.h; sourceTree = "<group>"; };
+		266C914F1444171200444BAC /* BookmarkItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkItem.h; sourceTree = "<group>"; };
+		266C91501444171200444BAC /* BookmarkItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkItem.m; sourceTree = "<group>"; };
 		266D67A4143CCE8D0025F929 /* MiniBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MiniBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		266D67A8143CCE8D0025F929 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		266D67AA143CCE8D0025F929 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -73,6 +86,12 @@
 		266D67C6143CCE8E0025F929 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = iPad/en.lproj/MainWindow_iPad.xib; sourceTree = "<group>"; };
 		266D67CD143CCF720025F929 /* BrowserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserController.h; sourceTree = "<group>"; };
 		266D67CE143CCF720025F929 /* BrowserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserController.m; sourceTree = "<group>"; };
+		26B578D3144429FB004657E2 /* BookmarkSaveTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkSaveTableViewController.h; sourceTree = "<group>"; };
+		26B578D4144429FB004657E2 /* BookmarkSaveTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkSaveTableViewController.m; sourceTree = "<group>"; };
+		26B578D714443290004657E2 /* BookmarkSaveModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkSaveModel.h; sourceTree = "<group>"; };
+		26B578D814443290004657E2 /* BookmarkSaveModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkSaveModel.m; sourceTree = "<group>"; };
+		26B578DA144432E6004657E2 /* BookmarkSaveProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkSaveProtocol.h; sourceTree = "<group>"; };
+		26B578DB1444376E004657E2 /* BookmarkSaveTable.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BookmarkSaveTable.plist; sourceTree = "<group>"; };
 		26FE56BC1443269D001622F2 /* Bookmark-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Bookmark-iPad.png"; sourceTree = "<group>"; };
 		26FE56BE144326FB001622F2 /* Bookmark-iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Bookmark-iPhone.png"; sourceTree = "<group>"; };
 		26FE56C414432A7A001622F2 /* SearchEngineYahoo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchEngineYahoo.h; sourceTree = "<group>"; };
@@ -146,6 +165,19 @@
 				266D67C1143CCE8D0025F929 /* iPad */,
 				266D67CD143CCF720025F929 /* BrowserController.h */,
 				266D67CE143CCF720025F929 /* BrowserController.m */,
+				26B578D3144429FB004657E2 /* BookmarkSaveTableViewController.h */,
+				26B578D4144429FB004657E2 /* BookmarkSaveTableViewController.m */,
+				26B578DA144432E6004657E2 /* BookmarkSaveProtocol.h */,
+				26B578D714443290004657E2 /* BookmarkSaveModel.h */,
+				26B578D814443290004657E2 /* BookmarkSaveModel.m */,
+				26B578DB1444376E004657E2 /* BookmarkSaveTable.plist */,
+				266C914714440DAD00444BAC /* BookmarksTableViewController.h */,
+				266C914814440DAD00444BAC /* BookmarksTableViewController.m */,
+				266C914E144411B000444BAC /* BookmarksStorageProtocol.h */,
+				266C914B1444115200444BAC /* BookmarksStorage.h */,
+				266C914C1444115200444BAC /* BookmarksStorage.m */,
+				266C914F1444171200444BAC /* BookmarkItem.h */,
+				266C91501444171200444BAC /* BookmarkItem.m */,
 				260D68BE144205AB00093012 /* SettingsControllerProtocol.h */,
 				260D68BB1442050200093012 /* SettingsController.h */,
 				260D68BC1442050200093012 /* SettingsController.m */,
@@ -260,6 +292,7 @@
 				260D68B01441B6C700093012 /* plus.png in Resources */,
 				26FE56BD1443269D001622F2 /* Bookmark-iPad.png in Resources */,
 				26FE56BF144326FB001622F2 /* Bookmark-iPhone.png in Resources */,
+				26B578DC1444376E004657E2 /* BookmarkSaveTable.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +312,11 @@
 				260D68BA1442045F00093012 /* SearchEngineGoogle.m in Sources */,
 				260D68BD1442050200093012 /* SettingsController.m in Sources */,
 				26FE56C614432A7A001622F2 /* SearchEngineYahoo.m in Sources */,
+				266C914914440DAD00444BAC /* BookmarksTableViewController.m in Sources */,
+				266C914D1444115200444BAC /* BookmarksStorage.m in Sources */,
+				266C91511444171200444BAC /* BookmarkItem.m in Sources */,
+				26B578D5144429FB004657E2 /* BookmarkSaveTableViewController.m in Sources */,
+				26B578D914443290004657E2 /* BookmarkSaveModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

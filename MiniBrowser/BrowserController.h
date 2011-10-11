@@ -8,14 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BrowserController : UIViewController <UIWebViewDelegate, UISearchBarDelegate>
+@interface BrowserController : UIViewController <UIWebViewDelegate,
+                                                 UISearchBarDelegate,
+                                                 UIActionSheetDelegate,
+                                                 UIActionSheetDelegate>
 
 @property (nonatomic, retain) IBOutlet UINavigationBar *navigationBar;
 @property (nonatomic, retain) IBOutlet UIToolbar *navigationToolbar;
 @property (nonatomic, retain) IBOutlet UISearchBar *searchBar;
-@property (nonatomic, retain) IBOutlet UIBarItem *backButton;
-@property (nonatomic, retain) IBOutlet UIBarItem *forwardButton;
-@property (nonatomic, retain) IBOutlet UIBarItem *bookmarkButton;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *backButton;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *forwardButton;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *bookmarkButton;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *actionButton;
 @property (nonatomic, retain) IBOutlet UITextField *urlField;
 @property (nonatomic, retain) IBOutlet UILabel *urlLabel;
 @property (nonatomic, retain) IBOutlet UIWebView *webView;

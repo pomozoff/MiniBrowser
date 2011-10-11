@@ -9,11 +9,20 @@
 #import "BrowserController.h"
 #import "SettingsController.h"
 #import "SearchEngine.h"
+#import "BookmarksTableViewController.h"
+#import "BookmarksStorageProtocol.h"
+#import "BookmarkSaveTableViewController.h"
 
 @interface BrowserController()
 
 @property (nonatomic, retain) SettingsController *settingsController;
 @property (nonatomic, retain) SearchEngine *searchEngine;
+@property (nonatomic, retain) BookmarksTableViewController *bookmarksTableViewController;
+@property (nonatomic, retain) BookmarkSaveTableViewController *bookmarkSaveTableViewController;
+@property (nonatomic, retain) id <BookmarksStorageProtocol> bookmarksStorage;
+@property (nonatomic, retain) UIPopoverController *popoverBookmark;
+@property (nonatomic, retain) UIPopoverController *popoverSaveBookmark;
+@property (nonatomic, retain) UIActionSheet *actionSheet;
 
 @end
 
@@ -25,12 +34,19 @@
 @synthesize backButton = _backButton;
 @synthesize forwardButton = _forwardButton;
 @synthesize bookmarkButton = _bookmarkButton;
+@synthesize actionButton = _actionButton;
 @synthesize urlField = _urlField;
 @synthesize urlLabel = _urlLabel;
 @synthesize webView = _webView;
 
 @synthesize settingsController = _settingsController;
 @synthesize searchEngine = _searchEngine;
+@synthesize bookmarksTableViewController = _bookmarksTableViewController;
+@synthesize bookmarkSaveTableViewController = _bookmarkSaveTableViewController;
+@synthesize bookmarksStorage = _bookmarksStorage;
+@synthesize popoverBookmark = _popoverBookmark;
+@synthesize popoverSaveBookmark = _popoverSaveBookmark;
+@synthesize actionSheet = _actionSheet;
 
 BOOL userInitiatedJump = NO;
 
@@ -50,6 +66,37 @@ BOOL userInitiatedJump = NO;
     }
     
     return _searchEngine;
+}
+
+- (BookmarksTableViewController *)bookmarksTableViewController
+{
+    if (!_bookmarksTableViewController) {
+        _bookmarksTableViewController = [[BookmarksTableViewController alloc] init];
+    }
+    
+    return _bookmarksTableViewController;
+}
+
+- (BookmarkSaveTableViewController *)bookmarkSaveTableViewController
+{
+    if (!_bookmarkSaveTableViewController) {
+        _bookmarkSaveTableViewController = [[BookmarkSaveTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    }
+    
+    return _bookmarkSaveTableViewController;
+}
+
+- (UIActionSheet *)actionSheet
+{
+    if (!_actionSheet) {
+        _actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                   delegate:self
+                                          cancelButtonTitle:nil
+                                     destructiveButtonTitle:nil
+                                          otherButtonTitles:@"Add bookmark", nil];
+    }
+    
+    return _actionSheet;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -113,6 +160,60 @@ BOOL userInitiatedJump = NO;
     self.forwardButton.enabled = self.webView.canGoForward;
 }
 
+- (void)cancelSavingBookmark:(id)sender
+{
+    [self.popoverSaveBookmark dismissPopoverAnimated:YES];
+    self.popoverSaveBookmark = nil;
+}
+
+- (void)dismissOpenPopoversAndActionSheet
+{
+    if ([self.popoverBookmark isPopoverVisible]) {
+        [self.popoverBookmark dismissPopoverAnimated:YES];
+        self.popoverBookmark = nil;
+    }
+    
+    if ([self.popoverSaveBookmark isPopoverVisible]) {
+        [self.popoverSaveBookmark dismissPopoverAnimated:YES];
+        self.popoverSaveBookmark = nil;
+    }
+    
+    if ([self.actionSheet isVisible]) {
+        [self.actionSheet dismissWithClickedButtonIndex:[self.actionSheet cancelButtonIndex] animated:YES];
+        self.actionSheet = nil;
+    }
+}
+
+- (void)displaySaveBookmarkPopoverForBarButton:(UIBarButtonItem *)barItem
+{
+    [self dismissOpenPopoversAndActionSheet];
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] init];
+    [navigationController pushViewController:self.bookmarkSaveTableViewController animated:NO];
+    
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                     style:UIBarButtonItemStylePlain
+                                                                    target:self
+                                                                    action:@selector(cancelSavingBookmark:)];
+    
+    navigationController.navigationItem.leftBarButtonItem = cancelButton;
+    navigationController.navigationItem.rightBarButtonItem = navigationController.editButtonItem;
+    
+    [cancelButton release];
+    
+    UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:navigationController];
+    [navigationController release];
+    
+    self.popoverSaveBookmark = popover;
+    self.popoverSaveBookmark.delegate = self.bookmarkSaveTableViewController;
+    
+    [popover release];
+    
+    [self.popoverSaveBookmark presentPopoverFromBarButtonItem:barItem
+                                     permittedArrowDirections:UIPopoverArrowDirectionUp
+                                                     animated:YES];
+}
+
 - (IBAction)backPressed:(id)sender
 {
     userInitiatedJump = YES;
@@ -125,6 +226,53 @@ BOOL userInitiatedJump = NO;
     userInitiatedJump = YES;
     [self.webView goForward];
     [self setButtonsStatus];
+}
+
+- (IBAction)bookmarkPressed:(id)sender
+{
+    [self dismissOpenPopoversAndActionSheet];
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] init];
+    [navigationController pushViewController:self.bookmarksTableViewController animated:NO];
+    
+    UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:navigationController];
+    [navigationController release];
+    
+    self.popoverBookmark = popover;
+    self.popoverBookmark.delegate = self.bookmarksTableViewController;
+    
+    [popover release];
+    
+    [self.popoverBookmark presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+}
+
+- (IBAction)actionPressed:(id)sender
+{
+    [self dismissOpenPopoversAndActionSheet];
+    
+    [self.actionSheet showFromBarButtonItem:sender animated:YES];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (actionSheet == self.actionSheet) {
+        switch (buttonIndex) {
+            case 0: { // Add bookmark button
+                /*
+                BookmarkItem *item = [[BookmarkItem alloc] initWithName:@"" url:@"" parent:nil];
+                [self.bookmarksStorage addBookmark:item];
+                [item release];
+                */
+                
+                [self displaySaveBookmarkPopoverForBarButton:self.actionButton];
+                
+                break;
+            }
+            
+            default:
+                break;
+        }
+    }
 }
 
 - (NSString *)correctUrl:(NSString *)sourceUrl
@@ -153,6 +301,11 @@ BOOL userInitiatedJump = NO;
     
     self.settingsController = nil;
     self.searchEngine = nil;
+    self.bookmarksTableViewController = nil;
+    self.bookmarkSaveTableViewController = nil;
+    self.bookmarksStorage = nil;
+    self.popoverBookmark = nil;
+    self.actionSheet = nil;
 }
 
 #pragma mark - View lifecycle
