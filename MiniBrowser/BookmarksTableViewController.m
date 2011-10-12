@@ -12,21 +12,32 @@
 
 @interface BookmarksTableViewController()
 
-@property (nonatomic, retain) id <BookmarksStorageProtocol> bookmarksList;
+@property (nonatomic, retain) id <BookmarksStorageProtocol> bookmarksStorage;
+@property (nonatomic, retain) BookmarkItem *currentBookmarkGroup;
 
 @end
 
 @implementation BookmarksTableViewController
 
-@synthesize bookmarksList = _bookmarksList;
+@synthesize bookmarksStorage = _bookmarksStorage;
+@synthesize currentBookmarkGroup = _currentBookmarkGroup;
 
-- (id)bookmarksList
+- (BookmarkItem *)currentBookmarkGroup
 {
-    if (!_bookmarksList) {
-        _bookmarksList = [[BookmarksStorage alloc] init];
+    if (!_currentBookmarkGroup) {
+        _currentBookmarkGroup = [self.bookmarksStorage rootItem];
     }
     
-    return _bookmarksList;
+    return _currentBookmarkGroup;
+}
+
+- (id)bookmarksStorage
+{
+    if (!_bookmarksStorage) {
+        _bookmarksStorage = [[BookmarksStorage alloc] init];
+    }
+    
+    return _bookmarksStorage;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -61,7 +72,8 @@
 
 - (void)freeProperties
 {
-    self.bookmarksList = nil;
+    self.bookmarksStorage = nil;
+    self.currentBookmarkGroup = nil;
 }
 
 - (void)viewDidUnload
@@ -110,26 +122,30 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    NSInteger sectionsCount = self.bookmarksList.sectionsCount;
+    NSInteger sectionsCount = self.bookmarksStorage.sectionsCount;
     return sectionsCount;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSInteger numberOfRows = [self.bookmarksList bookmarksCount];
+    NSInteger numberOfRows = [self.bookmarksStorage bookmarksCountForParent:self.currentBookmarkGroup];
     return numberOfRows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"BookmarkStorageCell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    // Configure the cell...
+    BookmarkItem *currentBookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentBookmarkGroup];
+
+    cell.textLabel.text = currentBookmark.name;
+    cell.detailTextLabel.text = currentBookmark.url;
+    cell.accessoryType = currentBookmark.group ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
     
     return cell;
 }

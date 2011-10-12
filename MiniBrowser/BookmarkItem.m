@@ -10,11 +10,21 @@
 
 @implementation BookmarkItem
 
+@synthesize itemId = _itemId;
+@synthesize group = _group;
 @synthesize name = _name;
 @synthesize url = _url;
-@synthesize group = _group;
-@synthesize itemId = _itemId;
 @synthesize parentId = _parentId;
+@synthesize content = _content;
+
+- (NSArray *)content
+{
+    if (!_content) {
+        _content = [[NSArray alloc] init];
+    }
+    
+    return _content;
+}
 
 - (id)initWithName:(NSString *)name
                url:(NSString *)url
@@ -58,6 +68,16 @@
     [keys release];
     
     return [dictionary autorelease];
+}
+
+- (void)dealloc
+{
+    self.name = nil;
+    self.url = nil;
+    self.parentId = nil;
+    self.content = nil;
+    
+    [super dealloc];
 }
 
 @end

@@ -12,9 +12,11 @@
 @protocol BookmarksStorageProtocol <NSObject>
 
 @property (nonatomic, readonly) NSInteger sectionsCount;
+@property (nonatomic, readonly, retain) BookmarkItem *rootItem;
 
-- (NSInteger)bookmarksCount;
-- (void)addBookmark:(BookmarkItem *)bookmark toGroup:(NSString *)groupId;
+- (NSInteger)bookmarksCountForParent:(BookmarkItem *)parentItem;
+- (void)addBookmark:(BookmarkItem *)bookmark;
+- (BookmarkItem *)bookmarkAtIndex:(NSIndexPath *)indexPath forParent:(BookmarkItem *)parentItem;
 
 - (NSArray *)treeOfTheBookmarks;
 
