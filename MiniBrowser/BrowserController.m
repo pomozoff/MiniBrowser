@@ -72,6 +72,7 @@ BOOL userInitiatedJump = NO;
 {
     if (!_bookmarksTableViewController) {
         _bookmarksTableViewController = [[BookmarksTableViewController alloc] init];
+        _bookmarksTableViewController.delegateController = self;
     }
     
     return _bookmarksTableViewController;
@@ -158,6 +159,10 @@ BOOL userInitiatedJump = NO;
 {
     self.backButton.enabled = self.webView.canGoBack;
     self.forwardButton.enabled = self.webView.canGoForward;
+    
+    NSLog(@"*************************************");
+    NSLog([NSString stringWithFormat:@"can go back: %@", self.webView.canGoBack ? @"YES" : @"NO"]);
+    NSLog([NSString stringWithFormat:@"can go forw: %@", self.webView.canGoForward ? @"YES" : @"NO"]);
 }
 
 - (void)cancelSavingBookmark:(id)sender
@@ -216,16 +221,12 @@ BOOL userInitiatedJump = NO;
 
 - (IBAction)backPressed:(id)sender
 {
-    userInitiatedJump = YES;
     [self.webView goBack];
-    [self setButtonsStatus];
 }
 
 - (IBAction)forwardPressed:(id)sender
 {
-    userInitiatedJump = YES;
     [self.webView goForward];
-    [self setButtonsStatus];
 }
 
 - (IBAction)bookmarkPressed:(id)sender
@@ -349,28 +350,27 @@ BOOL userInitiatedJump = NO;
     return YES;
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
+- (void)loadUrl:(NSString *)url
 {
-    NSString *readyUrl = [self correctUrl:textField.text];
+    NSString *readyUrl = [self correctUrl:url];
     readyUrl = [readyUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:readyUrl]]];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
     [textField resignFirstResponder];
     userInitiatedJump = YES;
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:readyUrl]]];
+
+    [self loadUrl:textField.text];
     
     return YES;
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    
-    self.backButton.enabled = YES;
-    self.forwardButton.enabled = NO;
-    
-    userInitiatedJump = userInitiatedJump || (navigationType != UIWebViewNavigationTypeOther);
-    
-    if (userInitiatedJump) {
+    if (userInitiatedJump || (navigationType != UIWebViewNavigationTypeOther)) {
         userInitiatedJump = NO;
      
         NSString *sourceUrl = request.URL.absoluteString;
@@ -385,6 +385,11 @@ BOOL userInitiatedJump = NO;
         
         return NO;
     }
+
+//    self.backButton.enabled = self.webView.canGoBack;
+//    self.forwardButton.enabled = NO;
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
     return YES;
 }
@@ -443,4 +448,12 @@ BOOL userInitiatedJump = NO;
     [searchBar resignFirstResponder];
     [self searchTheText:self.searchBar.text];
 }
+
+- (void)closePopupsAndLoadUrl:(NSString *)url
+{
+    userInitiatedJump = YES;
+    [self dismissOpenPopoversAndActionSheet];
+    [self loadUrl:url];
+}
+
 @end

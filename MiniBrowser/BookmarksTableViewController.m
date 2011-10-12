@@ -19,6 +19,8 @@
 
 @implementation BookmarksTableViewController
 
+@synthesize delegateController = _delegateController;
+
 @synthesize bookmarksStorage = _bookmarksStorage;
 @synthesize currentBookmarkGroup = _currentBookmarkGroup;
 
@@ -63,6 +65,8 @@
 {
     [super viewDidLoad];
 
+    self.title = self.currentBookmarkGroup.name;
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -193,14 +197,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+    BookmarkItem *currentBookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentBookmarkGroup];
+
+    if (currentBookmark.group) {
+        BookmarksTableViewController *newBookmarksTVC = [[BookmarksTableViewController alloc] init];
+        
+        newBookmarksTVC.delegateController = self.delegateController;
+        newBookmarksTVC.currentBookmarkGroup = currentBookmark;
+        [self.navigationController pushViewController:newBookmarksTVC animated:YES];
+        
+        [newBookmarksTVC release];
+    } else {
+        [self.delegateController closePopupsAndLoadUrl:currentBookmark.url];
+    }
 }
 
 @end

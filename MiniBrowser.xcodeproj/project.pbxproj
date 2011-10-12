@@ -63,6 +63,7 @@
 		265CCEBE143D85B9005F348A /* clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock.png; sourceTree = "<group>"; };
 		265CCEBF143D85B9005F348A /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
 		265CCEC0143D85B9005F348A /* preferences.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = preferences.png; sourceTree = "<group>"; };
+		266102DC1445A2F0000730FA /* BookmarksTableViewControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarksTableViewControllerProtocol.h; sourceTree = "<group>"; };
 		266C914714440DAD00444BAC /* BookmarksTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarksTableViewController.h; sourceTree = "<group>"; };
 		266C914814440DAD00444BAC /* BookmarksTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarksTableViewController.m; sourceTree = "<group>"; };
 		266C914B1444115200444BAC /* BookmarksStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarksStorage.h; sourceTree = "<group>"; };
@@ -173,6 +174,7 @@
 				26B578D714443290004657E2 /* BookmarkSaveModel.h */,
 				26B578D814443290004657E2 /* BookmarkSaveModel.m */,
 				26B578DB1444376E004657E2 /* BookmarkSaveTable.plist */,
+				266102DC1445A2F0000730FA /* BookmarksTableViewControllerProtocol.h */,
 				266C914714440DAD00444BAC /* BookmarksTableViewController.h */,
 				266C914814440DAD00444BAC /* BookmarksTableViewController.m */,
 				266C914E144411B000444BAC /* BookmarksStorageProtocol.h */,

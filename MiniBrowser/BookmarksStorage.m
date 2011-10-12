@@ -72,7 +72,7 @@ NSString *const savedBookmarks = @"savedBookmarks";
         NSArray *tmpBookmarks = [bookmarksPreloaded objectForKey:@"content"];
         
         if (!tmpBookmarks) {
-            _rootItem = [[BookmarkItem alloc] initWithName:@"root" url:@"" group:YES parentId:nil];
+            _rootItem = [[BookmarkItem alloc] initWithName:@"Bookmarks" url:@"" group:YES parentId:nil];
             NSArray *tmpArray = [[NSArray alloc] init];
             self.bookmarksTree = tmpArray;
             [tmpArray release];

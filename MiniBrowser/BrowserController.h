@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BookmarksTableViewControllerProtocol.h"
 
 @interface BrowserController : UIViewController <UIWebViewDelegate,
                                                  UISearchBarDelegate,
                                                  UIActionSheetDelegate,
-                                                 UIActionSheetDelegate>
+                                                 UIActionSheetDelegate,
+                                                 BookmarksTableViewControllerDelegate>
 
 @property (nonatomic, retain) IBOutlet UINavigationBar *navigationBar;
 @property (nonatomic, retain) IBOutlet UIToolbar *navigationToolbar;
@@ -23,5 +25,7 @@
 @property (nonatomic, retain) IBOutlet UITextField *urlField;
 @property (nonatomic, retain) IBOutlet UILabel *urlLabel;
 @property (nonatomic, retain) IBOutlet UIWebView *webView;
+
+- (void)dismissOpenPopoversAndActionSheet;
 
 @end
