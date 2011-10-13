@@ -223,6 +223,8 @@
         BookmarkSaveTableViewController *bookmarkSaveTVC = [[BookmarkSaveTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
         
         bookmarkSaveTVC.title = @"Edit Bookmark";
+        bookmarkSaveTVC.bookmark = currentBookmark;
+        
         [self.navigationController pushViewController:bookmarkSaveTVC animated:YES];
         
         [bookmarkSaveTVC release];

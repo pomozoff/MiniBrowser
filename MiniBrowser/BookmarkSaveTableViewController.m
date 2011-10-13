@@ -13,12 +13,17 @@
 @interface BookmarkSaveTableViewController()
 
 @property (nonatomic, retain) BookmarkSaveModel *bookmarkSaveModel;
+@property (nonatomic, retain) UITextField *nameField;
+@property (nonatomic, retain) UITextField *urlField;
 
 @end
 
 @implementation BookmarkSaveTableViewController
 
 @synthesize bookmarkSaveModel = _bookmarkSaveModel;
+@synthesize bookmark = _bookmark;
+@synthesize nameField = _nameField;
+@synthesize urlField = _urlField;
 
 - (BookmarkSaveModel *)bookmarkSaveModel
 {
@@ -27,6 +32,58 @@
     }
     
     return _bookmarkSaveModel;
+}
+
+- (BookmarkItem *)bookmark
+{
+    if (!_bookmark) {
+        _bookmark = [[BookmarkItem alloc] initWithName:@"" url:@"" group:NO permanent:NO parentId:nil];
+    }
+    
+    return _bookmark;
+}
+
+- (UITextField *)nameField
+{
+    if (!_nameField) {
+        _nameField = [[UITextField alloc] initWithFrame:CGRectMake(60, 12, 225, 21)];
+        _nameField.adjustsFontSizeToFitWidth = YES;
+        _nameField.textColor = [UIColor blackColor];
+        _nameField.backgroundColor = [UIColor greenColor];
+        _nameField.placeholder = @"Name";
+        _nameField.keyboardType = UIKeyboardTypeDefault;
+        _nameField.returnKeyType = UIReturnKeyDefault;
+        _nameField.autocorrectionType = UITextAutocorrectionTypeDefault;
+        _nameField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+        _nameField.textAlignment = UITextAlignmentLeft;
+        _nameField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        _nameField.enabled = YES;
+        _nameField.delegate = self;
+        _nameField.text = self.bookmark.name;
+    }
+    
+    return _nameField;
+}
+
+- (UITextField *)urlField
+{
+    if (!_urlField) {
+        _urlField = [[UITextField alloc] initWithFrame:CGRectMake(60, 12, 225, 21)];
+        _urlField.adjustsFontSizeToFitWidth = YES;
+        _urlField.textColor = [UIColor blackColor];
+        _urlField.placeholder = @"URL";
+        _urlField.keyboardType = UIKeyboardTypeURL;
+        _urlField.returnKeyType = UIReturnKeyDefault;
+        _urlField.autocorrectionType = UITextAutocorrectionTypeNo;
+        _urlField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        _urlField.textAlignment = UITextAlignmentLeft;
+        _urlField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        _urlField.enabled = YES;
+        _urlField.delegate = self;
+        _urlField.text = self.bookmark.url;
+    }
+    
+    return _urlField;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -116,6 +173,49 @@
 	return YES;
 }
 
+#pragma mark - Bookmark
+
+- (void)configureTheCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath forBookmark:(BookmarkItem *)bookmark
+{
+    switch (indexPath.section) {
+        case 0: { // Bookmark name and url
+            switch (indexPath.row) {
+                case 0: { // Bookmark name
+                    [cell addSubview:self.nameField];
+                    break;
+                }
+                    
+                case 1: { // Bookmark url
+                    [cell addSubview:self.urlField];
+                    break;
+                }
+                    
+                default:
+                    break;
+            }
+            break;
+        }
+            
+        case 1: { // Bookmark group
+            switch (indexPath.row) {
+                case 0: { // Bookmark group
+                    //cell.textLabel.text = bookmark.parentId;
+                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                    
+                    break;
+                }
+                    
+                default:
+                    break;
+            }
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -139,7 +239,7 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    // Configure the cell...
+    [self configureTheCell:cell atIndexPath:indexPath forBookmark:self.bookmark];
     
     return cell;
 }

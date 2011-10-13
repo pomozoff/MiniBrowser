@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BookmarkItem.h"
 
-@interface BookmarkSaveTableViewController : UITableViewController <UIPopoverControllerDelegate>
+@interface BookmarkSaveTableViewController : UITableViewController <UIPopoverControllerDelegate,
+                                                                    UITextFieldDelegate>
+
+@property (nonatomic, retain) BookmarkItem *bookmark;
 
 @end
