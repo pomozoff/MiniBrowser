@@ -352,6 +352,10 @@ BOOL userInitiatedJump = NO;
 
 - (void)loadUrl:(NSString *)url
 {
+    if ([[url stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""]) {
+        url = self.urlField.text;
+    }
+    
     NSString *readyUrl = [self correctUrl:url];
     readyUrl = [readyUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
@@ -370,7 +374,7 @@ BOOL userInitiatedJump = NO;
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    if (userInitiatedJump || (navigationType != UIWebViewNavigationTypeOther)) {
+    if (userInitiatedJump) {
         userInitiatedJump = NO;
      
         NSString *sourceUrl = request.URL.absoluteString;
@@ -385,9 +389,6 @@ BOOL userInitiatedJump = NO;
         
         return NO;
     }
-
-//    self.backButton.enabled = self.webView.canGoBack;
-//    self.forwardButton.enabled = NO;
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
