@@ -9,6 +9,7 @@
 #import "BookmarksTableViewController.h"
 #import "BookmarksStorageProtocol.h"
 #import "BookmarksStorage.h"
+#import "BookmarkSaveTableViewController.h"
 
 @interface BookmarksTableViewController()
 
@@ -61,12 +62,20 @@
 
 #pragma mark - View lifecycle
 
+#define CONTENT_SETTINGS_WIDTH 330.0f
+#define CONTENT_SETTINGS_HEIGHT 352.0f
+- (CGSize)contentSizeForViewInPopover
+{
+    return CGSizeMake(CONTENT_SETTINGS_WIDTH, CONTENT_SETTINGS_HEIGHT);
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
     self.title = self.currentBookmarkGroup.name;
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.tableView.allowsSelectionDuringEditing = YES;
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -116,13 +125,6 @@
 	return YES;
 }
 
-#define POPOVER_WIDTH 330
-#define POPOVER_HEIGHT 352
-- (CGSize)contentSizeForViewInPopover
-{
-    return CGSizeMake(POPOVER_WIDTH, POPOVER_HEIGHT);
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -151,6 +153,7 @@
     cell.textLabel.text = currentBookmark.name;
     cell.detailTextLabel.text = currentBookmark.url;
     cell.accessoryType = currentBookmark.group ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
+    cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
 }
@@ -165,10 +168,13 @@
 */
 
 // Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
+                                            forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
+        BookmarkItem *bookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentBookmarkGroup];
+        [self.bookmarksStorage removeBookmark:bookmark];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
@@ -182,31 +188,56 @@
     [self.bookmarksStorage moveBookmarkAtPosition:fromIndexPath toPosition:toIndexPath insideGroup:self.currentBookmarkGroup];
 }
 
-/*
 // Override to support conditional rearranging of the table view.
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
+    BookmarkItem *bookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentBookmarkGroup];
+    BOOL canOrder = !bookmark.group;
+    return canOrder;
 }
-*/
+
+- (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)source
+       toProposedIndexPath:(NSIndexPath *)destination {
+    
+    BookmarkItem *targetBookmark = [self.bookmarksStorage bookmarkAtIndex:destination forParent:self.currentBookmarkGroup];
+    NSIndexPath *result = targetBookmark.group ? source : destination;
+    
+    return result;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    BookmarkItem *bookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentBookmarkGroup];
+    UITableViewCellEditingStyle style = bookmark.permanent ? UITableViewCellEditingStyleNone : UITableViewCellEditingStyleDelete;
+    
+    return style;
+}
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BookmarkItem *currentBookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentBookmarkGroup];
-
-    if (currentBookmark.group) {
-        BookmarksTableViewController *newBookmarksTVC = [[BookmarksTableViewController alloc] init];
+    
+    if (self.tableView.editing) {
+        BookmarkSaveTableViewController *bookmarkSaveTVC = [[BookmarkSaveTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
         
-        newBookmarksTVC.delegateController = self.delegateController;
-        newBookmarksTVC.currentBookmarkGroup = currentBookmark;
-        [self.navigationController pushViewController:newBookmarksTVC animated:YES];
+        bookmarkSaveTVC.title = @"Edit Bookmark";
+        [self.navigationController pushViewController:bookmarkSaveTVC animated:YES];
         
-        [newBookmarksTVC release];
+        [bookmarkSaveTVC release];
     } else {
-        [self.delegateController closePopupsAndLoadUrl:currentBookmark.url];
+        if (currentBookmark.group) {
+            BookmarksTableViewController *newBookmarksTVC = [[BookmarksTableViewController alloc] init];
+            
+            newBookmarksTVC.delegateController = self.delegateController;
+            newBookmarksTVC.currentBookmarkGroup = currentBookmark;
+            [self.navigationController pushViewController:newBookmarksTVC animated:YES];
+            
+            [newBookmarksTVC release];
+        } else {
+            [self.delegateController closePopupsAndLoadUrl:currentBookmark.url];
+        }
     }
 }
 

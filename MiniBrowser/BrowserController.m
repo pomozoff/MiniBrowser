@@ -172,11 +172,13 @@ BOOL userInitiatedJump = NO;
     if ([self.popoverBookmark isPopoverVisible]) {
         [self.popoverBookmark dismissPopoverAnimated:YES];
         self.popoverBookmark = nil;
+        self.bookmarksTableViewController = nil;
     }
     
     if ([self.popoverSaveBookmark isPopoverVisible]) {
         [self.popoverSaveBookmark dismissPopoverAnimated:YES];
         self.popoverSaveBookmark = nil;
+        self.bookmarkSaveTableViewController = nil;
     }
     
     if ([self.actionSheet isVisible]) {
@@ -189,6 +191,8 @@ BOOL userInitiatedJump = NO;
 {
     [self dismissOpenPopoversAndActionSheet];
     
+    self.bookmarkSaveTableViewController.title = @"Add Bookmark";
+
     UINavigationController *navigationController = [[UINavigationController alloc] init];
     [navigationController pushViewController:self.bookmarkSaveTableViewController animated:NO];
     

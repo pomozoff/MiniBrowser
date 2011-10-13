@@ -17,7 +17,8 @@
 - (NSInteger)bookmarksCountForParent:(BookmarkItem *)parentItem;
 - (BookmarkItem *)bookmarkAtIndex:(NSIndexPath *)indexPath forParent:(BookmarkItem *)parentItem;
 
-- (void)addBookmark:(BookmarkItem *)bookmark;
+- (void)insertBookmark:(BookmarkItem *)bookmark;
+- (void)removeBookmark:(BookmarkItem *)bookmark;
 - (void)moveBookmarkAtPosition:(NSIndexPath *)fromIndexPath toPosition:(NSIndexPath *)toIndexPath insideGroup:(BookmarkItem *)group;
 - (NSArray *)treeOfTheBookmarks;
 

@@ -48,10 +48,22 @@
 
 #pragma mark - View lifecycle
 
+#define CONTENT_SETTINGS_WIDTH 330.0f
+#define CONTENT_SETTINGS_HEIGHT 175.0f
+- (CGSize)contentSizeForViewInPopover
+{
+    return CGSizeMake(CONTENT_SETTINGS_WIDTH, CONTENT_SETTINGS_HEIGHT);
+}
+
+- (void)forcePopoverSize {
+    CGSize currentSetSizeForPopover = self.contentSizeForViewInPopover;
+    CGSize fakeMomentarySize = CGSizeMake(currentSetSizeForPopover.width - 1.0f, currentSetSizeForPopover.height - 1.0f);
+    self.contentSizeForViewInPopover = fakeMomentarySize;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -76,11 +88,16 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self forcePopoverSize];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+
+    CGSize currentSetSizeForPopover = self.contentSizeForViewInPopover;
+    self.contentSizeForViewInPopover = currentSetSizeForPopover;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -97,13 +114,6 @@
 {
     // Return YES for supported orientations
 	return YES;
-}
-
-#define POPOVER_WIDTH 300
-#define POPOVER_HEIGHT 175
-- (CGSize)contentSizeForViewInPopover
-{
-    return CGSizeMake(POPOVER_WIDTH, POPOVER_HEIGHT);
 }
 
 #pragma mark - Table view data source
