@@ -143,6 +143,12 @@ NSString *const savedBookmarks = @"savedBookmarks";
     return parentItem.content.count;
 }
 
+- (BookmarkItem *)bookmarkAtIndex:(NSIndexPath *)indexPath forParent:(BookmarkItem *)parentItem
+{
+    BookmarkItem *item = [parentItem.content objectAtIndex:indexPath.row];
+    return item;
+}
+
 - (void)addBookmark:(BookmarkItem *)bookmark
 {
     NSMutableDictionary *tmpList = [self.bookmarksList mutableCopy];
@@ -161,10 +167,14 @@ NSString *const savedBookmarks = @"savedBookmarks";
     [tmpContent release];
 }
 
-- (BookmarkItem *)bookmarkAtIndex:(NSIndexPath *)indexPath forParent:(BookmarkItem *)parentItem
+- (void)moveBookmarkAtPosition:(NSIndexPath *)fromIndexPath toPosition:(NSIndexPath *)toIndexPath insideGroup:(BookmarkItem *)group
 {
-    BookmarkItem *item = [parentItem.content objectAtIndex:indexPath.row];
-    return item;
+    NSMutableArray *content = [group.content mutableCopy];
+    
+    [content exchangeObjectAtIndex:fromIndexPath.row withObjectAtIndex:toIndexPath.row];
+    group.content = content;
+    
+    [content release];
 }
 
 - (NSArray *)treeOfTheBookmarks

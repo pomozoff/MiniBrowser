@@ -15,9 +15,10 @@
 @property (nonatomic, readonly, retain) BookmarkItem *rootItem;
 
 - (NSInteger)bookmarksCountForParent:(BookmarkItem *)parentItem;
-- (void)addBookmark:(BookmarkItem *)bookmark;
 - (BookmarkItem *)bookmarkAtIndex:(NSIndexPath *)indexPath forParent:(BookmarkItem *)parentItem;
 
+- (void)addBookmark:(BookmarkItem *)bookmark;
+- (void)moveBookmarkAtPosition:(NSIndexPath *)fromIndexPath toPosition:(NSIndexPath *)toIndexPath insideGroup:(BookmarkItem *)group;
 - (NSArray *)treeOfTheBookmarks;
 
 @end

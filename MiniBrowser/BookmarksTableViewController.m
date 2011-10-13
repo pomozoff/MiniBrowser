@@ -66,6 +66,7 @@
     [super viewDidLoad];
 
     self.title = self.currentBookmarkGroup.name;
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -115,8 +116,8 @@
 	return YES;
 }
 
-#define POPOVER_WIDTH 400
-#define POPOVER_HEIGHT 500
+#define POPOVER_WIDTH 330
+#define POPOVER_HEIGHT 352
 - (CGSize)contentSizeForViewInPopover
 {
     return CGSizeMake(POPOVER_WIDTH, POPOVER_HEIGHT);
@@ -163,7 +164,6 @@
 }
 */
 
-/*
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -175,14 +175,12 @@
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-*/
 
-/*
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
+    [self.bookmarksStorage moveBookmarkAtPosition:fromIndexPath toPosition:toIndexPath insideGroup:self.currentBookmarkGroup];
 }
-*/
 
 /*
 // Override to support conditional rearranging of the table view.
