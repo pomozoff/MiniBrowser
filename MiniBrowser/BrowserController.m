@@ -159,10 +159,6 @@ BOOL userInitiatedJump = NO;
 {
     self.backButton.enabled = self.webView.canGoBack;
     self.forwardButton.enabled = self.webView.canGoForward;
-    
-    NSLog(@"*************************************");
-    NSLog([NSString stringWithFormat:@"can go back: %@", self.webView.canGoBack ? @"YES" : @"NO"]);
-    NSLog([NSString stringWithFormat:@"can go forw: %@", self.webView.canGoForward ? @"YES" : @"NO"]);
 }
 
 - (void)cancelSavingBookmark:(id)sender
