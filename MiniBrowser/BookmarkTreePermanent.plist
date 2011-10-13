@@ -5,63 +5,87 @@
 	<key>Bookmarks</key>
 	<dict>
 		<key>id</key>
-		<string>root_id_here</string>
+		<string>root_id</string>
 		<key>name</key>
 		<string>Bookmarks</string>
 		<key>url</key>
 		<string></string>
 		<key>group</key>
 		<true/>
+		<key>permanent</key>
+		<true/>
 		<key>content</key>
 		<array>
 			<dict>
 				<key>id</key>
-				<string>yahoo_id_here</string>
+				<string>history_id</string>
 				<key>name</key>
-				<string>Yahoo</string>
+				<string>History</string>
 				<key>url</key>
-				<string>http://yahoo.com</string>
+				<string></string>
 				<key>group</key>
-				<false/>
+				<true/>
+				<key>permanent</key>
+				<true/>
 				<key>content</key>
 				<array/>
 			</dict>
 			<dict>
 				<key>id</key>
-				<string>job_id_here</string>
+				<string>job_id</string>
 				<key>name</key>
 				<string>Job</string>
 				<key>url</key>
 				<string></string>
 				<key>group</key>
 				<true/>
+				<key>permanent</key>
+				<false/>
 				<key>content</key>
 				<array>
 					<dict>
 						<key>id</key>
-						<string>google_id_here</string>
+						<string>google_id</string>
 						<key>name</key>
 						<string>Google</string>
 						<key>url</key>
 						<string>http://google.com</string>
 						<key>group</key>
 						<false/>
+						<key>permanent</key>
+						<false/>
 						<key>content</key>
 						<array/>
 					</dict>
 					<dict>
 						<key>id</key>
-						<string>id_empty_group_here</string>
+						<string>id_empty_group</string>
 						<key>name</key>
 						<string>Empty group</string>
 						<key>url</key>
 						<string></string>
 						<key>group</key>
 						<true/>
+						<key>permanent</key>
+						<false/>
 						<key>content</key>
 						<array/>
 					</dict>
 				</array>
+			</dict>
+			<dict>
+				<key>id</key>
+				<string>yahoo_id</string>
+				<key>name</key>
+				<string>Yahoo</string>
+				<key>url</key>
+				<string>http://yahoo.com</string>
+				<key>group</key>
+				<false/>
+				<key>permanent</key>
+				<false/>
+				<key>content</key>
+				<array/>
 			</dict>
 		</array>
 	</dict>
