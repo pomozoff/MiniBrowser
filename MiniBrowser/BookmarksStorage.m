@@ -205,6 +205,11 @@ NSString *const savedBookmarks = @"savedBookmarks";
     return item ? item : self.rootItem;
 }
 
+- (void)moveBookmark:(BookmarkItem *)bookmark toGroup:(BookmarkItem *)groupBookmark
+{
+    
+}
+
 - (NSArray *)treeOfTheBookmarks
 {
     return nil;

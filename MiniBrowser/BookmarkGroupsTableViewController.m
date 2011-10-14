@@ -7,6 +7,7 @@
 //
 
 #import "BookmarkGroupsTableViewController.h"
+#import "BookmarkSaveTableViewProtocol.h"
 
 @interface BookmarkGroupsTableViewController()
 
@@ -196,15 +197,27 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+    NSMutableArray *tmpArray = [[NSMutableArray alloc] init];
+    for (UIViewController *viewController in self.navigationController.viewControllers) {
+        if (![viewController isKindOfClass:[BookmarkGroupsTableViewController class]]) {
+            [tmpArray addObject:viewController];
+            
+            if ([viewController conformsToProtocol:@protocol(BookmarkSaveTableViewProtocol)]) {
+                BookmarkItem *groupBookmark = [self.groupsList objectAtIndex:indexPath.row];
+                id <BookmarkSaveTableViewProtocol> saveTableViewController = (id <BookmarkSaveTableViewProtocol>)viewController;
+                
+                [saveTableViewController moveBookmarkToGroup:groupBookmark];
+            }
+        }
+    }
     
+    [self.navigationController setViewControllers:tmpArray animated:YES];
+    
+    [tmpArray release];
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
     BookmarkItem *groupBookmark = [self.groupsList objectAtIndex:indexPath.row];
     BookmarkGroupsTableViewController *groupsTable = [[BookmarkGroupsTableViewController alloc] init];
     
@@ -213,11 +226,6 @@
     [self.navigationController pushViewController:groupsTable animated:YES];
     
     [groupsTable release];
-}
-
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-    
 }
 
 @end

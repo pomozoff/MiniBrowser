@@ -98,6 +98,7 @@
 		26B578DB1444376E004657E2 /* BookmarkSaveTable.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BookmarkSaveTable.plist; sourceTree = "<group>"; };
 		26C083B01448238E0056B37A /* BookmarkGroupsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkGroupsTableViewController.h; sourceTree = "<group>"; };
 		26C083B11448238E0056B37A /* BookmarkGroupsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkGroupsTableViewController.m; sourceTree = "<group>"; };
+		26C083B314483CBB0056B37A /* BookmarkSaveTableViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkSaveTableViewProtocol.h; sourceTree = "<group>"; };
 		26FE56BC1443269D001622F2 /* Bookmark-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Bookmark-iPad.png"; sourceTree = "<group>"; };
 		26FE56BE144326FB001622F2 /* Bookmark-iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Bookmark-iPhone.png"; sourceTree = "<group>"; };
 		26FE56C414432A7A001622F2 /* SearchEngineYahoo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchEngineYahoo.h; sourceTree = "<group>"; };
@@ -243,6 +244,7 @@
 			children = (
 				26C083B01448238E0056B37A /* BookmarkGroupsTableViewController.h */,
 				26C083B11448238E0056B37A /* BookmarkGroupsTableViewController.m */,
+				26C083B314483CBB0056B37A /* BookmarkSaveTableViewProtocol.h */,
 				26B578D3144429FB004657E2 /* BookmarkSaveTableViewController.h */,
 				26B578D4144429FB004657E2 /* BookmarkSaveTableViewController.m */,
 				26B578DA144432E6004657E2 /* BookmarkSaveProtocol.h */,

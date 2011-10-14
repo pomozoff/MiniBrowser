@@ -23,5 +23,6 @@
 - (NSArray *)treeOfTheBookmarks;
 
 - (BookmarkItem *)bookmarkById:(NSString *)itemId;
+- (void)moveBookmark:(BookmarkItem *)bookmark toGroup:(BookmarkItem *)groupBookmark;
 
 @end

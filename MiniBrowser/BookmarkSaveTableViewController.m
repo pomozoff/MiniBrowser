@@ -349,4 +349,11 @@
                                 withRowAnimation:UITableViewRowAnimationRight];
 }
 
+#pragma mark - BookmarkSaveTableViewProtocol
+
+- (void)moveBookmarkToGroup:(BookmarkItem *)groupBookmark
+{
+    [self.bookmarksStorage moveBookmark:self.bookmark toGroup:groupBookmark];
+}
+
 @end
