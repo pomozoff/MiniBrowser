@@ -8,6 +8,7 @@
 
 #import "BookmarkSaveTableViewController.h"
 #import "BookmarkSaveModel.h"
+#import "BookmarkGroupsTableViewController.h"
 
 @interface BookmarkSaveTableViewController()
 
@@ -321,6 +322,17 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
+    
+    if (indexPath.section == 1 && indexPath.row == 0) { // group cell selected
+        BookmarkGroupsTableViewController *groupsTable = [[BookmarkGroupsTableViewController alloc] init];
+        
+        BookmarkItem *bookmarkParent = [self.bookmarksStorage bookmarkById:self.bookmark.parentId];
+        groupsTable.bookmarkParent = bookmarkParent;
+        groupsTable.title = bookmarkParent.name;
+        [self.navigationController pushViewController:groupsTable animated:YES];
+        
+        [groupsTable release];
+    }
 }
 
 #pragma mark - Text Field view delegate

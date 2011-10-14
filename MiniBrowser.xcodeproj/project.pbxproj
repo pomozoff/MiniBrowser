@@ -38,6 +38,7 @@
 		26B578D5144429FB004657E2 /* BookmarkSaveTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B578D4144429FB004657E2 /* BookmarkSaveTableViewController.m */; };
 		26B578D914443290004657E2 /* BookmarkSaveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B578D814443290004657E2 /* BookmarkSaveModel.m */; };
 		26B578DC1444376E004657E2 /* BookmarkSaveTable.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26B578DB1444376E004657E2 /* BookmarkSaveTable.plist */; };
+		26C083B21448238E0056B37A /* BookmarkGroupsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C083B11448238E0056B37A /* BookmarkGroupsTableViewController.m */; };
 		26FE56BD1443269D001622F2 /* Bookmark-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 26FE56BC1443269D001622F2 /* Bookmark-iPad.png */; };
 		26FE56BF144326FB001622F2 /* Bookmark-iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 26FE56BE144326FB001622F2 /* Bookmark-iPhone.png */; };
 		26FE56C614432A7A001622F2 /* SearchEngineYahoo.m in Sources */ = {isa = PBXBuildFile; fileRef = 26FE56C514432A7A001622F2 /* SearchEngineYahoo.m */; };
@@ -95,6 +96,8 @@
 		26B578D814443290004657E2 /* BookmarkSaveModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkSaveModel.m; sourceTree = "<group>"; };
 		26B578DA144432E6004657E2 /* BookmarkSaveProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkSaveProtocol.h; sourceTree = "<group>"; };
 		26B578DB1444376E004657E2 /* BookmarkSaveTable.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BookmarkSaveTable.plist; sourceTree = "<group>"; };
+		26C083B01448238E0056B37A /* BookmarkGroupsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkGroupsTableViewController.h; sourceTree = "<group>"; };
+		26C083B11448238E0056B37A /* BookmarkGroupsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkGroupsTableViewController.m; sourceTree = "<group>"; };
 		26FE56BC1443269D001622F2 /* Bookmark-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Bookmark-iPad.png"; sourceTree = "<group>"; };
 		26FE56BE144326FB001622F2 /* Bookmark-iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Bookmark-iPhone.png"; sourceTree = "<group>"; };
 		26FE56C414432A7A001622F2 /* SearchEngineYahoo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchEngineYahoo.h; sourceTree = "<group>"; };
@@ -169,30 +172,9 @@
 				266102DC1445A2F0000730FA /* BrowserControllerProtocol.h */,
 				266D67CD143CCF720025F929 /* BrowserController.h */,
 				266D67CE143CCF720025F929 /* BrowserController.m */,
-				26B578D3144429FB004657E2 /* BookmarkSaveTableViewController.h */,
-				26B578D4144429FB004657E2 /* BookmarkSaveTableViewController.m */,
-				26B578DA144432E6004657E2 /* BookmarkSaveProtocol.h */,
-				26B578D714443290004657E2 /* BookmarkSaveModel.h */,
-				26B578D814443290004657E2 /* BookmarkSaveModel.m */,
-				26B578DB1444376E004657E2 /* BookmarkSaveTable.plist */,
-				266C914714440DAD00444BAC /* BookmarksTableViewController.h */,
-				266C914814440DAD00444BAC /* BookmarksTableViewController.m */,
-				266C914E144411B000444BAC /* BookmarksStorageProtocol.h */,
-				266C914B1444115200444BAC /* BookmarksStorage.h */,
-				266C914C1444115200444BAC /* BookmarksStorage.m */,
-				26102EDB1444660000667B0C /* BookmarkTreePermanent.plist */,
-				266C914F1444171200444BAC /* BookmarkItem.h */,
-				266C91501444171200444BAC /* BookmarkItem.m */,
-				260D68BE144205AB00093012 /* SettingsControllerProtocol.h */,
-				260D68BB1442050200093012 /* SettingsController.h */,
-				260D68BC1442050200093012 /* SettingsController.m */,
-				260D68BF1442070B00093012 /* SearchEngineProtocol.h */,
-				260D68B51442044400093012 /* SearchEngine.h */,
-				260D68B61442044400093012 /* SearchEngine.m */,
-				260D68B81442045F00093012 /* SearchEngineGoogle.h */,
-				260D68B91442045F00093012 /* SearchEngineGoogle.m */,
-				26FE56C414432A7A001622F2 /* SearchEngineYahoo.h */,
-				26FE56C514432A7A001622F2 /* SearchEngineYahoo.m */,
+				26C083AF144820D70056B37A /* Bookmark */,
+				26C083AE144820C50056B37A /* Settings */,
+				26C083AD1448209F0056B37A /* Search Engine */,
 				265CCEB9143D85B9005F348A /* Resources */,
 				266D67AF143CCE8D0025F929 /* Supporting Files */,
 			);
@@ -230,6 +212,53 @@
 				260E1F57143CD4A90098D141 /* iPadBrowserView.xib */,
 			);
 			name = iPad;
+			sourceTree = "<group>";
+		};
+		26C083AD1448209F0056B37A /* Search Engine */ = {
+			isa = PBXGroup;
+			children = (
+				260D68BF1442070B00093012 /* SearchEngineProtocol.h */,
+				260D68B51442044400093012 /* SearchEngine.h */,
+				260D68B61442044400093012 /* SearchEngine.m */,
+				260D68B81442045F00093012 /* SearchEngineGoogle.h */,
+				260D68B91442045F00093012 /* SearchEngineGoogle.m */,
+				26FE56C414432A7A001622F2 /* SearchEngineYahoo.h */,
+				26FE56C514432A7A001622F2 /* SearchEngineYahoo.m */,
+			);
+			name = "Search Engine";
+			sourceTree = "<group>";
+		};
+		26C083AE144820C50056B37A /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				260D68BE144205AB00093012 /* SettingsControllerProtocol.h */,
+				260D68BB1442050200093012 /* SettingsController.h */,
+				260D68BC1442050200093012 /* SettingsController.m */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		26C083AF144820D70056B37A /* Bookmark */ = {
+			isa = PBXGroup;
+			children = (
+				26C083B01448238E0056B37A /* BookmarkGroupsTableViewController.h */,
+				26C083B11448238E0056B37A /* BookmarkGroupsTableViewController.m */,
+				26B578D3144429FB004657E2 /* BookmarkSaveTableViewController.h */,
+				26B578D4144429FB004657E2 /* BookmarkSaveTableViewController.m */,
+				26B578DA144432E6004657E2 /* BookmarkSaveProtocol.h */,
+				26B578D714443290004657E2 /* BookmarkSaveModel.h */,
+				26B578D814443290004657E2 /* BookmarkSaveModel.m */,
+				26B578DB1444376E004657E2 /* BookmarkSaveTable.plist */,
+				266C914714440DAD00444BAC /* BookmarksTableViewController.h */,
+				266C914814440DAD00444BAC /* BookmarksTableViewController.m */,
+				266C914E144411B000444BAC /* BookmarksStorageProtocol.h */,
+				266C914B1444115200444BAC /* BookmarksStorage.h */,
+				266C914C1444115200444BAC /* BookmarksStorage.m */,
+				26102EDB1444660000667B0C /* BookmarkTreePermanent.plist */,
+				266C914F1444171200444BAC /* BookmarkItem.h */,
+				266C91501444171200444BAC /* BookmarkItem.m */,
+			);
+			name = Bookmark;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -323,6 +352,7 @@
 				266C91511444171200444BAC /* BookmarkItem.m in Sources */,
 				26B578D5144429FB004657E2 /* BookmarkSaveTableViewController.m in Sources */,
 				26B578D914443290004657E2 /* BookmarkSaveModel.m in Sources */,
+				26C083B21448238E0056B37A /* BookmarkGroupsTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

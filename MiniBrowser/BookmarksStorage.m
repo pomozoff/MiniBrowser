@@ -202,7 +202,7 @@ NSString *const savedBookmarks = @"savedBookmarks";
 {
     BookmarkItem *item = [self.bookmarksList objectForKey:itemId];
     
-    return item;
+    return item ? item : self.rootItem;
 }
 
 - (NSArray *)treeOfTheBookmarks
