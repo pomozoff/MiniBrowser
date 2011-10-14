@@ -89,14 +89,14 @@
         _urlField = [[UITextField alloc] initWithFrame:[self createRectForTextFieldInCell]];
         _urlField.adjustsFontSizeToFitWidth = YES;
         _urlField.textColor = [UIColor blackColor];
-        _urlField.placeholder = @"URL";
+        _urlField.placeholder = self.bookmark.group ? @"Group" : @"URL";
         _urlField.keyboardType = UIKeyboardTypeURL;
         _urlField.returnKeyType = UIReturnKeyDefault;
         _urlField.autocorrectionType = UITextAutocorrectionTypeNo;
         _urlField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         _urlField.textAlignment = UITextAlignmentLeft;
         _urlField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        _urlField.enabled = YES;
+        _urlField.enabled = !self.bookmark.group;
         _urlField.text = self.bookmark.url;
         _urlField.delegate = self;
     }
@@ -212,6 +212,10 @@
                 }
                     
                 case 1: { // Bookmark url
+                    if (self.bookmark.group) {
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    }
+                    
                     [cell addSubview:self.urlField];
                     break;
                 }
@@ -275,8 +279,9 @@
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    BOOL canEdit = !(self.bookmark.group && indexPath.section == 0 && indexPath.row == 1);
     // Return NO if you do not want the specified item to be editable.
-    return YES;
+    return canEdit;
 }
 */
 
@@ -328,6 +333,7 @@
         
         BookmarkItem *bookmarkParent = [self.bookmarksStorage bookmarkById:self.bookmark.parentId];
         
+        groupsTable.bookmark = self.bookmark;
         groupsTable.bookmarkParent = bookmarkParent;
         groupsTable.title = bookmarkParent.name;
         groupsTable.bookmarksStorage = self.bookmarksStorage;

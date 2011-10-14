@@ -25,4 +25,6 @@
 - (BookmarkItem *)bookmarkById:(NSString *)itemId;
 - (void)moveBookmark:(BookmarkItem *)bookmark toGroup:(BookmarkItem *)groupBookmark;
 
+- (NSArray *)bookmarkGroupsWithoutBranch:(BookmarkItem *)branchBookmark;
+
 @end

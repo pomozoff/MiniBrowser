@@ -10,6 +10,7 @@
 
 @implementation BookmarkGroupsTableViewController
 
+@synthesize bookmark = _bookmark;
 @synthesize bookmarkParent = _bookmarkParent;
 @synthesize bookmarksStorage = _bookmarksStorage;
 @synthesize saveTableViewController = _saveTableViewController;
@@ -109,7 +110,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSInteger rowsCount = self.bookmarksStorage.groupsTreeList.count;
+    NSArray *treeList = [self.bookmarksStorage bookmarkGroupsWithoutBranch:self.bookmark];
+    NSInteger rowsCount = treeList.count;
     
     // Return the number of rows in the section.
     return rowsCount;

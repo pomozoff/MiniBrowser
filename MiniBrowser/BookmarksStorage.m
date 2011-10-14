@@ -31,7 +31,9 @@ NSString *const savedBookmarks = @"savedBookmarks";
     return 1;
 }
 
-- (void)generateBookmarksList:(NSMutableDictionary *)list fromTree:(NSArray *)tree parent:(BookmarkItem *)parentItem
+- (void)generateBookmarksList:(NSMutableDictionary *)list
+                     fromTree:(NSArray *)tree
+                       parent:(BookmarkItem *)parentItem
 {
     for (NSDictionary *subItem in tree) {
         NSString *name = [subItem objectForKey:@"name"];
@@ -99,7 +101,10 @@ NSString *const savedBookmarks = @"savedBookmarks";
     return _rootItem;
 }
 
-- (void)generateGroupsTreeList:(NSMutableArray *)treeList fromBookmarkGroup:(BookmarkItem *)bookmarkGroup
+- (void)generateGroupsTreeList:(NSMutableArray *)treeList
+             fromBookmarkGroup:(BookmarkItem *)bookmarkGroup
+                 excludeBranch:(BookmarkItem *)excludeItem
+           excludeBranchParent:(BookmarkItem *)excludeItemParent
 {
     if (!bookmarkGroup.group) {
         return;
@@ -110,8 +115,18 @@ NSString *const savedBookmarks = @"savedBookmarks";
             continue;
         }
         
-        [treeList addObject:bookmark];
-        [self generateGroupsTreeList:treeList fromBookmarkGroup:bookmark];
+        if (bookmark == excludeItem) {
+            continue;
+        }
+        
+        if (bookmark != excludeItemParent) {
+            [treeList addObject:bookmark];
+        }
+        
+        [self generateGroupsTreeList:treeList
+                   fromBookmarkGroup:bookmark
+                       excludeBranch:excludeItem
+                 excludeBranchParent:excludeItemParent];
     }
 }
 
@@ -121,7 +136,10 @@ NSString *const savedBookmarks = @"savedBookmarks";
         NSMutableArray *treeList = [[NSMutableArray alloc] init];
         
         [treeList addObject:self.rootItem];
-        [self generateGroupsTreeList:treeList fromBookmarkGroup:self.rootItem];
+        [self generateGroupsTreeList:treeList
+                   fromBookmarkGroup:self.rootItem
+                       excludeBranch:nil
+                 excludeBranchParent:nil];
         _groupsTreeList = [[NSArray arrayWithArray:treeList] retain];
         
         [treeList release];
@@ -228,6 +246,22 @@ NSString *const savedBookmarks = @"savedBookmarks";
     
     bookmark.parentId = groupBookmark.itemId;
     [bookmark.delegateBookmark bookmarkGroupChangedTo:groupBookmark];
+}
+
+- (NSArray *)bookmarkGroupsWithoutBranch:(BookmarkItem *)branchBookmark
+{
+    NSMutableArray *mutableList = [[NSMutableArray alloc] init];
+    BookmarkItem *branchBookmarkParent = [self bookmarkById:branchBookmark.parentId];
+    
+    [self generateGroupsTreeList:mutableList
+               fromBookmarkGroup:self.rootItem
+                   excludeBranch:branchBookmark
+             excludeBranchParent:branchBookmarkParent];
+    NSArray *resultList = [[NSArray arrayWithArray:mutableList] retain];
+    
+    [mutableList release];
+     
+    return [resultList autorelease];
 }
 
 - (void)dealloc

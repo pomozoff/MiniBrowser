@@ -13,6 +13,7 @@
 
 @interface BookmarkGroupsTableViewController : UITableViewController
 
+@property (nonatomic, retain) BookmarkItem *bookmark;
 @property (nonatomic, retain) BookmarkItem *bookmarkParent;
 @property (nonatomic, retain) id <BookmarksStorageProtocol> bookmarksStorage;
 @property (nonatomic, retain) id <BookmarkSaveTableViewProtocol> saveTableViewController;

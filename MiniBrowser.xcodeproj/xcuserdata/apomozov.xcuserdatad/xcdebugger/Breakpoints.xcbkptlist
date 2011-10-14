@@ -8,41 +8,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "MiniBrowser/BookmarksTableViewController.m"
-         timestampString = "340296127.342254"
+         filePath = "MiniBrowser/BookmarksStorage.m"
+         timestampString = "340299965.348412"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "212"
-         endingLineNumber = "212"
-         landmarkName = "-tableView:didSelectRowAtIndexPath:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "MiniBrowser/BookmarksTableViewController.m"
-         timestampString = "340296127.342254"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "189"
-         endingLineNumber = "189"
-         landmarkName = "-tableView:targetIndexPathForMoveFromRowAtIndexPath:toProposedIndexPath:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "MiniBrowser/BookmarksTableViewController.m"
-         timestampString = "340296127.342254"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "176"
-         endingLineNumber = "176"
-         landmarkName = "-tableView:moveRowAtIndexPath:toIndexPath:"
+         startingLineNumber = "113"
+         endingLineNumber = "113"
+         landmarkName = "-generateGroupsTreeList:fromBookmarkGroup:excludeBranch:excludeBranchParent:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
