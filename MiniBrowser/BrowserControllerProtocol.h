@@ -1,5 +1,5 @@
 //
-//  BookmarksTableViewControllerProtocol.h
+//  BrowserControllerProtocol.h
 //  MiniBrowser
 //
 //  Created by Антон Помозов on 12.10.11.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol BookmarksTableViewControllerDelegate <NSObject>
+@protocol BrowserControllerDelegate <NSObject>
 
 - (void)closePopupsAndLoadUrl:(NSString *)url;
 
