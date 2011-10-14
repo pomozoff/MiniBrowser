@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BookmarksTableViewControllerProtocol.h"
+#import "BrowserControllerProtocol.h"
 
 @interface BrowserController : UIViewController <UIWebViewDelegate,
                                                  UISearchBarDelegate,
                                                  UIActionSheetDelegate,
                                                  UIActionSheetDelegate,
-                                                 BookmarksTableViewControllerDelegate>
+                                                 UIPopoverControllerDelegate,
+                                                 BrowserControllerDelegate>
 
 @property (nonatomic, retain) IBOutlet UINavigationBar *navigationBar;
 @property (nonatomic, retain) IBOutlet UIToolbar *navigationToolbar;

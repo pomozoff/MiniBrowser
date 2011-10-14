@@ -4,8 +4,6 @@
 <dict>
 	<key>Bookmarks</key>
 	<dict>
-		<key>id</key>
-		<string>root_id</string>
 		<key>name</key>
 		<string>Bookmarks</string>
 		<key>url</key>
@@ -17,8 +15,6 @@
 		<key>content</key>
 		<array>
 			<dict>
-				<key>id</key>
-				<string>history_id</string>
 				<key>name</key>
 				<string>History</string>
 				<key>url</key>
@@ -31,8 +27,6 @@
 				<array/>
 			</dict>
 			<dict>
-				<key>id</key>
-				<string>job_id</string>
 				<key>name</key>
 				<string>Job</string>
 				<key>url</key>
@@ -44,8 +38,6 @@
 				<key>content</key>
 				<array>
 					<dict>
-						<key>id</key>
-						<string>google_id</string>
 						<key>name</key>
 						<string>Google</string>
 						<key>url</key>
@@ -58,8 +50,6 @@
 						<array/>
 					</dict>
 					<dict>
-						<key>id</key>
-						<string>id_empty_group</string>
 						<key>name</key>
 						<string>Empty group</string>
 						<key>url</key>
@@ -74,8 +64,6 @@
 				</array>
 			</dict>
 			<dict>
-				<key>id</key>
-				<string>yahoo_id</string>
 				<key>name</key>
 				<string>Yahoo</string>
 				<key>url</key>

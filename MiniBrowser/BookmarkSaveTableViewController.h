@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "BookmarkItem.h"
+#import "BookmarksStorageProtocol.h"
 
-@interface BookmarkSaveTableViewController : UITableViewController <UIPopoverControllerDelegate,
-                                                                    UITextFieldDelegate>
+@interface BookmarkSaveTableViewController : UITableViewController <UITextFieldDelegate>
 
 @property (nonatomic, retain) BookmarkItem *bookmark;
+@property (nonatomic, retain) id <BookmarksStorageProtocol> bookmarksStorage;
+@property (nonatomic, retain) UITableView *tableViewParent;
+@property (nonatomic, retain) NSIndexPath *indexPath;
 
 @end

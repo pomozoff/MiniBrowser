@@ -33,7 +33,6 @@ NSString *const savedBookmarks = @"savedBookmarks";
 - (void)generateBookmarksList:(NSMutableDictionary *)list fromTree:(NSArray *)tree parent:(BookmarkItem *)parentItem
 {
     for (NSDictionary *subItem in tree) {
-        NSString *itemId = [subItem objectForKey:@"id"];
         NSString *name = [subItem objectForKey:@"name"];
         NSString *url = [subItem objectForKey:@"url"];
         BOOL group = [[subItem objectForKey:@"group"] boolValue];
@@ -41,6 +40,8 @@ NSString *const savedBookmarks = @"savedBookmarks";
         NSString *parentId = parentItem.itemId;
         
         BookmarkItem *item = [[BookmarkItem alloc] initWithName:name url:url group:group permanent:permanent parentId:parentId];
+        
+        NSString *itemId = item.itemId;
         [list setObject:item forKey:itemId];
         
         NSArray *content = [subItem objectForKey:@"content"];
@@ -195,6 +196,13 @@ NSString *const savedBookmarks = @"savedBookmarks";
     group.content = content;
     
     [content release];
+}
+
+- (BookmarkItem *)bookmarkById:(NSString *)itemId
+{
+    BookmarkItem *item = [self.bookmarksList objectForKey:itemId];
+    
+    return item;
 }
 
 - (NSArray *)treeOfTheBookmarks

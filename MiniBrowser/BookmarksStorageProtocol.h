@@ -22,4 +22,6 @@
 - (void)moveBookmarkAtPosition:(NSIndexPath *)fromIndexPath toPosition:(NSIndexPath *)toIndexPath insideGroup:(BookmarkItem *)group;
 - (NSArray *)treeOfTheBookmarks;
 
+- (BookmarkItem *)bookmarkById:(NSString *)itemId;
+
 @end

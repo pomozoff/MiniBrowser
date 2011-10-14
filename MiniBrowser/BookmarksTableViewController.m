@@ -7,13 +7,10 @@
 //
 
 #import "BookmarksTableViewController.h"
-#import "BookmarksStorageProtocol.h"
-#import "BookmarksStorage.h"
 #import "BookmarkSaveTableViewController.h"
 
 @interface BookmarksTableViewController()
 
-@property (nonatomic, retain) id <BookmarksStorageProtocol> bookmarksStorage;
 @property (nonatomic, retain) BookmarkItem *currentBookmarkGroup;
 
 @end
@@ -32,15 +29,6 @@
     }
     
     return _currentBookmarkGroup;
-}
-
-- (id)bookmarksStorage
-{
-    if (!_bookmarksStorage) {
-        _bookmarksStorage = [[BookmarksStorage alloc] init];
-    }
-    
-    return _bookmarksStorage;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -224,6 +212,9 @@
         
         bookmarkSaveTVC.title = @"Edit Bookmark";
         bookmarkSaveTVC.bookmark = currentBookmark;
+        bookmarkSaveTVC.bookmarksStorage = self.bookmarksStorage;
+        bookmarkSaveTVC.tableViewParent = self.tableView;
+        bookmarkSaveTVC.indexPath = indexPath;
         
         [self.navigationController pushViewController:bookmarkSaveTVC animated:YES];
         
@@ -233,6 +224,7 @@
             BookmarksTableViewController *newBookmarksTVC = [[BookmarksTableViewController alloc] init];
             
             newBookmarksTVC.delegateController = self.delegateController;
+            newBookmarksTVC.bookmarksStorage = self.bookmarksStorage;
             newBookmarksTVC.currentBookmarkGroup = currentBookmark;
             [self.navigationController pushViewController:newBookmarksTVC animated:YES];
             

@@ -8,7 +8,6 @@
 
 #import "BookmarkSaveTableViewController.h"
 #import "BookmarkSaveModel.h"
-#import "BookmarksStorageProtocol.h"
 
 @interface BookmarkSaveTableViewController()
 
@@ -20,10 +19,14 @@
 
 @implementation BookmarkSaveTableViewController
 
-@synthesize bookmarkSaveModel = _bookmarkSaveModel;
 @synthesize bookmark = _bookmark;
+@synthesize bookmarksStorage = _bookmarksStorage;
+
+@synthesize bookmarkSaveModel = _bookmarkSaveModel;
 @synthesize nameField = _nameField;
 @synthesize urlField = _urlField;
+@synthesize tableViewParent = _tableViewParent;
+@synthesize indexPath = _indexPath;
 
 - (BookmarkSaveModel *)bookmarkSaveModel
 {
@@ -43,13 +46,27 @@
     return _bookmark;
 }
 
+#define CELL_FIELD_TOP_MARGINE 12.0f
+#define CELL_FIELD_HEIGHT 21.0f
+#define CELL_FIELD_WIDTH_PERCENT 85.0f
+
+- (CGRect)createRectForTextFieldInCell
+{
+    CGSize boundsSize = self.view.bounds.size;
+    CGFloat fieldWidth = boundsSize.width * CELL_FIELD_WIDTH_PERCENT / 100;
+    CGFloat fieldLeftMargine = (boundsSize.width - fieldWidth) / 2;
+    
+    CGRect rect = CGRectMake(fieldLeftMargine, CELL_FIELD_TOP_MARGINE, fieldWidth, CELL_FIELD_HEIGHT);
+    
+    return rect;
+}
+
 - (UITextField *)nameField
 {
     if (!_nameField) {
-        _nameField = [[UITextField alloc] initWithFrame:CGRectMake(60, 12, 225, 21)];
+        _nameField = [[UITextField alloc] initWithFrame:[self createRectForTextFieldInCell]];
         _nameField.adjustsFontSizeToFitWidth = YES;
         _nameField.textColor = [UIColor blackColor];
-        _nameField.backgroundColor = [UIColor greenColor];
         _nameField.placeholder = @"Name";
         _nameField.keyboardType = UIKeyboardTypeDefault;
         _nameField.returnKeyType = UIReturnKeyDefault;
@@ -58,8 +75,8 @@
         _nameField.textAlignment = UITextAlignmentLeft;
         _nameField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _nameField.enabled = YES;
-        _nameField.delegate = self;
         _nameField.text = self.bookmark.name;
+        _nameField.delegate = self;
     }
     
     return _nameField;
@@ -68,7 +85,7 @@
 - (UITextField *)urlField
 {
     if (!_urlField) {
-        _urlField = [[UITextField alloc] initWithFrame:CGRectMake(60, 12, 225, 21)];
+        _urlField = [[UITextField alloc] initWithFrame:[self createRectForTextFieldInCell]];
         _urlField.adjustsFontSizeToFitWidth = YES;
         _urlField.textColor = [UIColor blackColor];
         _urlField.placeholder = @"URL";
@@ -79,8 +96,8 @@
         _urlField.textAlignment = UITextAlignmentLeft;
         _urlField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _urlField.enabled = YES;
-        _urlField.delegate = self;
         _urlField.text = self.bookmark.url;
+        _urlField.delegate = self;
     }
     
     return _urlField;
@@ -131,6 +148,14 @@
 - (void)freeProperties
 {
     self.bookmarkSaveModel = nil;
+    self.bookmark = nil;
+    self.bookmarksStorage = nil;
+    
+    self.nameField = nil;
+    self.urlField = nil;
+    
+    self.tableViewParent = nil;
+    self.indexPath = nil;
 }
 
 - (void)viewDidUnload
@@ -199,7 +224,8 @@
         case 1: { // Bookmark group
             switch (indexPath.row) {
                 case 0: { // Bookmark group
-                    //cell.textLabel.text = bookmark.parentId;
+                    BookmarkItem *bookmarkParent = [self.bookmarksStorage bookmarkById:bookmark.parentId];
+                    cell.textLabel.text = bookmarkParent.name;
                     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                     
                     break;
@@ -295,6 +321,20 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
+}
+
+#pragma mark - Text Field view delegate
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if (textField == self.nameField) {
+        self.bookmark.name = textField.text;
+    } else if (textField == self.urlField) {
+        self.bookmark.url = textField.text;
+    }
+    
+    [self.tableViewParent reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.indexPath]
+                                withRowAnimation:UITableViewRowAnimationRight];
 }
 
 @end

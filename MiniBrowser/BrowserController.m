@@ -12,6 +12,7 @@
 #import "BookmarksTableViewController.h"
 #import "BookmarksStorageProtocol.h"
 #import "BookmarkSaveTableViewController.h"
+#import "BookmarksStorage.h"
 
 @interface BrowserController()
 
@@ -68,11 +69,21 @@ BOOL userInitiatedJump = NO;
     return _searchEngine;
 }
 
+- (id <BookmarksStorageProtocol>)bookmarksStorage
+{
+    if (!_bookmarksStorage) {
+        _bookmarksStorage = [[BookmarksStorage alloc] init];
+    }
+    
+    return _bookmarksStorage;
+}
+
 - (BookmarksTableViewController *)bookmarksTableViewController
 {
     if (!_bookmarksTableViewController) {
         _bookmarksTableViewController = [[BookmarksTableViewController alloc] init];
         _bookmarksTableViewController.delegateController = self;
+        _bookmarksTableViewController.bookmarksStorage = self.bookmarksStorage;
     }
     
     return _bookmarksTableViewController;
@@ -82,6 +93,7 @@ BOOL userInitiatedJump = NO;
 {
     if (!_bookmarkSaveTableViewController) {
         _bookmarkSaveTableViewController = [[BookmarkSaveTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        _bookmarkSaveTableViewController.bookmarksStorage = self.bookmarksStorage;
     }
     
     return _bookmarkSaveTableViewController;
@@ -210,7 +222,7 @@ BOOL userInitiatedJump = NO;
     [navigationController release];
     
     self.popoverSaveBookmark = popover;
-    self.popoverSaveBookmark.delegate = self.bookmarkSaveTableViewController;
+    self.popoverSaveBookmark.delegate = self;
     
     [popover release];
     
@@ -240,7 +252,7 @@ BOOL userInitiatedJump = NO;
     [navigationController release];
     
     self.popoverBookmark = popover;
-    self.popoverBookmark.delegate = self.bookmarksTableViewController;
+    self.popoverBookmark.delegate = self;
     
     [popover release];
     
@@ -455,6 +467,22 @@ BOOL userInitiatedJump = NO;
     userInitiatedJump = YES;
     [self dismissOpenPopoversAndActionSheet];
     [self loadUrl:url];
+}
+
+# pragma mark - Popover delegate
+
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+    if (popoverController == self.popoverBookmark) {
+        self.popoverBookmark = nil;
+        self.bookmarksTableViewController = nil;
+    }
+    
+    if (popoverController == self.popoverSaveBookmark) {
+        self.popoverSaveBookmark = nil;
+        self.bookmarkSaveTableViewController = nil;
+        self.actionSheet = nil;
+    }
 }
 
 @end
