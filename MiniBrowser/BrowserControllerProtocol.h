@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BookmarkItem.h"
 
 @protocol BrowserControllerDelegate <NSObject>
 

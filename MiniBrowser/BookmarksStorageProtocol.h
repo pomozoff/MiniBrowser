@@ -12,6 +12,7 @@
 @protocol BookmarksStorageProtocol <NSObject>
 
 @property (nonatomic, readonly) NSInteger sectionsCount;
+@property (nonatomic, readonly, retain) NSArray *groupsTreeList;
 @property (nonatomic, readonly, retain) BookmarkItem *rootItem;
 
 - (NSInteger)bookmarksCountForParent:(BookmarkItem *)parentItem;
@@ -20,7 +21,6 @@
 - (void)insertBookmark:(BookmarkItem *)bookmark;
 - (void)deleteBookmark:(BookmarkItem *)bookmark;
 - (void)moveBookmarkAtPosition:(NSIndexPath *)fromIndexPath toPosition:(NSIndexPath *)toIndexPath insideGroup:(BookmarkItem *)group;
-- (NSArray *)treeOfTheBookmarks;
 
 - (BookmarkItem *)bookmarkById:(NSString *)itemId;
 - (void)moveBookmark:(BookmarkItem *)bookmark toGroup:(BookmarkItem *)groupBookmark;

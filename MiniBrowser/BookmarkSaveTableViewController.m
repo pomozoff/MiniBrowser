@@ -327,8 +327,12 @@
         BookmarkGroupsTableViewController *groupsTable = [[BookmarkGroupsTableViewController alloc] init];
         
         BookmarkItem *bookmarkParent = [self.bookmarksStorage bookmarkById:self.bookmark.parentId];
+        
         groupsTable.bookmarkParent = bookmarkParent;
         groupsTable.title = bookmarkParent.name;
+        groupsTable.bookmarksStorage = self.bookmarksStorage;
+        groupsTable.saveTableViewController = self;
+        
         [self.navigationController pushViewController:groupsTable animated:YES];
         
         [groupsTable release];

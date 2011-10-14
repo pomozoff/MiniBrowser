@@ -24,6 +24,7 @@
 @property (nonatomic, retain) UIPopoverController *popoverBookmark;
 @property (nonatomic, retain) UIPopoverController *popoverSaveBookmark;
 @property (nonatomic, retain) UIActionSheet *actionSheet;
+@property (nonatomic, retain) UINavigationController *bookmarkNavigationController;
 
 @end
 
@@ -48,6 +49,7 @@
 @synthesize popoverBookmark = _popoverBookmark;
 @synthesize popoverSaveBookmark = _popoverSaveBookmark;
 @synthesize actionSheet = _actionSheet;
+@synthesize bookmarkNavigationController = _bookmarkNavigationController;
 
 BOOL userInitiatedJump = NO;
 
@@ -110,6 +112,16 @@ BOOL userInitiatedJump = NO;
     }
     
     return _actionSheet;
+}
+
+- (UINavigationController *)bookmarkNavigationController
+{
+    if (!_bookmarkNavigationController) {
+        _bookmarkNavigationController = [[UINavigationController alloc] init];
+        [_bookmarkNavigationController pushViewController:self.bookmarksTableViewController animated:NO];
+    }
+    
+    return _bookmarkNavigationController;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -184,7 +196,7 @@ BOOL userInitiatedJump = NO;
     if ([self.popoverBookmark isPopoverVisible]) {
         [self.popoverBookmark dismissPopoverAnimated:YES];
         self.popoverBookmark = nil;
-        self.bookmarksTableViewController = nil;
+//        self.bookmarksTableViewController = nil;
     }
     
     if ([self.popoverSaveBookmark isPopoverVisible]) {
@@ -245,11 +257,7 @@ BOOL userInitiatedJump = NO;
 {
     [self dismissOpenPopoversAndActionSheet];
     
-    UINavigationController *navigationController = [[UINavigationController alloc] init];
-    [navigationController pushViewController:self.bookmarksTableViewController animated:NO];
-    
-    UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:navigationController];
-    [navigationController release];
+    UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:self.bookmarkNavigationController];
     
     self.popoverBookmark = popover;
     self.popoverBookmark.delegate = self;
@@ -319,6 +327,7 @@ BOOL userInitiatedJump = NO;
     self.bookmarksStorage = nil;
     self.popoverBookmark = nil;
     self.actionSheet = nil;
+    self.bookmarkNavigationController = nil;
 }
 
 #pragma mark - View lifecycle
@@ -475,7 +484,7 @@ BOOL userInitiatedJump = NO;
 {
     if (popoverController == self.popoverBookmark) {
         self.popoverBookmark = nil;
-        self.bookmarksTableViewController = nil;
+//        self.bookmarksTableViewController = nil;
     }
     
     if (popoverController == self.popoverSaveBookmark) {

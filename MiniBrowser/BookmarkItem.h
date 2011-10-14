@@ -12,7 +12,7 @@
 
 @protocol BookmarkItemDelegate <NSObject>
 
-- (void)bookmarkGroupChangedTo:(BookmarkItem *)newGroup;
+- (void)bookmarkGroupChangedTo:(BookmarkItem *)newBookmarkGroup;
 
 @end
 

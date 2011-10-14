@@ -18,6 +18,7 @@
 @implementation BookmarksStorage
 
 @synthesize sectionsCount = _sectionsCount;
+@synthesize groupsTreeList = _groupsTreeList;
 @synthesize rootItem = _rootItem;
 
 @synthesize bookmarksTree = _bookmarksTree;
@@ -93,43 +94,41 @@ NSString *const savedBookmarks = @"savedBookmarks";
         [self generateBookmarksList:tmpList fromTree:self.bookmarksTree parent:_rootItem];
         self.bookmarksList = tmpList;
         [tmpList release];
-}
+    }
     
     return _rootItem;
 }
 
-/*
-- (NSArray *)bookmarksTree
+- (void)generateGroupsTreeList:(NSMutableArray *)treeList fromBookmarkGroup:(BookmarkItem *)bookmarkGroup
 {
-    if (!_bookmarksTree) {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults synchronize];
-        
-        NSArray *tmpBookmarks = [defaults objectForKey:savedBookmarks];
-        
-        if (!tmpBookmarks) {
-            _bookmarksTree = [[NSArray alloc] init];
-        } else {
-            _bookmarksTree = [tmpBookmarks retain];
-        }
+    if (!bookmarkGroup.group) {
+        return;
     }
     
-    return _bookmarksTree;
+    for (BookmarkItem *bookmark in bookmarkGroup.content) {
+        if (!bookmark.group) {
+            continue;
+        }
+        
+        [treeList addObject:bookmark];
+        [self generateGroupsTreeList:treeList fromBookmarkGroup:bookmark];
+    }
 }
 
-- (NSDictionary *)bookmarksList
+- (NSArray *)groupsTreeList
 {
-    if (!_bookmarksList) {
-        NSMutableDictionary *tmpList = [[NSMutableDictionary alloc] init];
-        [self generateBookmarksList:tmpList fromTree:self.bookmarksTree parent:self.rootItem];
+    if (!_groupsTreeList) {
+        NSMutableArray *treeList = [[NSMutableArray alloc] init];
         
-        _bookmarksList = tmpList;
-        [tmpList release];
+        [treeList addObject:self.rootItem];
+        [self generateGroupsTreeList:treeList fromBookmarkGroup:self.rootItem];
+        _groupsTreeList = [[NSArray arrayWithArray:treeList] retain];
+        
+        [treeList release];
     }
     
-    return _bookmarksList;
+    return _groupsTreeList;
 }
-*/
 
 - (id)init
 {
@@ -139,6 +138,14 @@ NSString *const savedBookmarks = @"savedBookmarks";
     }
     
     return self;
+}
+
+- (BookmarkItem *)bookmarkById:(NSString *)itemId
+{
+    BookmarkItem *item = [self.bookmarksList objectForKey:itemId];
+    BookmarkItem *resultItem = item ? item : self.rootItem;
+    
+    return resultItem;
 }
 
 - (NSInteger)bookmarksCountForParent:(BookmarkItem *)parentItem
@@ -172,7 +179,7 @@ NSString *const savedBookmarks = @"savedBookmarks";
     [tmpList release];
     
     
-    BookmarkItem *parentItem = [self.bookmarksList objectForKey:bookmark.parentId];
+    BookmarkItem *parentItem = [self bookmarkById:bookmark.parentId];
     [self addBookmark:bookmark toGroup:parentItem];
 }
 
@@ -195,7 +202,7 @@ NSString *const savedBookmarks = @"savedBookmarks";
     self.bookmarksList = tmpList;
     [tmpList release];
     
-    BookmarkItem *parentItem = [self.bookmarksList objectForKey:bookmark.parentId];
+    BookmarkItem *parentItem = [self bookmarkById:bookmark.parentId];
     
     [self removeBookmark:bookmark fromGroup:parentItem];
 }
@@ -210,17 +217,9 @@ NSString *const savedBookmarks = @"savedBookmarks";
     [content release];
 }
 
-- (BookmarkItem *)bookmarkById:(NSString *)itemId
-{
-    BookmarkItem *item = [self.bookmarksList objectForKey:itemId];
-    BookmarkItem *resultItem = item ? item : self.rootItem;
-    
-    return resultItem;
-}
-
 - (void)moveBookmark:(BookmarkItem *)bookmark toGroup:(BookmarkItem *)groupBookmark
 {
-    BookmarkItem *currentParent = [self.bookmarksList objectForKey:bookmark.itemId];
+    BookmarkItem *currentParent = [self bookmarkById:bookmark.parentId];
     
     [bookmark retain];
     [self removeBookmark:bookmark fromGroup:currentParent];
@@ -231,15 +230,12 @@ NSString *const savedBookmarks = @"savedBookmarks";
     [bookmark.delegateBookmark bookmarkGroupChangedTo:groupBookmark];
 }
 
-- (NSArray *)treeOfTheBookmarks
-{
-    return nil;
-}
-
 - (void)dealloc
 {
     [_rootItem release];
     _rootItem = nil;
+    [_groupsTreeList release];
+    _groupsTreeList = nil;
     
     self.bookmarksTree = nil;
     self.bookmarksList = nil;

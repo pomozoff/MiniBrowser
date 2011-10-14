@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "BookmarkItem.h"
+#import "BookmarksStorageProtocol.h"
+#import "BookmarkSaveTableViewProtocol.h"
 
 @interface BookmarkGroupsTableViewController : UITableViewController
 
 @property (nonatomic, retain) BookmarkItem *bookmarkParent;
+@property (nonatomic, retain) id <BookmarksStorageProtocol> bookmarksStorage;
+@property (nonatomic, retain) id <BookmarkSaveTableViewProtocol> saveTableViewController;
 
 @end

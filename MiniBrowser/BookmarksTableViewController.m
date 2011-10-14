@@ -141,7 +141,7 @@
     cell.textLabel.text = currentBookmark.name;
     cell.detailTextLabel.text = currentBookmark.url;
     cell.accessoryType = currentBookmark.group ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
-    cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.editingAccessoryType = currentBookmark.permanent ? UITableViewCellAccessoryNone : UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
 }
@@ -180,15 +180,14 @@
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BookmarkItem *bookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentBookmarkGroup];
-    BOOL canOrder = !bookmark.group;
+    BOOL canOrder = !bookmark.permanent;
     return canOrder;
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)source
        toProposedIndexPath:(NSIndexPath *)destination {
-    
     BookmarkItem *targetBookmark = [self.bookmarksStorage bookmarkAtIndex:destination forParent:self.currentBookmarkGroup];
-    NSIndexPath *result = targetBookmark.group ? source : destination;
+    NSIndexPath *result = targetBookmark.permanent ? source : destination;
     
     return result;
 }
@@ -239,9 +238,8 @@
 
 #pragma mark - Bookmark Item delegate
 
-- (void)bookmarkGroupChangedTo:(BookmarkItem *)newGroup
+- (void)bookmarkGroupChangedTo:(BookmarkItem *)newBookmarkGroup
 {
-    self.currentBookmarkGroup = newGroup;
     [self.tableView reloadData];
 }
 

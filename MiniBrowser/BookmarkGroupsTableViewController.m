@@ -7,43 +7,17 @@
 //
 
 #import "BookmarkGroupsTableViewController.h"
-#import "BookmarkSaveTableViewProtocol.h"
-
-@interface BookmarkGroupsTableViewController()
-
-@property (nonatomic, retain) NSArray *groupsList;
-
-@end
 
 @implementation BookmarkGroupsTableViewController
 
 @synthesize bookmarkParent = _bookmarkParent;
-@synthesize groupsList = _groupsList;
-
-- (NSArray *)groupsList
-{
-    if (!_groupsList) {
-        NSMutableArray *tmpList = [[NSMutableArray alloc] init];
-        
-        for (BookmarkItem *bookmark in self.bookmarkParent.content) {
-            if (bookmark.group) {
-                [tmpList addObject:bookmark];
-            }
-        }
-        
-        _groupsList = [[NSArray arrayWithArray:tmpList] retain];
-        [tmpList release];
-    }
-    
-    return _groupsList;
-}
+@synthesize bookmarksStorage = _bookmarksStorage;
+@synthesize saveTableViewController = _saveTableViewController;
 
 - (void)setBookmarkParent:(BookmarkItem *)newParent
 {
     [_bookmarkParent release];
     _bookmarkParent = newParent;
-    
-    self.groupsList = nil;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -86,6 +60,8 @@
 - (void)freeProperties
 {
     self.bookmarkParent = nil;
+    self.bookmarksStorage = nil;
+    self.saveTableViewController = nil;
 }
 
 - (void)viewDidUnload
@@ -133,7 +109,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSInteger rowsCount = self.groupsList.count;
+    NSInteger rowsCount = self.bookmarksStorage.groupsTreeList.count;
     
     // Return the number of rows in the section.
     return rowsCount;
@@ -148,9 +124,8 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    BookmarkItem *groupBookmark = [self.groupsList objectAtIndex:indexPath.row];
+    BookmarkItem *groupBookmark = [self.bookmarksStorage.groupsTreeList objectAtIndex:indexPath.row];
     cell.textLabel.text = groupBookmark.name;
-    cell.accessoryType = groupBookmark.group ? UITableViewCellAccessoryDetailDisclosureButton : UITableViewCellAccessoryNone;
     
     return cell;
 }
@@ -198,35 +173,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSMutableArray *tmpArray = [[NSMutableArray alloc] init];
-    for (UIViewController *viewController in self.navigationController.viewControllers) {
-        if (![viewController isKindOfClass:[BookmarkGroupsTableViewController class]]) {
-            [tmpArray addObject:viewController];
-            
-            if ([viewController conformsToProtocol:@protocol(BookmarkSaveTableViewProtocol)]) {
-                BookmarkItem *groupBookmark = [self.groupsList objectAtIndex:indexPath.row];
-                id <BookmarkSaveTableViewProtocol> saveTableViewController = (id <BookmarkSaveTableViewProtocol>)viewController;
-                
-                [saveTableViewController moveBookmarkToGroup:groupBookmark];
-            }
-        }
-    }
+    BookmarkItem *groupBookmark = [self.bookmarksStorage.groupsTreeList objectAtIndex:indexPath.row];
+    [self.saveTableViewController moveBookmarkToGroup:groupBookmark];
     
-    [self.navigationController setViewControllers:tmpArray animated:YES];
-    
-    [tmpArray release];
-}
-
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-    BookmarkItem *groupBookmark = [self.groupsList objectAtIndex:indexPath.row];
-    BookmarkGroupsTableViewController *groupsTable = [[BookmarkGroupsTableViewController alloc] init];
-    
-    groupsTable.bookmarkParent = groupBookmark;
-    groupsTable.title = groupBookmark.name;
-    [self.navigationController pushViewController:groupsTable animated:YES];
-    
-    [groupsTable release];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end
