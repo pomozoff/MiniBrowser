@@ -17,6 +17,7 @@
 @synthesize url = _url;
 @synthesize parentId = _parentId;
 @synthesize content = _content;
+@synthesize delegateBookmark = _delegateBookmark;
 
 - (NSArray *)content
 {
@@ -77,12 +78,19 @@
     return [dictionary autorelease];
 }
 
+- (NSString *)description
+{
+    NSString *desription = [NSString stringWithFormat:@"Bookmark named \"%@\"\nurl: %@\ngroup: %@\npermanent: %@\nid: %@\nparentId: %@\nsubitems count: %d", self.name, self.url, self.group ? @"YES" : @"NO", self.permanent ? @"YES" : @"NO", self.itemId, self.parentId, self.content.count];
+    return desription;
+}
+
 - (void)dealloc
 {
     self.name = nil;
     self.url = nil;
     self.parentId = nil;
     self.content = nil;
+    self.delegateBookmark = nil;
     
     [super dealloc];
 }

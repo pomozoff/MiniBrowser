@@ -152,6 +152,16 @@ NSString *const savedBookmarks = @"savedBookmarks";
     return item;
 }
 
+- (void)addBookmark:(BookmarkItem *)bookmark toGroup:(BookmarkItem *)bookmarkGroup
+{
+    NSMutableArray *tmpContent = [bookmarkGroup.content mutableCopy];
+    
+    [tmpContent addObject:bookmark];
+    bookmarkGroup.content = tmpContent;
+    
+    [tmpContent release];
+}
+
 - (void)insertBookmark:(BookmarkItem *)bookmark
 {
     NSMutableDictionary *tmpList = [self.bookmarksList mutableCopy];
@@ -161,16 +171,22 @@ NSString *const savedBookmarks = @"savedBookmarks";
     self.bookmarksList = tmpList;
     [tmpList release];
     
-    BookmarkItem *parentItem = [self.bookmarksList objectForKey:bookmark.parentId];
-    NSMutableArray *tmpContent = [parentItem.content mutableCopy];
     
-    [tmpContent addObject:bookmark];
-    parentItem.content = tmpContent;
+    BookmarkItem *parentItem = [self.bookmarksList objectForKey:bookmark.parentId];
+    [self addBookmark:bookmark toGroup:parentItem];
+}
+
+- (void)removeBookmark:(BookmarkItem *)bookmark fromGroup:(BookmarkItem *)bookmarkGroup
+{
+    NSMutableArray *tmpContent = [bookmarkGroup.content mutableCopy];
+    
+    [tmpContent removeObject:bookmark];
+    bookmarkGroup.content = tmpContent;
     
     [tmpContent release];
 }
 
-- (void)removeBookmark:(BookmarkItem *)bookmark
+- (void)deleteBookmark:(BookmarkItem *)bookmark
 {
     NSMutableDictionary *tmpList = [self.bookmarksList mutableCopy];
     
@@ -180,12 +196,8 @@ NSString *const savedBookmarks = @"savedBookmarks";
     [tmpList release];
     
     BookmarkItem *parentItem = [self.bookmarksList objectForKey:bookmark.parentId];
-    NSMutableArray *tmpContent = [parentItem.content mutableCopy];
     
-    [tmpContent removeObject:bookmark];
-    parentItem.content = tmpContent;
-    
-    [tmpContent release];
+    [self removeBookmark:bookmark fromGroup:parentItem];
 }
 
 - (void)moveBookmarkAtPosition:(NSIndexPath *)fromIndexPath toPosition:(NSIndexPath *)toIndexPath insideGroup:(BookmarkItem *)group
@@ -201,13 +213,22 @@ NSString *const savedBookmarks = @"savedBookmarks";
 - (BookmarkItem *)bookmarkById:(NSString *)itemId
 {
     BookmarkItem *item = [self.bookmarksList objectForKey:itemId];
+    BookmarkItem *resultItem = item ? item : self.rootItem;
     
-    return item ? item : self.rootItem;
+    return resultItem;
 }
 
 - (void)moveBookmark:(BookmarkItem *)bookmark toGroup:(BookmarkItem *)groupBookmark
 {
+    BookmarkItem *currentParent = [self.bookmarksList objectForKey:bookmark.itemId];
     
+    [bookmark retain];
+    [self removeBookmark:bookmark fromGroup:currentParent];
+    [self addBookmark:bookmark toGroup:groupBookmark];
+    [bookmark release];
+    
+    bookmark.parentId = groupBookmark.itemId;
+    [bookmark.delegateBookmark bookmarkGroupChangedTo:groupBookmark];
 }
 
 - (NSArray *)treeOfTheBookmarks

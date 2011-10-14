@@ -162,7 +162,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
         BookmarkItem *bookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentBookmarkGroup];
-        [self.bookmarksStorage removeBookmark:bookmark];
+        [self.bookmarksStorage deleteBookmark:bookmark];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
@@ -216,6 +216,8 @@
         bookmarkSaveTVC.tableViewParent = self.tableView;
         bookmarkSaveTVC.indexPath = indexPath;
         
+        currentBookmark.delegateBookmark = self;
+        
         [self.navigationController pushViewController:bookmarkSaveTVC animated:YES];
         
         [bookmarkSaveTVC release];
@@ -233,6 +235,14 @@
             [self.delegateController closePopupsAndLoadUrl:currentBookmark.url];
         }
     }
+}
+
+#pragma mark - Bookmark Item delegate
+
+- (void)bookmarkGroupChangedTo:(BookmarkItem *)newGroup
+{
+    self.currentBookmarkGroup = newGroup;
+    [self.tableView reloadData];
 }
 
 @end

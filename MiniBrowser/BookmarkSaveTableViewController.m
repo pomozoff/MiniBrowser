@@ -354,6 +354,10 @@
 - (void)moveBookmarkToGroup:(BookmarkItem *)groupBookmark
 {
     [self.bookmarksStorage moveBookmark:self.bookmark toGroup:groupBookmark];
+    
+    NSIndexPath *groupIndexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:groupIndexPath]
+                          withRowAnimation:UITableViewRowAnimationRight];
 }
 
 @end

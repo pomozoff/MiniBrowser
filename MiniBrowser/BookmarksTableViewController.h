@@ -10,7 +10,7 @@
 #import "BrowserControllerProtocol.h"
 #import "BookmarksStorageProtocol.h"
 
-@interface BookmarksTableViewController : UITableViewController
+@interface BookmarksTableViewController : UITableViewController <BookmarkItemDelegate>
 
 @property (nonatomic, retain) id <BrowserControllerDelegate> delegateController;
 @property (nonatomic, retain) id <BookmarksStorageProtocol> bookmarksStorage;

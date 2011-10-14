@@ -8,6 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+@class BookmarkItem;
+
+@protocol BookmarkItemDelegate <NSObject>
+
+- (void)bookmarkGroupChangedTo:(BookmarkItem *)newGroup;
+
+@end
+
+
 @interface BookmarkItem : NSObject
 
 @property (nonatomic, copy, readonly) NSString *itemId;
@@ -17,6 +26,7 @@
 @property (nonatomic, copy) NSString *url;
 @property (nonatomic, copy) NSString *parentId;
 @property (nonatomic, retain) NSArray *content;
+@property (nonatomic, retain) id <BookmarkItemDelegate> delegateBookmark;
 
 - (id)initWithName:(NSString *)name
                url:(NSString *)url

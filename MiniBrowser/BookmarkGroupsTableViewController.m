@@ -31,7 +31,8 @@
             }
         }
         
-        _groupsList = tmpList;
+        _groupsList = [[NSArray arrayWithArray:tmpList] retain];
+        [tmpList release];
     }
     
     return _groupsList;
@@ -65,7 +66,7 @@
 #pragma mark - View lifecycle
 
 #define CONTENT_SETTINGS_WIDTH 330.0f
-#define CONTENT_SETTINGS_HEIGHT 400.0f
+#define CONTENT_SETTINGS_HEIGHT 352.0f
 - (CGSize)contentSizeForViewInPopover
 {
     return CGSizeMake(CONTENT_SETTINGS_WIDTH, CONTENT_SETTINGS_HEIGHT);
