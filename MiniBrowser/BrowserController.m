@@ -194,7 +194,7 @@ BOOL userInitiatedJump = NO;
 - (void)dismissOpenPopoversAndActionSheet
 {
     if ([self.popoverBookmark isPopoverVisible]) {
-        [self.popoverBookmark dismissPopoverAnimated:YES];
+        [self.popoverBookmark dismissPopoverAnimated:NO];
         self.popoverBookmark = nil;
     }
     
