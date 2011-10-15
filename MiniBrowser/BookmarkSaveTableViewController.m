@@ -144,6 +144,24 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+/*    
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                     style:UIBarButtonItemStylePlain
+                                                                    target:self
+                                                                    action:@selector(cancelBookmarkSaving:)];
+    
+    self.navigationItem.leftBarButtonItem = cancelButton;
+
+    [cancelButton release];
+*/
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done"
+                                                                   style:UIBarButtonItemStyleDone
+                                                                  target:self
+                                                                  action:@selector(doneBookmarkSaving:)];
+    
+    self.navigationItem.rightBarButtonItem = doneButton;
+    
+    [doneButton release];
 }
 
 - (void)freeProperties
@@ -197,6 +215,19 @@
 {
     // Return YES for supported orientations
 	return YES;
+}
+
+/*
+- (void)cancelBookmarkSaving:(UIBarButtonItem *)sender
+{
+    [self.bookmarksStorage deleteBookmark:self.bookmark];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+*/
+
+- (void)doneBookmarkSaving:(UIBarButtonItem *)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Bookmark

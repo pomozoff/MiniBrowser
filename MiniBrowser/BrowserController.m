@@ -185,11 +185,13 @@ BOOL userInitiatedJump = NO;
     self.forwardButton.enabled = self.webView.canGoForward;
 }
 
-- (void)cancelSavingBookmark:(id)sender
+/*
+- (void)cancelSavingBookmark:(UIBarButtonItem *)sender
 {
     [self.popoverSaveBookmark dismissPopoverAnimated:YES];
     self.popoverSaveBookmark = nil;
 }
+*/
 
 - (void)dismissOpenPopoversAndActionSheet
 {
@@ -232,6 +234,7 @@ BOOL userInitiatedJump = NO;
     UINavigationController *navigationController = [[UINavigationController alloc] init];
     [navigationController pushViewController:self.bookmarkSaveTableViewController animated:NO];
     
+/*
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
                                                                      style:UIBarButtonItemStylePlain
                                                                     target:self
@@ -241,6 +244,7 @@ BOOL userInitiatedJump = NO;
     navigationController.navigationItem.rightBarButtonItem = navigationController.editButtonItem;
     
     [cancelButton release];
+*/
     
     UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:navigationController];
     [navigationController release];
@@ -439,17 +443,6 @@ BOOL userInitiatedJump = NO;
     NSString *sourceUrl = self.webView.request.URL.absoluteString;
 
     [self setLabel:logString andUrl:sourceUrl];
-    
-    /*
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"error loading url"
-                                                    message:logString
-                                                   delegate:self
-                                          cancelButtonTitle:@"Dismiss"
-                                          otherButtonTitles:nil];
-    
-    [alert show];
-    [alert release];
-    */
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
