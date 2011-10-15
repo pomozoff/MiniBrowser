@@ -14,6 +14,7 @@
 		260E1F55143CD4730098D141 /* iPhoneBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 260E1F54143CD4730098D141 /* iPhoneBrowserView.xib */; };
 		260E1F58143CD4A90098D141 /* iPadBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 260E1F57143CD4A90098D141 /* iPadBrowserView.xib */; };
 		26102EDC1444660000667B0C /* BookmarkTreePermanent.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26102EDB1444660000667B0C /* BookmarkTreePermanent.plist */; };
+		2634976A1449B0BA00D44F47 /* Action.png in Resources */ = {isa = PBXBuildFile; fileRef = 263497691449B0BA00D44F47 /* Action.png */; };
 		265CCEC1143D85B9005F348A /* arrowBackGray.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBA143D85B9005F348A /* arrowBackGray.png */; };
 		265CCEC2143D85B9005F348A /* arrowBackLight.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBB143D85B9005F348A /* arrowBackLight.png */; };
 		265CCEC3143D85B9005F348A /* arrowForwardGray.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBC143D85B9005F348A /* arrowForwardGray.png */; };
@@ -57,6 +58,7 @@
 		260E1F54143CD4730098D141 /* iPhoneBrowserView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = iPhoneBrowserView.xib; sourceTree = "<group>"; };
 		260E1F57143CD4A90098D141 /* iPadBrowserView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = iPadBrowserView.xib; sourceTree = "<group>"; };
 		26102EDB1444660000667B0C /* BookmarkTreePermanent.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BookmarkTreePermanent.plist; sourceTree = "<group>"; };
+		263497691449B0BA00D44F47 /* Action.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Action.png; sourceTree = "<group>"; };
 		265CCEBA143D85B9005F348A /* arrowBackGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowBackGray.png; sourceTree = "<group>"; };
 		265CCEBB143D85B9005F348A /* arrowBackLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowBackLight.png; sourceTree = "<group>"; };
 		265CCEBC143D85B9005F348A /* arrowForwardGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowForwardGray.png; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 		265CCEB9143D85B9005F348A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				263497691449B0BA00D44F47 /* Action.png */,
 				265CCEBA143D85B9005F348A /* arrowBackGray.png */,
 				265CCEBB143D85B9005F348A /* arrowBackLight.png */,
 				265CCEBC143D85B9005F348A /* arrowForwardGray.png */,
@@ -330,6 +333,7 @@
 				26FE56BF144326FB001622F2 /* Bookmark-iPhone.png in Resources */,
 				26B578DC1444376E004657E2 /* BookmarkSaveTable.plist in Resources */,
 				26102EDC1444660000667B0C /* BookmarkTreePermanent.plist in Resources */,
+				2634976A1449B0BA00D44F47 /* Action.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

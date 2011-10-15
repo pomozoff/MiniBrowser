@@ -9,12 +9,6 @@
 #import "BookmarksTableViewController.h"
 #import "BookmarkSaveTableViewController.h"
 
-@interface BookmarksTableViewController()
-
-@property (nonatomic, retain) BookmarkItem *currentBookmarkGroup;
-
-@end
-
 @implementation BookmarksTableViewController
 
 @synthesize delegateController = _delegateController;

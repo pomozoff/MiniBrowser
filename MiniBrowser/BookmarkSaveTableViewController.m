@@ -355,8 +355,10 @@
         self.bookmark.url = textField.text;
     }
     
-    [self.tableViewParent reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.indexPath]
-                                withRowAnimation:UITableViewRowAnimationRight];
+    if (self.indexPath) {
+        [self.tableViewParent reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.indexPath]
+                                    withRowAnimation:UITableViewRowAnimationRight];
+    }
 }
 
 #pragma mark - BookmarkSaveTableViewProtocol

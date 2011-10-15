@@ -187,20 +187,6 @@ NSString *const savedBookmarks = @"savedBookmarks";
     [tmpContent release];
 }
 
-- (void)insertBookmark:(BookmarkItem *)bookmark
-{
-    NSMutableDictionary *tmpList = [self.bookmarksList mutableCopy];
-    
-    [tmpList setObject:bookmark forKey:bookmark.itemId];
-    
-    self.bookmarksList = tmpList;
-    [tmpList release];
-    
-    
-    BookmarkItem *parentItem = [self bookmarkById:bookmark.parentId];
-    [self addBookmark:bookmark toGroup:parentItem];
-}
-
 - (void)removeBookmark:(BookmarkItem *)bookmark fromGroup:(BookmarkItem *)bookmarkGroup
 {
     NSMutableArray *tmpContent = [bookmarkGroup.content mutableCopy];

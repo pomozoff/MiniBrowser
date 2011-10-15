@@ -196,7 +196,6 @@ BOOL userInitiatedJump = NO;
     if ([self.popoverBookmark isPopoverVisible]) {
         [self.popoverBookmark dismissPopoverAnimated:YES];
         self.popoverBookmark = nil;
-//        self.bookmarksTableViewController = nil;
     }
     
     if ([self.popoverSaveBookmark isPopoverVisible]) {
@@ -211,11 +210,24 @@ BOOL userInitiatedJump = NO;
     }
 }
 
-- (void)displaySaveBookmarkPopoverForBarButton:(UIBarButtonItem *)barItem
+- (void)displaySaveNewBookmarkPopoverForBarButton:(UIBarButtonItem *)barItem
 {
     [self dismissOpenPopoversAndActionSheet];
     
     self.bookmarkSaveTableViewController.title = @"Add Bookmark";
+    
+    BookmarkItem *currentBookmarkGroup = self.bookmarksStorage.rootItem;
+
+    UIViewController *topViewController = self.bookmarkNavigationController.topViewController;
+    if ([topViewController isKindOfClass:[BookmarksTableViewController class]]) {
+        BookmarksTableViewController *bookmarkTVC = (BookmarksTableViewController *)topViewController;
+        currentBookmarkGroup = bookmarkTVC.currentBookmarkGroup;
+    }
+    
+    BookmarkItem *newBookmark = [[BookmarkItem alloc] initWithName:@"" url:self.urlField.text group:NO permanent:NO parentId:currentBookmarkGroup.itemId];
+    self.bookmarkSaveTableViewController.bookmark = newBookmark;
+    [self.bookmarksStorage addBookmark:newBookmark toGroup:currentBookmarkGroup];
+    [newBookmark release];
 
     UINavigationController *navigationController = [[UINavigationController alloc] init];
     [navigationController pushViewController:self.bookmarkSaveTableViewController animated:NO];
@@ -279,14 +291,7 @@ BOOL userInitiatedJump = NO;
     if (actionSheet == self.actionSheet) {
         switch (buttonIndex) {
             case 0: { // Add bookmark button
-                /*
-                BookmarkItem *item = [[BookmarkItem alloc] initWithName:@"" url:@"" thisIsAGroup:NO parent:nil];
-                [self.bookmarksStorage addBookmark:item];
-                [item release];
-                */
-                
-                [self displaySaveBookmarkPopoverForBarButton:self.actionButton];
-                
+                [self displaySaveNewBookmarkPopoverForBarButton:self.actionButton];
                 break;
             }
             
@@ -371,6 +376,8 @@ BOOL userInitiatedJump = NO;
     return YES;
 }
 
+# pragma mark - web view cnotroller delegate
+
 - (void)loadUrl:(NSString *)url
 {
     if ([[url stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""]) {
@@ -381,16 +388,6 @@ BOOL userInitiatedJump = NO;
     readyUrl = [readyUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:readyUrl]]];
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    userInitiatedJump = YES;
-
-    [self loadUrl:textField.text];
-    
-    return YES;
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
@@ -455,6 +452,23 @@ BOOL userInitiatedJump = NO;
     */
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+}
+
+# pragma mark - text field delegate
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    [self dismissOpenPopoversAndActionSheet];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    userInitiatedJump = YES;
+    
+    [self loadUrl:textField.text];
+    
+    return YES;
 }
 
 - (void)searchTheText:(NSString *)text

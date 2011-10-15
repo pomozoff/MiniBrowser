@@ -16,14 +16,14 @@
 @property (nonatomic, readonly, retain) BookmarkItem *rootItem;
 
 - (NSInteger)bookmarksCountForParent:(BookmarkItem *)parentItem;
-- (BookmarkItem *)bookmarkAtIndex:(NSIndexPath *)indexPath forParent:(BookmarkItem *)parentItem;
-
-- (void)insertBookmark:(BookmarkItem *)bookmark;
-- (void)deleteBookmark:(BookmarkItem *)bookmark;
 - (void)moveBookmarkAtPosition:(NSIndexPath *)fromIndexPath toPosition:(NSIndexPath *)toIndexPath insideGroup:(BookmarkItem *)group;
 
 - (BookmarkItem *)bookmarkById:(NSString *)itemId;
+- (BookmarkItem *)bookmarkAtIndex:(NSIndexPath *)indexPath forParent:(BookmarkItem *)parentItem;
+
+- (void)addBookmark:(BookmarkItem *)bookmark toGroup:(BookmarkItem *)bookmarkGroup;
 - (void)moveBookmark:(BookmarkItem *)bookmark toGroup:(BookmarkItem *)groupBookmark;
+- (void)deleteBookmark:(BookmarkItem *)bookmark;
 
 - (NSArray *)bookmarkGroupsWithoutBranch:(BookmarkItem *)branchBookmark;
 
