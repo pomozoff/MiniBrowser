@@ -8,17 +8,33 @@
 
 #import "BookmarkGroupsTableViewController.h"
 
+@interface BookmarkGroupsTableViewController()
+
+@property (nonatomic, retain) NSArray *treeList;
+
+@end
+
 @implementation BookmarkGroupsTableViewController
 
 @synthesize bookmark = _bookmark;
 @synthesize bookmarkParent = _bookmarkParent;
 @synthesize bookmarksStorage = _bookmarksStorage;
 @synthesize saveTableViewController = _saveTableViewController;
+@synthesize treeList = _treeList;
 
 - (void)setBookmarkParent:(BookmarkItem *)newParent
 {
     [_bookmarkParent release];
     _bookmarkParent = newParent;
+}
+
+- (NSArray *)treeList
+{
+    if (!_treeList) {
+        _treeList = [[self.bookmarksStorage bookmarkGroupsWithoutBranch:self.bookmark] retain];
+    }
+    
+    return _treeList;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -63,6 +79,7 @@
     self.bookmarkParent = nil;
     self.bookmarksStorage = nil;
     self.saveTableViewController = nil;
+    self.treeList = nil;
 }
 
 - (void)viewDidUnload
@@ -110,8 +127,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSArray *treeList = [self.bookmarksStorage bookmarkGroupsWithoutBranch:self.bookmark];
-    NSInteger rowsCount = treeList.count;
+    NSInteger rowsCount = self.treeList.count;
     
     // Return the number of rows in the section.
     return rowsCount;
@@ -126,7 +142,7 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    BookmarkItem *groupBookmark = [self.bookmarksStorage.groupsTreeList objectAtIndex:indexPath.row];
+    BookmarkItem *groupBookmark = [self.treeList objectAtIndex:indexPath.row];
     cell.textLabel.text = groupBookmark.name;
     
     return cell;
@@ -175,7 +191,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BookmarkItem *groupBookmark = [self.bookmarksStorage.groupsTreeList objectAtIndex:indexPath.row];
+    BookmarkItem *groupBookmark = [self.treeList objectAtIndex:indexPath.row];
     [self.saveTableViewController moveBookmarkToGroup:groupBookmark];
     
     [self.navigationController popViewControllerAnimated:YES];

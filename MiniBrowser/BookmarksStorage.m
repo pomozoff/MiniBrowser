@@ -119,7 +119,7 @@ NSString *const savedBookmarks = @"savedBookmarks";
             continue;
         }
         
-        if (bookmark != excludeItemParent) {
+        if (!bookmark.permanent && bookmark != excludeItemParent) {
             [treeList addObject:bookmark];
         }
         

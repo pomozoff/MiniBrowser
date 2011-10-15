@@ -483,8 +483,19 @@ BOOL userInitiatedJump = NO;
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
 {
     if (popoverController == self.popoverBookmark) {
-        self.popoverBookmark = nil;
-//        self.bookmarksTableViewController = nil;
+        self.popoverBookmark = nil; // free memory
+        
+        // pop edit bookmark controller from navigation stack
+        while (![self.bookmarkNavigationController.topViewController isKindOfClass:[BookmarksTableViewController class]]) {
+            [self.bookmarkNavigationController popViewControllerAnimated:NO];
+        }
+        
+        // close editing mode on top table view controller
+        UIViewController *topViewController = self.bookmarkNavigationController.topViewController;
+        if ([topViewController isKindOfClass:[UITableViewController class]]) {
+            ((UITableViewController *)topViewController).editing = NO;
+        }
+        
     }
     
     if (popoverController == self.popoverSaveBookmark) {
