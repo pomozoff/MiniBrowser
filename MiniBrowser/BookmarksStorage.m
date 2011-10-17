@@ -126,7 +126,6 @@ NSString *const savedBookmarks = @"savedBookmarks";
         }
         
         if (!bookmark.isPermanent && bookmark != excludeItemParent) {
-            [treeList addObject:bookmark];
             NSArray *keys = [NSArray arrayWithObjects:@"bookmark", @"level", nil];
             NSArray *objects = [NSArray arrayWithObjects:bookmark, [NSNumber numberWithInt:level], nil];
             
@@ -224,10 +223,13 @@ NSString *const savedBookmarks = @"savedBookmarks";
     
     [bookmark retain];
     [self removeBookmark:bookmark fromGroup:currentParent];
+    [bookmark.delegateBookmark reloadBookmarksForGroup:currentParent];
+
     [self addBookmark:bookmark toGroup:groupBookmark];
     [bookmark release];
     
     bookmark.parentId = groupBookmark.itemId;
+    bookmark.delegateBookmark = groupBookmark.delegateBookmark;
     [bookmark.delegateBookmark reloadBookmarksForGroup:groupBookmark];
 }
 

@@ -20,6 +20,7 @@
 {
     if (!_currentBookmarkGroup) {
         _currentBookmarkGroup = [self.bookmarksStorage rootItem];
+        _currentBookmarkGroup.delegateBookmark = self;
     }
     
     return _currentBookmarkGroup;

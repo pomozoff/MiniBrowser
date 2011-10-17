@@ -90,7 +90,7 @@
                   (bookmark.isPermanent == self.isPermanent) &&
                   [bookmark.name isEqualToString:self.name] && 
                   [bookmark.url isEqualToString:self.url] &&
-                  [bookmark.parentId isEqualToString:self.parentId] &&
+                  ((!self.parentId && !bookmark.parentId) || [bookmark.parentId isEqualToString:self.parentId]) &&
                   [bookmark.content isEqualToArray:self.content];
     
     return result;

@@ -57,7 +57,7 @@ NSString *const sectionGroup = @"Group";
     NSArray *titles = [currentSection objectForKey:@"Title"];
     NSInteger numberOfRows = titles.count;
     
-    if (section == 0 && bookmark.group) {
+    if (section == 0 && bookmark.isGroup) {
         numberOfRows--;
     }
     
