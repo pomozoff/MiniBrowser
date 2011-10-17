@@ -89,14 +89,14 @@
         _urlField = [[UITextField alloc] initWithFrame:[self createRectForTextFieldInCell]];
         _urlField.adjustsFontSizeToFitWidth = YES;
         _urlField.textColor = [UIColor blackColor];
-        _urlField.placeholder = self.bookmark.group ? @"Group" : @"URL";
+        _urlField.placeholder = self.bookmark.isGroup ? @"Group" : @"URL";
         _urlField.keyboardType = UIKeyboardTypeURL;
         _urlField.returnKeyType = UIReturnKeyDefault;
         _urlField.autocorrectionType = UITextAutocorrectionTypeNo;
         _urlField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         _urlField.textAlignment = UITextAlignmentLeft;
         _urlField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        _urlField.enabled = !self.bookmark.group;
+        _urlField.enabled = !self.bookmark.isGroup;
         _urlField.text = self.bookmark.url;
         _urlField.delegate = self;
     }
@@ -124,7 +124,7 @@
 #pragma mark - View lifecycle
 
 #define CONTENT_SETTINGS_WIDTH 330.0f
-#define CONTENT_SETTINGS_HEIGHT 175.0f
+#define CONTENT_SETTINGS_HEIGHT 352.0f
 - (CGSize)contentSizeForViewInPopover
 {
     return CGSizeMake(CONTENT_SETTINGS_WIDTH, CONTENT_SETTINGS_HEIGHT);
@@ -243,7 +243,7 @@
                 }
                     
                 case 1: { // Bookmark url
-                    if (self.bookmark.group) {
+                    if (self.bookmark.isGroup) {
                         cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     }
                     

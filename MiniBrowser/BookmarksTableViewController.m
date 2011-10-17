@@ -134,8 +134,8 @@
 
     cell.textLabel.text = currentBookmark.name;
     cell.detailTextLabel.text = currentBookmark.url;
-    cell.accessoryType = currentBookmark.group ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
-    cell.editingAccessoryType = currentBookmark.permanent ? UITableViewCellAccessoryNone : UITableViewCellAccessoryDisclosureIndicator;
+    cell.accessoryType = currentBookmark.isGroup ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
+    cell.editingAccessoryType = currentBookmark.isPermanent ? UITableViewCellAccessoryNone : UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
 }
@@ -174,14 +174,14 @@
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BookmarkItem *bookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentBookmarkGroup];
-    BOOL canOrder = !bookmark.permanent;
+    BOOL canOrder = !bookmark.isPermanent;
     return canOrder;
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)source
        toProposedIndexPath:(NSIndexPath *)destination {
     BookmarkItem *targetBookmark = [self.bookmarksStorage bookmarkAtIndex:destination forParent:self.currentBookmarkGroup];
-    NSIndexPath *result = targetBookmark.permanent ? source : destination;
+    NSIndexPath *result = targetBookmark.isPermanent ? source : destination;
     
     return result;
 }
@@ -189,7 +189,7 @@
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BookmarkItem *bookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentBookmarkGroup];
-    UITableViewCellEditingStyle style = bookmark.permanent ? UITableViewCellEditingStyleNone : UITableViewCellEditingStyleDelete;
+    UITableViewCellEditingStyle style = bookmark.isPermanent ? UITableViewCellEditingStyleNone : UITableViewCellEditingStyleDelete;
     
     return style;
 }
@@ -215,7 +215,7 @@
         
         [bookmarkSaveTVC release];
     } else {
-        if (currentBookmark.group) {
+        if (currentBookmark.isGroup) {
             BookmarksTableViewController *newBookmarksTVC = [[BookmarksTableViewController alloc] init];
             
             newBookmarksTVC.delegateController = self.delegateController;
@@ -232,9 +232,11 @@
 
 #pragma mark - Bookmark Item delegate
 
-- (void)bookmarkGroupChangedTo:(BookmarkItem *)newBookmarkGroup
+- (void)reloadBookmarksForGroup:(BookmarkItem *)bookmarkGroup
 {
-    [self.tableView reloadData];
+    if (bookmarkGroup && [self.currentBookmarkGroup isEqualToBookmark:bookmarkGroup]) {
+        [self.tableView reloadData];
+    }
 }
 
 @end

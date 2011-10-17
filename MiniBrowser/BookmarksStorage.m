@@ -20,6 +20,7 @@
 @synthesize sectionsCount = _sectionsCount;
 @synthesize groupsTreeList = _groupsTreeList;
 @synthesize rootItem = _rootItem;
+@synthesize historyGroup = _historyGroup;
 
 @synthesize bookmarksTree = _bookmarksTree;
 @synthesize bookmarksList = _bookmarksList;
@@ -46,6 +47,11 @@ NSString *const savedBookmarks = @"savedBookmarks";
         
         NSString *itemId = item.itemId;
         [list setObject:item forKey:itemId];
+        
+        if (permanent && [name isEqualToString:@"History"]) {
+            [_historyGroup release];
+            _historyGroup = [item retain];
+        }
         
         NSArray *content = [subItem objectForKey:@"content"];
         [self generateBookmarksList:list fromTree:content parent:item];
@@ -106,12 +112,12 @@ NSString *const savedBookmarks = @"savedBookmarks";
                  excludeBranch:(BookmarkItem *)excludeItem
            excludeBranchParent:(BookmarkItem *)excludeItemParent
 {
-    if (!bookmarkGroup.group) {
+    if (!bookmarkGroup.isGroup) {
         return;
     }
     
     for (BookmarkItem *bookmark in bookmarkGroup.content) {
-        if (!bookmark.group) {
+        if (!bookmark.isGroup) {
             continue;
         }
         
@@ -119,7 +125,7 @@ NSString *const savedBookmarks = @"savedBookmarks";
             continue;
         }
         
-        if (!bookmark.permanent && bookmark != excludeItemParent) {
+        if (!bookmark.isPermanent && bookmark != excludeItemParent) {
             [treeList addObject:bookmark];
         }
         
@@ -185,6 +191,8 @@ NSString *const savedBookmarks = @"savedBookmarks";
     bookmarkGroup.content = tmpContent;
     
     [tmpContent release];
+    
+    bookmark.parentId = bookmarkGroup.itemId;
 }
 
 - (void)removeBookmark:(BookmarkItem *)bookmark fromGroup:(BookmarkItem *)bookmarkGroup
@@ -231,7 +239,7 @@ NSString *const savedBookmarks = @"savedBookmarks";
     [bookmark release];
     
     bookmark.parentId = groupBookmark.itemId;
-    [bookmark.delegateBookmark bookmarkGroupChangedTo:groupBookmark];
+    [bookmark.delegateBookmark reloadBookmarksForGroup:groupBookmark];
 }
 
 - (NSArray *)bookmarkGroupsWithoutBranch:(BookmarkItem *)branchBookmark
@@ -250,12 +258,42 @@ NSString *const savedBookmarks = @"savedBookmarks";
     return [resultList autorelease];
 }
 
+#define HISTORY_LIST_CPACITY 50
+- (void)addHistoryBookmark:(BookmarkItem *)bookmark
+{
+    if (!self.rootItem) { // Bookmark control couldn't initialize
+        return;
+    }
+
+    bookmark.parentId = self.historyGroup.itemId;
+    if (self.historyGroup.content.count > 0) {
+        BookmarkItem *lastBookmark = [self.historyGroup.content objectAtIndex:0];
+        if ([bookmark isEqualToBookmark:lastBookmark]) {
+            return;
+        }
+    }
+    
+    NSMutableArray *tmpHistory = [self.historyGroup.content mutableCopy];
+    
+    [tmpHistory insertObject:bookmark atIndex:0];
+    if (HISTORY_LIST_CPACITY < self.historyGroup.content.count) {
+        [tmpHistory removeObjectsInRange:NSMakeRange(HISTORY_LIST_CPACITY, self.historyGroup.content.count - HISTORY_LIST_CPACITY)];
+    }
+    self.historyGroup.content = tmpHistory;
+    
+    [tmpHistory release];
+
+    [bookmark.delegateBookmark reloadBookmarksForGroup:self.historyGroup];
+}
+
 - (void)dealloc
 {
     [_rootItem release];
     _rootItem = nil;
     [_groupsTreeList release];
     _groupsTreeList = nil;
+    [_historyGroup release];
+    _historyGroup = nil;
     
     self.bookmarksTree = nil;
     self.bookmarksList = nil;

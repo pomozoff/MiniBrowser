@@ -212,18 +212,25 @@ BOOL userInitiatedJump = NO;
     }
 }
 
+- (void)finishEditing
+{
+    [self.urlField resignFirstResponder];
+    [self.searchBar resignFirstResponder];
+}
+
 - (void)displaySaveNewBookmarkPopoverForBarButton:(UIBarButtonItem *)barItem
 {
     [self dismissOpenPopoversAndActionSheet];
     
-    self.bookmarkSaveTableViewController.title = @"Add Bookmark";
+    self.bookmarkSaveTableViewController.title = barItem.title;
     
     BookmarkItem *currentBookmarkGroup = self.bookmarksStorage.rootItem;
 
     UIViewController *topViewController = self.bookmarkNavigationController.topViewController;
     if ([topViewController isKindOfClass:[BookmarksTableViewController class]]) {
         BookmarksTableViewController *bookmarkTVC = (BookmarksTableViewController *)topViewController;
-        currentBookmarkGroup = bookmarkTVC.currentBookmarkGroup;
+        currentBookmarkGroup = [bookmarkTVC.currentBookmarkGroup isEqualToBookmark:self.bookmarksStorage.historyGroup] ? 
+                                self.bookmarksStorage.rootItem : bookmarkTVC.currentBookmarkGroup;
     }
     
     BookmarkItem *newBookmark = [[BookmarkItem alloc] initWithName:@"" url:self.urlField.text group:NO permanent:NO parentId:currentBookmarkGroup.itemId];
@@ -272,6 +279,7 @@ BOOL userInitiatedJump = NO;
 - (IBAction)bookmarkPressed:(id)sender
 {
     [self dismissOpenPopoversAndActionSheet];
+    [self finishEditing];
     
     UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:self.bookmarkNavigationController];
     
@@ -286,6 +294,7 @@ BOOL userInitiatedJump = NO;
 - (IBAction)actionPressed:(id)sender
 {
     [self dismissOpenPopoversAndActionSheet];
+    [self finishEditing];
     
     [self.actionSheet showFromBarButtonItem:sender animated:YES];
 }
@@ -430,6 +439,18 @@ BOOL userInitiatedJump = NO;
     NSString *label = [self.webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     NSString *sourceUrl = self.webView.request.URL.absoluteString;
     
+    BookmarkItem *historyItem = [[BookmarkItem alloc] initWithName:label
+                                                               url:sourceUrl
+                                                             group:NO
+                                                         permanent:NO
+                                                          parentId:nil];
+    
+    if ([self.bookmarkNavigationController.topViewController conformsToProtocol:@protocol(BookmarkItemDelegate)]) {
+        historyItem.delegateBookmark = (id <BookmarkItemDelegate>)self.bookmarkNavigationController.topViewController;
+    }
+    [self.bookmarksStorage addHistoryBookmark:historyItem];
+    [historyItem release];
+    
     [self setLabel:label andUrl:sourceUrl];
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
@@ -483,6 +504,18 @@ BOOL userInitiatedJump = NO;
     userInitiatedJump = YES;
     [self dismissOpenPopoversAndActionSheet];
     [self loadUrl:url];
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    [self dismissOpenPopoversAndActionSheet];
+    return YES;
+}
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    [self dismissOpenPopoversAndActionSheet];
+    return YES;
 }
 
 # pragma mark - Popover delegate

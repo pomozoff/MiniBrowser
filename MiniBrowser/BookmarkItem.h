@@ -12,7 +12,7 @@
 
 @protocol BookmarkItemDelegate <NSObject>
 
-- (void)bookmarkGroupChangedTo:(BookmarkItem *)newBookmarkGroup;
+- (void)reloadBookmarksForGroup:(BookmarkItem *)bookmarkGroup;
 
 @end
 
@@ -20,8 +20,8 @@
 @interface BookmarkItem : NSObject
 
 @property (nonatomic, copy, readonly) NSString *itemId;
-@property (nonatomic, readonly) BOOL group;
-@property (nonatomic, readonly) BOOL permanent;
+@property (nonatomic, readonly) BOOL isGroup;
+@property (nonatomic, readonly) BOOL isPermanent;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *url;
 @property (nonatomic, copy) NSString *parentId;
@@ -33,5 +33,7 @@
              group:(BOOL)isThisAGroup
          permanent:(BOOL)isThisPermanent
           parentId:(NSString *)parentId;
+
+- (BOOL)isEqualToBookmark:(BookmarkItem *)bookmark;
 
 @end

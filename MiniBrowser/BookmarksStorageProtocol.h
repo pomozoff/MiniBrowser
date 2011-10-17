@@ -14,6 +14,7 @@
 @property (nonatomic, readonly) NSInteger sectionsCount;
 @property (nonatomic, readonly, retain) NSArray *groupsTreeList;
 @property (nonatomic, readonly, retain) BookmarkItem *rootItem;
+@property (nonatomic, readonly, retain) BookmarkItem *historyGroup;
 
 - (NSInteger)bookmarksCountForParent:(BookmarkItem *)parentItem;
 - (void)moveBookmarkAtPosition:(NSIndexPath *)fromIndexPath toPosition:(NSIndexPath *)toIndexPath insideGroup:(BookmarkItem *)group;
@@ -24,6 +25,8 @@
 - (void)addBookmark:(BookmarkItem *)bookmark toGroup:(BookmarkItem *)bookmarkGroup;
 - (void)moveBookmark:(BookmarkItem *)bookmark toGroup:(BookmarkItem *)groupBookmark;
 - (void)deleteBookmark:(BookmarkItem *)bookmark;
+
+- (void)addHistoryBookmark:(BookmarkItem *)bookmark;
 
 - (NSArray *)bookmarkGroupsWithoutBranch:(BookmarkItem *)branchBookmark;
 

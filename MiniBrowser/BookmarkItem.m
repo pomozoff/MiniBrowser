@@ -11,8 +11,8 @@
 @implementation BookmarkItem
 
 @synthesize itemId = _itemId;
-@synthesize group = _group;
-@synthesize permanent = _permanent;
+@synthesize isGroup = _group;
+@synthesize isPermanent = _permanent;
 @synthesize name = _name;
 @synthesize url = _url;
 @synthesize parentId = _parentId;
@@ -80,8 +80,20 @@
 
 - (NSString *)description
 {
-    NSString *desription = [NSString stringWithFormat:@"Bookmark named \"%@\"\nurl: %@\ngroup: %@\npermanent: %@\nid: %@\nparentId: %@\nsubitems count: %d", self.name, self.url, self.group ? @"YES" : @"NO", self.permanent ? @"YES" : @"NO", self.itemId, self.parentId, self.content.count];
+    NSString *desription = [NSString stringWithFormat:@"Bookmark named \"%@\"\nurl: %@\ngroup: %@\npermanent: %@\nid: %@\nparentId: %@\nsubitems count: %d", self.name, self.url, self.isGroup ? @"YES" : @"NO", self.isPermanent ? @"YES" : @"NO", self.itemId, self.parentId, self.content.count];
     return desription;
+}
+
+- (BOOL)isEqualToBookmark:(BookmarkItem *)bookmark
+{
+    BOOL result = (bookmark.isGroup == self.isGroup) &&
+                  (bookmark.isPermanent == self.isPermanent) &&
+                  [bookmark.name isEqualToString:self.name] && 
+                  [bookmark.url isEqualToString:self.url] &&
+                  [bookmark.parentId isEqualToString:self.parentId] &&
+                  [bookmark.content isEqualToArray:self.content];
+    
+    return result;
 }
 
 - (void)dealloc
