@@ -51,11 +51,15 @@ NSString *const sectionGroup = @"Group";
     return self;
 }
 
-- (NSInteger)numberOfRowsForSection:(NSInteger)section
+- (NSInteger)numberOfRowsForSection:(NSInteger)section forBookmark:(BookmarkItem *)bookmark
 {
-    NSDictionary *curSection = [self.sections objectAtIndex:section];
-    NSArray *titles = [curSection objectForKey:@"Title"];
+    NSDictionary *currentSection = [self.sections objectAtIndex:section];
+    NSArray *titles = [currentSection objectForKey:@"Title"];
     NSInteger numberOfRows = titles.count;
+    
+    if (section == 0 && bookmark.group) {
+        numberOfRows--;
+    }
     
     return numberOfRows;
 }

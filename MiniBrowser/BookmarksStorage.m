@@ -18,7 +18,6 @@
 @implementation BookmarksStorage
 
 @synthesize sectionsCount = _sectionsCount;
-@synthesize groupsTreeList = _groupsTreeList;
 @synthesize rootItem = _rootItem;
 @synthesize historyGroup = _historyGroup;
 
@@ -111,6 +110,7 @@ NSString *const savedBookmarks = @"savedBookmarks";
              fromBookmarkGroup:(BookmarkItem *)bookmarkGroup
                  excludeBranch:(BookmarkItem *)excludeItem
            excludeBranchParent:(BookmarkItem *)excludeItemParent
+                  currentLevel:(NSInteger)level
 {
     if (!bookmarkGroup.isGroup) {
         return;
@@ -127,31 +127,20 @@ NSString *const savedBookmarks = @"savedBookmarks";
         
         if (!bookmark.isPermanent && bookmark != excludeItemParent) {
             [treeList addObject:bookmark];
+            NSArray *keys = [NSArray arrayWithObjects:@"bookmark", @"level", nil];
+            NSArray *objects = [NSArray arrayWithObjects:bookmark, [NSNumber numberWithInt:level], nil];
+            
+            NSDictionary *bookmarkGroup = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
+            [treeList addObject:bookmarkGroup];
+            level++;
         }
         
         [self generateGroupsTreeList:treeList
                    fromBookmarkGroup:bookmark
                        excludeBranch:excludeItem
-                 excludeBranchParent:excludeItemParent];
+                 excludeBranchParent:excludeItemParent
+                        currentLevel:level];
     }
-}
-
-- (NSArray *)groupsTreeList
-{
-    if (!_groupsTreeList) {
-        NSMutableArray *treeList = [[NSMutableArray alloc] init];
-        
-        [treeList addObject:self.rootItem];
-        [self generateGroupsTreeList:treeList
-                   fromBookmarkGroup:self.rootItem
-                       excludeBranch:nil
-                 excludeBranchParent:nil];
-        _groupsTreeList = [[NSArray arrayWithArray:treeList] retain];
-        
-        [treeList release];
-    }
-    
-    return _groupsTreeList;
 }
 
 - (id)init
@@ -246,13 +235,25 @@ NSString *const savedBookmarks = @"savedBookmarks";
 {
     NSMutableArray *mutableList = [[NSMutableArray alloc] init];
     BookmarkItem *branchBookmarkParent = [self bookmarkById:branchBookmark.parentId];
+    NSInteger level = 0;
+    
+    if (branchBookmarkParent != self.rootItem) {
+        NSArray *keys = [NSArray arrayWithObjects:@"bookmark", @"level", nil];
+        NSArray *objects = [NSArray arrayWithObjects:self.rootItem, [NSNumber numberWithInt:level], nil];
+        
+        NSDictionary *bookmarkGroup = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
+        
+        [mutableList addObject:bookmarkGroup];
+        level++;
+    }
     
     [self generateGroupsTreeList:mutableList
                fromBookmarkGroup:self.rootItem
                    excludeBranch:branchBookmark
-             excludeBranchParent:branchBookmarkParent];
-    NSArray *resultList = [[NSArray arrayWithArray:mutableList] retain];
+             excludeBranchParent:branchBookmarkParent
+                    currentLevel:level];
     
+    NSArray *resultList = [[NSArray arrayWithArray:mutableList] retain];
     [mutableList release];
      
     return [resultList autorelease];
@@ -290,8 +291,6 @@ NSString *const savedBookmarks = @"savedBookmarks";
 {
     [_rootItem release];
     _rootItem = nil;
-    [_groupsTreeList release];
-    _groupsTreeList = nil;
     [_historyGroup release];
     _historyGroup = nil;
     

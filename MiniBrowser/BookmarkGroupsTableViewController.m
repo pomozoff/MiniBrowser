@@ -142,8 +142,16 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    BookmarkItem *groupBookmark = [self.treeList objectAtIndex:indexPath.row];
-    cell.textLabel.text = groupBookmark.name;
+    NSDictionary *bookmarkData = [self.treeList objectAtIndex:indexPath.row];
+    BookmarkItem *groupBookmark = [bookmarkData objectForKey:@"bookmark"];
+    NSInteger length = [[bookmarkData objectForKey:@"level"] intValue];
+    
+    NSString *prefix = @"";
+    for (NSInteger i = 0; i < length; ++i) {
+        prefix = [prefix stringByAppendingString:@"  "];
+    }
+    
+    cell.textLabel.text = [prefix stringByAppendingString:groupBookmark.name];
     
     return cell;
 }
@@ -191,7 +199,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BookmarkItem *groupBookmark = [self.treeList objectAtIndex:indexPath.row];
+    NSDictionary *bookmarkData = [self.treeList objectAtIndex:indexPath.row];
+    BookmarkItem *groupBookmark = [bookmarkData objectForKey:@"bookmark"];
     [self.saveTableViewController moveBookmarkToGroup:groupBookmark];
     
     [self.navigationController popViewControllerAnimated:YES];

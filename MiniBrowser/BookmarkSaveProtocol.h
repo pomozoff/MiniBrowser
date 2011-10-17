@@ -13,6 +13,6 @@
 
 @property (nonatomic, readonly) NSInteger sectionsCount;
 
-- (NSInteger)numberOfRowsForSection:(NSInteger)section;
+- (NSInteger)numberOfRowsForSection:(NSInteger)section forBookmark:(BookmarkItem *)bookmark;
 
 @end

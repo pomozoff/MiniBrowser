@@ -12,7 +12,6 @@
 @protocol BookmarksStorageProtocol <NSObject>
 
 @property (nonatomic, readonly) NSInteger sectionsCount;
-@property (nonatomic, readonly, retain) NSArray *groupsTreeList;
 @property (nonatomic, readonly, retain) BookmarkItem *rootItem;
 @property (nonatomic, readonly, retain) BookmarkItem *historyGroup;
 

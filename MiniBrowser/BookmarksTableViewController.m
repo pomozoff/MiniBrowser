@@ -107,6 +107,52 @@
 	return YES;
 }
 
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+    [super setEditing:editing animated:animated];
+    
+    if (editing) {
+        UIBarButtonItem *newFolderButton = [[UIBarButtonItem alloc] initWithTitle:@"New folder button"
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(newFolderPressed:)];
+        
+        self.navigationItem.leftBarButtonItem = newFolderButton;
+        [newFolderButton release];
+    } else {
+        self.navigationItem.leftBarButtonItem = nil;
+    }
+}
+
+- (void)newFolderPressed:(UIBarButtonItem *)sender
+{
+    BookmarkSaveTableViewController *bookmarkSaveTVC = [[BookmarkSaveTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    
+    BookmarkItem *newFolder = [[BookmarkItem alloc] initWithName:@"" url:nil group:YES permanent:NO parentId:self.currentBookmarkGroup.itemId];
+    
+    [self.bookmarksStorage addBookmark:newFolder toGroup:self.currentBookmarkGroup];
+
+    NSInteger numberOfRows = [self.bookmarksStorage bookmarksCountForParent:self.currentBookmarkGroup];
+    NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:(numberOfRows - 1) inSection:0];
+    
+    bookmarkSaveTVC.title = @"Edit Folder";
+    bookmarkSaveTVC.bookmark = newFolder;
+    bookmarkSaveTVC.bookmarksStorage = self.bookmarksStorage;
+    bookmarkSaveTVC.tableViewParent = self.tableView;
+    bookmarkSaveTVC.indexPath = newIndexPath;
+    
+    newFolder.delegateBookmark = self;
+    
+    [newFolder release];
+    
+    NSArray *arrayPaths = [NSArray arrayWithObject:newIndexPath];
+    [self.tableView insertRowsAtIndexPaths:arrayPaths withRowAnimation:UITableViewRowAnimationRight];
+    
+    [self.navigationController pushViewController:bookmarkSaveTVC animated:YES];
+    
+    [bookmarkSaveTVC release];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
