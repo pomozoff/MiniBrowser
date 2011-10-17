@@ -47,7 +47,7 @@
     return _bookmark;
 }
 
-#define CELL_FIELD_TOP_MARGINE 12.0f
+#define CELL_FIELD_TOP_MARGIN 12.0f
 #define CELL_FIELD_HEIGHT 21.0f
 #define CELL_FIELD_WIDTH_PERCENT 85.0f
 
@@ -55,9 +55,9 @@
 {
     CGSize boundsSize = self.view.bounds.size;
     CGFloat fieldWidth = boundsSize.width * CELL_FIELD_WIDTH_PERCENT / 100;
-    CGFloat fieldLeftMargine = (boundsSize.width - fieldWidth) / 2;
+    CGFloat fieldLeftMargin = (boundsSize.width - fieldWidth) / 2;
     
-    CGRect rect = CGRectMake(fieldLeftMargine, CELL_FIELD_TOP_MARGINE, fieldWidth, CELL_FIELD_HEIGHT);
+    CGRect rect = CGRectMake(fieldLeftMargin, CELL_FIELD_TOP_MARGIN, fieldWidth, CELL_FIELD_HEIGHT);
     
     return rect;
 }
@@ -68,7 +68,7 @@
         _nameField = [[UITextField alloc] initWithFrame:[self createRectForTextFieldInCell]];
         _nameField.adjustsFontSizeToFitWidth = YES;
         _nameField.textColor = [UIColor blackColor];
-        _nameField.placeholder = @"Name";
+        _nameField.placeholder = @"Title";
         _nameField.keyboardType = UIKeyboardTypeDefault;
         _nameField.returnKeyType = UIReturnKeyDefault;
         _nameField.autocorrectionType = UITextAutocorrectionTypeDefault;
@@ -89,7 +89,7 @@
         _urlField = [[UITextField alloc] initWithFrame:[self createRectForTextFieldInCell]];
         _urlField.adjustsFontSizeToFitWidth = YES;
         _urlField.textColor = [UIColor blackColor];
-        _urlField.placeholder = self.bookmark.isGroup ? @"Group" : @"URL";
+        _urlField.placeholder = @"URL";
         _urlField.keyboardType = UIKeyboardTypeURL;
         _urlField.returnKeyType = UIReturnKeyDefault;
         _urlField.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -288,7 +288,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSInteger numberOfRows = [self.bookmarkSaveModel numberOfRowsForSection:section];
+    NSInteger numberOfRows = [self.bookmarkSaveModel numberOfRowsForSection:section forBookmark:self.bookmark];
     return numberOfRows;
 }
 
