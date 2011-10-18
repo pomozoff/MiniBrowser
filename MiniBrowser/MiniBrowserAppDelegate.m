@@ -25,7 +25,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [self.window addSubview:self.browserController.view];
     [self.window makeKeyAndVisible];
     return YES;
 }

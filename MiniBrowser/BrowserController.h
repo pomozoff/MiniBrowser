@@ -14,6 +14,7 @@
                                                  UIActionSheetDelegate,
                                                  UIActionSheetDelegate,
                                                  UIPopoverControllerDelegate,
+                                                 UINavigationControllerDelegate,
                                                  BrowserControllerDelegate>
 
 @property (nonatomic, retain) IBOutlet UINavigationBar *navigationBar;

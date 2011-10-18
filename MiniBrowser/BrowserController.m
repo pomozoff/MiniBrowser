@@ -255,10 +255,10 @@ BOOL userInitiatedJump = NO;
     [self.bookmarksStorage addBookmark:newBookmark toGroup:currentBookmarkGroup];
     [newBookmark release];
 
-    UINavigationController *navigationController = [[UINavigationController alloc] init];
-    [navigationController pushViewController:self.bookmarkSaveTableViewController animated:NO];
-    
     if (self.isIPad) {
+        UINavigationController *navigationController = [[UINavigationController alloc] init];
+        [navigationController pushViewController:self.bookmarkSaveTableViewController animated:NO];
+        
         UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:navigationController];
         [navigationController release];
         
@@ -271,7 +271,7 @@ BOOL userInitiatedJump = NO;
                                          permittedArrowDirections:UIPopoverArrowDirectionUp
                                                          animated:YES];
     } else {
-        [self.navigationController pushViewController:navigationController animated:YES];
+        [self.navigationController pushViewController:self.bookmarkSaveTableViewController animated:YES];
     }
 }
 
@@ -290,7 +290,7 @@ BOOL userInitiatedJump = NO;
         
         [self.popoverBookmark presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     } else {
-        [self.navigationController pushViewController:self.bookmarkNavigationController animated:YES];
+        [self.navigationController pushViewController:self.bookmarksTableViewController animated:YES];
     }
 }
 
@@ -545,6 +545,15 @@ BOOL userInitiatedJump = NO;
         self.popoverSaveBookmark = nil;
         self.bookmarkSaveTableViewController = nil;
         self.actionSheet = nil;
+    }
+}
+
+# pragma mark - Popover delegate
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    if (navigationController == self.navigationController && !self.isIPad) {
+        self.navigationController.navigationBarHidden = viewController == self;
     }
 }
 

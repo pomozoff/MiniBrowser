@@ -26,6 +26,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.browserController.isIPad = YES;
+    [self.window addSubview:self.browserController.view];
     
     return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
