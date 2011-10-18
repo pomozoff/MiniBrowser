@@ -10,7 +10,6 @@
 
 @interface BookmarksStorage()
 
-@property (nonatomic, retain) NSArray *bookmarksTree;
 @property (nonatomic, retain) NSDictionary *bookmarksList;
 
 @end
@@ -21,7 +20,6 @@
 @synthesize rootItem = _rootItem;
 @synthesize historyGroup = _historyGroup;
 
-@synthesize bookmarksTree = _bookmarksTree;
 @synthesize bookmarksList = _bookmarksList;
 
 NSString *const savedBookmarks = @"savedBookmarks";
@@ -29,6 +27,39 @@ NSString *const savedBookmarks = @"savedBookmarks";
 - (NSInteger)sectionsCount
 {
     return 1;
+}
+
+- (NSDictionary *)copyBookmarksToDictionaryFrom:(BookmarkItem *)bookmark
+{
+    NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
+    
+    [result setObject:bookmark.name forKey:@"name"];
+    [result setObject:bookmark.url forKey:@"url"];
+    [result setObject:(bookmark.isGroup ? [NSNumber numberWithInt:1] : [NSNumber numberWithInt:0]) forKey:@"group"];
+    [result setObject:(bookmark.isPermanent ? [NSNumber numberWithInt:1] : [NSNumber numberWithInt:0]) forKey:@"permanent"];
+    
+    NSMutableArray *tmpContent = [[NSMutableArray alloc] init];
+    
+    for (BookmarkItem *subBookmark in bookmark.content) {
+        NSDictionary *contentItem = [self copyBookmarksToDictionaryFrom:subBookmark];
+        [tmpContent addObject:contentItem];
+        [contentItem release];
+    }
+    
+    [result setObject:tmpContent forKey:@"content"];
+    [tmpContent release];
+    
+    return result;
+}
+
+- (void)saveBookmarks
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults synchronize];
+    
+    NSDictionary *bookmarks = [self copyBookmarksToDictionaryFrom:self.rootItem];
+    [defaults setObject:bookmarks forKey:savedBookmarks];
+    [bookmarks release];
 }
 
 - (void)generateBookmarksList:(NSMutableDictionary *)list
@@ -69,36 +100,32 @@ NSString *const savedBookmarks = @"savedBookmarks";
     if (!_rootItem) {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults synchronize];
-        
-        NSDictionary *bookmarksPreloaded;// = [defaults objectForKey:savedBookmarks];
+        NSDictionary *bookmarksPreloaded = [defaults objectForKey:savedBookmarks];
 
-        //*************** PRELOADED DATA ***************
-        NSString *mainBundlePath = [[NSBundle mainBundle] bundlePath];
-        NSString *userDefaultsValuesPath = [mainBundlePath stringByAppendingPathComponent:@"BookmarkTreePermanent.plist"];
-        NSDictionary *tmpSavePref = [NSDictionary dictionaryWithContentsOfFile:userDefaultsValuesPath];
-        bookmarksPreloaded = [tmpSavePref objectForKey:@"Bookmarks"];
-        //**********************************************
-        
-        NSArray *tmpBookmarks = [bookmarksPreloaded objectForKey:@"content"];
-        
-        if (!tmpBookmarks) {
-            _rootItem = [[BookmarkItem alloc] initWithName:@"Bookmarks" url:@"" group:YES permanent:YES parentId:nil];
-            NSArray *tmpArray = [[NSArray alloc] init];
-            self.bookmarksTree = tmpArray;
-            [tmpArray release];
+        _rootItem = [[BookmarkItem alloc] initWithName:@"Bookmarks" url:@"" group:YES permanent:YES parentId:nil];
+
+        NSArray *tmpContent;
+        if (bookmarksPreloaded && bookmarksPreloaded.count > 0) {
+            tmpContent = [bookmarksPreloaded objectForKey:@"content"];
         } else {
-            NSString *name = [bookmarksPreloaded objectForKey:@"name"];
-            NSString *url = [bookmarksPreloaded objectForKey:@"url"];
-            BOOL group = [[bookmarksPreloaded objectForKey:@"group"] boolValue];
-            BOOL permanent = [[bookmarksPreloaded objectForKey:@"permanent"] boolValue];
+            //*************** PRELOADED DATA ***************
+            NSString *mainBundlePath = [[NSBundle mainBundle] bundlePath];
+            NSString *userDefaultsValuesPath = [mainBundlePath stringByAppendingPathComponent:@"BookmarkTreePermanent.plist"];
+            NSDictionary *tmpSavePref = [NSDictionary dictionaryWithContentsOfFile:userDefaultsValuesPath];
+            bookmarksPreloaded = [tmpSavePref objectForKey:@"Bookmarks"];
+            //**********************************************
             
-            _rootItem = [[BookmarkItem alloc] initWithName:name url:url group:group permanent:permanent parentId:nil];
-            self.bookmarksTree = tmpBookmarks;
+            NSArray *tmpBookmarks = [bookmarksPreloaded objectForKey:@"content"];
+            if (tmpBookmarks) {
+                tmpContent = tmpBookmarks;
+            } else {
+                tmpContent = [NSArray array];
+            }
         }
         
         // Init map ID -> BookmarkItem
         NSMutableDictionary *tmpList = [[NSMutableDictionary alloc] init];
-        [self generateBookmarksList:tmpList fromTree:self.bookmarksTree parent:_rootItem];
+        [self generateBookmarksList:tmpList fromTree:tmpContent parent:_rootItem];
         self.bookmarksList = tmpList;
         [tmpList release];
     }
@@ -296,7 +323,6 @@ NSString *const savedBookmarks = @"savedBookmarks";
     [_historyGroup release];
     _historyGroup = nil;
     
-    self.bookmarksTree = nil;
     self.bookmarksList = nil;
     
     [super dealloc];

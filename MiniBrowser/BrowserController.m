@@ -133,6 +133,11 @@ BOOL userInitiatedJump = NO;
     return self;
 }
 
+- (void)saveBookmarks
+{
+    [self.bookmarksStorage saveBookmarks];
+}
+
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.

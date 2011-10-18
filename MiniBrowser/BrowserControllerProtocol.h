@@ -12,5 +12,6 @@
 @protocol BrowserControllerDelegate <NSObject>
 
 - (void)closePopupsAndLoadUrl:(NSString *)url;
+- (void)saveBookmarks;
 
 @end

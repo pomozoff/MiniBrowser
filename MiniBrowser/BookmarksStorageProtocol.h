@@ -29,4 +29,6 @@
 
 - (NSArray *)bookmarkGroupsWithoutBranch:(BookmarkItem *)branchBookmark;
 
+- (void)saveBookmarks;
+
 @end
