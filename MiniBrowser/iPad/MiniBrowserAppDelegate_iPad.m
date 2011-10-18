@@ -23,4 +23,11 @@
     return _nibName;
 }
 
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    self.browserController.isIPad = YES;
+    
+    return [super application:application didFinishLaunchingWithOptions:launchOptions];
+}
+
 @end

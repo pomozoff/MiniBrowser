@@ -30,6 +30,8 @@
 
 @implementation BrowserController
 
+@synthesize isIPad = _isIPad;
+
 @synthesize navigationBar = _navigationBar;
 @synthesize navigationToolbar = _navigationView;
 @synthesize searchBar = _searchBar;
@@ -223,6 +225,16 @@ BOOL userInitiatedJump = NO;
     [self.searchBar resignFirstResponder];
 }
 
+- (IBAction)backPressed:(id)sender
+{
+    [self.webView goBack];
+}
+
+- (IBAction)forwardPressed:(id)sender
+{
+    [self.webView goForward];
+}
+
 - (void)displaySaveNewBookmarkPopoverForBarButton:(UIBarButtonItem *)barItem
 {
     [self dismissOpenPopoversAndActionSheet];
@@ -246,39 +258,21 @@ BOOL userInitiatedJump = NO;
     UINavigationController *navigationController = [[UINavigationController alloc] init];
     [navigationController pushViewController:self.bookmarkSaveTableViewController animated:NO];
     
-/*
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
-                                                                     style:UIBarButtonItemStylePlain
-                                                                    target:self
-                                                                    action:@selector(cancelSavingBookmark:)];
-    
-    navigationController.navigationItem.leftBarButtonItem = cancelButton;
-    navigationController.navigationItem.rightBarButtonItem = navigationController.editButtonItem;
-    
-    [cancelButton release];
-*/
-    
-    UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:navigationController];
-    [navigationController release];
-    
-    self.popoverSaveBookmark = popover;
-    self.popoverSaveBookmark.delegate = self;
-    
-    [popover release];
-    
-    [self.popoverSaveBookmark presentPopoverFromBarButtonItem:barItem
-                                     permittedArrowDirections:UIPopoverArrowDirectionUp
-                                                     animated:YES];
-}
-
-- (IBAction)backPressed:(id)sender
-{
-    [self.webView goBack];
-}
-
-- (IBAction)forwardPressed:(id)sender
-{
-    [self.webView goForward];
+    if (self.isIPad) {
+        UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:navigationController];
+        [navigationController release];
+        
+        self.popoverSaveBookmark = popover;
+        self.popoverSaveBookmark.delegate = self;
+        
+        [popover release];
+        
+        [self.popoverSaveBookmark presentPopoverFromBarButtonItem:barItem
+                                         permittedArrowDirections:UIPopoverArrowDirectionUp
+                                                         animated:YES];
+    } else {
+        [self.navigationController pushViewController:navigationController animated:YES];
+    }
 }
 
 - (IBAction)bookmarkPressed:(id)sender
@@ -286,14 +280,18 @@ BOOL userInitiatedJump = NO;
     [self dismissOpenPopoversAndActionSheet];
     [self finishEditing];
     
-    UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:self.bookmarkNavigationController];
-    
-    self.popoverBookmark = popover;
-    self.popoverBookmark.delegate = self;
-    
-    [popover release];
-    
-    [self.popoverBookmark presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+    if (self.isIPad) {
+        UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:self.bookmarkNavigationController];
+        
+        self.popoverBookmark = popover;
+        self.popoverBookmark.delegate = self;
+        
+        [popover release];
+        
+        [self.popoverBookmark presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+    } else {
+        [self.navigationController pushViewController:self.bookmarkNavigationController animated:YES];
+    }
 }
 
 - (IBAction)actionPressed:(id)sender
