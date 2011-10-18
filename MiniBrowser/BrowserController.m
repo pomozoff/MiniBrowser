@@ -108,7 +108,7 @@ BOOL userInitiatedJump = NO;
     if (!_actionSheet) {
         _actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                    delegate:self
-                                          cancelButtonTitle:nil
+                                          cancelButtonTitle:@"Cancel"
                                      destructiveButtonTitle:nil
                                           otherButtonTitles:@"Add bookmark", nil];
     }
@@ -217,6 +217,8 @@ BOOL userInitiatedJump = NO;
         [self.actionSheet dismissWithClickedButtonIndex:[self.actionSheet cancelButtonIndex] animated:YES];
         self.actionSheet = nil;
     }
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)finishEditing
