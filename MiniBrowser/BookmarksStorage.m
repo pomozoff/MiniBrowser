@@ -198,6 +198,16 @@ NSString *const savedBookmarks = @"savedBookmarks";
     return item;
 }
 
+- (void)insertBookmarkToList:(BookmarkItem *)bookmark
+{
+    NSMutableDictionary *tmpList = [self.bookmarksList mutableCopy];
+    
+    [tmpList setObject:bookmark forKey:bookmark.itemId];
+    self.bookmarksList = tmpList;
+    
+    [tmpList release];
+}
+
 - (void)addBookmark:(BookmarkItem *)bookmark toGroup:(BookmarkItem *)bookmarkGroup
 {
     NSMutableArray *tmpContent = [bookmarkGroup.content mutableCopy];
@@ -208,6 +218,7 @@ NSString *const savedBookmarks = @"savedBookmarks";
     [tmpContent release];
     
     bookmark.parentId = bookmarkGroup.itemId;
+    [self insertBookmarkToList:bookmark];
 }
 
 - (void)removeBookmark:(BookmarkItem *)bookmark fromGroup:(BookmarkItem *)bookmarkGroup
@@ -255,7 +266,6 @@ NSString *const savedBookmarks = @"savedBookmarks";
     [self addBookmark:bookmark toGroup:groupBookmark];
     [bookmark release];
     
-    bookmark.parentId = groupBookmark.itemId;
     bookmark.delegateBookmark = groupBookmark.delegateBookmark;
     [bookmark.delegateBookmark reloadBookmarksForGroup:groupBookmark];
 }
@@ -314,6 +324,7 @@ NSString *const savedBookmarks = @"savedBookmarks";
     [tmpHistory release];
 
     [bookmark.delegateBookmark reloadBookmarksForGroup:self.historyGroup];
+    [self insertBookmarkToList:bookmark];
 }
 
 - (void)dealloc

@@ -113,7 +113,7 @@
     [super setEditing:editing animated:animated];
     
     if (editing) {
-        UIBarButtonItem *newFolderButton = [[UIBarButtonItem alloc] initWithTitle:@"New folder button"
+        UIBarButtonItem *newFolderButton = [[UIBarButtonItem alloc] initWithTitle:@"New folder"
                                                                             style:UIBarButtonItemStylePlain
                                                                            target:self
                                                                            action:@selector(newFolderPressed:)];
