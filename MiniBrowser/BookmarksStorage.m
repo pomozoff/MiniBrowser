@@ -69,16 +69,20 @@ NSString *const savedBookmarks = @"savedBookmarks";
     for (NSDictionary *subItem in tree) {
         NSString *name = [subItem objectForKey:@"name"];
         NSString *url = [subItem objectForKey:@"url"];
+        NSDate *date = [subItem objectForKey:@"date"];
         BOOL group = [[subItem objectForKey:@"group"] boolValue];
         BOOL permanent = [[subItem objectForKey:@"permanent"] boolValue];
-        NSString *parentId = parentItem.itemId;
         
-        BookmarkItem *item = [[BookmarkItem alloc] initWithName:name url:url group:group permanent:permanent parentId:parentId];
+        BookmarkItem *item = [[BookmarkItem alloc] initWithName:name
+                                                            url:url
+                                                           date:date
+                                                          group:group
+                                                      permanent:permanent];
         
-        NSString *itemId = item.itemId;
-        [list setObject:item forKey:itemId];
+        item.parentId = parentItem.itemId;
+        [list setObject:item forKey:item.itemId];
         
-        if (permanent && [name isEqualToString:@"History"]) {
+        if (permanent && [name isEqualToString:[BookmarkItem historyFolderName]]) {
             [_historyGroup release];
             _historyGroup = [item retain];
         }
@@ -102,7 +106,7 @@ NSString *const savedBookmarks = @"savedBookmarks";
         [defaults synchronize];
         NSDictionary *bookmarksPreloaded = [defaults objectForKey:savedBookmarks];
 
-        _rootItem = [[BookmarkItem alloc] initWithName:@"Bookmarks" url:@"" group:YES permanent:YES parentId:nil];
+        _rootItem = [[BookmarkItem alloc] initWithName:@"Bookmarks" url:@"" date:[NSDate date] group:YES permanent:YES];
 
         NSArray *tmpContent;
         if (bookmarksPreloaded && bookmarksPreloaded.count > 0) {
@@ -208,16 +212,6 @@ NSString *const savedBookmarks = @"savedBookmarks";
     [tmpList release];
 }
 
-- (void)removeBookmarkFromList:(BookmarkItem *)bookmark
-{
-    NSMutableDictionary *tmpList = [self.bookmarksList mutableCopy];
-    
-    [tmpList removeObjectForKey:bookmark.itemId];
-    self.bookmarksList = tmpList;
-    
-    [tmpList release];
-}
-
 - (void)addBookmark:(BookmarkItem *)bookmark toGroup:(BookmarkItem *)bookmarkGroup
 {
     NSMutableArray *tmpContent = [bookmarkGroup.content mutableCopy];
@@ -229,6 +223,16 @@ NSString *const savedBookmarks = @"savedBookmarks";
     
     bookmark.parentId = bookmarkGroup.itemId;
     [self insertBookmarkToList:bookmark];
+}
+
+- (void)removeBookmarkFromList:(BookmarkItem *)bookmark
+{
+    NSMutableDictionary *tmpList = [self.bookmarksList mutableCopy];
+    
+    [tmpList removeObjectForKey:bookmark.itemId];
+    self.bookmarksList = tmpList;
+    
+    [tmpList release];
 }
 
 - (void)removeBookmark:(BookmarkItem *)bookmark fromGroup:(BookmarkItem *)bookmarkGroup

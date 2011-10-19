@@ -129,7 +129,11 @@
 {
     BookmarkSaveTableViewController *bookmarkSaveTVC = [[BookmarkSaveTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
     
-    BookmarkItem *newFolder = [[BookmarkItem alloc] initWithName:@"" url:nil group:YES permanent:NO parentId:self.currentBookmarkGroup.itemId];
+    BookmarkItem *newFolder = [[BookmarkItem alloc] initWithName:@""
+                                                             url:nil
+                                                            date:[NSDate date]
+                                                           group:YES
+                                                       permanent:NO];
     
     [self.bookmarksStorage addBookmark:newFolder toGroup:self.currentBookmarkGroup];
 

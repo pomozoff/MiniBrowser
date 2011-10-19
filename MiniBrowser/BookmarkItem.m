@@ -16,8 +16,23 @@
 @synthesize name = _name;
 @synthesize url = _url;
 @synthesize parentId = _parentId;
+@synthesize date = _date;
 @synthesize content = _content;
 @synthesize delegateBookmark = _delegateBookmark;
+
++ (NSString *)historyFolderName
+{
+    return @"History";
+}
+
+- (void)prepareHistoryContent:(NSArray *)itemContent
+{
+    if (self.isPermanent && self.isGroup && [self.name isEqualToString:[BookmarkItem historyFolderName]]) {
+        for (BookmarkItem *historyBookmark in itemContent) {
+            
+        }
+    }
+}
 
 - (NSArray *)content
 {
@@ -25,14 +40,16 @@
         _content = [[NSArray alloc] init];
     }
     
+    [self prepareHistoryContent:_content];
+    
     return _content;
 }
 
 - (id)initWithName:(NSString *)name
                url:(NSString *)url
+              date:(NSDate *)date
              group:(BOOL)isThisAGroup
          permanent:(BOOL)isThisPermanent
-          parentId:(NSString *)parentId
 {
     self = [super init];
     if (self) {
@@ -45,7 +62,7 @@
         
         self.name = name;
         self.url = url;
-        self.parentId = parentId;
+        self.date = date;
     }
     
     return self;
@@ -53,7 +70,7 @@
 
 - (id)init
 {
-    self = [self initWithName:@"" url:@"" group:NO permanent:NO parentId:nil];
+    self = [self initWithName:@"" url:@"" date:[NSDate date] group:NO permanent:NO];
     
     return self;
 }

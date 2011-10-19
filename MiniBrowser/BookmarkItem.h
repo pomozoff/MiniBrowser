@@ -16,7 +16,6 @@
 
 @end
 
-
 @interface BookmarkItem : NSObject
 
 @property (nonatomic, copy, readonly) NSString *itemId;
@@ -25,14 +24,17 @@
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *url;
 @property (nonatomic, copy) NSString *parentId;
+@property (nonatomic, copy) NSDate *date;
 @property (nonatomic, retain) NSArray *content;
 @property (nonatomic, retain) id <BookmarkItemDelegate> delegateBookmark;
 
++ (NSString *)historyFolderName;
+
 - (id)initWithName:(NSString *)name
                url:(NSString *)url
+              date:(NSDate *)date
              group:(BOOL)isThisAGroup
-         permanent:(BOOL)isThisPermanent
-          parentId:(NSString *)parentId;
+         permanent:(BOOL)isThisPermanent;
 
 - (BOOL)isEqualToBookmark:(BookmarkItem *)bookmark;
 

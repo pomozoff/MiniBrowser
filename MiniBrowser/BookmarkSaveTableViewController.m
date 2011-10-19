@@ -41,7 +41,7 @@
 - (BookmarkItem *)bookmark
 {
     if (!_bookmark) {
-        _bookmark = [[BookmarkItem alloc] initWithName:@"" url:@"" group:NO permanent:NO parentId:nil];
+        _bookmark = [[BookmarkItem alloc] initWithName:@"" url:@"" date:[NSDate date] group:NO permanent:NO];
     }
     
     return _bookmark;

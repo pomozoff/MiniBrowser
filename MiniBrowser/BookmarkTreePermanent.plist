@@ -4,6 +4,8 @@
 <dict>
 	<key>Bookmarks</key>
 	<dict>
+		<key>date</key>
+		<date>2011-10-18T07:03:08Z</date>
 		<key>name</key>
 		<string>Bookmarks</string>
 		<key>url</key>
@@ -15,6 +17,8 @@
 		<key>content</key>
 		<array>
 			<dict>
+				<key>date</key>
+				<date>2011-10-18T07:03:08Z</date>
 				<key>name</key>
 				<string>History</string>
 				<key>url</key>
@@ -27,6 +31,8 @@
 				<array/>
 			</dict>
 			<dict>
+				<key>date</key>
+				<date>2011-10-18T07:03:08Z</date>
 				<key>name</key>
 				<string>Google</string>
 				<key>url</key>
@@ -39,6 +45,8 @@
 				<array/>
 			</dict>
 			<dict>
+				<key>date</key>
+				<date>2011-10-18T07:03:08Z</date>
 				<key>name</key>
 				<string>Yahoo</string>
 				<key>url</key>

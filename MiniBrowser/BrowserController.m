@@ -252,7 +252,11 @@ BOOL userInitiatedJump = NO;
                                 self.bookmarksStorage.rootItem : bookmarkTVC.currentBookmarkGroup;
     }
     
-    BookmarkItem *newBookmark = [[BookmarkItem alloc] initWithName:@"" url:self.urlField.text group:NO permanent:NO parentId:currentBookmarkGroup.itemId];
+    BookmarkItem *newBookmark = [[BookmarkItem alloc] initWithName:@""
+                                                               url:self.urlField.text
+                                                              date:[NSDate date]
+                                                             group:NO
+                                                         permanent:NO];
     self.bookmarkSaveTableViewController.bookmark = newBookmark;
     [self.bookmarksStorage addBookmark:newBookmark toGroup:currentBookmarkGroup];
     [newBookmark release];
@@ -446,9 +450,9 @@ BOOL userInitiatedJump = NO;
     
     BookmarkItem *historyItem = [[BookmarkItem alloc] initWithName:label
                                                                url:sourceUrl
+                                                              date:[NSDate date]
                                                              group:NO
-                                                         permanent:NO
-                                                          parentId:nil];
+                                                         permanent:NO];
     
     if ([self.bookmarkNavigationController.topViewController conformsToProtocol:@protocol(BookmarkItemDelegate)]) {
         historyItem.delegateBookmark = (id <BookmarkItemDelegate>)self.bookmarkNavigationController.topViewController;
