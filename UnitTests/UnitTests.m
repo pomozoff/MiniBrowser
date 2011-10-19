@@ -41,7 +41,7 @@
     [super tearDown];
 }
 
-- (void)testBookmarkStorageLoadingBookmarksTreePermanentPlist
+- (void)testBookmarkStorageLoadingBookmarksTreePermanentPlistAndArrangeIt
 {
     STAssertNotNil(self.bookmarksStorage, @"Bookmark's Storage didn't initialized");
 
@@ -62,6 +62,34 @@
 //    for (BookmarkItem *historyItem in historyBookmarks) {
 //        NSLog([NSString stringWithFormat:@"%@", historyItem]);
 //    }
+    
+    [self.bookmarksStorage arrangeHistoryContentByDate:historyFolder];
+}
+
+- (void)testCompareTwoBookmarks
+{
+    NSDate *currentDate = [NSDate date];
+    BookmarkItem *firstBookmark = [[BookmarkItem alloc] initWithName:@"first"
+                                                                 url:@""
+                                                                date:currentDate
+                                                               group:NO
+                                                           permanent:NO];
+
+    BookmarkItem *secondBookmark = [[BookmarkItem alloc] initWithName:@"first"
+                                                                  url:@""
+                                                                 date:currentDate
+                                                                group:NO
+                                                            permanent:NO];
+    STAssertTrue([firstBookmark isEqualToBookmark:secondBookmark], @"Same both bookmarks are not identical");
+    
+    secondBookmark.date = [NSDate dateWithTimeInterval:-100 sinceDate:currentDate];
+    STAssertTrue([firstBookmark isEqualToBookmark:secondBookmark], @"Bookmarks with different date must be identical");
+    
+    firstBookmark.url = [secondBookmark.url stringByAppendingString:@"1"];
+    STAssertFalse([firstBookmark isEqualToBookmark:secondBookmark], @"Bookmarks with different url must be different");
+
+    [secondBookmark release];
+    [firstBookmark release];
 }
 
 @end
