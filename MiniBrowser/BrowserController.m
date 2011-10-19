@@ -457,6 +457,7 @@ BOOL userInitiatedJump = NO;
     if ([self.bookmarkNavigationController.topViewController conformsToProtocol:@protocol(BookmarkItemDelegate)]) {
         historyItem.delegateBookmark = (id <BookmarkItemDelegate>)self.bookmarkNavigationController.topViewController;
     }
+    
     [self.bookmarksStorage addBookmark:historyItem toGroup:self.bookmarksStorage.historyGroup];
     [historyItem release];
     

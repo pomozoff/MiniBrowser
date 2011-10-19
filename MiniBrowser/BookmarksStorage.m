@@ -11,6 +11,7 @@
 @interface BookmarksStorage()
 
 @property (nonatomic, retain) NSDictionary *bookmarksList;
+@property (nonatomic, copy) NSString *bookmarkTreePlist;
 
 @end
 
@@ -21,27 +22,30 @@
 @synthesize historyGroup = _historyGroup;
 
 @synthesize bookmarksList = _bookmarksList;
+@synthesize bookmarkTreePlist = _bookmarkTreePlist;
 
 NSString *const savedBookmarks = @"savedBookmarks";
+NSString *const historyFolderName = @"History";
 
 - (NSInteger)sectionsCount
 {
     return 1;
 }
 
-- (NSDictionary *)copyBookmarksToDictionaryFrom:(BookmarkItem *)bookmark
+- (NSDictionary *)copyBookmarksToDictionaryFromBookmark:(BookmarkItem *)bookmark
 {
     NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
     
     [result setObject:bookmark.name forKey:@"name"];
     [result setObject:bookmark.url forKey:@"url"];
+    [result setObject:bookmark.date forKey:@"date"];
     [result setObject:(bookmark.isGroup ? [NSNumber numberWithInt:1] : [NSNumber numberWithInt:0]) forKey:@"group"];
     [result setObject:(bookmark.isPermanent ? [NSNumber numberWithInt:1] : [NSNumber numberWithInt:0]) forKey:@"permanent"];
     
     NSMutableArray *tmpContent = [[NSMutableArray alloc] init];
     
     for (BookmarkItem *subBookmark in bookmark.content) {
-        NSDictionary *contentItem = [self copyBookmarksToDictionaryFrom:subBookmark];
+        NSDictionary *contentItem = [self copyBookmarksToDictionaryFromBookmark:subBookmark];
         [tmpContent addObject:contentItem];
         [contentItem release];
     }
@@ -57,7 +61,7 @@ NSString *const savedBookmarks = @"savedBookmarks";
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults synchronize];
     
-    NSDictionary *bookmarks = [self copyBookmarksToDictionaryFrom:self.rootItem];
+    NSDictionary *bookmarks = [self copyBookmarksToDictionaryFromBookmark:self.rootItem];
     [defaults setObject:bookmarks forKey:savedBookmarks];
     [bookmarks release];
 }
@@ -82,7 +86,7 @@ NSString *const savedBookmarks = @"savedBookmarks";
         item.parentId = parentItem.itemId;
         [list setObject:item forKey:item.itemId];
         
-        if (permanent && [name isEqualToString:[BookmarkItem historyFolderName]]) {
+        if (permanent && [name isEqualToString:historyFolderName]) {
             [_historyGroup release];
             _historyGroup = [item retain];
         }
@@ -112,9 +116,16 @@ NSString *const savedBookmarks = @"savedBookmarks";
         if (bookmarksPreloaded && bookmarksPreloaded.count > 0) {
             tmpContent = [bookmarksPreloaded objectForKey:@"content"];
         } else {
+            //*************** DEBUG LOG DATA ***************
+            NSLog(@"Main Bundle Path: %@", [[NSBundle mainBundle] bundlePath]);
+            
+            for (NSBundle *bundle in [NSBundle allBundles]) {
+                NSLog(@"%@: %@", [bundle bundleIdentifier], 
+                      [bundle pathForResource:@"fire" ofType:@"png"]);
+            }
             //*************** PRELOADED DATA ***************
             NSString *mainBundlePath = [[NSBundle mainBundle] bundlePath];
-            NSString *userDefaultsValuesPath = [mainBundlePath stringByAppendingPathComponent:@"BookmarkTreePermanent.plist"];
+            NSString *userDefaultsValuesPath = [mainBundlePath stringByAppendingPathComponent:self.bookmarkTreePlist];
             NSDictionary *tmpSavePref = [NSDictionary dictionaryWithContentsOfFile:userDefaultsValuesPath];
             bookmarksPreloaded = [tmpSavePref objectForKey:@"Bookmarks"];
             //**********************************************
@@ -135,6 +146,15 @@ NSString *const savedBookmarks = @"savedBookmarks";
     }
     
     return _rootItem;
+}
+
+- (BookmarkItem *)historyGroup
+{
+    if (!_historyGroup && !self.rootItem) {
+        _historyGroup = nil;
+    }
+    
+    return _historyGroup;
 }
 
 - (void)generateGroupsTreeList:(NSMutableArray *)treeList
@@ -173,12 +193,30 @@ NSString *const savedBookmarks = @"savedBookmarks";
     }
 }
 
-- (id)init
+/*
+- (NSString *)bookmarkTreePlist
+{
+    if (!_bookmarkTreePlist) {
+        _bookmarkTreePlist = @"BookmarkTreePermanent.plist";
+    }
+    
+    return _bookmarkTreePlist;
+}
+*/
+
+- (id)initWithBookmarksPlistName:(NSString *)plistName
 {
     self = [super init];
     if (self) {
-        // Initialization code here.
+        self.bookmarkTreePlist = plistName;
     }
+    
+    return self;
+}
+
+- (id)init
+{
+    [self initWithBookmarksPlistName:@"BookmarkTreePermanent.plist"];
     
     return self;
 }
@@ -214,14 +252,29 @@ NSString *const savedBookmarks = @"savedBookmarks";
 
 - (void)addBookmark:(BookmarkItem *)bookmark toGroup:(BookmarkItem *)bookmarkGroup
 {
+    bookmark.parentId = bookmarkGroup.itemId;
+
     NSMutableArray *tmpContent = [bookmarkGroup.content mutableCopy];
     
-    [tmpContent addObject:bookmark];
+    if ([bookmarkGroup isEqualToBookmark:self.historyGroup]) {
+        BookmarkItem *firstBookmark = nil;
+        if (tmpContent.count > 0) {
+            firstBookmark = [tmpContent objectAtIndex:0];
+        }
+        
+        if (firstBookmark && [bookmark isEqualToBookmark:firstBookmark]) {
+            firstBookmark.date = bookmark.date;
+        } else {
+            [tmpContent insertObject:bookmark atIndex:0];
+        }
+    } else {
+        [tmpContent addObject:bookmark];
+    }
+
     bookmarkGroup.content = tmpContent;
     
     [tmpContent release];
     
-    bookmark.parentId = bookmarkGroup.itemId;
     [self insertBookmarkToList:bookmark];
 }
 
@@ -319,8 +372,9 @@ NSString *const savedBookmarks = @"savedBookmarks";
     _rootItem = nil;
     [_historyGroup release];
     _historyGroup = nil;
-    
+
     self.bookmarksList = nil;
+    self.bookmarkTreePlist = nil;
     
     [super dealloc];
 }

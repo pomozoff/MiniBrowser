@@ -15,6 +15,8 @@
 @property (nonatomic, readonly, retain) BookmarkItem *rootItem;
 @property (nonatomic, readonly, retain) BookmarkItem *historyGroup;
 
+- (id)initWithBookmarksPlistName:(NSString *)plistName;
+
 - (NSInteger)bookmarksCountForParent:(BookmarkItem *)parentItem;
 - (void)moveBookmarkAtPosition:(NSIndexPath *)fromIndexPath toPosition:(NSIndexPath *)toIndexPath insideGroup:(BookmarkItem *)group;
 

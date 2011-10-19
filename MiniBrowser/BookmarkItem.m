@@ -20,27 +20,11 @@
 @synthesize content = _content;
 @synthesize delegateBookmark = _delegateBookmark;
 
-+ (NSString *)historyFolderName
-{
-    return @"History";
-}
-
-- (void)prepareHistoryContent:(NSArray *)itemContent
-{
-    if (self.isPermanent && self.isGroup && [self.name isEqualToString:[BookmarkItem historyFolderName]]) {
-        for (BookmarkItem *historyBookmark in itemContent) {
-            
-        }
-    }
-}
-
 - (NSArray *)content
 {
     if (!_content) {
         _content = [[NSArray alloc] init];
     }
-    
-    [self prepareHistoryContent:_content];
     
     return _content;
 }
@@ -84,8 +68,8 @@
     NSNumber *group = [NSNumber numberWithBool:isThisAGroup];
     NSNumber *permanent = [NSNumber numberWithBool:isThisPermanent];
 
-    NSArray *keys = [[NSArray alloc] initWithObjects:@"name", @"url", @"group", @"permanent", @"parent", @"content", nil];
-    NSArray *objects = [[NSArray alloc] initWithObjects:name, url, group, permanent, parentId, content, nil];
+    NSArray *keys = [[NSArray alloc] initWithObjects:@"name", @"url", @"date" @"group", @"permanent", @"parent", @"content", nil];
+    NSArray *objects = [[NSArray alloc] initWithObjects:name, url, [NSDate date], group, permanent, parentId, content, nil];
     
     NSDictionary *dictionary = [[NSDictionary alloc] initWithObjects:objects forKeys:keys];
     
@@ -97,7 +81,14 @@
 
 - (NSString *)description
 {
-    NSString *desription = [NSString stringWithFormat:@"Bookmark named \"%@\"\nurl: %@\ngroup: %@\npermanent: %@\nid: %@\nparentId: %@\nsubitems count: %d", self.name, self.url, self.isGroup ? @"YES" : @"NO", self.isPermanent ? @"YES" : @"NO", self.itemId, self.parentId, self.content.count];
+    NSString *desription = [NSString stringWithFormat:@"Bookmark named \"%@\"\nurl: %@\ndate: %@\ngroup: %@\npermanent: %@\nid: %@\nparentId: %@\nsubitems count: %d", self.name,
+                            self.url,
+                            self.date,
+                            self.isGroup ? @"YES" : @"NO",
+                            self.isPermanent ? @"YES" : @"NO",
+                            self.itemId,
+                            self.parentId,
+                            self.content.count];
     return desription;
 }
 
@@ -107,6 +98,7 @@
                   (bookmark.isPermanent == self.isPermanent) &&
                   [bookmark.name isEqualToString:self.name] && 
                   [bookmark.url isEqualToString:self.url] &&
+//                  [bookmark.date isEqualToDate:self.date] &&
                   ((!self.parentId && !bookmark.parentId) || [bookmark.parentId isEqualToString:self.parentId]) &&
                   [bookmark.content isEqualToArray:self.content];
     

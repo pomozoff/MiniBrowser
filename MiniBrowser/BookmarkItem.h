@@ -28,8 +28,6 @@
 @property (nonatomic, retain) NSArray *content;
 @property (nonatomic, retain) id <BookmarkItemDelegate> delegateBookmark;
 
-+ (NSString *)historyFolderName;
-
 - (id)initWithName:(NSString *)name
                url:(NSString *)url
               date:(NSDate *)date

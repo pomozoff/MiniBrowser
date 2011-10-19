@@ -7,46 +7,51 @@
 //
 
 #import "UnitTests.h"
-#import "BookmarkItem.h"
+#import "BookmarksStorage.h"
 
 @interface UnitTests()
 
-@property (nonatomic, retain) BookmarkItem *bookmark;
-@property (nonatomic, copy) NSDate *bookmarkDate;
+@property (nonatomic, retain) BookmarksStorage *bookmarksStorage;
 
 @end
 
 @implementation UnitTests
 
-@synthesize bookmark = _bookmark;
-@synthesize bookmarkDate = _bookmarkDate;
+@synthesize bookmarksStorage = _bookmarksStorage;
+
+- (BookmarksStorage *)bookmarksStorage
+{
+    if (!_bookmarksStorage) {
+        _bookmarksStorage = [[BookmarksStorage alloc] initWithBookmarksPlistName:@"BookmarkTreePermanentTest.plist"];
+    }
+    
+    return _bookmarksStorage;
+}
 
 - (void)setUp
 {
     [super setUp];
-
-    NSString *bookmarkName = @"bookmark name";
-    NSString *bookmarkUrl = @"http://url";
-    self.bookmarkDate = [NSDate date];
-
-    self.bookmark = [[BookmarkItem alloc] initWithName:bookmarkName
-                                                   url:bookmarkUrl
-                                                  date:self.bookmarkDate
-                                                 group:NO
-                                             permanent:NO];
 }
 
 - (void)tearDown
 {
-    self.bookmark = nil;
-    self.bookmarkDate = nil;
+    self.bookmarksStorage = nil;
     
     [super tearDown];
 }
 
-- (void)testExample
+- (void)testStorageInit
 {
-    STAssertEquals(self.bookmark.name, @"bookmark name", @"Invalid name for new bookmark");
+    STAssertNotNil(self.bookmarksStorage, @"Bookmark's Storage didn't initialized");
+}
+
+- (void)testStorageContentEmpty
+{
+    BookmarkItem *rootItem = self.bookmarksStorage.rootItem;
+    
+    STAssertNotNil(rootItem, @"Root item didn't initialized");
+    STAssertEquals(rootItem.name, @"Bookmarks", @"Invalid root item's name");
+    STAssertFalse(rootItem.content.count == 0, @"Root item is empty");
 }
 
 @end
