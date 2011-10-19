@@ -22,7 +22,8 @@
 - (BookmarksStorage *)bookmarksStorage
 {
     if (!_bookmarksStorage) {
-        _bookmarksStorage = [[BookmarksStorage alloc] initWithBookmarksPlistName:@"BookmarkTreePermanentTest.plist"];
+        NSString *testsBundlePath = [[NSBundle bundleForClass:[UnitTests class]] bundlePath];
+        _bookmarksStorage = [[BookmarksStorage alloc] initWithPathToBundle:testsBundlePath];
     }
     
     return _bookmarksStorage;
@@ -40,15 +41,11 @@
     [super tearDown];
 }
 
-- (void)testStorageInit
-{
-    STAssertNotNil(self.bookmarksStorage, @"Bookmark's Storage didn't initialized");
-}
-
-- (void)testStorageContentEmpty
+- (void)testBookmarkStorageLoadingBookmarksTreePermanentPlist
 {
     BookmarkItem *rootItem = self.bookmarksStorage.rootItem;
     
+    STAssertNotNil(self.bookmarksStorage, @"Bookmark's Storage didn't initialized");
     STAssertNotNil(rootItem, @"Root item didn't initialized");
     STAssertEquals(rootItem.name, @"Bookmarks", @"Invalid root item's name");
     STAssertFalse(rootItem.content.count == 0, @"Root item is empty");

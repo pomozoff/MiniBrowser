@@ -37,7 +37,7 @@
 		266D67CF143CCF720025F929 /* BrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67CE143CCF720025F929 /* BrowserController.m */; };
 		26AF9D4B144EF31900CBBF20 /* BookmarksStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 266C914C1444115200444BAC /* BookmarksStorage.m */; };
 		26AF9D4C144EF35900CBBF20 /* BookmarkItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 266C91501444171200444BAC /* BookmarkItem.m */; };
-		26AF9D4D144EF9F100CBBF20 /* BookmarkTreePermanentTest.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26AF9D48144EF22500CBBF20 /* BookmarkTreePermanentTest.plist */; };
+		26AF9D4D144EF9F100CBBF20 /* BookmarkTreePermanent.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26AF9D48144EF22500CBBF20 /* BookmarkTreePermanent.plist */; };
 		26B578D5144429FB004657E2 /* BookmarkSaveTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B578D4144429FB004657E2 /* BookmarkSaveTableViewController.m */; };
 		26B578D914443290004657E2 /* BookmarkSaveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B578D814443290004657E2 /* BookmarkSaveModel.m */; };
 		26B578DC1444376E004657E2 /* BookmarkSaveTable.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26B578DB1444376E004657E2 /* BookmarkSaveTable.plist */; };
@@ -111,7 +111,7 @@
 		266D67C6143CCE8E0025F929 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = iPad/en.lproj/MainWindow_iPad.xib; sourceTree = "<group>"; };
 		266D67CD143CCF720025F929 /* BrowserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserController.h; sourceTree = "<group>"; };
 		266D67CE143CCF720025F929 /* BrowserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserController.m; sourceTree = "<group>"; };
-		26AF9D48144EF22500CBBF20 /* BookmarkTreePermanentTest.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BookmarkTreePermanentTest.plist; sourceTree = "<group>"; };
+		26AF9D48144EF22500CBBF20 /* BookmarkTreePermanent.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BookmarkTreePermanent.plist; sourceTree = "<group>"; };
 		26B578D3144429FB004657E2 /* BookmarkSaveTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkSaveTableViewController.h; sourceTree = "<group>"; };
 		26B578D4144429FB004657E2 /* BookmarkSaveTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkSaveTableViewController.m; sourceTree = "<group>"; };
 		26B578D714443290004657E2 /* BookmarkSaveModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkSaveModel.h; sourceTree = "<group>"; };
@@ -313,7 +313,7 @@
 			children = (
 				26DB36B4144EC19C001C4CBC /* UnitTests.h */,
 				26DB36B6144EC19C001C4CBC /* UnitTests.m */,
-				26AF9D48144EF22500CBBF20 /* BookmarkTreePermanentTest.plist */,
+				26AF9D48144EF22500CBBF20 /* BookmarkTreePermanent.plist */,
 				26DB36AF144EC19C001C4CBC /* Supporting Files */,
 			);
 			path = UnitTests;
@@ -424,7 +424,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				26AF9D4D144EF9F100CBBF20 /* BookmarkTreePermanentTest.plist in Resources */,
+				26AF9D4D144EF9F100CBBF20 /* BookmarkTreePermanent.plist in Resources */,
 				26DB36B3144EC19C001C4CBC /* InfoPlist.strings in Resources */,
 				26DB36B5144EC19C001C4CBC /* UnitTests.h in Resources */,
 			);

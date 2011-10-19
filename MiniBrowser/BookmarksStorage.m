@@ -11,7 +11,7 @@
 @interface BookmarksStorage()
 
 @property (nonatomic, retain) NSDictionary *bookmarksList;
-@property (nonatomic, copy) NSString *bookmarkTreePlist;
+@property (nonatomic, copy) NSString *pathToBundle;
 
 @end
 
@@ -22,7 +22,7 @@
 @synthesize historyGroup = _historyGroup;
 
 @synthesize bookmarksList = _bookmarksList;
-@synthesize bookmarkTreePlist = _bookmarkTreePlist;
+@synthesize pathToBundle = _pathToBundle;
 
 NSString *const savedBookmarks = @"savedBookmarks";
 NSString *const historyFolderName = @"History";
@@ -116,19 +116,9 @@ NSString *const historyFolderName = @"History";
         if (bookmarksPreloaded && bookmarksPreloaded.count > 0) {
             tmpContent = [bookmarksPreloaded objectForKey:@"content"];
         } else {
-            //*************** DEBUG LOG DATA ***************
-            NSLog(@"Main Bundle Path: %@", [[NSBundle mainBundle] bundlePath]);
-            
-            for (NSBundle *bundle in [NSBundle allBundles]) {
-                NSLog(@"%@: %@", [bundle bundleIdentifier], 
-                      [bundle pathForResource:@"fire" ofType:@"png"]);
-            }
-            //*************** PRELOADED DATA ***************
-            NSString *mainBundlePath = [[NSBundle mainBundle] bundlePath];
-            NSString *userDefaultsValuesPath = [mainBundlePath stringByAppendingPathComponent:self.bookmarkTreePlist];
-            NSDictionary *tmpSavePref = [NSDictionary dictionaryWithContentsOfFile:userDefaultsValuesPath];
+            NSString *pathToPermanentBookmarks = [self.pathToBundle stringByAppendingPathComponent:@"BookmarkTreePermanent.plist"];
+            NSDictionary *tmpSavePref = [NSDictionary dictionaryWithContentsOfFile:pathToPermanentBookmarks];
             bookmarksPreloaded = [tmpSavePref objectForKey:@"Bookmarks"];
-            //**********************************************
             
             NSArray *tmpBookmarks = [bookmarksPreloaded objectForKey:@"content"];
             if (tmpBookmarks) {
@@ -194,21 +184,21 @@ NSString *const historyFolderName = @"History";
 }
 
 /*
-- (NSString *)bookmarkTreePlist
+- (NSString *)pathToBundle
 {
-    if (!_bookmarkTreePlist) {
-        _bookmarkTreePlist = @"BookmarkTreePermanent.plist";
+    if (!_pathToBundle) {
+        _pathToBundle = [[NSBundle mainBundle] bundlePath];
     }
     
-    return _bookmarkTreePlist;
+    return _pathToBundle;
 }
 */
 
-- (id)initWithBookmarksPlistName:(NSString *)plistName
+- (id)initWithPathToBundle:(NSString *)currentPathToBundle
 {
     self = [super init];
     if (self) {
-        self.bookmarkTreePlist = plistName;
+        self.pathToBundle = currentPathToBundle;
     }
     
     return self;
@@ -216,7 +206,8 @@ NSString *const historyFolderName = @"History";
 
 - (id)init
 {
-    [self initWithBookmarksPlistName:@"BookmarkTreePermanent.plist"];
+    NSString *mainBundlePath = [[NSBundle mainBundle] bundlePath];
+    [self initWithPathToBundle:mainBundlePath];
     
     return self;
 }
@@ -374,7 +365,7 @@ NSString *const historyFolderName = @"History";
     _historyGroup = nil;
 
     self.bookmarksList = nil;
-    self.bookmarkTreePlist = nil;
+    self.pathToBundle = nil;
     
     [super dealloc];
 }
