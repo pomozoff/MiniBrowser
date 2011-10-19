@@ -43,12 +43,18 @@
 
 - (void)testBookmarkStorageLoadingBookmarksTreePermanentPlist
 {
-    BookmarkItem *rootItem = self.bookmarksStorage.rootItem;
-    
     STAssertNotNil(self.bookmarksStorage, @"Bookmark's Storage didn't initialized");
+
+    BookmarkItem *rootItem = self.bookmarksStorage.rootItem;
     STAssertNotNil(rootItem, @"Root item didn't initialized");
-    STAssertEquals(rootItem.name, @"Bookmarks", @"Invalid root item's name");
-    STAssertFalse(rootItem.content.count == 0, @"Root item is empty");
+    STAssertEqualObjects(rootItem.name, @"Bookmarks", @"Invalid root item name");
+    
+    NSArray *rootBookmarks = rootItem.content;
+    STAssertFalse(rootBookmarks.count < 1, @"Root item is empty - permananet bookmarks didn't loaded");
+    
+    BookmarkItem *historyFolder = [rootBookmarks objectAtIndex:0];
+    STAssertNotNil(historyFolder, @"History Folder is absent");
+    STAssertEqualObjects(historyFolder.name, @"History", @"Invalid History Folder name");
 }
 
 @end
