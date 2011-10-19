@@ -64,6 +64,7 @@
 //    }
     
     [self.bookmarksStorage arrangeHistoryContentByDate:historyFolder];
+    STAssertFalse(historyBookmarks.count != 2, @"History Folder must contract to two folders");
 }
 
 - (void)testCompareTwoBookmarks
