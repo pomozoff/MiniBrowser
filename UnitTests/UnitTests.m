@@ -55,6 +55,13 @@
     BookmarkItem *historyFolder = [rootBookmarks objectAtIndex:0];
     STAssertNotNil(historyFolder, @"History Folder is absent");
     STAssertEqualObjects(historyFolder.name, @"History", @"Invalid History Folder name");
+    
+    NSArray *historyBookmarks = historyFolder.content;
+    STAssertFalse(historyBookmarks.count < 1, @"History Folder is empty - permananet bookmarks didn't loaded");
+    
+    for (BookmarkItem *historyItem in historyBookmarks) {
+        NSLog([NSString stringWithFormat:@"%@", historyItem]);
+    }
 }
 
 @end

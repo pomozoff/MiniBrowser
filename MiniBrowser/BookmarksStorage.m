@@ -357,6 +357,91 @@ NSString *const historyFolderName = @"History";
     return [resultList autorelease];
 }
 
+#pragma mark - arrange History folder by date
+
+- (NSDate *)convertDateToLocalTimeZone:(NSDate *)sourceDate fromTimeZone:(NSTimeZone *)sourceTimeZone
+{
+    NSTimeZone *localTimeZone = [NSTimeZone systemTimeZone];
+    
+    NSInteger gmtOffset = [sourceTimeZone secondsFromGMTForDate:sourceDate];
+    NSInteger localOffset = [localTimeZone secondsFromGMTForDate:sourceDate];
+    
+    NSTimeInterval interval = localOffset - gmtOffset;
+    NSDate *currentLocalDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:sourceDate];
+    
+    return [currentLocalDate autorelease];
+}
+
+- (NSDate *)getStartOfTheDay:(NSDate *)date
+{
+    NSUInteger componentFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *dateComponents = [calendar components:componentFlags fromDate:date];
+    NSDate *beginOfTheDay = [[calendar dateFromComponents:dateComponents] retain];
+    
+    return [beginOfTheDay autorelease];
+}
+
+- (NSDate *)getEndOfTheDay:(NSDate *)date
+{
+    NSUInteger componentFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *dateComponents = [calendar components:componentFlags fromDate:date];
+    dateComponents.hour = 23;
+    dateComponents.minute = 59;
+    dateComponents.second = 59;
+    NSDate *enfOfTheDay = [[calendar dateFromComponents:dateComponents] retain];
+    
+    return [enfOfTheDay autorelease];
+}
+
+- (void)arrangeHistoryContentByDate:(BookmarkItem *)bookmarkGroup
+{
+    BookmarkItem *newGroup = nil;
+    
+    NSDate *currentDate = [NSDate date];
+    NSDate *beginOfTheDay = [self getStartOfTheDay:currentDate];
+    
+    NSArray *localContent = [NSArray arrayWithArray:bookmarkGroup.content];
+    
+    for (BookmarkItem *historyBookmark in localContent) {
+        if (historyBookmark.isGroup) {
+            continue;
+        }
+        
+        if ([beginOfTheDay compare:historyBookmark.date] == NSOrderedDescending) {
+            NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+            [dateFormat setDateFormat:@"yyyy-MM-dd"];
+            
+            NSDate *endOfBookmarksDate = [self getEndOfTheDay:historyBookmark.date];
+            NSDate *localBookmarksDate = [self convertDateToLocalTimeZone:historyBookmark.date
+                                                             fromTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
+            
+            NSString *newGroupName = [dateFormat stringFromDate:localBookmarksDate];
+            
+            NSArray *filteredContent = [bookmarkGroup.content
+                                        filteredArrayUsingPredicate:[NSPredicate
+                                                                     predicateWithFormat:@"(name == %@)", newGroupName]];
+            
+            [dateFormat release];
+            
+            if (filteredContent.count == 0) {
+                newGroup = [[[BookmarkItem alloc] initWithName:newGroupName
+                                                           url:@""
+                                                          date:endOfBookmarksDate
+                                                         group:YES
+                                                     permanent:YES] autorelease];
+                
+                [self addBookmark:newGroup toGroup:self.historyGroup];
+            } else {
+                newGroup = [filteredContent objectAtIndex:0];
+            }
+            
+            [self moveBookmark:historyBookmark toGroup:newGroup];
+        }
+    }
+}
+
 - (void)dealloc
 {
     [_rootItem release];

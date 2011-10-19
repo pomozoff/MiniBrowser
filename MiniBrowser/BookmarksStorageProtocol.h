@@ -17,6 +17,8 @@
 
 - (id)initWithPathToBundle:(NSString *)currentPathToBundle;
 
+- (void)arrangeHistoryContentByDate:(BookmarkItem *)bookmarkGroup;
+
 - (NSInteger)bookmarksCountForParent:(BookmarkItem *)parentItem;
 - (void)moveBookmarkAtPosition:(NSIndexPath *)fromIndexPath toPosition:(NSIndexPath *)toIndexPath insideGroup:(BookmarkItem *)group;
 
