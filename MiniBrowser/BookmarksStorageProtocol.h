@@ -25,8 +25,6 @@
 - (void)moveBookmark:(BookmarkItem *)bookmark toGroup:(BookmarkItem *)groupBookmark;
 - (void)deleteBookmark:(BookmarkItem *)bookmark;
 
-- (void)addHistoryBookmark:(BookmarkItem *)bookmark;
-
 - (NSArray *)bookmarkGroupsWithoutBranch:(BookmarkItem *)branchBookmark;
 
 - (void)saveBookmarks;

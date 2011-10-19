@@ -208,6 +208,16 @@ NSString *const savedBookmarks = @"savedBookmarks";
     [tmpList release];
 }
 
+- (void)removeBookmarkFromList:(BookmarkItem *)bookmark
+{
+    NSMutableDictionary *tmpList = [self.bookmarksList mutableCopy];
+    
+    [tmpList removeObjectForKey:bookmark.itemId];
+    self.bookmarksList = tmpList;
+    
+    [tmpList release];
+}
+
 - (void)addBookmark:(BookmarkItem *)bookmark toGroup:(BookmarkItem *)bookmarkGroup
 {
     NSMutableArray *tmpContent = [bookmarkGroup.content mutableCopy];
@@ -243,6 +253,7 @@ NSString *const savedBookmarks = @"savedBookmarks";
     BookmarkItem *parentItem = [self bookmarkById:bookmark.parentId];
     
     [self removeBookmark:bookmark fromGroup:parentItem];
+    [self removeBookmarkFromList:bookmark];
 }
 
 - (void)moveBookmarkAtPosition:(NSIndexPath *)fromIndexPath toPosition:(NSIndexPath *)toIndexPath insideGroup:(BookmarkItem *)group
@@ -296,35 +307,6 @@ NSString *const savedBookmarks = @"savedBookmarks";
     [mutableList release];
      
     return [resultList autorelease];
-}
-
-#define HISTORY_LIST_CPACITY 50
-- (void)addHistoryBookmark:(BookmarkItem *)bookmark
-{
-    if (!self.rootItem) { // Bookmark control couldn't initialize
-        return;
-    }
-
-    bookmark.parentId = self.historyGroup.itemId;
-    if (self.historyGroup.content.count > 0) {
-        BookmarkItem *lastBookmark = [self.historyGroup.content objectAtIndex:0];
-        if ([bookmark isEqualToBookmark:lastBookmark]) {
-            return;
-        }
-    }
-    
-    NSMutableArray *tmpHistory = [self.historyGroup.content mutableCopy];
-    
-    [tmpHistory insertObject:bookmark atIndex:0];
-    if (HISTORY_LIST_CPACITY < self.historyGroup.content.count) {
-        [tmpHistory removeObjectsInRange:NSMakeRange(HISTORY_LIST_CPACITY, self.historyGroup.content.count - HISTORY_LIST_CPACITY)];
-    }
-    self.historyGroup.content = tmpHistory;
-    
-    [tmpHistory release];
-
-    [bookmark.delegateBookmark reloadBookmarksForGroup:self.historyGroup];
-    [self insertBookmarkToList:bookmark];
 }
 
 - (void)dealloc
