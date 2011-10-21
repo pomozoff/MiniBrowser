@@ -11,6 +11,6 @@
 
 @protocol BookmarkSaveTableViewProtocol <NSObject>
 
-- (void)moveBookmarkToGroup:(BookmarkItem *)groupBookmark;
+- (void)moveBookmarkToFolder:(BookmarkItem *)bookmarkFolder;
 
 @end

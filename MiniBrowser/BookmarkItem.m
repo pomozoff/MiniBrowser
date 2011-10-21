@@ -11,7 +11,7 @@
 @implementation BookmarkItem
 
 @synthesize itemId = _itemId;
-@synthesize isGroup = _group;
+@synthesize isFolder = _folder;
 @synthesize isPermanent = _permanent;
 @synthesize name = _name;
 @synthesize url = _url;
@@ -32,7 +32,7 @@
 - (id)initWithName:(NSString *)name
                url:(NSString *)url
               date:(NSDate *)date
-             group:(BOOL)isThisAGroup
+             folder:(BOOL)isFolder
          permanent:(BOOL)isThisPermanent
 {
     self = [super init];
@@ -41,7 +41,7 @@
         _itemId = (NSString *)CFUUIDCreateString(nil, uuidObj);
         CFRelease(uuidObj);
 
-        _group = isThisAGroup;
+        _folder = isFolder;
         _permanent = isThisPermanent;
         
         self.name = name;
@@ -54,22 +54,22 @@
 
 - (id)init
 {
-    self = [self initWithName:@"" url:@"" date:[NSDate date] group:NO permanent:NO];
+    self = [self initWithName:@"" url:@"" date:[NSDate date] folder:NO permanent:NO];
     
     return self;
 }
 + (NSDictionary *)itemAsDictionaryWithName:(NSString *)name
                                        url:(NSString *)url
-                                     group:(BOOL)isThisAGroup
+                                     folder:(BOOL)isFolder
                                  permanent:(BOOL)isThisPermanent
                                     parent:(NSString *)parentId
                                    content:(NSArray *)content
 {
-    NSNumber *group = [NSNumber numberWithBool:isThisAGroup];
+    NSNumber *isFolderNumber = [NSNumber numberWithBool:isFolder];
     NSNumber *permanent = [NSNumber numberWithBool:isThisPermanent];
 
-    NSArray *keys = [[NSArray alloc] initWithObjects:@"name", @"url", @"date" @"group", @"permanent", @"parent", @"content", nil];
-    NSArray *objects = [[NSArray alloc] initWithObjects:name, url, [NSDate date], group, permanent, parentId, content, nil];
+    NSArray *keys = [[NSArray alloc] initWithObjects:@"name", @"url", @"date" @"folder", @"permanent", @"parent", @"content", nil];
+    NSArray *objects = [[NSArray alloc] initWithObjects:name, url, [NSDate date], isFolderNumber, permanent, parentId, content, nil];
     
     NSDictionary *dictionary = [[NSDictionary alloc] initWithObjects:objects forKeys:keys];
     
@@ -81,10 +81,11 @@
 
 - (NSString *)description
 {
-    NSString *desription = [NSString stringWithFormat:@"Bookmark named \"%@\"\nurl: %@\ndate: %@\ngroup: %@\npermanent: %@\nid: %@\nparentId: %@\nsubitems count: %d", self.name,
+    NSString *desription = [NSString stringWithFormat:@"Bookmark named \"%@\"\nurl: %@\ndate: %@\nfolder: %@\npermanent: %@\nid: %@\nparentId: %@\nsubitems count: %d",
+                            self.name,
                             self.url,
                             self.date,
-                            self.isGroup ? @"YES" : @"NO",
+                            self.isFolder ? @"YES" : @"NO",
                             self.isPermanent ? @"YES" : @"NO",
                             self.itemId,
                             self.parentId,
@@ -94,7 +95,7 @@
 
 - (BOOL)isEqualToBookmark:(BookmarkItem *)bookmark
 {
-    BOOL result = (bookmark.isGroup == self.isGroup) &&
+    BOOL result = (bookmark.isFolder == self.isFolder) &&
                   (bookmark.isPermanent == self.isPermanent) &&
                   [bookmark.name isEqualToString:self.name] && 
                   [bookmark.url isEqualToString:self.url] &&

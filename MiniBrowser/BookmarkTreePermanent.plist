@@ -10,7 +10,7 @@
 		<string>Bookmarks</string>
 		<key>url</key>
 		<string></string>
-		<key>group</key>
+		<key>folder</key>
 		<true/>
 		<key>permanent</key>
 		<true/>
@@ -23,7 +23,7 @@
 				<string>History</string>
 				<key>url</key>
 				<string></string>
-				<key>group</key>
+				<key>folder</key>
 				<true/>
 				<key>permanent</key>
 				<true/>
@@ -37,7 +37,7 @@
 				<string>Google</string>
 				<key>url</key>
 				<string>http://google.com</string>
-				<key>group</key>
+				<key>folder</key>
 				<false/>
 				<key>permanent</key>
 				<false/>
@@ -51,7 +51,7 @@
 				<string>Yahoo</string>
 				<key>url</key>
 				<string>http://yahoo.com</string>
-				<key>group</key>
+				<key>folder</key>
 				<false/>
 				<key>permanent</key>
 				<false/>

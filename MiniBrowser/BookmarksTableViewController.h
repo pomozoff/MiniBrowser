@@ -14,6 +14,6 @@
 
 @property (nonatomic, retain) id <BrowserControllerDelegate> delegateController;
 @property (nonatomic, retain) id <BookmarksStorageProtocol> bookmarksStorage;
-@property (nonatomic, retain) BookmarkItem *currentBookmarkGroup;
+@property (nonatomic, retain) BookmarkItem *currentBookmarkFolder;
 
 @end

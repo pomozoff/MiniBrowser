@@ -45,11 +45,11 @@
 {
     STAssertNotNil(self.bookmarksStorage, @"Bookmark's Storage didn't initialized");
 
-    BookmarkItem *rootItem = self.bookmarksStorage.rootItem;
-    STAssertNotNil(rootItem, @"Root item didn't initialized");
-    STAssertEqualObjects(rootItem.name, @"Bookmarks", @"Invalid root item name");
+    BookmarkItem *rootFolder = self.bookmarksStorage.rootFolder;
+    STAssertNotNil(rootFolder, @"Root item didn't initialized");
+    STAssertEqualObjects(rootFolder.name, @"Bookmarks", @"Invalid root item name");
     
-    NSArray *rootBookmarks = rootItem.content;
+    NSArray *rootBookmarks = rootFolder.content;
     STAssertFalse(rootBookmarks.count < 1, @"Root item is empty - permananet bookmarks didn't loaded");
     
     BookmarkItem *historyFolder = [rootBookmarks objectAtIndex:0];
@@ -63,8 +63,8 @@
 //        NSLog([NSString stringWithFormat:@"%@", historyItem]);
 //    }
     
-    [self.bookmarksStorage arrangeHistoryContentByDate:historyFolder];
-    STAssertFalse(historyBookmarks.count != 2, @"History Folder must contract to two folders");
+//    [self.bookmarksStorage arrangeHistoryContentByDate];
+//    STAssertFalse(historyFolder.content.count != 2, @"History Folder must contract to two folders");
 }
 
 - (void)testCompareTwoBookmarks
@@ -73,13 +73,13 @@
     BookmarkItem *firstBookmark = [[BookmarkItem alloc] initWithName:@"first"
                                                                  url:@""
                                                                 date:currentDate
-                                                               group:NO
+                                                               folder:NO
                                                            permanent:NO];
 
     BookmarkItem *secondBookmark = [[BookmarkItem alloc] initWithName:@"first"
                                                                   url:@""
                                                                  date:currentDate
-                                                                group:NO
+                                                                folder:NO
                                                             permanent:NO];
     STAssertTrue([firstBookmark isEqualToBookmark:secondBookmark], @"Same both bookmarks are not identical");
     
@@ -91,6 +91,29 @@
 
     [secondBookmark release];
     [firstBookmark release];
+}
+
+- (void)testAddNewBookmark
+{
+    // New bookmark
+    NSDate *currentDate = [NSDate date];
+    BookmarkItem *newBookmark = [[BookmarkItem alloc] initWithName:@"test bookmark"
+                                                               url:@"http://test.com"
+                                                              date:currentDate
+                                                             folder:NO
+                                                         permanent:NO];
+    
+    // Add new bookmark to list
+    BookmarkItem *rootBookmark = self.bookmarksStorage.rootFolder;
+    [self.bookmarksStorage addBookmark:newBookmark toFolder:rootBookmark];
+    
+    // New bookmark must be in list
+    BookmarkItem *itemFromList = [self.bookmarksStorage bookmarkById:newBookmark.itemId];
+    STAssertNotNil(itemFromList, @"Just created bookmark not found in bookmarks list");
+    
+    
+    
+    // Move bookmark to new folder
 }
 
 @end

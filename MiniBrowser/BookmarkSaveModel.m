@@ -21,7 +21,6 @@
 @synthesize sections = _sections;
 
 NSString *const sectionItemDescription = @"Item description";
-NSString *const sectionGroup = @"Group";
 
 - (NSArray *)sections
 {
@@ -57,7 +56,7 @@ NSString *const sectionGroup = @"Group";
     NSArray *titles = [currentSection objectForKey:@"Title"];
     NSInteger numberOfRows = titles.count;
     
-    if (section == 0 && bookmark.isGroup) {
+    if (section == 0 && bookmark.isFolder) {
         numberOfRows--;
     }
     

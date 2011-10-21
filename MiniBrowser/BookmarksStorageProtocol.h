@@ -12,24 +12,26 @@
 @protocol BookmarksStorageProtocol <NSObject>
 
 @property (nonatomic, readonly) NSInteger sectionsCount;
-@property (nonatomic, readonly, retain) BookmarkItem *rootItem;
-@property (nonatomic, readonly, retain) BookmarkItem *historyGroup;
+@property (nonatomic, readonly, retain) BookmarkItem *rootFolder;
+@property (nonatomic, readonly, retain) BookmarkItem *historyFolder;
 
 - (id)initWithPathToBundle:(NSString *)currentPathToBundle;
 
-- (void)arrangeHistoryContentByDate:(BookmarkItem *)bookmarkGroup;
+- (void)arrangeHistoryContentByDate;
 
 - (NSInteger)bookmarksCountForParent:(BookmarkItem *)parentItem;
-- (void)moveBookmarkAtPosition:(NSIndexPath *)fromIndexPath toPosition:(NSIndexPath *)toIndexPath insideGroup:(BookmarkItem *)group;
+- (void)moveBookmarkAtPosition:(NSIndexPath *)fromIndexPath
+                    toPosition:(NSIndexPath *)toIndexPath
+                  insideFolder:(BookmarkItem *)folder;
 
 - (BookmarkItem *)bookmarkById:(NSString *)itemId;
 - (BookmarkItem *)bookmarkAtIndex:(NSIndexPath *)indexPath forParent:(BookmarkItem *)parentItem;
 
-- (void)addBookmark:(BookmarkItem *)bookmark toGroup:(BookmarkItem *)bookmarkGroup;
-- (void)moveBookmark:(BookmarkItem *)bookmark toGroup:(BookmarkItem *)groupBookmark;
+- (void)addBookmark:(BookmarkItem *)bookmark toFolder:(BookmarkItem *)bookmarkFolder;
+- (void)moveBookmark:(BookmarkItem *)bookmark toFolder:(BookmarkItem *)bookmarkFolder;
 - (void)deleteBookmark:(BookmarkItem *)bookmark;
 
-- (NSArray *)bookmarkGroupsWithoutBranch:(BookmarkItem *)branchBookmark;
+- (NSArray *)bookmarkFoldersWithoutBranch:(BookmarkItem *)branchBookmark;
 
 - (void)saveBookmarks;
 

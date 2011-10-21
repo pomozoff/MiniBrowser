@@ -12,14 +12,14 @@
 
 @protocol BookmarkItemDelegate <NSObject>
 
-- (void)reloadBookmarksForGroup:(BookmarkItem *)bookmarkGroup;
+- (void)reloadBookmarksInFolder:(BookmarkItem *)bookmarkFolder;
 
 @end
 
 @interface BookmarkItem : NSObject
 
 @property (nonatomic, copy, readonly) NSString *itemId;
-@property (nonatomic, readonly) BOOL isGroup;
+@property (nonatomic, readonly) BOOL isFolder;
 @property (nonatomic, readonly) BOOL isPermanent;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *url;
@@ -31,7 +31,7 @@
 - (id)initWithName:(NSString *)name
                url:(NSString *)url
               date:(NSDate *)date
-             group:(BOOL)isThisAGroup
+             folder:(BOOL)isFolder
          permanent:(BOOL)isThisPermanent;
 
 - (BOOL)isEqualToBookmark:(BookmarkItem *)bookmark;

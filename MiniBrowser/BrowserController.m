@@ -243,22 +243,22 @@ BOOL userInitiatedJump = NO;
     
     self.bookmarkSaveTableViewController.title = barItem.title;
     
-    BookmarkItem *currentBookmarkGroup = self.bookmarksStorage.rootItem;
+    BookmarkItem *currentFolder = self.bookmarksStorage.rootFolder;
 
     UIViewController *topViewController = self.bookmarkNavigationController.topViewController;
     if ([topViewController isKindOfClass:[BookmarksTableViewController class]]) {
         BookmarksTableViewController *bookmarkTVC = (BookmarksTableViewController *)topViewController;
-        currentBookmarkGroup = [bookmarkTVC.currentBookmarkGroup isEqualToBookmark:self.bookmarksStorage.historyGroup] ? 
-                                self.bookmarksStorage.rootItem : bookmarkTVC.currentBookmarkGroup;
+        currentFolder = [bookmarkTVC.currentBookmarkFolder isEqualToBookmark:self.bookmarksStorage.historyFolder] ? 
+                                self.bookmarksStorage.rootFolder : bookmarkTVC.currentBookmarkFolder;
     }
     
     BookmarkItem *newBookmark = [[BookmarkItem alloc] initWithName:@""
                                                                url:self.urlField.text
                                                               date:[NSDate date]
-                                                             group:NO
+                                                             folder:NO
                                                          permanent:NO];
     self.bookmarkSaveTableViewController.bookmark = newBookmark;
-    [self.bookmarksStorage addBookmark:newBookmark toGroup:currentBookmarkGroup];
+    [self.bookmarksStorage addBookmark:newBookmark toFolder:currentFolder];
     [newBookmark release];
 
     if (self.isIPad) {
@@ -451,14 +451,14 @@ BOOL userInitiatedJump = NO;
     BookmarkItem *historyItem = [[BookmarkItem alloc] initWithName:label
                                                                url:sourceUrl
                                                               date:[NSDate date]
-                                                             group:NO
+                                                             folder:NO
                                                          permanent:NO];
     
     if ([self.bookmarkNavigationController.topViewController conformsToProtocol:@protocol(BookmarkItemDelegate)]) {
         historyItem.delegateBookmark = (id <BookmarkItemDelegate>)self.bookmarkNavigationController.topViewController;
     }
     
-    [self.bookmarksStorage addBookmark:historyItem toGroup:self.bookmarksStorage.historyGroup];
+    [self.bookmarksStorage addBookmark:historyItem toFolder:self.bookmarksStorage.historyFolder];
     [historyItem release];
     
     [self setLabel:label andUrl:sourceUrl];

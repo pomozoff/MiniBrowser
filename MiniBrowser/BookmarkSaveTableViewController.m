@@ -8,7 +8,7 @@
 
 #import "BookmarkSaveTableViewController.h"
 #import "BookmarkSaveModel.h"
-#import "BookmarkGroupsTableViewController.h"
+#import "BookmarkFolderTableViewController.h"
 
 @interface BookmarkSaveTableViewController()
 
@@ -41,7 +41,7 @@
 - (BookmarkItem *)bookmark
 {
     if (!_bookmark) {
-        _bookmark = [[BookmarkItem alloc] initWithName:@"" url:@"" date:[NSDate date] group:NO permanent:NO];
+        _bookmark = [[BookmarkItem alloc] initWithName:@"" url:@"" date:[NSDate date] folder:NO permanent:NO];
     }
     
     return _bookmark;
@@ -96,7 +96,7 @@
         _urlField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         _urlField.textAlignment = UITextAlignmentLeft;
         _urlField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        _urlField.enabled = !self.bookmark.isGroup;
+        _urlField.enabled = !self.bookmark.isFolder;
         _urlField.text = self.bookmark.url;
         _urlField.delegate = self;
     }
@@ -235,7 +235,7 @@
 - (void)configureTheCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath forBookmark:(BookmarkItem *)bookmark
 {
     switch (indexPath.section) {
-        case 0: { // Bookmark name and url
+        case 0: { // Bookmark settings section
             switch (indexPath.row) {
                 case 0: { // Bookmark name
                     [cell addSubview:self.nameField];
@@ -243,7 +243,7 @@
                 }
                     
                 case 1: { // Bookmark url
-                    if (self.bookmark.isGroup) {
+                    if (self.bookmark.isFolder) {
                         cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     }
                     
@@ -257,9 +257,9 @@
             break;
         }
             
-        case 1: { // Bookmark group
+        case 1: { // Folder section
             switch (indexPath.row) {
-                case 0: { // Bookmark group
+                case 0: { // Select Folder
                     BookmarkItem *bookmarkParent = [self.bookmarksStorage bookmarkById:bookmark.parentId];
                     cell.textLabel.text = bookmarkParent.name;
                     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -359,20 +359,20 @@
      [detailViewController release];
      */
     
-    if (indexPath.section == 1 && indexPath.row == 0) { // group cell selected
-        BookmarkGroupsTableViewController *groupsTable = [[BookmarkGroupsTableViewController alloc] init];
+    if (indexPath.section == 1 && indexPath.row == 0) { // folder cell selected
+        BookmarkFolderTableViewController *foldersTable = [[BookmarkFolderTableViewController alloc] init];
         
         BookmarkItem *bookmarkParent = [self.bookmarksStorage bookmarkById:self.bookmark.parentId];
         
-        groupsTable.bookmark = self.bookmark;
-        groupsTable.bookmarkParent = bookmarkParent;
-        groupsTable.title = bookmarkParent.name;
-        groupsTable.bookmarksStorage = self.bookmarksStorage;
-        groupsTable.saveTableViewController = self;
+        foldersTable.bookmark = self.bookmark;
+        foldersTable.bookmarkParent = bookmarkParent;
+        foldersTable.title = bookmarkParent.name;
+        foldersTable.bookmarksStorage = self.bookmarksStorage;
+        foldersTable.saveTableViewController = self;
         
-        [self.navigationController pushViewController:groupsTable animated:YES];
+        [self.navigationController pushViewController:foldersTable animated:YES];
         
-        [groupsTable release];
+        [foldersTable release];
     }
 }
 
@@ -394,12 +394,12 @@
 
 #pragma mark - BookmarkSaveTableViewProtocol
 
-- (void)moveBookmarkToGroup:(BookmarkItem *)groupBookmark
+- (void)moveBookmarkToFolder:(BookmarkItem *)bookmarkFolder
 {
-    [self.bookmarksStorage moveBookmark:self.bookmark toGroup:groupBookmark];
+    [self.bookmarksStorage moveBookmark:self.bookmark toFolder:bookmarkFolder];
     
-    NSIndexPath *groupIndexPath = [NSIndexPath indexPathForRow:0 inSection:1];
-    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:groupIndexPath]
+    NSIndexPath *folderIndexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:folderIndexPath]
                           withRowAnimation:UITableViewRowAnimationRight];
 }
 

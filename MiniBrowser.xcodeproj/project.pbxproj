@@ -41,7 +41,7 @@
 		26B578D5144429FB004657E2 /* BookmarkSaveTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B578D4144429FB004657E2 /* BookmarkSaveTableViewController.m */; };
 		26B578D914443290004657E2 /* BookmarkSaveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B578D814443290004657E2 /* BookmarkSaveModel.m */; };
 		26B578DC1444376E004657E2 /* BookmarkSaveTable.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26B578DB1444376E004657E2 /* BookmarkSaveTable.plist */; };
-		26C083B21448238E0056B37A /* BookmarkGroupsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C083B11448238E0056B37A /* BookmarkGroupsTableViewController.m */; };
+		26C083B21448238E0056B37A /* BookmarkFolderTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C083B11448238E0056B37A /* BookmarkFolderTableViewController.m */; };
 		26DB365B144EB3D6001C4CBC /* action.png in Resources */ = {isa = PBXBuildFile; fileRef = 26DB365A144EB3D6001C4CBC /* action.png */; };
 		26DB36AA144EC19C001C4CBC /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26DB36A9144EC19C001C4CBC /* SenTestingKit.framework */; };
 		26DB36AB144EC19C001C4CBC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266D67A8143CCE8D0025F929 /* UIKit.framework */; };
@@ -118,8 +118,8 @@
 		26B578D814443290004657E2 /* BookmarkSaveModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkSaveModel.m; sourceTree = "<group>"; };
 		26B578DA144432E6004657E2 /* BookmarkSaveProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkSaveProtocol.h; sourceTree = "<group>"; };
 		26B578DB1444376E004657E2 /* BookmarkSaveTable.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BookmarkSaveTable.plist; sourceTree = "<group>"; };
-		26C083B01448238E0056B37A /* BookmarkGroupsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkGroupsTableViewController.h; sourceTree = "<group>"; };
-		26C083B11448238E0056B37A /* BookmarkGroupsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkGroupsTableViewController.m; sourceTree = "<group>"; };
+		26C083B01448238E0056B37A /* BookmarkFolderTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = BookmarkFolderTableViewController.h; sourceTree = "<group>"; };
+		26C083B11448238E0056B37A /* BookmarkFolderTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkFolderTableViewController.m; sourceTree = "<group>"; };
 		26C083B314483CBB0056B37A /* BookmarkSaveTableViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkSaveTableViewProtocol.h; sourceTree = "<group>"; };
 		26DB365A144EB3D6001C4CBC /* action.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = action.png; sourceTree = "<group>"; };
 		26DB36A8144EC19C001C4CBC /* UnitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -287,8 +287,8 @@
 		26C083AF144820D70056B37A /* Bookmark */ = {
 			isa = PBXGroup;
 			children = (
-				26C083B01448238E0056B37A /* BookmarkGroupsTableViewController.h */,
-				26C083B11448238E0056B37A /* BookmarkGroupsTableViewController.m */,
+				26C083B01448238E0056B37A /* BookmarkFolderTableViewController.h */,
+				26C083B11448238E0056B37A /* BookmarkFolderTableViewController.m */,
 				26C083B314483CBB0056B37A /* BookmarkSaveTableViewProtocol.h */,
 				26B578D3144429FB004657E2 /* BookmarkSaveTableViewController.h */,
 				26B578D4144429FB004657E2 /* BookmarkSaveTableViewController.m */,
@@ -467,7 +467,7 @@
 				266C91511444171200444BAC /* BookmarkItem.m in Sources */,
 				26B578D5144429FB004657E2 /* BookmarkSaveTableViewController.m in Sources */,
 				26B578D914443290004657E2 /* BookmarkSaveModel.m in Sources */,
-				26C083B21448238E0056B37A /* BookmarkGroupsTableViewController.m in Sources */,
+				26C083B21448238E0056B37A /* BookmarkFolderTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

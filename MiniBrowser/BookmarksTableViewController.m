@@ -14,16 +14,16 @@
 @synthesize delegateController = _delegateController;
 
 @synthesize bookmarksStorage = _bookmarksStorage;
-@synthesize currentBookmarkGroup = _currentBookmarkGroup;
+@synthesize currentBookmarkFolder = _currentBookmarkFolder;
 
-- (BookmarkItem *)currentBookmarkGroup
+- (BookmarkItem *)currentBookmarkFolder
 {
-    if (!_currentBookmarkGroup) {
-        _currentBookmarkGroup = [self.bookmarksStorage rootItem];
-        _currentBookmarkGroup.delegateBookmark = self;
+    if (!_currentBookmarkFolder) {
+        _currentBookmarkFolder = self.bookmarksStorage.rootFolder;
+        _currentBookmarkFolder.delegateBookmark = self;
     }
     
-    return _currentBookmarkGroup;
+    return _currentBookmarkFolder;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -56,7 +56,7 @@
 {
     [super viewDidLoad];
 
-    self.title = self.currentBookmarkGroup.name;
+    self.title = self.currentBookmarkFolder.name;
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.tableView.allowsSelectionDuringEditing = YES;
     
@@ -70,7 +70,7 @@
 - (void)freeProperties
 {
     self.bookmarksStorage = nil;
-    self.currentBookmarkGroup = nil;
+    self.currentBookmarkFolder = nil;
 }
 
 - (void)viewDidUnload
@@ -132,12 +132,12 @@
     BookmarkItem *newFolder = [[BookmarkItem alloc] initWithName:@""
                                                              url:nil
                                                             date:[NSDate date]
-                                                           group:YES
+                                                           folder:YES
                                                        permanent:NO];
     
-    [self.bookmarksStorage addBookmark:newFolder toGroup:self.currentBookmarkGroup];
+    [self.bookmarksStorage addBookmark:newFolder toFolder:self.currentBookmarkFolder];
 
-    NSInteger numberOfRows = [self.bookmarksStorage bookmarksCountForParent:self.currentBookmarkGroup];
+    NSInteger numberOfRows = [self.bookmarksStorage bookmarksCountForParent:self.currentBookmarkFolder];
     NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:(numberOfRows - 1) inSection:0];
     
     bookmarkSaveTVC.title = @"Edit Folder";
@@ -162,11 +162,11 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if (self.currentBookmarkGroup.isPermanent &&
-        self.currentBookmarkGroup.isGroup &&
-        [self.currentBookmarkGroup isEqualToBookmark:self.bookmarksStorage.historyGroup])
+    if (self.currentBookmarkFolder.isPermanent &&
+        self.currentBookmarkFolder.isFolder &&
+        [self.currentBookmarkFolder isEqualToBookmark:self.bookmarksStorage.historyFolder])
     {
-        [self.bookmarksStorage arrangeHistoryContentByDate:self.currentBookmarkGroup];
+        [self.bookmarksStorage arrangeHistoryContentByDate];
     }
     
     NSInteger sectionsCount = self.bookmarksStorage.sectionsCount;
@@ -175,7 +175,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSInteger numberOfRows = [self.bookmarksStorage bookmarksCountForParent:self.currentBookmarkGroup];
+    NSInteger numberOfRows = [self.bookmarksStorage bookmarksCountForParent:self.currentBookmarkFolder];
     return numberOfRows;
 }
 
@@ -188,11 +188,11 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    BookmarkItem *currentBookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentBookmarkGroup];
+    BookmarkItem *currentBookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentBookmarkFolder];
 
     cell.textLabel.text = currentBookmark.name;
     cell.detailTextLabel.text = currentBookmark.url;
-    cell.accessoryType = currentBookmark.isGroup ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
+    cell.accessoryType = currentBookmark.isFolder ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
     cell.editingAccessoryType = currentBookmark.isPermanent ? UITableViewCellAccessoryNone : UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
@@ -213,7 +213,7 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        BookmarkItem *bookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentBookmarkGroup];
+        BookmarkItem *bookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentBookmarkFolder];
         [self.bookmarksStorage deleteBookmark:bookmark];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }   
@@ -225,20 +225,20 @@
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
-    [self.bookmarksStorage moveBookmarkAtPosition:fromIndexPath toPosition:toIndexPath insideGroup:self.currentBookmarkGroup];
+    [self.bookmarksStorage moveBookmarkAtPosition:fromIndexPath toPosition:toIndexPath insideFolder:self.currentBookmarkFolder];
 }
 
 // Override to support conditional rearranging of the table view.
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BookmarkItem *bookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentBookmarkGroup];
+    BookmarkItem *bookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentBookmarkFolder];
     BOOL canOrder = !bookmark.isPermanent;
     return canOrder;
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)source
        toProposedIndexPath:(NSIndexPath *)destination {
-    BookmarkItem *targetBookmark = [self.bookmarksStorage bookmarkAtIndex:destination forParent:self.currentBookmarkGroup];
+    BookmarkItem *targetBookmark = [self.bookmarksStorage bookmarkAtIndex:destination forParent:self.currentBookmarkFolder];
     NSIndexPath *result = targetBookmark.isPermanent ? source : destination;
     
     return result;
@@ -246,7 +246,7 @@
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BookmarkItem *bookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentBookmarkGroup];
+    BookmarkItem *bookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentBookmarkFolder];
     UITableViewCellEditingStyle style = bookmark.isPermanent ? UITableViewCellEditingStyleNone : UITableViewCellEditingStyleDelete;
     
     return style;
@@ -256,7 +256,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BookmarkItem *currentBookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentBookmarkGroup];
+    BookmarkItem *currentBookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentBookmarkFolder];
     
     if (self.tableView.editing) {
         BookmarkSaveTableViewController *bookmarkSaveTVC = [[BookmarkSaveTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
@@ -273,12 +273,12 @@
         
         [bookmarkSaveTVC release];
     } else {
-        if (currentBookmark.isGroup) {
+        if (currentBookmark.isFolder) {
             BookmarksTableViewController *newBookmarksTVC = [[BookmarksTableViewController alloc] init];
             
             newBookmarksTVC.delegateController = self.delegateController;
             newBookmarksTVC.bookmarksStorage = self.bookmarksStorage;
-            newBookmarksTVC.currentBookmarkGroup = currentBookmark;
+            newBookmarksTVC.currentBookmarkFolder = currentBookmark;
             [self.navigationController pushViewController:newBookmarksTVC animated:YES];
             
             [newBookmarksTVC release];
@@ -290,9 +290,9 @@
 
 #pragma mark - Bookmark Item delegate
 
-- (void)reloadBookmarksForGroup:(BookmarkItem *)bookmarkGroup
+- (void)reloadBookmarksInFolder:(BookmarkItem *)bookmarkFolder
 {
-    if (bookmarkGroup && [self.currentBookmarkGroup isEqualToBookmark:bookmarkGroup]) {
+    if (bookmarkFolder && [self.currentBookmarkFolder isEqualToBookmark:bookmarkFolder]) {
         [self.tableView reloadData];
     }
 }
