@@ -120,6 +120,9 @@
     
     // Check new parentId property
     STAssertEqualObjects(newBookmark.parentId, newFolder.itemId, @"Wrong parentId property value in just moved bookmark");
+    
+    [newBookmark release];
+    [newFolder release];
 }
 
 - (void)test3BookmarkStorageLoadingBookmarksTreePermanentPlistAndArrangeIt
