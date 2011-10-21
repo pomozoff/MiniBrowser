@@ -314,13 +314,6 @@ NSString *const historyFolderName = @"History";
 
 - (void)deleteBookmark:(BookmarkItem *)bookmark
 {
-    NSMutableDictionary *tmpList = [self.bookmarksList mutableCopy];
-    
-    [tmpList removeObjectForKey:bookmark.itemId];
-    
-    self.bookmarksList = tmpList;
-    [tmpList release];
-    
     BookmarkItem *parentItem = [self bookmarkById:bookmark.parentId];
     
     [self removeBookmark:bookmark fromFolder:parentItem];
@@ -358,6 +351,20 @@ NSString *const historyFolderName = @"History";
     
     bookmark.delegateBookmark = bookmarkFolder.delegateBookmark;
     [bookmark.delegateBookmark reloadBookmarksInFolder:bookmarkFolder];
+}
+
+- (void)clearFolder:(BookmarkItem *)folder
+{
+    if (!folder.isFolder) {
+        return;
+    }
+    
+    for (BookmarkItem *bookmarkItem in folder.content) {
+        [self clearFolder:bookmarkItem];
+        [self removeBookmarkFromList:bookmarkItem];
+    }
+    
+    folder.content = [NSArray array];
 }
 
 - (NSArray *)bookmarkFoldersWithoutBranch:(BookmarkItem *)branchBookmark

@@ -118,7 +118,7 @@
 		26B578D814443290004657E2 /* BookmarkSaveModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkSaveModel.m; sourceTree = "<group>"; };
 		26B578DA144432E6004657E2 /* BookmarkSaveProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkSaveProtocol.h; sourceTree = "<group>"; };
 		26B578DB1444376E004657E2 /* BookmarkSaveTable.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BookmarkSaveTable.plist; sourceTree = "<group>"; };
-		26C083B01448238E0056B37A /* BookmarkFolderTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = BookmarkFolderTableViewController.h; sourceTree = "<group>"; };
+		26C083B01448238E0056B37A /* BookmarkFolderTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkFolderTableViewController.h; sourceTree = "<group>"; };
 		26C083B11448238E0056B37A /* BookmarkFolderTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkFolderTableViewController.m; sourceTree = "<group>"; };
 		26C083B314483CBB0056B37A /* BookmarkSaveTableViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkSaveTableViewProtocol.h; sourceTree = "<group>"; };
 		26DB365A144EB3D6001C4CBC /* action.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = action.png; sourceTree = "<group>"; };

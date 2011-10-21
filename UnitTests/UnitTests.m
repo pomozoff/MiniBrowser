@@ -120,31 +120,52 @@
     
     // Check new parentId property
     STAssertEqualObjects(newBookmark.parentId, newFolder.itemId, @"Wrong parentId property value in just moved bookmark");
-    
+ 
     [newBookmark release];
     [newFolder release];
 }
 
 - (void)test3BookmarkStorageLoadingBookmarksTreePermanentPlistAndArrangeIt
 {
+    // Check init Bookmark's Storage
     STAssertNotNil(self.bookmarksStorage, @"Bookmark's Storage didn't initialized");
     
+    // Check init Root Folder and it's name
     BookmarkItem *rootFolder = self.bookmarksStorage.rootFolder;
     STAssertNotNil(rootFolder, @"Root item didn't initialized");
     STAssertEqualObjects(rootFolder.name, @"Bookmarks", @"Invalid root item name");
     
+    // Check loaded bookmarks from BookmarkTreePermanent.plist
     NSArray *rootBookmarks = rootFolder.content;
     STAssertFalse(rootBookmarks.count < 1, @"Root item is empty - permananet bookmarks didn't loaded");
     
+    // Check History Folder presence
     BookmarkItem *historyFolder = [rootBookmarks objectAtIndex:0];
     STAssertNotNil(historyFolder, @"History Folder is absent");
     STAssertEqualObjects(historyFolder.name, @"History", @"Invalid History Folder name");
     
+    // Check history bookmarks loaded from BookmarkTreePermanent.plist
     NSArray *historyBookmarks = historyFolder.content;
     STAssertFalse(historyBookmarks.count < 1, @"History Folder is empty - permananet bookmarks didn't loaded");
     
+    // Check History Folder rearranged itself by dates
     [self.bookmarksStorage arrangeHistoryContentByDate];
-    STAssertFalse(historyFolder.content.count != 2, @"History Folder now must contain two sub-folders");
+    STAssertFalse(historyFolder.content.count != 2, @"History Folder now must contains two sub-folders");
+
+    // Check only sub-folders must stay in History Folders
+    BookmarkItem *firstSubFolder = [historyFolder.content objectAtIndex:0];
+    STAssertTrue(firstSubFolder.isFolder, @"First item in History Folder isn't folder");
+
+    // Check for clearing History Folder
+    [self.bookmarksStorage clearFolder:historyFolder];
+    STAssertTrue(historyFolder.content.count == 0, @"History Folder didn't cleared");
+    
+    // Check first sub-folder in History Folder contains any items
+    STAssertTrue(firstSubFolder.content.count == 0, @"First sub-folder in History Folder still contains items");
+    
+    // Check first sub-folder in general bookmark's list
+    BookmarkItem *itemFromGeneralList = [self.bookmarksStorage bookmarkById:firstSubFolder.itemId];
+    STAssertEqualObjects(itemFromGeneralList, self.bookmarksStorage.rootFolder, @"First sub-folder in History Folder still presence in general bookmark's list");
 }
 
 @end

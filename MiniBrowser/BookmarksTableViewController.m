@@ -9,12 +9,31 @@
 #import "BookmarksTableViewController.h"
 #import "BookmarkSaveTableViewController.h"
 
+@interface BookmarksTableViewController()
+
+@property (nonatomic, retain) UIBarButtonItem *clearHistoryButton;
+
+@end
+
 @implementation BookmarksTableViewController
 
+@synthesize clearHistoryButton = _clearHistoryButton;
 @synthesize delegateController = _delegateController;
 
 @synthesize bookmarksStorage = _bookmarksStorage;
 @synthesize currentBookmarkFolder = _currentBookmarkFolder;
+
+- (UIBarButtonItem *)clearHistoryButton
+{
+    if (!_clearHistoryButton) {
+        _clearHistoryButton = [[UIBarButtonItem alloc] initWithTitle:@"Clear History"
+                                                               style:UIBarButtonItemStylePlain
+                                                              target:self
+                                                              action:@selector(clearHistoryFolderPressed:)];
+    }
+    
+    return _clearHistoryButton;
+}
 
 - (BookmarkItem *)currentBookmarkFolder
 {
@@ -55,9 +74,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    BOOL isHistoryFolder = [self.currentBookmarkFolder isEqualToBookmark:self.bookmarksStorage.historyFolder];
 
     self.title = self.currentBookmarkFolder.name;
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.rightBarButtonItem = isHistoryFolder ? self.clearHistoryButton : self.editButtonItem;
     self.tableView.allowsSelectionDuringEditing = YES;
     
     // Uncomment the following line to preserve selection between presentations.
@@ -156,6 +177,11 @@
     [self.navigationController pushViewController:bookmarkSaveTVC animated:YES];
     
     [bookmarkSaveTVC release];
+}
+
+- (void)clearHistoryFolderPressed:(UIBarButtonItem *)sender
+{
+    [self.bookmarksStorage clearFolder:self.bookmarksStorage.historyFolder];
 }
 
 #pragma mark - Table view data source

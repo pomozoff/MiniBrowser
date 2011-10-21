@@ -30,6 +30,7 @@
 - (void)addBookmark:(BookmarkItem *)bookmark toFolder:(BookmarkItem *)bookmarkFolder;
 - (void)moveBookmark:(BookmarkItem *)bookmark toFolder:(BookmarkItem *)bookmarkFolder;
 - (void)deleteBookmark:(BookmarkItem *)bookmark;
+- (void)clearFolder:(BookmarkItem *)folder;
 
 - (NSArray *)bookmarkFoldersWithoutBranch:(BookmarkItem *)branchBookmark;
 
