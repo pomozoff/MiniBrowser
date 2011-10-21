@@ -233,16 +233,26 @@ NSString *const historyFolderName = @"History";
 
 - (void)insertBookmarkToList:(BookmarkItem *)bookmark
 {
-    NSMutableDictionary *tmpList = [self.bookmarksList mutableCopy];
-    
-    [tmpList setObject:bookmark forKey:bookmark.itemId];
-    self.bookmarksList = tmpList;
-    
-    [tmpList release];
+    if (![self.bookmarksList objectForKey:bookmark.itemId]) {
+        NSMutableDictionary *tmpList = [self.bookmarksList mutableCopy];
+        
+        [tmpList setObject:bookmark forKey:bookmark.itemId];
+        self.bookmarksList = tmpList;
+        
+        [tmpList release];
+    }
 }
 
 - (void)addBookmark:(BookmarkItem *)bookmark toFolder:(BookmarkItem *)bookmarkFolder
 {
+    if (!bookmark) {
+        return;
+    }
+    
+    if (bookmark.parentId) {
+        [NSException raise:@"Bookmark adding error" format:@"Bookmark is already present in bookmark's list"];
+    }
+    
     bookmark.parentId = bookmarkFolder.itemId;
 
     NSMutableArray *tmpContent = [bookmarkFolder.content mutableCopy];
@@ -281,6 +291,8 @@ NSString *const historyFolderName = @"History";
 
 - (void)removeBookmark:(BookmarkItem *)bookmark fromFolder:(BookmarkItem *)bookmarkFolder
 {
+    bookmark.parentId = nil;
+    
     NSMutableArray *tmpContent = [bookmarkFolder.content mutableCopy];
     
     [tmpContent removeObject:bookmark];
@@ -322,8 +334,16 @@ NSString *const historyFolderName = @"History";
     [self removeBookmark:bookmark fromFolder:currentParent];
     [bookmark.delegateBookmark reloadBookmarksInFolder:currentParent];
 
-    [self addBookmark:bookmark toFolder:bookmarkFolder];
-    [bookmark release];
+    @try {
+        [self addBookmark:bookmark toFolder:bookmarkFolder];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Error moving bookmark: %@", exception.reason);
+        [self addBookmark:bookmark toFolder:currentParent];
+    }
+    @finally {
+        [bookmark release];
+    }
     
     bookmark.delegateBookmark = bookmarkFolder.delegateBookmark;
     [bookmark.delegateBookmark reloadBookmarksInFolder:bookmarkFolder];
@@ -421,11 +441,10 @@ NSString *const historyFolderName = @"History";
             
             [dateFormat release];
 
-            NSArray *folderssListNamedByDate = [self.historyFolder.content
-                                               filteredArrayUsingPredicate:[NSPredicate
-                                                                     predicateWithFormat:@"(name == %@)", newFolderName]];
+            NSArray *foldersListNamedByDate = [self.historyFolder.content filteredArrayUsingPredicate:
+                                                [NSPredicate predicateWithFormat:@"(name == %@)", newFolderName]];
             
-            if (folderssListNamedByDate.count == 0) {
+            if (foldersListNamedByDate.count == 0) {
                 newFolder = [[[BookmarkItem alloc] initWithName:newFolderName
                                                            url:@""
                                                           date:endOfBookmarksDate
@@ -434,20 +453,10 @@ NSString *const historyFolderName = @"History";
                 
                 [self addBookmark:newFolder toFolder:self.historyFolder];
             } else {
-                newFolder = [folderssListNamedByDate objectAtIndex:0];
+                newFolder = [foldersListNamedByDate objectAtIndex:0];
             }
             
-            BookmarkItem *foundBookmark = [self.bookmarksList objectForKey:historyBookmark.itemId];
-            [self moveBookmark:foundBookmark toFolder:newFolder];
-            
-            NSArray *currentBookmarkList = [self.historyFolder.content
-                                            filteredArrayUsingPredicate:[NSPredicate
-                                                                     predicateWithFormat:@"(itemId == %@)", historyBookmark.itemId]];
-            
-            if (currentBookmarkList.count > 0) {
-                BookmarkItem *foundBookmark = [currentBookmarkList objectAtIndex:0];
-                [self moveBookmark:foundBookmark toFolder:newFolder];
-            }
+            [self moveBookmark:historyBookmark toFolder:newFolder];
         }
     }
 }
