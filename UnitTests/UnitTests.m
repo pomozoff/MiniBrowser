@@ -41,33 +41,44 @@
     [super tearDown];
 }
 
-- (void)testBookmarkStorageLoadingBookmarksTreePermanentPlistAndArrangeIt
+- (void)test1AddNewBookmark
 {
-    STAssertNotNil(self.bookmarksStorage, @"Bookmark's Storage didn't initialized");
-
-    BookmarkItem *rootFolder = self.bookmarksStorage.rootFolder;
-    STAssertNotNil(rootFolder, @"Root item didn't initialized");
-    STAssertEqualObjects(rootFolder.name, @"Bookmarks", @"Invalid root item name");
+    // New bookmark
+    NSDate *currentDate = [NSDate date];
+    BookmarkItem *newBookmark = [[BookmarkItem alloc] initWithName:@"test bookmark"
+                                                               url:@"http://test.com"
+                                                              date:currentDate
+                                                            folder:NO
+                                                         permanent:NO];
     
-    NSArray *rootBookmarks = rootFolder.content;
-    STAssertFalse(rootBookmarks.count < 1, @"Root item is empty - permananet bookmarks didn't loaded");
+    // Add new bookmark to list
+    BookmarkItem *rootBookmark = self.bookmarksStorage.rootFolder;
+    [self.bookmarksStorage addBookmark:newBookmark toFolder:rootBookmark];
     
-    BookmarkItem *historyFolder = [rootBookmarks objectAtIndex:0];
-    STAssertNotNil(historyFolder, @"History Folder is absent");
-    STAssertEqualObjects(historyFolder.name, @"History", @"Invalid History Folder name");
+    // Check parentId property
+    STAssertEqualObjects(newBookmark.parentId, rootBookmark.itemId, @"Wrong parentId property value in just created bookmark");
     
-    NSArray *historyBookmarks = historyFolder.content;
-    STAssertFalse(historyBookmarks.count < 1, @"History Folder is empty - permananet bookmarks didn't loaded");
+    // New bookmark must be in list
+    BookmarkItem *itemFromList = [self.bookmarksStorage bookmarkById:newBookmark.itemId];
+    STAssertNotNil(itemFromList, @"Just created bookmark not found in bookmarks list");
     
-//    for (BookmarkItem *historyItem in historyBookmarks) {
-//        NSLog([NSString stringWithFormat:@"%@", historyItem]);
-//    }
+    // Move bookmark to new folder
+    BookmarkItem *newFolder = [[BookmarkItem alloc] initWithName:@"test folder"
+                                                             url:@""
+                                                            date:currentDate
+                                                          folder:YES
+                                                       permanent:NO];
+    [self.bookmarksStorage moveBookmark:newBookmark toFolder:newFolder];
     
-//    [self.bookmarksStorage arrangeHistoryContentByDate];
-//    STAssertFalse(historyFolder.content.count != 2, @"History Folder must contract to two folders");
+    // Moved bookmark still must be in list
+    BookmarkItem *movedItemFromList = [self.bookmarksStorage bookmarkById:newBookmark.itemId];
+    STAssertNotNil(movedItemFromList, @"Moved bookmark not found in bookmarks list");
+    
+    // Check new parentId property
+    STAssertEqualObjects(newBookmark.parentId, newFolder.itemId, @"Wrong parentId property value in moved bookmark");
 }
 
-- (void)testCompareTwoBookmarks
+- (void)test2CompareTwoBookmarks
 {
     NSDate *currentDate = [NSDate date];
     BookmarkItem *firstBookmark = [[BookmarkItem alloc] initWithName:@"first"
@@ -93,41 +104,30 @@
     [firstBookmark release];
 }
 
-- (void)testAddNewBookmark
+- (void)test3BookmarkStorageLoadingBookmarksTreePermanentPlistAndArrangeIt
 {
-    // New bookmark
-    NSDate *currentDate = [NSDate date];
-    BookmarkItem *newBookmark = [[BookmarkItem alloc] initWithName:@"test bookmark"
-                                                               url:@"http://test.com"
-                                                              date:currentDate
-                                                             folder:NO
-                                                         permanent:NO];
+    STAssertNotNil(self.bookmarksStorage, @"Bookmark's Storage didn't initialized");
     
-    // Add new bookmark to list
-    BookmarkItem *rootBookmark = self.bookmarksStorage.rootFolder;
-    [self.bookmarksStorage addBookmark:newBookmark toFolder:rootBookmark];
+    BookmarkItem *rootFolder = self.bookmarksStorage.rootFolder;
+    STAssertNotNil(rootFolder, @"Root item didn't initialized");
+    STAssertEqualObjects(rootFolder.name, @"Bookmarks", @"Invalid root item name");
     
-    // Check parentId property
-    STAssertEqualObjects(newBookmark.parentId, rootBookmark.itemId, @"Wrong parentId property value in just created bookmark");
+    NSArray *rootBookmarks = rootFolder.content;
+    STAssertFalse(rootBookmarks.count < 1, @"Root item is empty - permananet bookmarks didn't loaded");
     
-    // New bookmark must be in list
-    BookmarkItem *itemFromList = [self.bookmarksStorage bookmarkById:newBookmark.itemId];
-    STAssertNotNil(itemFromList, @"Just created bookmark not found in bookmarks list");
+    BookmarkItem *historyFolder = [rootBookmarks objectAtIndex:0];
+    STAssertNotNil(historyFolder, @"History Folder is absent");
+    STAssertEqualObjects(historyFolder.name, @"History", @"Invalid History Folder name");
     
-    // Move bookmark to new folder
-    BookmarkItem *newFolder = [[BookmarkItem alloc] initWithName:@"test folder"
-                                                             url:@""
-                                                            date:currentDate
-                                                          folder:YES
-                                                       permanent:NO];
-    [self.bookmarksStorage moveBookmark:newBookmark toFolder:newFolder];
-
-    // Moved bookmark still must be in list
-    BookmarkItem *movedItemFromList = [self.bookmarksStorage bookmarkById:newBookmark.itemId];
-    STAssertNotNil(movedItemFromList, @"Moved bookmark not found in bookmarks list");
+    NSArray *historyBookmarks = historyFolder.content;
+    STAssertFalse(historyBookmarks.count < 1, @"History Folder is empty - permananet bookmarks didn't loaded");
     
-    // Check new parentId property
-    STAssertEqualObjects(newBookmark.parentId, newFolder.itemId, @"Wrong parentId property value in moved bookmark");
+    //    for (BookmarkItem *historyItem in historyBookmarks) {
+    //        NSLog([NSString stringWithFormat:@"%@", historyItem]);
+    //    }
+    
+    //    [self.bookmarksStorage arrangeHistoryContentByDate];
+    //    STAssertFalse(historyFolder.content.count != 2, @"History Folder must contract to two folders");
 }
 
 @end
