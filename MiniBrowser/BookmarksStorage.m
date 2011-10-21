@@ -11,6 +11,7 @@
 @interface BookmarksStorage()
 
 @property (nonatomic, retain) NSDictionary *bookmarksList;
+@property (nonatomic, retain) NSDateFormatter *dateFormatter;
 @property (nonatomic, copy) NSString *pathToBundle;
 
 @end
@@ -22,6 +23,7 @@
 @synthesize historyFolder = _historyFolder;
 
 @synthesize bookmarksList = _bookmarksList;
+@synthesize dateFormatter = _dateFormatter;
 @synthesize pathToBundle = _pathToBundle;
 
 NSString *const savedBookmarks = @"savedBookmarks";
@@ -30,6 +32,15 @@ NSString *const historyFolderName = @"History";
 - (NSInteger)sectionsCount
 {
     return 1;
+}
+
+- (NSDateFormatter *)dateFormatter
+{
+    if (!_dateFormatter) {
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        [_dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    }
+    return _dateFormatter;
 }
 
 - (NSDictionary *)copyBookmarksToDictionaryFromBookmark:(BookmarkItem *)bookmark
@@ -423,23 +434,19 @@ NSString *const historyFolderName = @"History";
     NSDate *beginOfTheDay = [self getStartOfTheDay:currentDate];
     
     NSArray *localContent = [NSArray arrayWithArray:self.historyFolder.content];
-    
+
     for (BookmarkItem *historyBookmark in localContent) {
         if (historyBookmark.isFolder) {
             continue;
         }
         
         if ([beginOfTheDay compare:historyBookmark.date] == NSOrderedDescending) {
-            NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-            [dateFormat setDateFormat:@"yyyy-MM-dd"];
             
             NSDate *endOfBookmarksDate = [self getEndOfTheDay:historyBookmark.date];
             NSDate *localBookmarksDate = [self convertDateToLocalTimeZone:historyBookmark.date
                                                              fromTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
             
-            NSString *newFolderName = [dateFormat stringFromDate:localBookmarksDate];
-            
-            [dateFormat release];
+            NSString *newFolderName = [self.dateFormatter stringFromDate:localBookmarksDate];
 
             NSArray *foldersListNamedByDate = [self.historyFolder.content filteredArrayUsingPredicate:
                                                 [NSPredicate predicateWithFormat:@"(name == %@)", newFolderName]];
@@ -469,6 +476,7 @@ NSString *const historyFolderName = @"History";
     _historyFolder = nil;
 
     self.bookmarksList = nil;
+    self.dateFormatter = nil;
     self.pathToBundle = nil;
     
     [super dealloc];
