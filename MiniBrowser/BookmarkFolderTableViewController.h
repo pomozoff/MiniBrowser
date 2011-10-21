@@ -1,5 +1,5 @@
 //
-//  BookmarkGroupsTableViewController.h
+//  BookmarkFolderTableViewController.h
 //  MiniBrowser
 //
 //  Created by Антон Помозов on 14.10.11.
@@ -11,7 +11,7 @@
 #import "BookmarksStorageProtocol.h"
 #import "BookmarkSaveTableViewProtocol.h"
 
-@interface BookmarkGroupsTableViewController : UITableViewController
+@interface BookmarkFolderTableViewController : UITableViewController
 
 @property (nonatomic, retain) BookmarkItem *bookmark;
 @property (nonatomic, retain) BookmarkItem *bookmarkParent;

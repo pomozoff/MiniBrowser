@@ -1,20 +1,20 @@
 //
-//  BookmarkGroupsTableViewController.m
+//  BookmarkFolderTableViewController.m
 //  MiniBrowser
 //
 //  Created by Антон Помозов on 14.10.11.
 //  Copyright 2011 Alma. All rights reserved.
 //
 
-#import "BookmarkGroupsTableViewController.h"
+#import "BookmarkFolderTableViewController.h"
 
-@interface BookmarkGroupsTableViewController()
+@interface BookmarkFolderTableViewController()
 
 @property (nonatomic, retain) NSArray *treeList;
 
 @end
 
-@implementation BookmarkGroupsTableViewController
+@implementation BookmarkFolderTableViewController
 
 @synthesize bookmark = _bookmark;
 @synthesize bookmarkParent = _bookmarkParent;
@@ -31,7 +31,7 @@
 - (NSArray *)treeList
 {
     if (!_treeList) {
-        _treeList = [[self.bookmarksStorage bookmarkGroupsWithoutBranch:self.bookmark] retain];
+        _treeList = [[self.bookmarksStorage bookmarkFoldersWithoutBranch:self.bookmark] retain];
     }
     
     return _treeList;
@@ -135,7 +135,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"BookmarkGroupCell";
+    static NSString *CellIdentifier = @"BookmarkFolderCell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -143,7 +143,7 @@
     }
     
     NSDictionary *bookmarkData = [self.treeList objectAtIndex:indexPath.row];
-    BookmarkItem *groupBookmark = [bookmarkData objectForKey:@"bookmark"];
+    BookmarkItem *bookmarkFolder = [bookmarkData objectForKey:@"bookmark"];
     NSInteger length = [[bookmarkData objectForKey:@"level"] intValue];
     
     NSString *prefix = @"";
@@ -151,7 +151,7 @@
         prefix = [prefix stringByAppendingString:@"  "];
     }
     
-    cell.textLabel.text = [prefix stringByAppendingString:groupBookmark.name];
+    cell.textLabel.text = [prefix stringByAppendingString:bookmarkFolder.name];
     
     return cell;
 }
@@ -200,8 +200,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *bookmarkData = [self.treeList objectAtIndex:indexPath.row];
-    BookmarkItem *groupBookmark = [bookmarkData objectForKey:@"bookmark"];
-    [self.saveTableViewController moveBookmarkToGroup:groupBookmark];
+    BookmarkItem *bookmarkFolder = [bookmarkData objectForKey:@"bookmark"];
+    [self.saveTableViewController moveBookmarkToFolder:bookmarkFolder];
     
     [self.navigationController popViewControllerAnimated:YES];
 }
