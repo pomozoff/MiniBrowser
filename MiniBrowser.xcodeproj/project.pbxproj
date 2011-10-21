@@ -42,6 +42,7 @@
 		26B578D914443290004657E2 /* BookmarkSaveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B578D814443290004657E2 /* BookmarkSaveModel.m */; };
 		26B578DC1444376E004657E2 /* BookmarkSaveTable.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26B578DB1444376E004657E2 /* BookmarkSaveTable.plist */; };
 		26C083B21448238E0056B37A /* BookmarkFolderTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C083B11448238E0056B37A /* BookmarkFolderTableViewController.m */; };
+		26C202E21451711600323E79 /* NSDate+Between.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C202E11451711600323E79 /* NSDate+Between.m */; };
 		26DB365B144EB3D6001C4CBC /* action.png in Resources */ = {isa = PBXBuildFile; fileRef = 26DB365A144EB3D6001C4CBC /* action.png */; };
 		26DB36AA144EC19C001C4CBC /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26DB36A9144EC19C001C4CBC /* SenTestingKit.framework */; };
 		26DB36AB144EC19C001C4CBC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266D67A8143CCE8D0025F929 /* UIKit.framework */; };
@@ -121,6 +122,8 @@
 		26C083B01448238E0056B37A /* BookmarkFolderTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkFolderTableViewController.h; sourceTree = "<group>"; };
 		26C083B11448238E0056B37A /* BookmarkFolderTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkFolderTableViewController.m; sourceTree = "<group>"; };
 		26C083B314483CBB0056B37A /* BookmarkSaveTableViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkSaveTableViewProtocol.h; sourceTree = "<group>"; };
+		26C202E01451711600323E79 /* NSDate+Between.h */ = {isa = PBXFileReference; fileEncoding = 4; path = "NSDate+Between.h"; sourceTree = "<group>"; };
+		26C202E11451711600323E79 /* NSDate+Between.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Between.m"; sourceTree = "<group>"; };
 		26DB365A144EB3D6001C4CBC /* action.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = action.png; sourceTree = "<group>"; };
 		26DB36A8144EC19C001C4CBC /* UnitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		26DB36A9144EC19C001C4CBC /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -223,6 +226,8 @@
 				26C083AD1448209F0056B37A /* Search Engine */,
 				265CCEB9143D85B9005F348A /* Resources */,
 				266D67AF143CCE8D0025F929 /* Supporting Files */,
+				26C202E01451711600323E79 /* NSDate+Between.h */,
+				26C202E11451711600323E79 /* NSDate+Between.m */,
 			);
 			path = MiniBrowser;
 			sourceTree = "<group>";
@@ -468,6 +473,7 @@
 				26B578D5144429FB004657E2 /* BookmarkSaveTableViewController.m in Sources */,
 				26B578D914443290004657E2 /* BookmarkSaveModel.m in Sources */,
 				26C083B21448238E0056B37A /* BookmarkFolderTableViewController.m in Sources */,
+				26C202E21451711600323E79 /* NSDate+Between.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

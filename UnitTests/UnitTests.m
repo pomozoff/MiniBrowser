@@ -8,6 +8,7 @@
 
 #import "UnitTests.h"
 #import "BookmarksStorage.h"
+#import "NSDate+Between.h"
 
 @interface UnitTests()
 
@@ -154,18 +155,22 @@
 
     // Check only sub-folders must stay in History Folders
     BookmarkItem *firstSubFolder = [historyFolder.content objectAtIndex:0];
-    STAssertTrue(firstSubFolder.isFolder, @"First item in History Folder isn't folder");
+    STAssertTrue(firstSubFolder.isFolder, @"The first item in History Folder isn't folder");
 
+    // Check the first folder's date is 17.10.2011
+    NSString *expectedName = @"Monday, Oct 17";
+    STAssertEqualObjects(firstSubFolder.name, expectedName, @"The first sub-folder in arranged History Folder has wrong name");
+    
     // Check for clearing History Folder
     [self.bookmarksStorage clearFolder:historyFolder];
     STAssertTrue(historyFolder.content.count == 0, @"History Folder didn't cleared");
     
-    // Check first sub-folder in History Folder contains any items
-    STAssertTrue(firstSubFolder.content.count == 0, @"First sub-folder in History Folder still contains items");
+    // Check the first sub-folder in History Folder contains any items
+    STAssertTrue(firstSubFolder.content.count == 0, @"The first sub-folder in History Folder still contains items");
     
-    // Check first sub-folder in general bookmark's list
+    // Check presence of the first sub-folder in general bookmark's list
     BookmarkItem *itemFromGeneralList = [self.bookmarksStorage bookmarkById:firstSubFolder.itemId];
-    STAssertEqualObjects(itemFromGeneralList, self.bookmarksStorage.rootFolder, @"First sub-folder in History Folder still presence in general bookmark's list");
+    STAssertEqualObjects(itemFromGeneralList, self.bookmarksStorage.rootFolder, @"The first sub-folder in History Folder still presence in general bookmark's list");
 }
 
 @end

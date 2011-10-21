@@ -268,7 +268,7 @@ NSString *const historyFolderName = @"History";
 
     NSMutableArray *tmpContent = [bookmarkFolder.content mutableCopy];
     
-    if ([bookmarkFolder isEqualToBookmark:self.historyFolder]) {
+    if (!bookmark.isFolder && [bookmarkFolder isEqualToBookmark:self.historyFolder]) {
         BookmarkItem *firstBookmark = nil;
         if (tmpContent.count > 0) {
             firstBookmark = [tmpContent objectAtIndex:0];
@@ -415,9 +415,9 @@ NSString *const historyFolderName = @"History";
     NSUInteger componentFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *dateComponents = [calendar components:componentFlags fromDate:date];
-    NSDate *beginOfTheDay = [[calendar dateFromComponents:dateComponents] retain];
+    NSDate *beginOfTheDay = [calendar dateFromComponents:dateComponents];
     
-    return [beginOfTheDay autorelease];
+    return beginOfTheDay;
 }
 
 - (NSDate *)getEndOfTheDay:(NSDate *)date
@@ -428,9 +428,9 @@ NSString *const historyFolderName = @"History";
     dateComponents.hour = 23;
     dateComponents.minute = 59;
     dateComponents.second = 59;
-    NSDate *enfOfTheDay = [[calendar dateFromComponents:dateComponents] retain];
+    NSDate *enfOfTheDay = [calendar dateFromComponents:dateComponents];
     
-    return [enfOfTheDay autorelease];
+    return enfOfTheDay;
 }
 
 - (void)arrangeHistoryContentByDate
