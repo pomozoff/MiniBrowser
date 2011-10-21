@@ -107,13 +107,27 @@
     BookmarkItem *rootBookmark = self.bookmarksStorage.rootFolder;
     [self.bookmarksStorage addBookmark:newBookmark toFolder:rootBookmark];
     
+    // Check parentId property
+    STAssertEqualObjects(newBookmark.parentId, rootBookmark.itemId, @"Wrong parentId property value in just created bookmark");
+    
     // New bookmark must be in list
     BookmarkItem *itemFromList = [self.bookmarksStorage bookmarkById:newBookmark.itemId];
     STAssertNotNil(itemFromList, @"Just created bookmark not found in bookmarks list");
     
-    
-    
     // Move bookmark to new folder
+    BookmarkItem *newFolder = [[BookmarkItem alloc] initWithName:@"test folder"
+                                                             url:@""
+                                                            date:currentDate
+                                                          folder:YES
+                                                       permanent:NO];
+    [self.bookmarksStorage moveBookmark:newBookmark toFolder:newFolder];
+
+    // Moved bookmark still must be in list
+    BookmarkItem *movedItemFromList = [self.bookmarksStorage bookmarkById:newBookmark.itemId];
+    STAssertNotNil(movedItemFromList, @"Moved bookmark not found in bookmarks list");
+    
+    // Check new parentId property
+    STAssertEqualObjects(newBookmark.parentId, newFolder.itemId, @"Wrong parentId property value in moved bookmark");
 }
 
 @end
