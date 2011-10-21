@@ -143,8 +143,8 @@
     NSArray *historyBookmarks = historyFolder.content;
     STAssertFalse(historyBookmarks.count < 1, @"History Folder is empty - permananet bookmarks didn't loaded");
     
-//    [self.bookmarksStorage arrangeHistoryContentByDate];
-//    STAssertFalse(historyFolder.content.count != 2, @"History Folder must contract to two folders");
+    [self.bookmarksStorage arrangeHistoryContentByDate];
+    STAssertFalse(historyFolder.content.count != 2, @"History Folder now must contain two sub-folders");
 }
 
 @end
