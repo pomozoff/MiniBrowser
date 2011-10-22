@@ -12,14 +12,16 @@
 @interface BookmarksTableViewController()
 
 @property (nonatomic, retain) UIBarButtonItem *clearHistoryButton;
+@property (nonatomic) NSInteger lastNumberOfRows;
 
 @end
 
 @implementation BookmarksTableViewController
 
 @synthesize clearHistoryButton = _clearHistoryButton;
-@synthesize delegateController = _delegateController;
+@synthesize lastNumberOfRows = _lastNumberOfRows;
 
+@synthesize delegateController = _delegateController;
 @synthesize bookmarksStorage = _bookmarksStorage;
 @synthesize currentBookmarkFolder = _currentBookmarkFolder;
 
@@ -189,13 +191,6 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if (self.currentBookmarkFolder.isPermanent &&
-        self.currentBookmarkFolder.isFolder &&
-        [self.currentBookmarkFolder isEqualToBookmark:self.bookmarksStorage.historyFolder])
-    {
-        [self.bookmarksStorage arrangeHistoryContentByDate];
-    }
-    
     NSInteger sectionsCount = self.bookmarksStorage.sectionsCount;
     return sectionsCount;
 }
@@ -203,6 +198,14 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSInteger numberOfRows = [self.bookmarksStorage bookmarksCountForParent:self.currentBookmarkFolder];
+    
+    if ( [self.currentBookmarkFolder isEqualToBookmark:self.bookmarksStorage.historyFolder] && (self.lastNumberOfRows != numberOfRows) )
+    {
+        [self.bookmarksStorage arrangeHistoryContentByDate];
+        [self.tableView reloadData];
+        self.lastNumberOfRows = numberOfRows;
+    }
+    
     return numberOfRows;
 }
 
