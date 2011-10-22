@@ -28,7 +28,7 @@
 @synthesize urlField = _urlField;
 @synthesize tableViewParent = _tableViewParent;
 @synthesize indexPath = _indexPath;
-@synthesize popoverParent = _popoverParent;
+@synthesize delegateController = _delegateController;
 
 - (BookmarkSaveModel *)bookmarkSaveModel
 {
@@ -176,7 +176,7 @@
     
     self.tableViewParent = nil;
     self.indexPath = nil;
-    self.popoverParent = nil;
+    self.delegateController = nil;
 }
 
 - (void)viewDidUnload
@@ -191,8 +191,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    [self forcePopoverSize];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -230,7 +228,7 @@
 - (void)doneBookmarkSaving:(UIBarButtonItem *)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
-    [self.popoverParent dismissPopoverAnimated:YES];
+    [self.delegateController dismissAndCleanNewBookmarkPopover];
 }
 
 #pragma mark - Bookmark

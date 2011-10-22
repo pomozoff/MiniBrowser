@@ -271,7 +271,7 @@ BOOL userInitiatedJump = NO;
         [popover release];
         [navigationController release];
 
-        self.bookmarkSaveTableViewController.popoverParent = self.popoverSaveBookmark;
+        self.bookmarkSaveTableViewController.delegateController = self;
         self.popoverSaveBookmark.delegate = self;
         
         [self.popoverSaveBookmark presentPopoverFromBarButtonItem:barItem
@@ -547,12 +547,19 @@ BOOL userInitiatedJump = NO;
             ((UITableViewController *)topViewController).editing = NO;
         }
         
-    }
-    
-    if (popoverController == self.popoverSaveBookmark) {
+    } else if (popoverController == self.popoverSaveBookmark) {
         self.popoverSaveBookmark = nil;
         self.bookmarkSaveTableViewController = nil;
         self.actionSheet = nil;
+    }
+}
+
+- (void)dismissAndCleanNewBookmarkPopover
+{
+    if ([self.popoverSaveBookmark isPopoverVisible]) {
+        [self.popoverSaveBookmark dismissPopoverAnimated:YES];
+        self.popoverSaveBookmark = nil;
+        self.bookmarkSaveTableViewController = nil;
     }
 }
 

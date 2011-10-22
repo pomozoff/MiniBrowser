@@ -15,5 +15,6 @@
 
 - (void)closePopupsAndLoadUrl:(NSString *)url;
 - (void)saveBookmarks;
+- (void)dismissAndCleanNewBookmarkPopover;
 
 @end

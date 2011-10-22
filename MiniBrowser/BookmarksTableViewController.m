@@ -182,6 +182,7 @@
 - (void)clearHistoryFolderPressed:(UIBarButtonItem *)sender
 {
     [self.bookmarksStorage clearFolder:self.bookmarksStorage.historyFolder];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source

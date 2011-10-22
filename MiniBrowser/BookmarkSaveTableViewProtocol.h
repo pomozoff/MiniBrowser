@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "BookmarkItem.h"
+#import "BrowserControllerProtocol.h"
 
 @protocol BookmarkSaveTableViewProtocol <NSObject>
 
@@ -15,7 +16,7 @@
 @property (nonatomic, retain) BookmarkItem *bookmark;
 @property (nonatomic, retain) UITableView *tableViewParent;
 @property (nonatomic, retain) NSIndexPath *indexPath;
-@property (nonatomic, retain) UIPopoverController *popoverParent;
+@property (nonatomic, retain) id <BrowserControllerDelegate> delegateController;
 
 - (void)moveBookmarkToFolder:(BookmarkItem *)bookmarkFolder;
 
