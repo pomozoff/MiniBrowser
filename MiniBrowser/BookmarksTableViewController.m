@@ -39,7 +39,7 @@
 {
     if (!_currentBookmarkFolder) {
         _currentBookmarkFolder = self.bookmarksStorage.rootFolder;
-        _currentBookmarkFolder.delegateBookmark = self;
+        _currentBookmarkFolder.delegateController = self;
     }
     
     return _currentBookmarkFolder;
@@ -167,7 +167,7 @@
     bookmarkSaveTVC.tableViewParent = self.tableView;
     bookmarkSaveTVC.indexPath = newIndexPath;
     
-    newFolder.delegateBookmark = self;
+    newFolder.delegateController = self;
     
     [newFolder release];
     
@@ -293,7 +293,7 @@
         bookmarkSaveTVC.tableViewParent = self.tableView;
         bookmarkSaveTVC.indexPath = indexPath;
         
-        currentBookmark.delegateBookmark = self;
+        currentBookmark.delegateController = self;
         
         [self.navigationController pushViewController:bookmarkSaveTVC animated:YES];
         

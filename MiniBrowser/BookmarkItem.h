@@ -26,7 +26,7 @@
 @property (nonatomic, copy) NSString *parentId;
 @property (nonatomic, copy) NSDate *date;
 @property (nonatomic, retain) NSArray *content;
-@property (nonatomic, retain) id <BookmarkItemDelegate> delegateBookmark;
+@property (nonatomic, retain) id <BookmarkItemDelegate> delegateController;
 
 - (id)initWithName:(NSString *)name
                url:(NSString *)url

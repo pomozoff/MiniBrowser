@@ -336,7 +336,7 @@ NSString *const historyFolderName = @"History";
     
     [bookmark retain];
     [self removeBookmark:bookmark fromFolder:currentParent];
-    [bookmark.delegateBookmark reloadBookmarksInFolder:currentParent];
+    [bookmark.delegateController reloadBookmarksInFolder:currentParent];
 
     @try {
         [self addBookmark:bookmark toFolder:bookmarkFolder];
@@ -349,8 +349,8 @@ NSString *const historyFolderName = @"History";
         [bookmark release];
     }
     
-    bookmark.delegateBookmark = bookmarkFolder.delegateBookmark;
-    [bookmark.delegateBookmark reloadBookmarksInFolder:bookmarkFolder];
+    bookmark.delegateController = bookmarkFolder.delegateController;
+    [bookmark.delegateController reloadBookmarksInFolder:bookmarkFolder];
 }
 
 - (void)clearFolder:(BookmarkItem *)folder

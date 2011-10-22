@@ -18,7 +18,7 @@
 @synthesize parentId = _parentId;
 @synthesize date = _date;
 @synthesize content = _content;
-@synthesize delegateBookmark = _delegateBookmark;
+@synthesize delegateController = _delegateBookmark;
 
 - (NSArray *)content
 {
@@ -112,7 +112,7 @@
     self.url = nil;
     self.parentId = nil;
     self.content = nil;
-    self.delegateBookmark = nil;
+    self.delegateController = nil;
     
     [super dealloc];
 }
