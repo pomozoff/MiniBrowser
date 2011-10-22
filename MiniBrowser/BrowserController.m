@@ -252,7 +252,7 @@ BOOL userInitiatedJump = NO;
                                 self.bookmarksStorage.rootFolder : bookmarkTVC.currentBookmarkFolder;
     }
     
-    BookmarkItem *newBookmark = [[BookmarkItem alloc] initWithName:@""
+    BookmarkItem *newBookmark = [[BookmarkItem alloc] initWithName:self.urlLabel.text
                                                                url:self.urlField.text
                                                               date:[NSDate date]
                                                              folder:NO
