@@ -28,6 +28,7 @@
 @synthesize urlField = _urlField;
 @synthesize tableViewParent = _tableViewParent;
 @synthesize indexPath = _indexPath;
+@synthesize popoverParent = _popoverParent;
 
 - (BookmarkSaveModel *)bookmarkSaveModel
 {
@@ -175,6 +176,7 @@
     
     self.tableViewParent = nil;
     self.indexPath = nil;
+    self.popoverParent = nil;
 }
 
 - (void)viewDidUnload
@@ -228,6 +230,7 @@
 - (void)doneBookmarkSaving:(UIBarButtonItem *)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
+    [self.popoverParent dismissPopoverAnimated:YES];
 }
 
 #pragma mark - Bookmark

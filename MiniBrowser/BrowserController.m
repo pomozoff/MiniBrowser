@@ -263,15 +263,16 @@ BOOL userInitiatedJump = NO;
 
     if (self.isIPad) {
         UINavigationController *navigationController = [[UINavigationController alloc] init];
-        [navigationController pushViewController:self.bookmarkSaveTableViewController animated:NO];
-        
         UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:navigationController];
-        [navigationController release];
-        
+
+        [navigationController pushViewController:self.bookmarkSaveTableViewController animated:NO];
         self.popoverSaveBookmark = popover;
-        self.popoverSaveBookmark.delegate = self;
         
         [popover release];
+        [navigationController release];
+
+        self.bookmarkSaveTableViewController.popoverParent = self.popoverSaveBookmark;
+        self.popoverSaveBookmark.delegate = self;
         
         [self.popoverSaveBookmark presentPopoverFromBarButtonItem:barItem
                                          permittedArrowDirections:UIPopoverArrowDirectionUp

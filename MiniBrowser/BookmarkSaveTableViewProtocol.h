@@ -15,6 +15,7 @@
 @property (nonatomic, retain) BookmarkItem *bookmark;
 @property (nonatomic, retain) UITableView *tableViewParent;
 @property (nonatomic, retain) NSIndexPath *indexPath;
+@property (nonatomic, retain) UIPopoverController *popoverParent;
 
 - (void)moveBookmarkToFolder:(BookmarkItem *)bookmarkFolder;
 
