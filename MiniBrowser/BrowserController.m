@@ -145,6 +145,7 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
 
 - (void)saveBookmarks
 {
+    [self saveCurrentPage];
     [self.bookmarksStorage saveBookmarks];
 }
 
