@@ -54,6 +54,7 @@
 @synthesize bookmarkNavigationController = _bookmarkNavigationController;
 
 BOOL userInitiatedJump = NO;
+NSString *const savedUrlKey = @"savedCurrentUrl";
 
 - (SettingsController *)settingsController
 {
@@ -133,6 +134,13 @@ BOOL userInitiatedJump = NO;
         // Custom initialization
     }
     return self;
+}
+
+- (void)saveCurrentPage
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:self.urlField.text forKey:savedUrlKey];
+    [defaults synchronize];
 }
 
 - (void)saveBookmarks
@@ -324,18 +332,6 @@ BOOL userInitiatedJump = NO;
     }
 }
 
-- (NSString *)correctUrl:(NSString *)sourceUrl
-{
-    NSString *readyUrl;
-    
-    if ([sourceUrl hasPrefix:@"http://"])
-        readyUrl = sourceUrl;
-    else
-        readyUrl = [NSString stringWithFormat:@"http://%@", sourceUrl];
-    
-    return readyUrl;
-}
-
 - (void)freeProperties
 {
     self.navigationBar = nil;
@@ -367,6 +363,43 @@ BOOL userInitiatedJump = NO;
 }
 */
 
+- (void)loadUrl:(NSString *)url
+{
+    if (!url) {
+        return;
+    }
+    
+    NSString *trimmedUrl = [url stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if ([trimmedUrl isEqualToString:@""]) {
+        url = self.urlField.text;
+    }
+    
+    //NSString *readyUrl = [self correctUrl:url];
+    NSString *readyUrl = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURL *urlObject = [NSURL URLWithString:readyUrl];
+    
+    if (!urlObject.scheme) {
+        urlObject = [NSURL URLWithString:[@"http://" stringByAppendingString:urlObject.absoluteString]];
+    }
+    
+    [self.webView loadRequest:[NSURLRequest requestWithURL:urlObject]];
+}
+
+- (void)closePopupsAndLoadUrl:(NSString *)url
+{
+    userInitiatedJump = YES;
+    [self dismissOpenPopoversAndActionSheet];
+    [self loadUrl:url];
+}
+
+- (void)restoreOpenedUrl
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults synchronize];
+    NSString *savedUrl = [defaults objectForKey:savedUrlKey];
+    [self closePopupsAndLoadUrl:savedUrl];
+}
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
@@ -374,6 +407,8 @@ BOOL userInitiatedJump = NO;
 
     [self setButtonsStatus];
     self.searchBar.placeholder = self.searchEngine.placeholder;
+    
+    [self restoreOpenedUrl];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -400,18 +435,6 @@ BOOL userInitiatedJump = NO;
 }
 
 # pragma mark - web view cnotroller delegate
-
-- (void)loadUrl:(NSString *)url
-{
-    if ([[url stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""]) {
-        url = self.urlField.text;
-    }
-    
-    NSString *readyUrl = [self correctUrl:url];
-    readyUrl = [readyUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:readyUrl]]];
-}
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
@@ -510,13 +533,6 @@ BOOL userInitiatedJump = NO;
 {
     [searchBar resignFirstResponder];
     [self searchTheText:self.searchBar.text];
-}
-
-- (void)closePopupsAndLoadUrl:(NSString *)url
-{
-    userInitiatedJump = YES;
-    [self dismissOpenPopoversAndActionSheet];
-    [self loadUrl:url];
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField

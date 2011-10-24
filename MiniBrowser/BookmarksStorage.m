@@ -69,11 +69,12 @@ NSString *const historyFolderName = @"History";
 
 - (void)saveBookmarks
 {
+    NSDictionary *bookmarks = [self copyBookmarksToDictionaryFromBookmark:self.rootFolder];
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:bookmarks forKey:savedBookmarks];
     [defaults synchronize];
     
-    NSDictionary *bookmarks = [self copyBookmarksToDictionaryFromBookmark:self.rootFolder];
-    [defaults setObject:bookmarks forKey:savedBookmarks];
     [bookmarks release];
 }
 
