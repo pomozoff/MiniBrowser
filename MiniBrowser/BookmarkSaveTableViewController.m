@@ -274,8 +274,7 @@
         case 1: { // Folder section
             switch (indexPath.row) {
                 case 0: { // Select Folder
-                    BookmarkItem *bookmarkParent = [self.bookmarksStorage bookmarkById:bookmark.parentId];
-                    cell.textLabel.text = bookmarkParent.name;
+                    cell.textLabel.text = self.currentFolder.name;
                     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                     
                     break;
@@ -408,7 +407,7 @@
 
 - (void)moveBookmarkToFolder:(BookmarkItem *)bookmarkFolder
 {
-    [self.bookmarksStorage moveBookmark:self.bookmark toFolder:bookmarkFolder];
+    self.currentFolder = bookmarkFolder;
     
     NSIndexPath *folderIndexPath = [NSIndexPath indexPathForRow:0 inSection:1];
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:folderIndexPath]

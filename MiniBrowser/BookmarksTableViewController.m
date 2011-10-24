@@ -23,7 +23,7 @@
 
 @synthesize delegateController = _delegateController;
 @synthesize bookmarksStorage = _bookmarksStorage;
-@synthesize currentBookmarkFolder = _currentBookmarkFolder;
+@synthesize currentFolder = _currentFolder;
 
 - (UIBarButtonItem *)clearHistoryButton
 {
@@ -37,14 +37,14 @@
     return _clearHistoryButton;
 }
 
-- (BookmarkItem *)currentBookmarkFolder
+- (BookmarkItem *)currentFolder
 {
-    if (!_currentBookmarkFolder) {
-        _currentBookmarkFolder = self.bookmarksStorage.rootFolder;
-        _currentBookmarkFolder.delegateController = self;
+    if (!_currentFolder) {
+        _currentFolder = self.bookmarksStorage.rootFolder;
+        _currentFolder.delegateController = self;
     }
     
-    return _currentBookmarkFolder;
+    return _currentFolder;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -77,9 +77,9 @@
 {
     [super viewDidLoad];
     
-    BOOL isHistoryFolder = [self.currentBookmarkFolder isEqualToBookmark:self.bookmarksStorage.historyFolder];
+    BOOL isHistoryFolder = [self.currentFolder isEqualToBookmark:self.bookmarksStorage.historyFolder];
 
-    self.title = self.currentBookmarkFolder.name;
+    self.title = self.currentFolder.name;
     self.navigationItem.rightBarButtonItem = isHistoryFolder ? self.clearHistoryButton : self.editButtonItem;
     self.tableView.allowsSelectionDuringEditing = YES;
     
@@ -93,7 +93,7 @@
 - (void)freeProperties
 {
     self.bookmarksStorage = nil;
-    self.currentBookmarkFolder = nil;
+    self.currentFolder = nil;
 }
 
 - (void)viewDidUnload
@@ -158,10 +158,10 @@
                                                            folder:YES
                                                        permanent:NO];
     
-    [self.bookmarksStorage addBookmark:newFolder toFolder:self.currentBookmarkFolder];
+    //[self.bookmarksStorage addBookmark:newFolder toFolder:self.currentFolder];
 
-    NSInteger numberOfRows = [self.bookmarksStorage bookmarksCountForParent:self.currentBookmarkFolder];
-    NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:(numberOfRows - 1) inSection:0];
+    NSInteger numberOfRows = [self.bookmarksStorage bookmarksCountForParent:self.currentFolder];
+    NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:numberOfRows inSection:0];
     
     bookmarkSaveTVC.title = @"Edit Folder";
     bookmarkSaveTVC.bookmark = newFolder;
@@ -173,8 +173,8 @@
     
     [newFolder release];
     
-    NSArray *arrayPaths = [NSArray arrayWithObject:newIndexPath];
-    [self.tableView insertRowsAtIndexPaths:arrayPaths withRowAnimation:UITableViewRowAnimationRight];
+    //NSArray *arrayPaths = [NSArray arrayWithObject:newIndexPath];
+    //[self.tableView insertRowsAtIndexPaths:arrayPaths withRowAnimation:UITableViewRowAnimationRight];
     
     [self.navigationController pushViewController:bookmarkSaveTVC animated:YES];
     
@@ -197,9 +197,9 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSInteger numberOfRows = [self.bookmarksStorage bookmarksCountForParent:self.currentBookmarkFolder];
+    NSInteger numberOfRows = [self.bookmarksStorage bookmarksCountForParent:self.currentFolder];
     
-    if ( [self.currentBookmarkFolder isEqualToBookmark:self.bookmarksStorage.historyFolder] && (self.lastNumberOfRows != numberOfRows) )
+    if ( [self.currentFolder isEqualToBookmark:self.bookmarksStorage.historyFolder] && (self.lastNumberOfRows != numberOfRows) )
     {
         [self.bookmarksStorage arrangeHistoryContentByDate];
         [self.tableView reloadData];
@@ -218,7 +218,7 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    BookmarkItem *currentBookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentBookmarkFolder];
+    BookmarkItem *currentBookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentFolder];
 
     cell.textLabel.text = currentBookmark.name;
     cell.detailTextLabel.text = currentBookmark.url;
@@ -243,7 +243,7 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        BookmarkItem *bookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentBookmarkFolder];
+        BookmarkItem *bookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentFolder];
         [self.bookmarksStorage deleteBookmark:bookmark];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }   
@@ -255,20 +255,20 @@
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
-    [self.bookmarksStorage moveBookmarkAtPosition:fromIndexPath toPosition:toIndexPath insideFolder:self.currentBookmarkFolder];
+    [self.bookmarksStorage moveBookmarkAtPosition:fromIndexPath toPosition:toIndexPath insideFolder:self.currentFolder];
 }
 
 // Override to support conditional rearranging of the table view.
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BookmarkItem *bookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentBookmarkFolder];
+    BookmarkItem *bookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentFolder];
     BOOL canOrder = !bookmark.isPermanent;
     return canOrder;
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)source
        toProposedIndexPath:(NSIndexPath *)destination {
-    BookmarkItem *targetBookmark = [self.bookmarksStorage bookmarkAtIndex:destination forParent:self.currentBookmarkFolder];
+    BookmarkItem *targetBookmark = [self.bookmarksStorage bookmarkAtIndex:destination forParent:self.currentFolder];
     NSIndexPath *result = targetBookmark.isPermanent ? source : destination;
     
     return result;
@@ -276,7 +276,7 @@
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BookmarkItem *bookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentBookmarkFolder];
+    BookmarkItem *bookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentFolder];
     UITableViewCellEditingStyle style = bookmark.isPermanent ? UITableViewCellEditingStyleNone : UITableViewCellEditingStyleDelete;
     
     return style;
@@ -286,7 +286,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BookmarkItem *currentBookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentBookmarkFolder];
+    BookmarkItem *currentBookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentFolder];
     
     if (self.tableView.editing) {
         BookmarkSaveTableViewController *bookmarkSaveTVC = [[BookmarkSaveTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
@@ -308,7 +308,7 @@
             
             newBookmarksTVC.delegateController = self.delegateController;
             newBookmarksTVC.bookmarksStorage = self.bookmarksStorage;
-            newBookmarksTVC.currentBookmarkFolder = currentBookmark;
+            newBookmarksTVC.currentFolder = currentBookmark;
             [self.navigationController pushViewController:newBookmarksTVC animated:YES];
             
             [newBookmarksTVC release];
@@ -322,7 +322,7 @@
 
 - (void)reloadBookmarksInFolder:(BookmarkItem *)bookmarkFolder
 {
-    if (bookmarkFolder && [self.currentBookmarkFolder isEqualToBookmark:bookmarkFolder]) {
+    if (bookmarkFolder && [self.currentFolder isEqualToBookmark:bookmarkFolder]) {
         [self.tableView reloadData];
     }
 }

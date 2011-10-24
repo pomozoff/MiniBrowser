@@ -254,11 +254,12 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
     
     BookmarkItem *currentFolder = self.bookmarksStorage.rootFolder;
 
+    BookmarksTableViewController *bookmarkTVC = nil;
     UIViewController *topViewController = self.bookmarkNavigationController.topViewController;
     if ([topViewController isKindOfClass:[BookmarksTableViewController class]]) {
-        BookmarksTableViewController *bookmarkTVC = (BookmarksTableViewController *)topViewController;
-        currentFolder = [bookmarkTVC.currentBookmarkFolder isEqualToBookmark:self.bookmarksStorage.historyFolder] ? 
-                                self.bookmarksStorage.rootFolder : bookmarkTVC.currentBookmarkFolder;
+        bookmarkTVC = (BookmarksTableViewController *)topViewController;
+        currentFolder = [bookmarkTVC.currentFolder isEqualToBookmark:self.bookmarksStorage.historyFolder] ? 
+                                self.bookmarksStorage.rootFolder : bookmarkTVC.currentFolder;
     }
     
     BookmarkItem *newBookmark = [[BookmarkItem alloc] initWithName:self.urlLabel.text
@@ -270,7 +271,7 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
     self.bookmarkSaveTableViewController.currentFolder = [currentFolder isEqualToBookmark:self.bookmarksStorage.historyFolder] ?
                                                          self.bookmarksStorage.rootFolder : currentFolder;
     
-    newBookmark.delegateController = self.bookmarksTableViewController;
+    newBookmark.delegateController = bookmarkTVC ? bookmarkTVC : self.bookmarksTableViewController;
     [newBookmark release];
 
     if (self.isIPad) {

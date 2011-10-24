@@ -98,8 +98,7 @@
     BOOL result = (bookmark.isFolder == self.isFolder) &&
                   (bookmark.isPermanent == self.isPermanent) &&
                   [bookmark.name isEqualToString:self.name] && 
-                  [bookmark.url isEqualToString:self.url] &&
-//                  [bookmark.date isEqualToDate:self.date] &&
+                  ((!self.url && !bookmark.url) || [bookmark.url isEqualToString:self.url]) &&
                   ((!self.parentId && !bookmark.parentId) || [bookmark.parentId isEqualToString:self.parentId]) &&
                   [bookmark.content isEqualToArray:self.content];
     
