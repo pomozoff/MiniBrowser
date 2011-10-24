@@ -231,7 +231,8 @@
 - (void)finishBookmarkSaving
 {
     [self.navigationController popViewControllerAnimated:YES];
-    [self.delegateController dismissAndCleanNewBookmarkPopover];
+    [self.delegateController dismissPopoverAndCleanUp];
+    [self freeProperties];
 }
 
 - (void)cancelBookmarkSaving:(UIBarButtonItem *)sender

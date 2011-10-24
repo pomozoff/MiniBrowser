@@ -270,6 +270,7 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
     self.bookmarkSaveTableViewController.bookmark = newBookmark;
     self.bookmarkSaveTableViewController.currentFolder = [currentFolder isEqualToBookmark:self.bookmarksStorage.historyFolder] ?
                                                          self.bookmarksStorage.rootFolder : currentFolder;
+    self.bookmarkSaveTableViewController.delegateController = self;
     
     newBookmark.delegateController = bookmarkTVC ? bookmarkTVC : self.bookmarksTableViewController;
     [newBookmark release];
@@ -284,7 +285,6 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
         [popover release];
         [navigationController release];
 
-        self.bookmarkSaveTableViewController.delegateController = self;
         self.popoverSaveBookmark.delegate = self;
         
         [self.popoverSaveBookmark presentPopoverFromBarButtonItem:barItem
@@ -577,13 +577,14 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
     }
 }
 
-- (void)dismissAndCleanNewBookmarkPopover
+- (void)dismissPopoverAndCleanUp
 {
     if ([self.popoverSaveBookmark isPopoverVisible]) {
         [self.popoverSaveBookmark dismissPopoverAnimated:YES];
-        self.popoverSaveBookmark = nil;
-        self.bookmarkSaveTableViewController = nil;
     }
+
+    self.popoverSaveBookmark = nil;
+    self.bookmarkSaveTableViewController = nil;
 }
 
 # pragma mark - Popover delegate
