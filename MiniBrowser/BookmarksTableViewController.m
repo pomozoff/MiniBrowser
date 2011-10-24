@@ -136,7 +136,7 @@
     [super setEditing:editing animated:animated];
     
     if (editing) {
-        UIBarButtonItem *newFolderButton = [[UIBarButtonItem alloc] initWithTitle:@"New folder"
+        UIBarButtonItem *newFolderButton = [[UIBarButtonItem alloc] initWithTitle:@"New Folder"
                                                                             style:UIBarButtonItemStylePlain
                                                                            target:self
                                                                            action:@selector(newFolderPressed:)];
@@ -168,6 +168,7 @@
     bookmarkSaveTVC.bookmarksStorage = self.bookmarksStorage;
     bookmarkSaveTVC.tableViewParent = self.tableView;
     bookmarkSaveTVC.indexPath = newIndexPath;
+    bookmarkSaveTVC.currentFolder = self.currentFolder;
     
     newFolder.delegateController = self;
     

@@ -396,7 +396,7 @@
     } else if (textField == self.urlField) {
         self.bookmark.url = textField.text;
     }
-    
+
     if (self.indexPath) {
         [self.tableViewParent reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.indexPath]
                                     withRowAnimation:UITableViewRowAnimationRight];
