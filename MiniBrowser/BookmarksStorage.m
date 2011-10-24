@@ -289,6 +289,8 @@ NSString *const historyFolderName = @"History";
     [tmpContent release];
     
     [self insertBookmarkToList:bookmark];
+
+    [bookmark.delegateController reloadBookmarksInFolder:bookmarkFolder];
 }
 
 - (void)removeBookmarkFromList:(BookmarkItem *)bookmark
