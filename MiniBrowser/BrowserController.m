@@ -432,6 +432,8 @@ BOOL userInitiatedJump = NO;
     }
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    self.urlLabel.text = [NSString stringWithFormat:@"Loading: %@", request.URL.absoluteString];
+    self.urlField.text = request.URL.absoluteString;
 
     return YES;
 }
