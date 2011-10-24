@@ -155,7 +155,7 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-/*    
+
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
                                                                      style:UIBarButtonItemStylePlain
                                                                     target:self
@@ -164,7 +164,7 @@
     self.navigationItem.leftBarButtonItem = cancelButton;
 
     [cancelButton release];
-*/
+
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done"
                                                                    style:UIBarButtonItemStyleDone
                                                                   target:self
@@ -228,20 +228,24 @@
 	return YES;
 }
 
-/*
+- (void)finishBookmarkSaving
+{
+    [self.navigationController popViewControllerAnimated:YES];
+    [self.delegateController dismissAndCleanNewBookmarkPopover];
+}
+
 - (void)cancelBookmarkSaving:(UIBarButtonItem *)sender
 {
-    [self.bookmarksStorage deleteBookmark:self.bookmark];
-    [self.navigationController popViewControllerAnimated:YES];
+    self.indexPath = nil;
+    
+    [self finishBookmarkSaving];
 }
-*/
 
 - (void)doneBookmarkSaving:(UIBarButtonItem *)sender
 {
     [self.bookmarksStorage addBookmark:self.bookmark toFolder:self.currentFolder];
     
-    [self.navigationController popViewControllerAnimated:YES];
-    [self.delegateController dismissAndCleanNewBookmarkPopover];
+    [self finishBookmarkSaving];
 }
 
 #pragma mark - Bookmark
