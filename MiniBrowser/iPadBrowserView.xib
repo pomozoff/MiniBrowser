@@ -167,7 +167,7 @@
 							<object class="IBUIBarButtonItem" id="655776070">
 								<object class="NSCustomResource" key="IBUIImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">Action.png</string>
+									<string key="NSResourceName">action.png</string>
 								</object>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 								<reference key="IBUIToolbar" ref="313538076"/>
@@ -734,15 +734,15 @@
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSArray" key="dict.sortedKeys">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>Action.png</string>
 				<string>Bookmark-iPad.png</string>
+				<string>action.png</string>
 				<string>arrowBackLight.png</string>
 				<string>arrowForwardLight.png</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>{30, 30}</string>
 				<string>{36, 39}</string>
+				<string>{30, 30}</string>
 				<string>{26, 26}</string>
 				<string>{26, 26}</string>
 			</object>
