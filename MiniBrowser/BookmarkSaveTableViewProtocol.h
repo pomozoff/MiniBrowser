@@ -14,6 +14,7 @@
 
 @property (nonatomic, retain) id <BookmarksStorageProtocol> bookmarksStorage;
 @property (nonatomic, retain) BookmarkItem *bookmark;
+@property (nonatomic, retain) BookmarkItem *currentFolder;
 @property (nonatomic, retain) UITableView *tableViewParent;
 @property (nonatomic, retain) NSIndexPath *indexPath;
 @property (nonatomic, retain) id <BrowserControllerDelegate> delegateController;

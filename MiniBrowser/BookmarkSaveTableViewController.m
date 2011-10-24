@@ -29,6 +29,7 @@
 @synthesize tableViewParent = _tableViewParent;
 @synthesize indexPath = _indexPath;
 @synthesize delegateController = _delegateController;
+@synthesize currentFolder = _currentFolder;
 
 - (BookmarkSaveModel *)bookmarkSaveModel
 {
@@ -46,6 +47,15 @@
     }
     
     return _bookmark;
+}
+
+- (BookmarkItem *)currentFolder
+{
+    if (!_currentFolder) {
+        _currentFolder = self.bookmarksStorage.rootFolder;
+    }
+    
+    return _currentFolder;
 }
 
 #define CELL_FIELD_TOP_MARGIN 12.0f
@@ -173,6 +183,7 @@
     
     self.nameField = nil;
     self.urlField = nil;
+    self.currentFolder = nil;
     
     self.tableViewParent = nil;
     self.indexPath = nil;
@@ -227,6 +238,8 @@
 
 - (void)doneBookmarkSaving:(UIBarButtonItem *)sender
 {
+    [self.bookmarksStorage addBookmark:self.bookmark toFolder:self.currentFolder];
+    
     [self.navigationController popViewControllerAnimated:YES];
     [self.delegateController dismissAndCleanNewBookmarkPopover];
 }
@@ -363,11 +376,9 @@
     if (indexPath.section == 1 && indexPath.row == 0) { // folder cell selected
         BookmarkFolderTableViewController *foldersTable = [[BookmarkFolderTableViewController alloc] init];
         
-        BookmarkItem *bookmarkParent = [self.bookmarksStorage bookmarkById:self.bookmark.parentId];
-        
         foldersTable.bookmark = self.bookmark;
-        foldersTable.bookmarkParent = bookmarkParent;
-        foldersTable.title = bookmarkParent.name;
+        foldersTable.bookmarkParent = self.currentFolder;
+        foldersTable.title = self.currentFolder.name;
         foldersTable.bookmarksStorage = self.bookmarksStorage;
         foldersTable.saveTableViewController = self;
         

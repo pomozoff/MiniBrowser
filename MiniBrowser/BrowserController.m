@@ -267,7 +267,10 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
                                                              folder:NO
                                                          permanent:NO];
     self.bookmarkSaveTableViewController.bookmark = newBookmark;
-    [self.bookmarksStorage addBookmark:newBookmark toFolder:currentFolder];
+    self.bookmarkSaveTableViewController.currentFolder = [currentFolder isEqualToBookmark:self.bookmarksStorage.historyFolder] ?
+                                                         self.bookmarksStorage.rootFolder : currentFolder;
+    
+    newBookmark.delegateController = self.bookmarksTableViewController;
     [newBookmark release];
 
     if (self.isIPad) {
