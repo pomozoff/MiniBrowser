@@ -169,6 +169,7 @@ NSString *const historyFolderName = @"History";
         return;
     }
     
+    level++;
     for (BookmarkItem *bookmark in fromFolder.content) {
         if (!bookmark.isFolder) {
             continue;
@@ -184,7 +185,6 @@ NSString *const historyFolderName = @"History";
             
             NSDictionary *bookmarkFolder = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
             [treeList addObject:bookmarkFolder];
-            level++;
         }
         
         [self generateFoldersTreeList:treeList
