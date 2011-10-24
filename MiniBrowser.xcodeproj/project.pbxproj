@@ -122,7 +122,7 @@
 		26C083B01448238E0056B37A /* BookmarkFolderTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkFolderTableViewController.h; sourceTree = "<group>"; };
 		26C083B11448238E0056B37A /* BookmarkFolderTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkFolderTableViewController.m; sourceTree = "<group>"; };
 		26C083B314483CBB0056B37A /* BookmarkSaveTableViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkSaveTableViewProtocol.h; sourceTree = "<group>"; };
-		26C202E01451711600323E79 /* NSDate+Between.h */ = {isa = PBXFileReference; fileEncoding = 4; path = "NSDate+Between.h"; sourceTree = "<group>"; };
+		26C202E01451711600323E79 /* NSDate+Between.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Between.h"; sourceTree = "<group>"; };
 		26C202E11451711600323E79 /* NSDate+Between.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Between.m"; sourceTree = "<group>"; };
 		26DB365A144EB3D6001C4CBC /* action.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = action.png; sourceTree = "<group>"; };
 		26DB36A8144EC19C001C4CBC /* UnitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -379,6 +379,7 @@
 		266D679B143CCE8D0025F929 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0420;
 				ORGANIZATIONNAME = Alma;
 			};
 			buildConfigurationList = 266D679E143CCE8D0025F929 /* Build configuration list for PBXProject "MiniBrowser" */;
@@ -585,6 +586,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MiniBrowser/MiniBrowser-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "MiniBrowser/MiniBrowser-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -597,6 +599,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MiniBrowser/MiniBrowser-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "MiniBrowser/MiniBrowser-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -613,6 +616,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UnitTests/UnitTests-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -629,6 +633,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UnitTests/UnitTests-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALID_ARCHS = "i386 armv6 armv7";
