@@ -40,7 +40,7 @@
 - (BookmarkItem *)currentFolder
 {
     if (!_currentFolder) {
-        _currentFolder = self.bookmarksStorage.rootFolder;
+        _currentFolder = [self.bookmarksStorage.rootFolder retain];
         _currentFolder.delegateController = self;
     }
     
@@ -158,8 +158,6 @@
                                                            folder:YES
                                                        permanent:NO];
     
-    //[self.bookmarksStorage addBookmark:newFolder toFolder:self.currentFolder];
-
     NSInteger numberOfRows = [self.bookmarksStorage bookmarksCountForParent:self.currentFolder];
     NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:numberOfRows inSection:0];
     
@@ -173,9 +171,6 @@
     newFolder.delegateController = self;
     
     [newFolder release];
-    
-    //NSArray *arrayPaths = [NSArray arrayWithObject:newIndexPath];
-    //[self.tableView insertRowsAtIndexPaths:arrayPaths withRowAnimation:UITableViewRowAnimationRight];
     
     [self.navigationController pushViewController:bookmarkSaveTVC animated:YES];
     

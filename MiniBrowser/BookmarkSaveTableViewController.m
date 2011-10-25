@@ -232,7 +232,8 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
     [self.delegateController dismissPopoverAndCleanUp];
-    [self freeProperties];
+
+//    [self freeProperties];
 }
 
 - (void)cancelBookmarkSaving:(UIBarButtonItem *)sender
@@ -244,7 +245,17 @@
 
 - (void)doneBookmarkSaving:(UIBarButtonItem *)sender
 {
-    [self.bookmarksStorage addBookmark:self.bookmark toFolder:self.currentFolder];
+    self.bookmark.name = self.nameField.text;
+    self.bookmark.url = self.urlField.text;
+
+    if (!self.bookmark.parentId) {
+        [self.bookmarksStorage addBookmark:self.bookmark toFolder:self.currentFolder];
+    }
+    
+    if (self.indexPath) {
+        [self.tableViewParent reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.indexPath]
+                                    withRowAnimation:UITableViewRowAnimationRight];
+    }
     
     [self finishBookmarkSaving];
 }
@@ -389,22 +400,6 @@
         [self.navigationController pushViewController:foldersTable animated:YES];
         
         [foldersTable release];
-    }
-}
-
-#pragma mark - Text Field view delegate
-
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    if (textField == self.nameField) {
-        self.bookmark.name = textField.text;
-    } else if (textField == self.urlField) {
-        self.bookmark.url = textField.text;
-    }
-
-    if (self.indexPath) {
-        [self.tableViewParent reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.indexPath]
-                                    withRowAnimation:UITableViewRowAnimationRight];
     }
 }
 
