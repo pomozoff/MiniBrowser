@@ -107,6 +107,7 @@
     if (_itemId) {
         [_itemId release];
     }
+    _itemId = nil;
     
     self.name = nil;
     self.url = nil;

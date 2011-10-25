@@ -246,7 +246,9 @@
     self.bookmark.name = self.nameField.text;
     self.bookmark.url = self.urlField.text;
 
-    if (!self.bookmark.parentId) {
+    if (self.bookmark.parentId) {
+        [self.bookmarksStorage moveBookmark:self.bookmark toFolder:self.currentFolder];
+    } else {
         [self.bookmarksStorage addBookmark:self.bookmark toFolder:self.currentFolder];
     }
     

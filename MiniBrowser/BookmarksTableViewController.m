@@ -216,6 +216,9 @@
     cell.detailTextLabel.text = currentBookmark.url;
     cell.accessoryType = currentBookmark.isFolder ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
     cell.editingAccessoryType = currentBookmark.isPermanent ? UITableViewCellAccessoryNone : UITableViewCellAccessoryDisclosureIndicator;
+
+    UITableViewCellSelectionStyle selectionStyle = currentBookmark == self.bookmarksStorage.historyFolder ? UITableViewCellSelectionStyleNone : UITableViewCellSelectionStyleBlue;
+    cell.selectionStyle = selectionStyle;
     
     return cell;
 }
@@ -225,7 +228,10 @@
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
-    return YES;
+    BookmarkItem *currentBookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentFolder];
+    BOOL mayEdit = currentBookmark == self.bookmarksStorage.historyFolder ? NO : YES;
+    
+    return mayEdit;
 }
 */
 
@@ -279,16 +285,21 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BookmarkItem *currentBookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentFolder];
+    currentBookmark.delegateController = self;
     
     if (self.tableView.editing) {
+        if (currentBookmark == self.bookmarksStorage.historyFolder) {
+            return;
+        }
+        
         BookmarkSaveTableViewController *bookmarkSaveTVC = [[BookmarkSaveTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
         
         bookmarkSaveTVC.title = @"Edit Bookmark";
         bookmarkSaveTVC.bookmark = currentBookmark;
         bookmarkSaveTVC.bookmarksStorage = self.bookmarksStorage;
         bookmarkSaveTVC.tableViewParent = self.tableView;
-        
-        currentBookmark.delegateController = self;
+        bookmarkSaveTVC.currentFolder = self.currentFolder;
+        bookmarkSaveTVC.currentFolder.delegateController = self;
         
         [self.navigationController pushViewController:bookmarkSaveTVC animated:YES];
         
@@ -300,6 +311,7 @@
             newBookmarksTVC.delegateController = self.delegateController;
             newBookmarksTVC.bookmarksStorage = self.bookmarksStorage;
             newBookmarksTVC.currentFolder = currentBookmark;
+            
             [self.navigationController pushViewController:newBookmarksTVC animated:YES];
             
             [newBookmarksTVC release];

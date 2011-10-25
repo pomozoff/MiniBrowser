@@ -76,6 +76,7 @@
 
 - (void)freeProperties
 {
+    self.bookmark = nil;
     self.bookmarkParent = nil;
     self.bookmarksStorage = nil;
     self.saveTableViewController = nil;
@@ -108,6 +109,8 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
+    [self freeProperties];
+
     [super viewDidDisappear:animated];
 }
 

@@ -306,19 +306,21 @@ NSString *const historyFolderName = @"History";
 {
     BookmarkItem *currentParent = [self bookmarkById:bookmark.parentId];
     
-    [bookmark retain];
-    [self removeBookmark:bookmark fromFolder:currentParent];
-    [bookmark.delegateController reloadBookmarksInFolder:currentParent];
-
-    @try {
-        [self addBookmark:bookmark toFolder:bookmarkFolder];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"Error moving bookmark: %@", exception.reason);
-        [self addBookmark:bookmark toFolder:currentParent];
-    }
-    @finally {
-        [bookmark release];
+    if (currentParent != bookmarkFolder) {
+        [bookmark retain];
+        [self removeBookmark:bookmark fromFolder:currentParent];
+        [bookmark.delegateController reloadBookmarksInFolder:currentParent];
+        
+        @try {
+            [self addBookmark:bookmark toFolder:bookmarkFolder];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"Error moving bookmark: %@", exception.reason);
+            [self addBookmark:bookmark toFolder:currentParent];
+        }
+        @finally {
+            [bookmark release];
+        }
     }
     
     bookmark.delegateController = bookmarkFolder.delegateController;
@@ -351,13 +353,13 @@ NSString *const historyFolderName = @"History";
     NSDictionary *bookmarkFolder = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
     
     [mutableList addObject:bookmarkFolder];
-    
+
     [self generateFoldersTreeList:mutableList
                fromFolder:self.rootFolder
                    excludeBranch:branchBookmark
              excludeBranchParent:branchBookmarkParent
                     currentLevel:level];
-    
+
     NSArray *resultList = [NSArray arrayWithArray:mutableList];
     [mutableList release];
      
