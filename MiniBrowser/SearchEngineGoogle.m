@@ -27,7 +27,7 @@
     NSString *readyUrl = [NSString stringWithFormat:self.searchUrl, text];
     readyUrl = [readyUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    return [[[NSURL URLWithString:readyUrl] retain] autorelease];
+    return [NSURL URLWithString:readyUrl];
 }
 
 @end

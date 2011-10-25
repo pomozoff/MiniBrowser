@@ -358,10 +358,10 @@ NSString *const historyFolderName = @"History";
              excludeBranchParent:branchBookmarkParent
                     currentLevel:level];
     
-    NSArray *resultList = [[NSArray arrayWithArray:mutableList] retain];
+    NSArray *resultList = [NSArray arrayWithArray:mutableList];
     [mutableList release];
      
-    return [resultList autorelease];
+    return resultList;
 }
 
 #pragma mark - arrange History folder by date
@@ -374,9 +374,9 @@ NSString *const historyFolderName = @"History";
     NSInteger localOffset = [localTimeZone secondsFromGMTForDate:sourceDate];
     
     NSTimeInterval interval = localOffset - gmtOffset;
-    NSDate *currentLocalDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:sourceDate];
+    NSDate *currentLocalDate = [NSDate dateWithTimeInterval:interval sinceDate:sourceDate];
     
-    return [currentLocalDate autorelease];
+    return currentLocalDate;
 }
 
 - (NSDate *)getStartOfTheDay:(NSDate *)date
@@ -428,13 +428,14 @@ NSString *const historyFolderName = @"History";
                                                 [NSPredicate predicateWithFormat:@"(name == %@)", newFolderName]];
             
             if (foldersListNamedByDate.count == 0) {
-                newFolder = [[[BookmarkItem alloc] initWithName:newFolderName
+                newFolder = [[BookmarkItem alloc] initWithName:newFolderName
                                                            url:@""
                                                           date:endOfBookmarksDate
                                                          folder:YES
-                                                     permanent:YES] autorelease];
+                                                     permanent:YES];
                 
                 [self addBookmark:newFolder toFolder:self.historyFolder];
+                [newFolder release];
             } else {
                 newFolder = [foldersListNamedByDate objectAtIndex:0];
             }

@@ -37,8 +37,8 @@
 {
     self = [super init];
     if (self) {
-        CFUUIDRef uuidObj = CFUUIDCreate(nil);
-        _itemId = (NSString *)CFUUIDCreateString(nil, uuidObj);
+        CFUUIDRef uuidObj = CFUUIDCreate(NULL);
+        _itemId = (NSString *)CFUUIDCreateString(NULL, uuidObj);
         CFRelease(uuidObj);
 
         _folder = isFolder;
@@ -68,15 +68,12 @@
     NSNumber *isFolderNumber = [NSNumber numberWithBool:isFolder];
     NSNumber *permanent = [NSNumber numberWithBool:isThisPermanent];
 
-    NSArray *keys = [[NSArray alloc] initWithObjects:@"name", @"url", @"date" @"folder", @"permanent", @"parent", @"content", nil];
-    NSArray *objects = [[NSArray alloc] initWithObjects:name, url, [NSDate date], isFolderNumber, permanent, parentId, content, nil];
+    NSArray *keys = [NSArray arrayWithObjects:@"name", @"url", @"date" @"folder", @"permanent", @"parent", @"content", nil];
+    NSArray *objects = [NSArray arrayWithObjects:name, url, [NSDate date], isFolderNumber, permanent, parentId, content, nil];
     
-    NSDictionary *dictionary = [[NSDictionary alloc] initWithObjects:objects forKeys:keys];
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObject:objects forKey:keys];
     
-    [objects release];
-    [keys release];
-    
-    return [dictionary autorelease];
+    return dictionary;
 }
 
 - (NSString *)description
@@ -107,9 +104,14 @@
 
 - (void)dealloc
 {
+    if (_itemId) {
+        [_itemId release];
+    }
+    
     self.name = nil;
     self.url = nil;
     self.parentId = nil;
+    self.date = nil;
     self.content = nil;
     self.delegateController = nil;
     
