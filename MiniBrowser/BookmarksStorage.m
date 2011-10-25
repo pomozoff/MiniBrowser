@@ -29,9 +29,10 @@
 NSString *const savedBookmarks = @"savedBookmarks";
 NSString *const historyFolderName = @"History";
 
+#define SECTIONS_COUNT 1
 - (NSInteger)sectionsCount
 {
-    return 1;
+    return SECTIONS_COUNT;
 }
 
 - (NSDateFormatter *)dateFormatter
@@ -41,41 +42,6 @@ NSString *const historyFolderName = @"History";
         [_dateFormatter setDateFormat:@"EEEE, MMM d"];
     }
     return _dateFormatter;
-}
-
-- (NSDictionary *)copyBookmarksToDictionaryFromBookmark:(BookmarkItem *)bookmark
-{
-    NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
-    
-    [result setObject:bookmark.name forKey:@"name"];
-    [result setObject:bookmark.url forKey:@"url"];
-    [result setObject:bookmark.date forKey:@"date"];
-    [result setObject:(bookmark.isFolder ? [NSNumber numberWithInt:1] : [NSNumber numberWithInt:0]) forKey:@"folder"];
-    [result setObject:(bookmark.isPermanent ? [NSNumber numberWithInt:1] : [NSNumber numberWithInt:0]) forKey:@"permanent"];
-    
-    NSMutableArray *tmpContent = [[NSMutableArray alloc] init];
-    
-    for (BookmarkItem *subBookmark in bookmark.content) {
-        NSDictionary *contentItem = [self copyBookmarksToDictionaryFromBookmark:subBookmark];
-        [tmpContent addObject:contentItem];
-        [contentItem release];
-    }
-    
-    [result setObject:tmpContent forKey:@"content"];
-    [tmpContent release];
-    
-    return result;
-}
-
-- (void)saveBookmarks
-{
-    NSDictionary *bookmarks = [self copyBookmarksToDictionaryFromBookmark:self.rootFolder];
-
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:bookmarks forKey:savedBookmarks];
-    [defaults synchronize];
-    
-    [bookmarks release];
 }
 
 - (void)generateBookmarksList:(NSMutableDictionary *)list
@@ -99,7 +65,9 @@ NSString *const historyFolderName = @"History";
         [list setObject:item forKey:item.itemId];
         
         if (permanent && [name isEqualToString:historyFolderName]) {
-            [_historyFolder release];
+            if (_historyFolder) {
+                [_historyFolder release];
+            }
             _historyFolder = [item retain];
         }
         
@@ -153,6 +121,7 @@ NSString *const historyFolderName = @"History";
 - (BookmarkItem *)historyFolder
 {
     if (!_historyFolder && !self.rootFolder) {
+        [_historyFolder release];
         _historyFolder = nil;
     }
     
@@ -376,15 +345,12 @@ NSString *const historyFolderName = @"History";
     BookmarkItem *branchBookmarkParent = [self bookmarkById:branchBookmark.parentId];
     NSInteger level = 0;
     
-    if (branchBookmarkParent != self.rootFolder) {
-        NSArray *keys = [NSArray arrayWithObjects:@"bookmark", @"level", nil];
-        NSArray *objects = [NSArray arrayWithObjects:self.rootFolder, [NSNumber numberWithInt:level], nil];
-        
-        NSDictionary *bookmarkFolder = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
-        
-        [mutableList addObject:bookmarkFolder];
-        level++;
-    }
+    NSArray *keys = [NSArray arrayWithObjects:@"bookmark", @"level", nil];
+    NSArray *objects = [NSArray arrayWithObjects:self.rootFolder, [NSNumber numberWithInt:level], nil];
+    
+    NSDictionary *bookmarkFolder = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
+    
+    [mutableList addObject:bookmarkFolder];
     
     [self generateFoldersTreeList:mutableList
                fromFolder:self.rootFolder
@@ -413,17 +379,17 @@ NSString *const historyFolderName = @"History";
     return [currentLocalDate autorelease];
 }
 
-- (NSDate *)newStartOfTheDay:(NSDate *)date
+- (NSDate *)getStartOfTheDay:(NSDate *)date
 {
     NSUInteger componentFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *dateComponents = [calendar components:componentFlags fromDate:date];
     NSDate *beginOfTheDay = [calendar dateFromComponents:dateComponents];
     
-    return [beginOfTheDay retain];
+    return beginOfTheDay;
 }
 
-- (NSDate *)newEndOfTheDay:(NSDate *)date
+- (NSDate *)getEndOfTheDay:(NSDate *)date
 {
     NSUInteger componentFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
     NSCalendar *calendar = [NSCalendar currentCalendar];
@@ -433,7 +399,7 @@ NSString *const historyFolderName = @"History";
     dateComponents.second = 59;
     NSDate *enfOfTheDay = [calendar dateFromComponents:dateComponents];
     
-    return [enfOfTheDay retain];
+    return enfOfTheDay;
 }
 
 - (void)arrangeHistoryContentByDate
@@ -441,7 +407,7 @@ NSString *const historyFolderName = @"History";
     BookmarkItem *newFolder = nil;
     
     NSDate *currentDate = [NSDate date];
-    NSDate *beginOfTheDay = [self newStartOfTheDay:currentDate];
+    NSDate *beginOfTheDay = [self getStartOfTheDay:currentDate];
     
     NSArray *localContent = [NSArray arrayWithArray:self.historyFolder.content];
 
@@ -452,7 +418,7 @@ NSString *const historyFolderName = @"History";
         
         if ([beginOfTheDay compare:historyBookmark.date] == NSOrderedDescending) {
             
-            NSDate *endOfBookmarksDate = [self newEndOfTheDay:historyBookmark.date];
+            NSDate *endOfBookmarksDate = [self getEndOfTheDay:historyBookmark.date];
             NSDate *localBookmarksDate = [self convertDateToLocalTimeZone:historyBookmark.date
                                                              fromTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
             
@@ -473,19 +439,56 @@ NSString *const historyFolderName = @"History";
                 newFolder = [foldersListNamedByDate objectAtIndex:0];
             }
             
-            [endOfBookmarksDate release];
             [self moveBookmark:historyBookmark toFolder:newFolder];
         }
     }
+}
+
+- (NSDictionary *)copyBookmarksToDictionaryFromBookmark:(BookmarkItem *)bookmark
+{
+    NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
     
-    [beginOfTheDay release];
+    [result setObject:bookmark.name forKey:@"name"];
+    [result setObject:bookmark.isFolder ? @"" : bookmark.url forKey:@"url"];
+    [result setObject:bookmark.date forKey:@"date"];
+    [result setObject:(bookmark.isFolder ? [NSNumber numberWithInt:1] : [NSNumber numberWithInt:0]) forKey:@"folder"];
+    [result setObject:(bookmark.isPermanent ? [NSNumber numberWithInt:1] : [NSNumber numberWithInt:0]) forKey:@"permanent"];
+    
+    NSMutableArray *tmpContent = [[NSMutableArray alloc] init];
+    
+    for (BookmarkItem *subBookmark in bookmark.content) {
+        NSDictionary *contentItem = [self copyBookmarksToDictionaryFromBookmark:subBookmark];
+        [tmpContent addObject:contentItem];
+        [contentItem release];
+    }
+    
+    [result setObject:tmpContent forKey:@"content"];
+    [tmpContent release];
+    
+    return result;
+}
+
+- (void)saveBookmarks
+{
+    NSDictionary *bookmarks = [self copyBookmarksToDictionaryFromBookmark:self.rootFolder];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:bookmarks forKey:savedBookmarks];
+    [defaults synchronize];
+    
+    [bookmarks release];
 }
 
 - (void)dealloc
 {
-    [_rootFolder release];
+    if (_rootFolder) {
+        [_rootFolder release];
+    }
     _rootFolder = nil;
-    [_historyFolder release];
+    
+    if (_historyFolder) {
+        [_historyFolder release];
+    }
     _historyFolder = nil;
 
     self.bookmarksList = nil;

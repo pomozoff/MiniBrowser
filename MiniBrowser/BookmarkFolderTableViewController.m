@@ -25,7 +25,7 @@
 - (void)setBookmarkParent:(BookmarkItem *)newParent
 {
     [_bookmarkParent release];
-    _bookmarkParent = newParent;
+    [_bookmarkParent = newParent retain];
 }
 
 - (NSArray *)treeList

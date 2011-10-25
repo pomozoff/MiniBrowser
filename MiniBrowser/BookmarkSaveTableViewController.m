@@ -27,8 +27,7 @@
 @synthesize nameField = _nameField;
 @synthesize urlField = _urlField;
 @synthesize tableViewParent = _tableViewParent;
-@synthesize indexPath = _indexPath;
-@synthesize delegateController = _delegateController;
+@synthesize delegateBrowserController = _delegateBrowserController;
 @synthesize currentFolder = _currentFolder;
 
 - (BookmarkSaveModel *)bookmarkSaveModel
@@ -52,15 +51,15 @@
 - (BookmarkItem *)currentFolder
 {
     if (!_currentFolder) {
-        _currentFolder = self.bookmarksStorage.rootFolder;
+        _currentFolder = [self.bookmarksStorage.rootFolder retain];
     }
     
     return _currentFolder;
 }
 
-#define CELL_FIELD_TOP_MARGIN 12.0f
-#define CELL_FIELD_HEIGHT 21.0f
-#define CELL_FIELD_WIDTH_PERCENT 85.0f
+#define CELL_FIELD_TOP_MARGIN 1.0f
+#define CELL_FIELD_HEIGHT 42.0f
+#define CELL_FIELD_WIDTH_PERCENT 90.0f
 
 - (CGRect)createRectForTextFieldInCell
 {
@@ -86,6 +85,7 @@
         _nameField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         _nameField.textAlignment = UITextAlignmentLeft;
         _nameField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        _nameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         _nameField.enabled = YES;
         _nameField.text = self.bookmark.name;
         _nameField.delegate = self;
@@ -107,6 +107,7 @@
         _urlField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         _urlField.textAlignment = UITextAlignmentLeft;
         _urlField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        _urlField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         _urlField.enabled = !self.bookmark.isFolder;
         _urlField.text = self.bookmark.url;
         _urlField.delegate = self;
@@ -186,8 +187,7 @@
     self.currentFolder = nil;
     
     self.tableViewParent = nil;
-    self.indexPath = nil;
-    self.delegateController = nil;
+    self.delegateBrowserController = nil;
 }
 
 - (void)viewDidUnload
@@ -231,15 +231,13 @@
 - (void)finishBookmarkSaving
 {
     [self.navigationController popViewControllerAnimated:YES];
-    [self.delegateController dismissPopoverAndCleanUp];
+    [self.delegateBrowserController dismissPopoverAndCleanUp];
 
-//    [self freeProperties];
+    [self freeProperties];
 }
 
 - (void)cancelBookmarkSaving:(UIBarButtonItem *)sender
 {
-    self.indexPath = nil;
-    
     [self finishBookmarkSaving];
 }
 
@@ -250,11 +248,6 @@
 
     if (!self.bookmark.parentId) {
         [self.bookmarksStorage addBookmark:self.bookmark toFolder:self.currentFolder];
-    }
-    
-    if (self.indexPath) {
-        [self.tableViewParent reloadRowsAtIndexPaths:[NSArray arrayWithObject:self.indexPath]
-                                    withRowAnimation:UITableViewRowAnimationRight];
     }
     
     [self finishBookmarkSaving];

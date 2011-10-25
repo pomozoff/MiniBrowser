@@ -68,7 +68,7 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
 - (SearchEngine *)searchEngine
 {
     if (!_searchEngine) {
-        _searchEngine = [self.settingsController currentSearchEngine];
+        _searchEngine = [[self.settingsController currentSearchEngine] retain];
     }
     
     return _searchEngine;
@@ -138,9 +138,11 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
 
 - (void)saveCurrentPage
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:self.urlField.text forKey:savedUrlKey];
-    [defaults synchronize];
+    if (self.urlField.text) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:self.urlField.text forKey:savedUrlKey];
+        [defaults synchronize];
+    }
 }
 
 - (void)saveBookmarks
@@ -250,12 +252,10 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
 {
     [self dismissOpenPopoversAndActionSheet];
     
-    self.bookmarkSaveTableViewController.title = barItem.title;
-    
     BookmarkItem *currentFolder = self.bookmarksStorage.rootFolder;
-
     BookmarksTableViewController *bookmarkTVC = nil;
     UIViewController *topViewController = self.bookmarkNavigationController.topViewController;
+    
     if ([topViewController isKindOfClass:[BookmarksTableViewController class]]) {
         bookmarkTVC = (BookmarksTableViewController *)topViewController;
         currentFolder = [bookmarkTVC.currentFolder isEqualToBookmark:self.bookmarksStorage.historyFolder] ? 
@@ -267,10 +267,11 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
                                                               date:[NSDate date]
                                                              folder:NO
                                                          permanent:NO];
+    
     self.bookmarkSaveTableViewController.bookmark = newBookmark;
-    self.bookmarkSaveTableViewController.currentFolder = [currentFolder isEqualToBookmark:self.bookmarksStorage.historyFolder] ?
-                                                         self.bookmarksStorage.rootFolder : currentFolder;
-    self.bookmarkSaveTableViewController.delegateController = self;
+    self.bookmarkSaveTableViewController.currentFolder = currentFolder;
+    self.bookmarkSaveTableViewController.delegateBrowserController = self;
+    self.bookmarkSaveTableViewController.title = barItem.title;
     
     newBookmark.delegateController = bookmarkTVC ? bookmarkTVC : self.bookmarksTableViewController;
     [newBookmark release];
@@ -376,7 +377,10 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
     
     NSString *trimmedUrl = [url stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     if ([trimmedUrl isEqualToString:@""]) {
-        url = self.urlField.text;
+        self.urlField.text = @"";
+        self.urlLabel.text = @"Untitled";
+        
+        return;
     }
     
     //NSString *readyUrl = [self correctUrl:url];

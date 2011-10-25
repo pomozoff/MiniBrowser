@@ -158,14 +158,10 @@
                                                            folder:YES
                                                        permanent:NO];
     
-    NSInteger numberOfRows = [self.bookmarksStorage bookmarksCountForParent:self.currentFolder];
-    NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:numberOfRows inSection:0];
-    
     bookmarkSaveTVC.title = @"Edit Folder";
     bookmarkSaveTVC.bookmark = newFolder;
     bookmarkSaveTVC.bookmarksStorage = self.bookmarksStorage;
     bookmarkSaveTVC.tableViewParent = self.tableView;
-    bookmarkSaveTVC.indexPath = newIndexPath;
     bookmarkSaveTVC.currentFolder = self.currentFolder;
     
     newFolder.delegateController = self;
@@ -291,7 +287,6 @@
         bookmarkSaveTVC.bookmark = currentBookmark;
         bookmarkSaveTVC.bookmarksStorage = self.bookmarksStorage;
         bookmarkSaveTVC.tableViewParent = self.tableView;
-        bookmarkSaveTVC.indexPath = indexPath;
         
         currentBookmark.delegateController = self;
         
