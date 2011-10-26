@@ -371,12 +371,12 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
 
 - (void)loadUrl:(NSString *)url
 {
-    if (!url) {
-        return;
-    }
-    
     NSString *trimmedUrl = [url stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    if ([trimmedUrl isEqualToString:@""]) {
+    BOOL isUrlEmpty = !trimmedUrl || [trimmedUrl isEqualToString:@""];
+
+    self.actionButton.enabled = !isUrlEmpty;
+
+    if (isUrlEmpty) {
         self.urlField.text = @"";
         self.urlLabel.text = @"Untitled";
         
