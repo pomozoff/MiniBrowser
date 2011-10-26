@@ -22,7 +22,7 @@
 @property (nonatomic, retain) BookmarkSaveTableViewController *bookmarkSaveTableViewController;
 @property (nonatomic, retain) id <BookmarksStorageProtocol> bookmarksStorage;
 @property (nonatomic, retain) UIPopoverController *popoverBookmark;
-@property (nonatomic, retain) UIPopoverController *popoverSaveBookmark;
+@property (nonatomic, retain) UIPopoverController *popoverAction;
 @property (nonatomic, retain) UIActionSheet *actionSheet;
 @property (nonatomic, retain) UINavigationController *bookmarkNavigationController;
 
@@ -49,7 +49,7 @@
 @synthesize bookmarkSaveTableViewController = _bookmarkSaveTableViewController;
 @synthesize bookmarksStorage = _bookmarksStorage;
 @synthesize popoverBookmark = _popoverBookmark;
-@synthesize popoverSaveBookmark = _popoverSaveBookmark;
+@synthesize popoverAction = _popoverAction;
 @synthesize actionSheet = _actionSheet;
 @synthesize bookmarkNavigationController = _bookmarkNavigationController;
 
@@ -206,8 +206,8 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
 /*
 - (void)cancelSavingBookmark:(UIBarButtonItem *)sender
 {
-    [self.popoverSaveBookmark dismissPopoverAnimated:YES];
-    self.popoverSaveBookmark = nil;
+    [self.popoverAction dismissPopoverAnimated:YES];
+    self.popoverAction = nil;
 }
 */
 
@@ -218,9 +218,9 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
         self.popoverBookmark = nil;
     }
     
-    if ([self.popoverSaveBookmark isPopoverVisible]) {
-        [self.popoverSaveBookmark dismissPopoverAnimated:YES];
-        self.popoverSaveBookmark = nil;
+    if ([self.popoverAction isPopoverVisible]) {
+        [self.popoverAction dismissPopoverAnimated:YES];
+        self.popoverAction = nil;
         self.bookmarkSaveTableViewController = nil;
     }
     
@@ -281,14 +281,14 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
         UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:navigationController];
 
         [navigationController pushViewController:self.bookmarkSaveTableViewController animated:NO];
-        self.popoverSaveBookmark = popover;
+        self.popoverAction = popover;
         
         [popover release];
         [navigationController release];
 
-        self.popoverSaveBookmark.delegate = self;
+        self.popoverAction.delegate = self;
         
-        [self.popoverSaveBookmark presentPopoverFromBarButtonItem:barItem
+        [self.popoverAction presentPopoverFromBarButtonItem:barItem
                                          permittedArrowDirections:UIPopoverArrowDirectionUp
                                                          animated:YES];
     } else {
@@ -298,8 +298,14 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
 
 - (IBAction)bookmarkPressed:(id)sender
 {
+    BOOL isBookmarkPopoverOpen = [self.popoverBookmark isPopoverVisible];
+
     [self dismissOpenPopoversAndActionSheet];
     [self finishEditing];
+    
+    if (isBookmarkPopoverOpen) {
+        return;
+    }
     
     if (self.isIPad) {
         UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:self.bookmarkNavigationController];
@@ -317,8 +323,14 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
 
 - (IBAction)actionPressed:(id)sender
 {
+    BOOL isActionSheet = [self.actionSheet isVisible];
+
     [self dismissOpenPopoversAndActionSheet];
     [self finishEditing];
+    
+    if (isActionSheet) {
+        return;
+    }
     
     [self.actionSheet showFromBarButtonItem:sender animated:YES];
 }
@@ -369,21 +381,27 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
 }
 */
 
-- (void)loadUrl:(NSString *)url
+- (BOOL)checkIsUrlEmpty:(NSString *)url
 {
     NSString *trimmedUrl = [url stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     BOOL isUrlEmpty = !trimmedUrl || [trimmedUrl isEqualToString:@""];
-
+    
     self.actionButton.enabled = !isUrlEmpty;
-
+    
     if (isUrlEmpty) {
         self.urlField.text = @"";
         self.urlLabel.text = @"Untitled";
-        
+    }
+    
+    return isUrlEmpty;
+}
+
+- (void)loadUrl:(NSString *)url
+{
+    if ([self checkIsUrlEmpty:url]) {
         return;
     }
     
-    //NSString *readyUrl = [self correctUrl:url];
     NSString *readyUrl = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL *urlObject = [NSURL URLWithString:readyUrl];
     
@@ -515,9 +533,15 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
 
 # pragma mark - text field delegate
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     [self dismissOpenPopoversAndActionSheet];
+    return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    [self checkIsUrlEmpty:textField.text];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -544,12 +568,6 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
     [self searchTheText:self.searchBar.text];
 }
 
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-    [self dismissOpenPopoversAndActionSheet];
-    return YES;
-}
-
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
     [self dismissOpenPopoversAndActionSheet];
@@ -574,8 +592,8 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
             ((UITableViewController *)topViewController).editing = NO;
         }
         
-    } else if (popoverController == self.popoverSaveBookmark) {
-        self.popoverSaveBookmark = nil;
+    } else if (popoverController == self.popoverAction) {
+        self.popoverAction = nil;
         self.bookmarkSaveTableViewController = nil;
         self.actionSheet = nil;
     }
@@ -583,11 +601,11 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
 
 - (void)dismissPopoverAndCleanUp
 {
-    if ([self.popoverSaveBookmark isPopoverVisible]) {
-        [self.popoverSaveBookmark dismissPopoverAnimated:YES];
+    if ([self.popoverAction isPopoverVisible]) {
+        [self.popoverAction dismissPopoverAnimated:YES];
     }
 
-    self.popoverSaveBookmark = nil;
+    self.popoverAction = nil;
     self.bookmarkSaveTableViewController = nil;
 }
 
