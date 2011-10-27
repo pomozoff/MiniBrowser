@@ -1,5 +1,5 @@
 //
-//  NSDate+Between.h
+//  NSDate+Extended.h
 //  MiniBrowser
 //
 //  Created by Антон Помозов on 21.10.11.
@@ -8,8 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSDate (Between)
+@interface NSDate (Extended)
 
 + (BOOL)date:(NSDate*)date isBetweenDate:(NSDate*)beginDate andDate:(NSDate*)endDate;
+
+- (NSDate *)getStartOfTheDay;
+- (NSDate *)getEndOfTheDay;
+- (NSDate *)convertDateToLocalTimeZoneFromTimeZone:(NSTimeZone *)sourceTimeZone;
+- (NSDate *)convertDateToLocalFromGMT;
 
 @end
