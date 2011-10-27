@@ -8,7 +8,7 @@
 
 #import "UnitTests.h"
 #import "BookmarksStorage.h"
-#import "NSDate+Between.h"
+#import "NSDate+Extended.h"
 
 @interface UnitTests()
 
@@ -149,16 +149,25 @@
     NSArray *historyBookmarks = historyFolder.content;
     STAssertFalse(historyBookmarks.count < 1, @"History Folder is empty - permananet bookmarks didn't loaded");
     
+    // Get first bookmark in history folder
+    BookmarkItem *firstInHistoryFolder = [historyBookmarks objectAtIndex:0];
+    NSDate *firstBookmarkDate = firstInHistoryFolder.date;
+    NSDate *localBookmarksDate = [firstBookmarkDate convertDateToLocalFromGMT];
+    
+    // Prepare date formatter date (to string conversion)
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"EEEE, MMM d";
+    
     // Check History Folder rearranged itself by dates
     [self.bookmarksStorage arrangeHistoryContentByDate];
-    STAssertFalse(historyFolder.content.count != 2, @"History Folder now must contains two sub-folders");
+    STAssertFalse(historyFolder.content.count != 3, @"History Folder now must contains three sub-folders");
 
     // Check only sub-folders must stay in History Folders
     BookmarkItem *firstSubFolder = [historyFolder.content objectAtIndex:0];
     STAssertTrue(firstSubFolder.isFolder, @"The first item in History Folder isn't folder");
 
-    // Check the first folder's date is 17.10.2011
-    NSString *expectedName = @"Monday, Oct 17";
+    // Check the first folder's date same with first history bookmark
+    NSString *expectedName = [dateFormatter stringFromDate:localBookmarksDate];//@"Monday, Oct 17";
     STAssertEqualObjects(firstSubFolder.name, expectedName, @"The first sub-folder in arranged History Folder has wrong name");
     
     // Check for clearing History Folder

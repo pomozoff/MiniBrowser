@@ -7,6 +7,7 @@
 //
 
 #import "BookmarksStorage.h"
+#import "NSDate+Extended.h"
 
 @interface BookmarksStorage()
 
@@ -39,7 +40,7 @@ NSString *const historyFolderName = @"History";
 {
     if (!_dateFormatter) {
         _dateFormatter = [[NSDateFormatter alloc] init];
-        [_dateFormatter setDateFormat:@"EEEE, MMM d"];
+        _dateFormatter.dateFormat = @"EEEE, MMM d";
     }
     return _dateFormatter;
 }
@@ -366,48 +367,13 @@ NSString *const historyFolderName = @"History";
 
 #pragma mark - arrange History folder by date
 
-- (NSDate *)convertDateToLocalTimeZone:(NSDate *)sourceDate fromTimeZone:(NSTimeZone *)sourceTimeZone
-{
-    NSTimeZone *localTimeZone = [NSTimeZone systemTimeZone];
-    
-    NSInteger gmtOffset = [sourceTimeZone secondsFromGMTForDate:sourceDate];
-    NSInteger localOffset = [localTimeZone secondsFromGMTForDate:sourceDate];
-    
-    NSTimeInterval interval = localOffset - gmtOffset;
-    NSDate *currentLocalDate = [NSDate dateWithTimeInterval:interval sinceDate:sourceDate];
-    
-    return currentLocalDate;
-}
-
-- (NSDate *)getStartOfTheDay:(NSDate *)date
-{
-    NSUInteger componentFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *dateComponents = [calendar components:componentFlags fromDate:date];
-    NSDate *beginOfTheDay = [calendar dateFromComponents:dateComponents];
-    
-    return beginOfTheDay;
-}
-
-- (NSDate *)getEndOfTheDay:(NSDate *)date
-{
-    NSUInteger componentFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *dateComponents = [calendar components:componentFlags fromDate:date];
-    dateComponents.hour = 23;
-    dateComponents.minute = 59;
-    dateComponents.second = 59;
-    NSDate *enfOfTheDay = [calendar dateFromComponents:dateComponents];
-    
-    return enfOfTheDay;
-}
-
 - (void)arrangeHistoryContentByDate
 {
     BookmarkItem *newFolder = nil;
     
     NSDate *currentDate = [NSDate date];
-    NSDate *beginOfTheDay = [self getStartOfTheDay:currentDate];
+    NSDate *beginOfTheDay = [currentDate getStartOfTheDay];
+    NSDate *localBeginDate = [beginOfTheDay convertDateToLocalFromGMT];
     
     NSArray *localContent = [NSArray arrayWithArray:self.historyFolder.content];
 
@@ -416,13 +382,10 @@ NSString *const historyFolderName = @"History";
             continue;
         }
         
-        if ([beginOfTheDay compare:historyBookmark.date] == NSOrderedDescending) {
-            NSDate *endOfBookmarksDate = [self getEndOfTheDay:historyBookmark.date];
-            NSDate *localBookmarksDate = [self convertDateToLocalTimeZone:historyBookmark.date
-                                                             fromTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
-            
+        NSDate *localBookmarksDate = [historyBookmark.date convertDateToLocalFromGMT];
+        if ([localBeginDate compare:localBookmarksDate] == NSOrderedDescending) {
+            NSDate *endOfBookmarksDate = [localBookmarksDate getEndOfTheDay];
             NSString *newFolderName = [self.dateFormatter stringFromDate:localBookmarksDate];
-
             NSArray *foldersListNamedByDate = [self.historyFolder.content filteredArrayUsingPredicate:
                                                 [NSPredicate predicateWithFormat:@"(name == %@)", newFolderName]];
             

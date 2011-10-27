@@ -21,6 +21,8 @@
 		265CCEC5143D85B9005F348A /* clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBE143D85B9005F348A /* clock.png */; };
 		265CCEC6143D85B9005F348A /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBF143D85B9005F348A /* heart.png */; };
 		265CCEC7143D85B9005F348A /* preferences.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEC0143D85B9005F348A /* preferences.png */; };
+		265F359E145978A700EC85B7 /* UnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 26DB36B6144EC19C001C4CBC /* UnitTests.m */; };
+		265F359F145978B800EC85B7 /* NSDate+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C202E11451711600323E79 /* NSDate+Extended.m */; };
 		266C914914440DAD00444BAC /* BookmarksTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266C914814440DAD00444BAC /* BookmarksTableViewController.m */; };
 		266C914D1444115200444BAC /* BookmarksStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 266C914C1444115200444BAC /* BookmarksStorage.m */; };
 		266C91511444171200444BAC /* BookmarkItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 266C91501444171200444BAC /* BookmarkItem.m */; };
@@ -42,7 +44,7 @@
 		26B578D914443290004657E2 /* BookmarkSaveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B578D814443290004657E2 /* BookmarkSaveModel.m */; };
 		26B578DC1444376E004657E2 /* BookmarkSaveTable.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26B578DB1444376E004657E2 /* BookmarkSaveTable.plist */; };
 		26C083B21448238E0056B37A /* BookmarkFolderTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C083B11448238E0056B37A /* BookmarkFolderTableViewController.m */; };
-		26C202E21451711600323E79 /* NSDate+Between.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C202E11451711600323E79 /* NSDate+Between.m */; };
+		26C202E21451711600323E79 /* NSDate+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C202E11451711600323E79 /* NSDate+Extended.m */; };
 		26C8CF89145881A400536C9B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67B4143CCE8D0025F929 /* main.m */; };
 		26C8CF8A145881A400536C9B /* MiniBrowserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67B8143CCE8D0025F929 /* MiniBrowserAppDelegate.m */; };
 		26C8CF8B145881A400536C9B /* MiniBrowserAppDelegate_iPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67BC143CCE8D0025F929 /* MiniBrowserAppDelegate_iPhone.m */; };
@@ -58,7 +60,7 @@
 		26C8CF95145881A400536C9B /* BookmarkSaveTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B578D4144429FB004657E2 /* BookmarkSaveTableViewController.m */; };
 		26C8CF96145881A400536C9B /* BookmarkSaveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B578D814443290004657E2 /* BookmarkSaveModel.m */; };
 		26C8CF97145881A400536C9B /* BookmarkFolderTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C083B11448238E0056B37A /* BookmarkFolderTableViewController.m */; };
-		26C8CF98145881A400536C9B /* NSDate+Between.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C202E11451711600323E79 /* NSDate+Between.m */; };
+		26C8CF98145881A400536C9B /* NSDate+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C202E11451711600323E79 /* NSDate+Extended.m */; };
 		26C8CF9A145881A400536C9B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266D67A8143CCE8D0025F929 /* UIKit.framework */; };
 		26C8CF9B145881A400536C9B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266D67AA143CCE8D0025F929 /* Foundation.framework */; };
 		26C8CF9C145881A400536C9B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266D67AC143CCE8D0025F929 /* CoreGraphics.framework */; };
@@ -87,7 +89,6 @@
 		26DB36AD144EC19C001C4CBC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266D67AC143CCE8D0025F929 /* CoreGraphics.framework */; };
 		26DB36B3144EC19C001C4CBC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26DB36B1144EC19C001C4CBC /* InfoPlist.strings */; };
 		26DB36B5144EC19C001C4CBC /* UnitTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 26DB36B4144EC19C001C4CBC /* UnitTests.h */; };
-		26DB36B7144EC19C001C4CBC /* UnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 26DB36B6144EC19C001C4CBC /* UnitTests.m */; };
 		26FE56BD1443269D001622F2 /* Bookmark-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 26FE56BC1443269D001622F2 /* Bookmark-iPad.png */; };
 		26FE56BF144326FB001622F2 /* Bookmark-iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 26FE56BE144326FB001622F2 /* Bookmark-iPhone.png */; };
 		26FE56C614432A7A001622F2 /* SearchEngineYahoo.m in Sources */ = {isa = PBXBuildFile; fileRef = 26FE56C514432A7A001622F2 /* SearchEngineYahoo.m */; };
@@ -166,8 +167,8 @@
 		26C083B01448238E0056B37A /* BookmarkFolderTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkFolderTableViewController.h; sourceTree = "<group>"; };
 		26C083B11448238E0056B37A /* BookmarkFolderTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkFolderTableViewController.m; sourceTree = "<group>"; };
 		26C083B314483CBB0056B37A /* BookmarkSaveTableViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkSaveTableViewProtocol.h; sourceTree = "<group>"; };
-		26C202E01451711600323E79 /* NSDate+Between.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Between.h"; sourceTree = "<group>"; };
-		26C202E11451711600323E79 /* NSDate+Between.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Between.m"; sourceTree = "<group>"; };
+		26C202E01451711600323E79 /* NSDate+Extended.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extended.h"; sourceTree = "<group>"; };
+		26C202E11451711600323E79 /* NSDate+Extended.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extended.m"; sourceTree = "<group>"; };
 		26C8CFB4145881A400536C9B /* MiniBrowser3G.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MiniBrowser3G.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26C8CFB7145881ED00536C9B /* MiniBrowser3G-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MiniBrowser3G-Info.plist"; sourceTree = "<group>"; };
 		26DB365A144EB3D6001C4CBC /* action.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = action.png; sourceTree = "<group>"; };
@@ -275,6 +276,8 @@
 				266D67B8143CCE8D0025F929 /* MiniBrowserAppDelegate.m */,
 				266D67BA143CCE8D0025F929 /* iPhone */,
 				266D67C1143CCE8D0025F929 /* iPad */,
+				26C202E01451711600323E79 /* NSDate+Extended.h */,
+				26C202E11451711600323E79 /* NSDate+Extended.m */,
 				266102DC1445A2F0000730FA /* BrowserControllerProtocol.h */,
 				266D67CD143CCF720025F929 /* BrowserController.h */,
 				266D67CE143CCF720025F929 /* BrowserController.m */,
@@ -283,8 +286,6 @@
 				26C083AD1448209F0056B37A /* Search Engine */,
 				265CCEB9143D85B9005F348A /* Resources */,
 				266D67AF143CCE8D0025F929 /* Supporting Files */,
-				26C202E01451711600323E79 /* NSDate+Between.h */,
-				26C202E11451711600323E79 /* NSDate+Between.m */,
 			);
 			path = MiniBrowser;
 			sourceTree = "<group>";
@@ -576,7 +577,7 @@
 				26B578D5144429FB004657E2 /* BookmarkSaveTableViewController.m in Sources */,
 				26B578D914443290004657E2 /* BookmarkSaveModel.m in Sources */,
 				26C083B21448238E0056B37A /* BookmarkFolderTableViewController.m in Sources */,
-				26C202E21451711600323E79 /* NSDate+Between.m in Sources */,
+				26C202E21451711600323E79 /* NSDate+Extended.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -599,7 +600,7 @@
 				26C8CF95145881A400536C9B /* BookmarkSaveTableViewController.m in Sources */,
 				26C8CF96145881A400536C9B /* BookmarkSaveModel.m in Sources */,
 				26C8CF97145881A400536C9B /* BookmarkFolderTableViewController.m in Sources */,
-				26C8CF98145881A400536C9B /* NSDate+Between.m in Sources */,
+				26C8CF98145881A400536C9B /* NSDate+Extended.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -609,7 +610,8 @@
 			files = (
 				26AF9D4C144EF35900CBBF20 /* BookmarkItem.m in Sources */,
 				26AF9D4B144EF31900CBBF20 /* BookmarksStorage.m in Sources */,
-				26DB36B7144EC19C001C4CBC /* UnitTests.m in Sources */,
+				265F359F145978B800EC85B7 /* NSDate+Extended.m in Sources */,
+				265F359E145978A700EC85B7 /* UnitTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -679,6 +681,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = "";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
@@ -741,6 +744,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = "";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
@@ -764,6 +768,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = "";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
