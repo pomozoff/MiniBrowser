@@ -248,6 +248,7 @@
 
     if (self.bookmark.parentId) {
         [self.bookmarksStorage moveBookmark:self.bookmark toFolder:self.currentFolder];
+        [self.bookmark.delegateController reloadBookmarksInFolder:self.currentFolder];
     } else {
         [self.bookmarksStorage addBookmark:self.bookmark toFolder:self.currentFolder];
     }

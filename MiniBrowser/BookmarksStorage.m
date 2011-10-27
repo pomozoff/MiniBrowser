@@ -313,6 +313,7 @@ NSString *const historyFolderName = @"History";
         
         @try {
             [self addBookmark:bookmark toFolder:bookmarkFolder];
+            bookmark.delegateController = bookmarkFolder.delegateController;
         }
         @catch (NSException *exception) {
             NSLog(@"Error moving bookmark: %@", exception.reason);
@@ -322,9 +323,6 @@ NSString *const historyFolderName = @"History";
             [bookmark release];
         }
     }
-    
-    bookmark.delegateController = bookmarkFolder.delegateController;
-    [bookmark.delegateController reloadBookmarksInFolder:bookmarkFolder];
 }
 
 - (void)clearFolder:(BookmarkItem *)folder
@@ -419,7 +417,6 @@ NSString *const historyFolderName = @"History";
         }
         
         if ([beginOfTheDay compare:historyBookmark.date] == NSOrderedDescending) {
-            
             NSDate *endOfBookmarksDate = [self getEndOfTheDay:historyBookmark.date];
             NSDate *localBookmarksDate = [self convertDateToLocalTimeZone:historyBookmark.date
                                                              fromTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
@@ -442,6 +439,7 @@ NSString *const historyFolderName = @"History";
                 newFolder = [foldersListNamedByDate objectAtIndex:0];
             }
             
+            historyBookmark.delegateController = nil;
             [self moveBookmark:historyBookmark toFolder:newFolder];
         }
     }
