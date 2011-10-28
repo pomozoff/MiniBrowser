@@ -21,6 +21,34 @@
     return YES;
 }
 
+- (NSDate *)convertDateToLocalTimeZoneFromTimeZone:(NSTimeZone *)sourceTimeZone
+{
+    NSTimeZone *localTimeZone = [NSTimeZone localTimeZone];
+    
+    NSInteger gmtOffset = [localTimeZone secondsFromGMT];
+    NSDate *currentLocalDate = [self dateByAddingTimeInterval:gmtOffset];
+    
+    return currentLocalDate;
+}
+
++ (NSDate *)localDate
+{
+    NSDate *nowGmt = [NSDate date];
+    
+    NSTimeZone *gmtTimeZone = [NSTimeZone timeZoneWithName:@"GMT"];
+    NSDate *currentLocalDate = [nowGmt convertDateToLocalTimeZoneFromTimeZone:gmtTimeZone];
+    
+    return currentLocalDate;
+}
+
+- (NSDate *)convertDateFromGmtToLocal
+{
+    NSTimeZone *gmtTimeZone = [NSTimeZone timeZoneWithName:@"GMT"];
+    NSDate *currentLocalDate = [self convertDateToLocalTimeZoneFromTimeZone:gmtTimeZone];
+    
+    return currentLocalDate;
+}
+
 - (NSDate *)getStartOfTheDay
 {
     NSUInteger componentFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
@@ -44,25 +72,26 @@
     return enfOfTheDay;
 }
 
-- (NSDate *)convertDateToLocalTimeZoneFromTimeZone:(NSTimeZone *)sourceTimeZone
+- (NSDate *)getStartOfAnHour
 {
-    NSTimeZone *localTimeZone = [NSTimeZone systemTimeZone];
+    NSUInteger componentFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit;
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *dateComponents = [calendar components:componentFlags fromDate:self];
+    NSDate *beginOfAnHour = [calendar dateFromComponents:dateComponents];
     
-    NSInteger gmtOffset = [sourceTimeZone secondsFromGMTForDate:self];
-    NSInteger localOffset = [localTimeZone secondsFromGMTForDate:self];
-    
-    NSTimeInterval interval = localOffset - gmtOffset;
-    NSDate *currentLocalDate = [NSDate dateWithTimeInterval:interval sinceDate:self];
-    
-    return currentLocalDate;
+    return beginOfAnHour;
 }
 
-- (NSDate *)convertDateToLocalFromGMT
+- (NSDate *)getEndOfAnHour
 {
-    NSTimeZone *gmtTimeZone = [NSTimeZone timeZoneWithName:@"GMT"];
-    NSDate *currentLocalDate = [self convertDateToLocalTimeZoneFromTimeZone:gmtTimeZone];
+    NSUInteger componentFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit;
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *dateComponents = [calendar components:componentFlags fromDate:self];
+    dateComponents.minute = 59;
+    dateComponents.second = 59;
+    NSDate *enfOfAnHour = [calendar dateFromComponents:dateComponents];
     
-    return currentLocalDate;
+    return enfOfAnHour;
 }
 
 @end

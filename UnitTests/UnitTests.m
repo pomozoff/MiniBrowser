@@ -42,6 +42,15 @@
     [super tearDown];
 }
 
+- (void)test0TestExtendedDateMeyhods
+{
+    NSDate *now = [NSDate date];
+    NSDate *startOfAnHour = [now getStartOfAnHour];
+    NSDate *endOfAnHour = [now getEndOfAnHour];
+    NSDate *expectedDate = [startOfAnHour dateByAddingTimeInterval:(60*60 - 1)];
+    STAssertEqualObjects(endOfAnHour, expectedDate, @"The end jo an hour is not equals expected");
+}
+
 - (void)test1CompareTwoBookmarks
 {
     NSDate *currentDate = [NSDate date];
@@ -152,22 +161,22 @@
     // Get first bookmark in history folder
     BookmarkItem *firstInHistoryFolder = [historyBookmarks objectAtIndex:0];
     NSDate *firstBookmarkDate = firstInHistoryFolder.date;
-    NSDate *localBookmarksDate = [firstBookmarkDate convertDateToLocalFromGMT];
     
     // Prepare date formatter date (to string conversion)
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"EEEE, MMM d";
+    dateFormatter.timeZone = [NSTimeZone localTimeZone];
     
     // Check History Folder rearranged itself by dates
     [self.bookmarksStorage arrangeHistoryContentByDate];
-    STAssertFalse(historyFolder.content.count != 3, @"History Folder now must contains three sub-folders");
+    STAssertFalse(historyFolder.content.count != 3, @"History Folder now must contains three sub-folders, instead %d", historyFolder.content.count);
 
     // Check only sub-folders must stay in History Folders
-    BookmarkItem *firstSubFolder = [historyFolder.content objectAtIndex:0];
+    BookmarkItem *firstSubFolder = [[historyFolder.content objectAtIndex:0] retain];
     STAssertTrue(firstSubFolder.isFolder, @"The first item in History Folder isn't folder");
 
     // Check the first folder's date same with first history bookmark
-    NSString *expectedName = [dateFormatter stringFromDate:localBookmarksDate];//@"Monday, Oct 17";
+    NSString *expectedName = [dateFormatter stringFromDate:firstBookmarkDate];//@"Monday, Oct 17";
     STAssertEqualObjects(firstSubFolder.name, expectedName, @"The first sub-folder in arranged History Folder has wrong name");
     
     // Check for clearing History Folder
@@ -176,6 +185,7 @@
     
     // Check the first sub-folder in History Folder contains any items
     STAssertTrue(firstSubFolder.content.count == 0, @"The first sub-folder in History Folder still contains items");
+    [firstSubFolder release];
     
     // Check presence of the first sub-folder in general bookmark's list
     BookmarkItem *itemFromGeneralList = [self.bookmarksStorage bookmarkById:firstSubFolder.itemId];

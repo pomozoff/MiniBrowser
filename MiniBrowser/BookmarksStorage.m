@@ -41,6 +41,7 @@ NSString *const historyFolderName = @"History";
     if (!_dateFormatter) {
         _dateFormatter = [[NSDateFormatter alloc] init];
         _dateFormatter.dateFormat = @"EEEE, MMM d";
+        _dateFormatter.timeZone = [NSTimeZone localTimeZone];
     }
     return _dateFormatter;
 }
@@ -369,43 +370,56 @@ NSString *const historyFolderName = @"History";
 
 - (void)arrangeHistoryContentByDate
 {
-    BookmarkItem *newFolder = nil;
+    // if no bookmarks - go out
+    if (self.historyFolder.content.count == 0) {
+        return;
+    }
     
-    NSDate *currentDate = [NSDate date];
-    NSDate *beginOfTheDay = [currentDate getStartOfTheDay];
-    NSDate *localBeginDate = [beginOfTheDay convertDateToLocalFromGMT];
-    
-    NSArray *localContent = [NSArray arrayWithArray:self.historyFolder.content];
+    BookmarkItem *firstBookmark = [self.historyFolder.content objectAtIndex:0];
 
+    // if first bookmark is folder - go out
+    if (firstBookmark.isFolder) {
+        return;
+    }
+    
+    BookmarkItem *newFolder = nil;
+    NSDate *beginOfTheDay = [[[NSDate date] getStartOfTheDay] convertDateFromGmtToLocal];
+    NSArray *localContent = [NSArray arrayWithArray:self.historyFolder.content];
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
     for (BookmarkItem *historyBookmark in localContent) {
         if (historyBookmark.isFolder) {
-            continue;
+            break;
         }
+
+        NSDate *historyBookmarkDate = [historyBookmark.date convertDateFromGmtToLocal];
         
-        NSDate *localBookmarksDate = [historyBookmark.date convertDateToLocalFromGMT];
-        if ([localBeginDate compare:localBookmarksDate] == NSOrderedDescending) {
-            NSDate *endOfBookmarksDate = [localBookmarksDate getEndOfTheDay];
-            NSString *newFolderName = [self.dateFormatter stringFromDate:localBookmarksDate];
+        // if first bookmark's date is not yesterday - go out
+        if ([beginOfTheDay compare:historyBookmarkDate] == NSOrderedDescending) {
+            NSString *newFolderName = [self.dateFormatter stringFromDate:historyBookmark.date];
             NSArray *foldersListNamedByDate = [self.historyFolder.content filteredArrayUsingPredicate:
-                                                [NSPredicate predicateWithFormat:@"(name == %@)", newFolderName]];
+                                               [NSPredicate predicateWithFormat:@"(name == %@)", newFolderName]];
             
             if (foldersListNamedByDate.count == 0) {
-                newFolder = [[BookmarkItem alloc] initWithName:newFolderName
-                                                           url:@""
-                                                          date:endOfBookmarksDate
+                NSDate *endOfBookmarksDate = [[historyBookmark.date getEndOfTheDay] convertDateFromGmtToLocal];
+                newFolder = [[[BookmarkItem alloc] initWithName:newFolderName
+                                                            url:@""
+                                                           date:endOfBookmarksDate
                                                          folder:YES
-                                                     permanent:YES];
+                                                      permanent:YES] autorelease];
                 
                 [self addBookmark:newFolder toFolder:self.historyFolder];
-                [newFolder release];
             } else {
                 newFolder = [foldersListNamedByDate objectAtIndex:0];
             }
-            
-            historyBookmark.delegateController = nil;
-            [self moveBookmark:historyBookmark toFolder:newFolder];
         }
+        
+        beginOfTheDay = [[historyBookmark.date getStartOfTheDay] convertDateFromGmtToLocal];
+        historyBookmark.delegateController = nil;
+        [self moveBookmark:historyBookmark toFolder:newFolder];
     }
+    
+    [pool release];
 }
 
 - (NSDictionary *)copyBookmarksToDictionaryFromBookmark:(BookmarkItem *)bookmark

@@ -11,10 +11,13 @@
 @interface NSDate (Extended)
 
 + (BOOL)date:(NSDate*)date isBetweenDate:(NSDate*)beginDate andDate:(NSDate*)endDate;
++ (NSDate *)localDate;
 
+- (NSDate *)getStartOfAnHour;
+- (NSDate *)getEndOfAnHour;
 - (NSDate *)getStartOfTheDay;
 - (NSDate *)getEndOfTheDay;
 - (NSDate *)convertDateToLocalTimeZoneFromTimeZone:(NSTimeZone *)sourceTimeZone;
-- (NSDate *)convertDateToLocalFromGMT;
+- (NSDate *)convertDateFromGmtToLocal;
 
 @end

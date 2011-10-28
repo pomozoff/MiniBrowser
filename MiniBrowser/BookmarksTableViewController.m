@@ -155,7 +155,7 @@
     BookmarkItem *newFolder = [[BookmarkItem alloc] initWithName:@""
                                                              url:nil
                                                             date:[NSDate date]
-                                                           folder:YES
+                                                          folder:YES
                                                        permanent:NO];
     
     bookmarkSaveTVC.title = @"Edit Folder";

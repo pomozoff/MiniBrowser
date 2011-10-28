@@ -265,7 +265,7 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
     BookmarkItem *newBookmark = [[BookmarkItem alloc] initWithName:self.urlLabel.text
                                                                url:self.urlField.text
                                                               date:[NSDate date]
-                                                             folder:NO
+                                                            folder:NO
                                                          permanent:NO];
     
     self.bookmarkSaveTableViewController.bookmark = newBookmark;
@@ -504,7 +504,7 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
     BookmarkItem *historyItem = [[BookmarkItem alloc] initWithName:label
                                                                url:sourceUrl
                                                               date:[NSDate date]
-                                                             folder:NO
+                                                            folder:NO
                                                          permanent:NO];
     
     if ([self.bookmarkNavigationController.topViewController conformsToProtocol:@protocol(BookmarkItemDelegate)]) {
