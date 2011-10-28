@@ -192,11 +192,10 @@
 
 - (void)viewDidUnload
 {
-    [self freeProperties];
-    
-    [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    [self freeProperties];
+    [super viewDidUnload];
 }
 
 - (void)viewWillAppear:(BOOL)animated

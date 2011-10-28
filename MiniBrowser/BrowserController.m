@@ -448,11 +448,10 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
 
 - (void)viewDidUnload
 {
-    [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-    
     [self freeProperties];
+    [super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
