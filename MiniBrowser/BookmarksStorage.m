@@ -414,6 +414,11 @@ NSString *const historyFolderName = @"History";
             }
         }
         
+        // It does not need to move anything
+        if (!newFolder) {
+            return;
+        }
+        
         beginOfTheDay = [[historyBookmark.date getStartOfTheDay] convertDateFromGmtToLocal];
         historyBookmark.delegateController = nil;
         [self moveBookmark:historyBookmark toFolder:newFolder];
