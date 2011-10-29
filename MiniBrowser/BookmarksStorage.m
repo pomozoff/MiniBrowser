@@ -40,7 +40,8 @@ NSString *const historyFolderName = @"History";
 {
     if (!_dateFormatter) {
         _dateFormatter = [[NSDateFormatter alloc] init];
-        _dateFormatter.dateFormat = @"EEEE, MMM d";
+//        _dateFormatter.dateFormat = @"EEEE, MMM d";
+        _dateFormatter.dateFormat = @"EEEE, MMM d HH:mm";
         _dateFormatter.timeZone = [NSTimeZone localTimeZone];
     }
     return _dateFormatter;
