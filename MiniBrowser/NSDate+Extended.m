@@ -94,4 +94,25 @@
     return enfOfAnHour;
 }
 
+- (NSDate *)getStartOfAMinute
+{
+    NSUInteger componentFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit;
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *dateComponents = [calendar components:componentFlags fromDate:self];
+    NSDate *beginOfAMinute = [calendar dateFromComponents:dateComponents];
+    
+    return beginOfAMinute;
+}
+
+- (NSDate *)getEndOfAMinute
+{
+    NSUInteger componentFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit;
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *dateComponents = [calendar components:componentFlags fromDate:self];
+    dateComponents.second = 59;
+    NSDate *enfOfAMinute = [calendar dateFromComponents:dateComponents];
+    
+    return enfOfAMinute;
+}
+
 @end

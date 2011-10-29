@@ -13,6 +13,8 @@
 + (BOOL)date:(NSDate*)date isBetweenDate:(NSDate*)beginDate andDate:(NSDate*)endDate;
 + (NSDate *)localDate;
 
+- (NSDate *)getEndOfAMinute;
+- (NSDate *)getStartOfAMinute;
 - (NSDate *)getStartOfAnHour;
 - (NSDate *)getEndOfAnHour;
 - (NSDate *)getStartOfTheDay;

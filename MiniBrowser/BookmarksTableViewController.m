@@ -107,6 +107,12 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
+    if ( [self.currentFolder isEqualToBookmark:self.bookmarksStorage.historyFolder] )
+    {
+        [self.bookmarksStorage arrangeHistoryContentByDate];
+        [self.tableView reloadData];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -189,14 +195,14 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSInteger numberOfRows = [self.bookmarksStorage bookmarksCountForParent:self.currentFolder];
-    
+/*
     if ( [self.currentFolder isEqualToBookmark:self.bookmarksStorage.historyFolder] && (self.lastNumberOfRows != numberOfRows) )
     {
         [self.bookmarksStorage arrangeHistoryContentByDate];
         [self.tableView reloadData];
         self.lastNumberOfRows = numberOfRows;
     }
-    
+*/    
     return numberOfRows;
 }
 
