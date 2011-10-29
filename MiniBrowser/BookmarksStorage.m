@@ -246,6 +246,7 @@ NSString *const historyFolderName = @"History";
             firstBookmark = [tmpContent objectAtIndex:0];
         }
         
+        // do not insert same bookmark twice
         if (firstBookmark && [bookmark isEqualToBookmark:firstBookmark]) {
             firstBookmark.date = bookmark.date;
         } else {
@@ -368,6 +369,33 @@ NSString *const historyFolderName = @"History";
 
 #pragma mark - arrange History folder by date
 
+- (void)moveHistorySubFolderToRightPlace:(BookmarkItem *)newSubFolder
+{
+    BookmarkItem *historySubFolder = nil;
+    NSInteger counter = 0;
+    for (counter = self.historyFolder.content.count; counter == 0; --counter) {
+        BookmarkItem *historyItem = [self.historyFolder.content objectAtIndex:counter];
+        
+        if (!historyItem.isFolder) {
+            break;
+        } else {
+            historySubFolder = historyItem;
+        }
+    }
+    
+    if (!historySubFolder && [self.historyFolder.content lastObject] != newSubFolder) {
+        return;
+    }
+    
+    NSMutableArray *tmpContent = [self.historyFolder.content mutableCopy];
+    
+    [tmpContent removeLastObject];
+    [tmpContent insertObject:newSubFolder atIndex:(counter - 1)];
+    self.historyFolder.content = tmpContent;
+    
+    [tmpContent release];
+}
+
 - (void)arrangeHistoryContentByDate
 {
     // if no bookmarks - go out
@@ -383,7 +411,8 @@ NSString *const historyFolderName = @"History";
     }
     
     BookmarkItem *newFolder = nil;
-    NSDate *beginOfTheDay = [[[NSDate date] getStartOfTheDay] convertDateFromGmtToLocal];
+//    NSDate *beginOfTheDay = [[[NSDate date] getStartOfTheDay] convertDateFromGmtToLocal];
+    NSDate *beginOfTheDay = [[[NSDate date] getStartOfAnHour] convertDateFromGmtToLocal];
     NSArray *localContent = [NSArray arrayWithArray:self.historyFolder.content];
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
@@ -401,7 +430,8 @@ NSString *const historyFolderName = @"History";
                                                [NSPredicate predicateWithFormat:@"(name == %@)", newFolderName]];
             
             if (foldersListNamedByDate.count == 0) {
-                NSDate *endOfBookmarksDate = [[historyBookmark.date getEndOfTheDay] convertDateFromGmtToLocal];
+//                NSDate *endOfBookmarksDate = [[historyBookmark.date getEndOfTheDay] convertDateFromGmtToLocal];
+                NSDate *endOfBookmarksDate = [[historyBookmark.date getEndOfAnHour] convertDateFromGmtToLocal];
                 newFolder = [[[BookmarkItem alloc] initWithName:newFolderName
                                                             url:@""
                                                            date:endOfBookmarksDate
@@ -409,6 +439,7 @@ NSString *const historyFolderName = @"History";
                                                       permanent:YES] autorelease];
                 
                 [self addBookmark:newFolder toFolder:self.historyFolder];
+                [self moveHistorySubFolderToRightPlace:newFolder];
             } else {
                 newFolder = [foldersListNamedByDate objectAtIndex:0];
             }
@@ -419,7 +450,8 @@ NSString *const historyFolderName = @"History";
             return;
         }
         
-        beginOfTheDay = [[historyBookmark.date getStartOfTheDay] convertDateFromGmtToLocal];
+//        beginOfTheDay = [[historyBookmark.date getStartOfTheDay] convertDateFromGmtToLocal];
+        beginOfTheDay = [[historyBookmark.date getStartOfAnHour] convertDateFromGmtToLocal];
         historyBookmark.delegateController = nil;
         [self moveBookmark:historyBookmark toFolder:newFolder];
     }
