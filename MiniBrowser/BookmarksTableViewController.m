@@ -89,10 +89,11 @@
 {
     [super viewDidLoad];
     
-    BOOL isHistoryFolder = [self.currentFolder isEqualToBookmark:self.bookmarksStorage.historyFolder];
+    BookmarkItem *currentFolderParent = [self.bookmarksStorage bookmarkById:self.currentFolder.parentId];
+    BOOL isInHistoryFolder = (self.currentFolder == self.bookmarksStorage.historyFolder) || (currentFolderParent == self.bookmarksStorage.historyFolder);
 
     self.title = self.currentFolder.name;
-    self.navigationItem.rightBarButtonItem = isHistoryFolder ? self.clearHistoryButton : self.editButtonItem;
+    self.navigationItem.rightBarButtonItem = isInHistoryFolder ? self.clearHistoryButton : self.editButtonItem;
     self.tableView.allowsSelectionDuringEditing = YES;
     
     if (!self.delegateController.isIPad) {
@@ -207,7 +208,7 @@
 
 - (void)clearHistoryFolderPressed:(UIBarButtonItem *)sender
 {
-    [self.bookmarksStorage clearFolder:self.bookmarksStorage.historyFolder];
+    [self.bookmarksStorage clearFolder:self.currentFolder];
     [self.tableView reloadData];
 }
 
