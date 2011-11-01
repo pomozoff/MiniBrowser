@@ -177,7 +177,7 @@
 
 - (void)closeBookmarksPressed:(UIBarButtonItem *)sender
 {
-    
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)newFolderPressed:(UIBarButtonItem *)sender

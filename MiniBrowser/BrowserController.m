@@ -613,7 +613,7 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     if (!self.isIPad) {
-//        [self.navigationController setToolbarHidden:viewController == self animated:YES];
+        [self.navigationController setToolbarHidden:viewController == self animated:YES];
         if (navigationController == self.navigationController) {
             self.navigationController.navigationBarHidden = viewController == self;
         }
