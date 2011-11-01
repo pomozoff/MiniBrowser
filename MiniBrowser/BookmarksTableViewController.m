@@ -13,6 +13,7 @@
 
 @property (nonatomic, retain) UIBarButtonItem *clearHistoryButton;
 @property (nonatomic) NSInteger lastNumberOfRows;
+@property (nonatomic, retain) NSDateFormatter *dateFormatter;
 
 @end
 
@@ -20,6 +21,7 @@
 
 @synthesize clearHistoryButton = _clearHistoryButton;
 @synthesize lastNumberOfRows = _lastNumberOfRows;
+@synthesize dateFormatter = _dateFormatter;
 
 @synthesize delegateController = _delegateController;
 @synthesize bookmarksStorage = _bookmarksStorage;
@@ -45,6 +47,16 @@
     }
     
     return _currentFolder;
+}
+
+- (NSDateFormatter *)dateFormatter
+{
+    if (!_dateFormatter) {
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        _dateFormatter.dateFormat = @"HH:mm";
+        _dateFormatter.timeZone = [NSTimeZone localTimeZone];
+    }
+    return _dateFormatter;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -82,6 +94,16 @@
     self.title = self.currentFolder.name;
     self.navigationItem.rightBarButtonItem = isHistoryFolder ? self.clearHistoryButton : self.editButtonItem;
     self.tableView.allowsSelectionDuringEditing = YES;
+    
+    if (!self.delegateController.isIPad) {
+        UIBarButtonItem *closeBookmarksButton = [[UIBarButtonItem alloc] initWithTitle:@"Close"
+                                                                                 style:UIBarButtonItemStyleDone
+                                                                                target:self
+                                                                                action:@selector(closeBookmarksPressed:)];
+        
+        self.toolbarItems = [NSArray arrayWithObject:closeBookmarksButton];
+        [closeBookmarksButton release];
+    }
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -153,6 +175,11 @@
     }
 }
 
+- (void)closeBookmarksPressed:(UIBarButtonItem *)sender
+{
+    
+}
+
 - (void)newFolderPressed:(UIBarButtonItem *)sender
 {
     BookmarkSaveTableViewController *bookmarkSaveTVC = [[BookmarkSaveTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
@@ -216,9 +243,13 @@
     }
     
     BookmarkItem *currentBookmark = [self.bookmarksStorage bookmarkAtIndex:indexPath forParent:self.currentFolder];
+    NSString *bookmarkTime = [self.dateFormatter stringFromDate:currentBookmark.date];
+    BookmarkItem *currentFolderParent = [self.bookmarksStorage bookmarkById:self.currentFolder.parentId];
+    BOOL isInHistoryFolder = (self.currentFolder == self.bookmarksStorage.historyFolder) || (currentFolderParent == self.bookmarksStorage.historyFolder);
 
     cell.textLabel.text = currentBookmark.name;
-    cell.detailTextLabel.text = currentBookmark.url;
+    cell.detailTextLabel.text = (!currentBookmark.isFolder && isInHistoryFolder) ? [NSString stringWithFormat:@"%@ at %@", currentBookmark.url, bookmarkTime] : @"";
+    cell.detailTextLabel.lineBreakMode = UILineBreakModeMiddleTruncation;
     cell.accessoryType = currentBookmark.isFolder ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
     cell.editingAccessoryType = currentBookmark.isPermanent ? UITableViewCellAccessoryNone : UITableViewCellAccessoryDisclosureIndicator;
 

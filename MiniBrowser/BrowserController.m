@@ -608,12 +608,15 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
     self.bookmarkSaveTableViewController = nil;
 }
 
-# pragma mark - Popover delegate
+# pragma mark - navigation controller delegate
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    if (navigationController == self.navigationController && !self.isIPad) {
-        self.navigationController.navigationBarHidden = viewController == self;
+    if (!self.isIPad) {
+//        [self.navigationController setToolbarHidden:viewController == self animated:YES];
+        if (navigationController == self.navigationController) {
+            self.navigationController.navigationBarHidden = viewController == self;
+        }
     }
 }
 
