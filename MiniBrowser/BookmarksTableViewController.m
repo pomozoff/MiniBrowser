@@ -117,6 +117,7 @@
 {
     self.bookmarksStorage = nil;
     self.currentFolder = nil;
+    self.dateFormatter = nil;
 }
 
 - (void)viewDidUnload
