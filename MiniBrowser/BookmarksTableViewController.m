@@ -250,7 +250,8 @@
     BOOL isInHistoryFolder = (self.currentFolder == self.bookmarksStorage.historyFolder) || (currentFolderParent == self.bookmarksStorage.historyFolder);
 
     cell.textLabel.text = currentBookmark.name;
-    cell.detailTextLabel.text = (!currentBookmark.isFolder && isInHistoryFolder) ? [NSString stringWithFormat:@"%@ at %@", currentBookmark.url, bookmarkTime] : @"";
+    cell.detailTextLabel.text = (!currentBookmark.isFolder && isInHistoryFolder) ?
+                                [NSString stringWithFormat:@"%@ at %@", currentBookmark.url, bookmarkTime] : currentBookmark.url;
     cell.detailTextLabel.lineBreakMode = UILineBreakModeMiddleTruncation;
     cell.accessoryType = currentBookmark.isFolder ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
     cell.editingAccessoryType = currentBookmark.isPermanent ? UITableViewCellAccessoryNone : UITableViewCellAccessoryDisclosureIndicator;
