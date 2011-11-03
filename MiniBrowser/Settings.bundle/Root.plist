@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Values</key>
+			<array>
+				<string>Google</string>
+				<string>Yahoo</string>
+			</array>
+			<key>Titles</key>
+			<array>
+				<string>Google</string>
+				<string>Yahoo</string>
+			</array>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Search Engine</string>
+			<key>Key</key>
+			<string>setting_search_engine</string>
+			<key>DefaultValue</key>
+			<string>Google</string>
+		</dict>
+	</array>
+	<key>StringsTable</key>
+	<string>Root</string>
+</dict>
+</plist>

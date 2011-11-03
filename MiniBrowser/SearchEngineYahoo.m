@@ -10,15 +10,15 @@
 
 @implementation SearchEngineYahoo
 
-@synthesize placeholder = _placeholder;
+@synthesize name = _name;
 
-- (NSString *)placeholder
+- (NSString *)name
 {
-    if (!_placeholder) {
-        _placeholder = @"Yahoo";
+    if (!_name) {
+        _name = @"Yahoo";
     }
     
-    return _placeholder;
+    return _name;
 }
 
 - (NSURL *)searchUrlForText:(NSString *)text

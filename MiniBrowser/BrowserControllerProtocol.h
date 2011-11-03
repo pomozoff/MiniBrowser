@@ -14,7 +14,6 @@
 @property (nonatomic, assign) BOOL isIPad;
 
 - (void)closePopupsAndLoadUrl:(NSString *)url;
-- (void)saveBookmarks;
 - (void)dismissPopoverAndCleanUp;
 
 @end

@@ -10,15 +10,15 @@
 
 @implementation SearchEngineGoogle
 
-@synthesize placeholder = _placeholder;
+@synthesize name = _name;
 
-- (NSString *)placeholder
+- (NSString *)name
 {
-    if (!_placeholder) {
-        _placeholder = @"Google";
+    if (!_name) {
+        _name = @"Google";
     }
     
-    return _placeholder;
+    return _name;
 }
 
 - (NSURL *)searchUrlForText:(NSString *)text

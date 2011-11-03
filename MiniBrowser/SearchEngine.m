@@ -10,8 +10,8 @@
 
 @implementation SearchEngine
 
+@synthesize name = _name;
 @synthesize searchUrl = _searchUrl;
-@synthesize placeholder = _placeholder;
 
 - (id)init
 {
@@ -30,6 +30,11 @@
 
 - (void)dealloc
 {
+    if (_name) {
+        [_name release];
+        _name = nil;
+    }
+    
     self.searchUrl = nil;
     
     [super dealloc];

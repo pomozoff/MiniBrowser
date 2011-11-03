@@ -23,8 +23,54 @@
     return _browserController;
 }
 
+- (void)registerDefaultsFromSettingsBundle
+{
+    NSLog(@"Registering default values from Settings.bundle");
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults synchronize];
+    
+    NSString *settingsBundle = [[NSBundle mainBundle] pathForResource:@"Settings" ofType:@"bundle"];
+    
+    if(!settingsBundle)
+    {
+        NSLog(@"Could not find Settings.bundle");
+        return;
+    }
+    
+    NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:[settingsBundle stringByAppendingPathComponent:@"Root.plist"]];
+    NSArray *preferences = [settings objectForKey:@"PreferenceSpecifiers"];
+    NSMutableDictionary *defaultsToRegister = [[NSMutableDictionary alloc] initWithCapacity:[preferences count]];
+    
+    for (NSDictionary *prefSpecification in preferences)
+    {
+        NSString *key = [prefSpecification objectForKey:@"Key"];
+        if (key)
+        {
+            // check if value readable in userDefaults
+            id currentObject = [defaults objectForKey:key];
+            if (currentObject == nil)
+            {
+                // not readable: set value from Settings.bundle
+                id objectToSet = [prefSpecification objectForKey:@"DefaultValue"];
+                [defaultsToRegister setObject:objectToSet forKey:key];
+                NSLog(@"Setting object %@ for key %@", objectToSet, key);
+            }
+            else
+            {
+                // already readable: don't touch
+                NSLog(@"Key %@ is readable (value: %@), nothing written to defaults.", key, currentObject);
+            }
+        }
+    }
+    
+    [defaults registerDefaults:defaultsToRegister];
+    [defaultsToRegister release];
+    [defaults synchronize];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [self registerDefaultsFromSettingsBundle];
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -43,8 +89,6 @@
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
-    
-    [self.browserController saveBookmarks];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -68,8 +112,6 @@
      Save data if appropriate.
      See also applicationDidEnterBackground:.
      */
-    
-//    [self.browserController saveBookmarks];
 }
 
 - (void)dealloc

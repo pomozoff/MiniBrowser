@@ -10,8 +10,8 @@
 
 @protocol SearchEngineProtocol <NSObject>
 
+@property (nonatomic, readonly) NSString *name;
 @property (nonatomic, copy) NSString *searchUrl;
-@property (nonatomic, readonly) NSString *placeholder;
 
 - (NSURL *)searchUrlForText:(NSString *)text;
 

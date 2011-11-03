@@ -193,6 +193,14 @@ NSString *const historyFolderName = @"History";
     NSString *mainBundlePath = [[NSBundle mainBundle] bundlePath];
     self = [self initWithPathToBundle:mainBundlePath];
     
+    if (self) {
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self
+                   selector:@selector(saveSettings)
+                       name:UIApplicationWillResignActiveNotification
+                     object:nil];
+    }
+    
     return self;
 }
 
@@ -480,7 +488,7 @@ NSString *const historyFolderName = @"History";
     return result;
 }
 
-- (void)saveBookmarks
+- (void)saveSettings
 {
     NSDictionary *bookmarks = [self copyBookmarksToDictionaryFromBookmark:self.rootFolder];
     
@@ -506,7 +514,12 @@ NSString *const historyFolderName = @"History";
     self.bookmarksList = nil;
     self.dateFormatter = nil;
     self.pathToBundle = nil;
-    
+
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center removeObserver:self 
+                      name:UIApplicationWillResignActiveNotification 
+                    object:nil];
+
     [super dealloc];
 }
 

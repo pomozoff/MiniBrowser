@@ -8,7 +8,6 @@
 
 #import "BrowserController.h"
 #import "SettingsController.h"
-#import "SearchEngine.h"
 #import "BookmarksTableViewController.h"
 #import "BookmarksStorageProtocol.h"
 #import "BookmarkSaveTableViewController.h"
@@ -17,7 +16,6 @@
 @interface BrowserController()
 
 @property (nonatomic, retain) SettingsController *settingsController;
-@property (nonatomic, retain) SearchEngine *searchEngine;
 @property (nonatomic, retain) BookmarksTableViewController *bookmarksTableViewController;
 @property (nonatomic, retain) BookmarkSaveTableViewController *bookmarkSaveTableViewController;
 @property (nonatomic, retain) id <BookmarksStorageProtocol> bookmarksStorage;
@@ -44,7 +42,6 @@
 @synthesize webView = _webView;
 
 @synthesize settingsController = _settingsController;
-@synthesize searchEngine = _searchEngine;
 @synthesize bookmarksTableViewController = _bookmarksTableViewController;
 @synthesize bookmarkSaveTableViewController = _bookmarkSaveTableViewController;
 @synthesize bookmarksStorage = _bookmarksStorage;
@@ -63,15 +60,6 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
     }
     
     return _settingsController;
-}
-
-- (SearchEngine *)searchEngine
-{
-    if (!_searchEngine) {
-        _searchEngine = [[self.settingsController currentSearchEngine] retain];
-    }
-    
-    return _searchEngine;
 }
 
 - (id <BookmarksStorageProtocol>)bookmarksStorage
@@ -136,19 +124,13 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
     return self;
 }
 
-- (void)saveCurrentPage
+- (void)saveSettings
 {
     if (self.urlField.text) {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults setObject:self.urlField.text forKey:savedUrlKey];
         [defaults synchronize];
     }
-}
-
-- (void)saveBookmarks
-{
-    [self saveCurrentPage];
-    [self.bookmarksStorage saveBookmarks];
 }
 
 - (void)didReceiveMemoryWarning
@@ -363,7 +345,6 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
     self.webView = nil;
     
     self.settingsController = nil;
-    self.searchEngine = nil;
     self.bookmarksTableViewController = nil;
     self.bookmarkSaveTableViewController = nil;
     self.bookmarksStorage = nil;
@@ -433,9 +414,24 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
     [super viewDidLoad];
 
     [self setButtonsStatus];
-    self.searchBar.placeholder = self.searchEngine.placeholder;
     
     [self restoreOpenedUrl];
+
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(saveSettings)
+                   name:UIApplicationWillResignActiveNotification
+                 object:nil];
+    
+    [center addObserver:self
+               selector:@selector(loadSettings)
+                   name:UIApplicationWillEnterForegroundNotification
+                 object:nil];
+}
+
+- (void)loadSettings
+{
+    self.searchBar.placeholder = self.settingsController.currentSearchEngine.name;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -444,6 +440,8 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
     
     CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     self.view.frame = CGRectOffset(self.view.frame, 0, statusBarHeight);
+    
+    [self loadSettings];
 }
 
 - (void)viewDidUnload
@@ -451,6 +449,16 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
     [self freeProperties];
+    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center removeObserver:self 
+                      name:UIApplicationWillResignActiveNotification 
+                    object:nil];
+    
+    [center removeObserver:self 
+                      name:UIApplicationWillEnterForegroundNotification
+                    object:nil];
+    
     [super viewDidUnload];
 }
 
@@ -557,7 +565,7 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
 {
     userInitiatedJump = YES;
     
-    NSURL *searchUrl = [self.searchEngine searchUrlForText:text];
+    NSURL *searchUrl = [self.settingsController.currentSearchEngine searchUrlForText:text];
     [self.webView loadRequest:[NSURLRequest requestWithURL:searchUrl]];
 }
 

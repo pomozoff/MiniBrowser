@@ -56,6 +56,7 @@
         _dateFormatter.dateFormat = @"HH:mm";
         _dateFormatter.timeZone = [NSTimeZone localTimeZone];
     }
+    
     return _dateFormatter;
 }
 
@@ -115,9 +116,11 @@
 
 - (void)freeProperties
 {
+    self.clearHistoryButton = nil;
+    self.dateFormatter = nil;
+    self.delegateController = nil;
     self.bookmarksStorage = nil;
     self.currentFolder = nil;
-    self.dateFormatter = nil;
 }
 
 - (void)viewDidUnload
@@ -125,6 +128,7 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
     [self freeProperties];
+
     [super viewDidUnload];
 }
 
@@ -151,6 +155,10 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
+    if (self.editing) {
+        self.editing = NO;
+    }
+    
     [super viewDidDisappear:animated];
 }
 

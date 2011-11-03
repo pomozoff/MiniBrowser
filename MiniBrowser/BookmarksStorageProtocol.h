@@ -34,6 +34,4 @@
 
 - (NSArray *)bookmarkFoldersWithoutBranch:(BookmarkItem *)branchBookmark;
 
-- (void)saveBookmarks;
-
 @end
