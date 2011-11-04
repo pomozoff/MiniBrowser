@@ -133,8 +133,27 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
     }
 }
 
+- (void)loadSettings
+{
+    self.searchBar.placeholder = self.settingsController.currentSearchEngine.name;
+}
+
+- (void)cleanCache
+{
+    self.settingsController = nil;
+    self.bookmarksTableViewController = nil;
+    self.bookmarkSaveTableViewController = nil;
+    self.bookmarksStorage = nil;
+    self.popoverBookmark = nil;
+    self.popoverAction = nil;
+    self.actionSheet = nil;
+    self.bookmarkNavigationController = nil;
+}
+
 - (void)didReceiveMemoryWarning
 {
+    [self saveSettings];
+    [self cleanCache];
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
     
@@ -334,6 +353,8 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
 
 - (void)freeProperties
 {
+    [self cleanCache];
+    
     self.navigationBar = nil;
     self.navigationToolbar = nil;
     self.searchBar = nil;
@@ -343,14 +364,6 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
     self.urlField = nil;
     self.urlLabel = nil;
     self.webView = nil;
-    
-    self.settingsController = nil;
-    self.bookmarksTableViewController = nil;
-    self.bookmarkSaveTableViewController = nil;
-    self.bookmarksStorage = nil;
-    self.popoverBookmark = nil;
-    self.actionSheet = nil;
-    self.bookmarkNavigationController = nil;
 }
 
 #pragma mark - View lifecycle
@@ -429,11 +442,6 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
                  object:nil];
 }
 
-- (void)loadSettings
-{
-    self.searchBar.placeholder = self.settingsController.currentSearchEngine.name;
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -468,7 +476,7 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
     return YES;
 }
 
-# pragma mark - web view cnotroller delegate
+# pragma mark - web view controller delegate
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
@@ -514,8 +522,9 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
                                                             folder:NO
                                                          permanent:NO];
     
-    if ([self.bookmarkNavigationController.topViewController conformsToProtocol:@protocol(BookmarkItemDelegate)]) {
-        historyItem.delegateController = (id <BookmarkItemDelegate>)self.bookmarkNavigationController.topViewController;
+    UIViewController *topViewController = self.bookmarkNavigationController.topViewController;
+    if ([topViewController conformsToProtocol:@protocol(BookmarkItemDelegate)]) {
+        historyItem.delegateController = (id <BookmarkItemDelegate>)topViewController;
     }
     
     [self.bookmarksStorage addBookmark:historyItem toFolder:self.bookmarksStorage.historyFolder];
@@ -598,15 +607,14 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
         if ([topViewController isKindOfClass:[UITableViewController class]]) {
             ((UITableViewController *)topViewController).editing = NO;
         }
-        
     } else if (popoverController == self.popoverAction) {
+        self.actionSheet = nil;
         self.popoverAction = nil;
         self.bookmarkSaveTableViewController = nil;
-        self.actionSheet = nil;
     }
 }
 
-- (void)dismissPopoverAndCleanUp
+- (void)dismissPopoverActionAndCleanUp
 {
     if ([self.popoverAction isPopoverVisible]) {
         [self.popoverAction dismissPopoverAnimated:YES];
@@ -621,9 +629,10 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     if (!self.isIPad) {
-        [self.navigationController setToolbarHidden:viewController == self animated:YES];
+        BOOL hideElements = viewController == self;
+        [self.navigationController setToolbarHidden:hideElements animated:YES];
         if (navigationController == self.navigationController) {
-            self.navigationController.navigationBarHidden = viewController == self;
+            self.navigationController.navigationBarHidden = hideElements;
         }
     }
 }

@@ -22,12 +22,6 @@
 @synthesize saveTableViewController = _saveTableViewController;
 @synthesize treeList = _treeList;
 
-- (void)setBookmarkParent:(BookmarkItem *)newParent
-{
-    [_bookmarkParent release];
-    [_bookmarkParent = newParent retain];
-}
-
 - (NSArray *)treeList
 {
     if (!_treeList) {
@@ -35,6 +29,13 @@
     }
     
     return _treeList;
+}
+
+- (void)setBookmarkParent:(BookmarkItem *)newParent
+{
+    [_bookmarkParent release];
+    _bookmarkParent = newParent;
+    [_bookmarkParent retain];
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -206,6 +207,12 @@
     [self.saveTableViewController moveBookmarkToFolder:bookmarkFolder];
     
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)dealloc
+{
+    [self freeProperties];
+    [super dealloc];
 }
 
 @end

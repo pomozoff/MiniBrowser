@@ -30,15 +30,6 @@
 @synthesize delegateBrowserController = _delegateBrowserController;
 @synthesize currentFolder = _currentFolder;
 
-- (BookmarkSaveModel *)bookmarkSaveModel
-{
-    if (!_bookmarkSaveModel) {
-        _bookmarkSaveModel = [[BookmarkSaveModel alloc] init];
-    }
-    
-    return _bookmarkSaveModel;
-}
-
 - (BookmarkItem *)bookmark
 {
     if (!_bookmark) {
@@ -48,13 +39,13 @@
     return _bookmark;
 }
 
-- (BookmarkItem *)currentFolder
+- (BookmarkSaveModel *)bookmarkSaveModel
 {
-    if (!_currentFolder) {
-        _currentFolder = [self.bookmarksStorage.rootFolder retain];
+    if (!_bookmarkSaveModel) {
+        _bookmarkSaveModel = [[BookmarkSaveModel alloc] init];
     }
     
-    return _currentFolder;
+    return _bookmarkSaveModel;
 }
 
 #define CELL_FIELD_TOP_MARGIN 1.0f
@@ -114,6 +105,15 @@
     }
     
     return _urlField;
+}
+
+- (BookmarkItem *)currentFolder
+{
+    if (!_currentFolder) {
+        _currentFolder = [self.bookmarksStorage.rootFolder retain];
+    }
+    
+    return _currentFolder;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -178,16 +178,15 @@
 
 - (void)freeProperties
 {
-    self.bookmarkSaveModel = nil;
     self.bookmark = nil;
     self.bookmarksStorage = nil;
     
+    self.bookmarkSaveModel = nil;
     self.nameField = nil;
     self.urlField = nil;
-    self.currentFolder = nil;
-    
     self.tableViewParent = nil;
     self.delegateBrowserController = nil;
+    self.currentFolder = nil;
 }
 
 - (void)viewDidUnload
@@ -230,7 +229,7 @@
 - (void)finishBookmarkSaving
 {
     [self.navigationController popViewControllerAnimated:YES];
-    [self.delegateBrowserController dismissPopoverAndCleanUp];
+    [self.delegateBrowserController dismissPopoverActionAndCleanUp];
 
     [self freeProperties];
 }
@@ -407,6 +406,12 @@
     NSIndexPath *folderIndexPath = [NSIndexPath indexPathForRow:0 inSection:1];
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:folderIndexPath]
                           withRowAnimation:UITableViewRowAnimationRight];
+}
+
+- (void)dealloc
+{
+    [self freeProperties];
+    [super dealloc];
 }
 
 @end

@@ -39,16 +39,6 @@
     return _clearHistoryButton;
 }
 
-- (BookmarkItem *)currentFolder
-{
-    if (!_currentFolder) {
-        _currentFolder = [self.bookmarksStorage.rootFolder retain];
-        _currentFolder.delegateController = self;
-    }
-    
-    return _currentFolder;
-}
-
 - (NSDateFormatter *)dateFormatter
 {
     if (!_dateFormatter) {
@@ -58,6 +48,16 @@
     }
     
     return _dateFormatter;
+}
+
+- (BookmarkItem *)currentFolder
+{
+    if (!_currentFolder) {
+        _currentFolder = [self.bookmarksStorage.rootFolder retain];
+        _currentFolder.delegateController = self;
+    }
+    
+    return _currentFolder;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -127,8 +127,6 @@
 {
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-    [self freeProperties];
-
     [super viewDidUnload];
 }
 
@@ -158,6 +156,7 @@
     if (self.editing) {
         self.editing = NO;
     }
+//    self.dateFormatter = nil;
     
     [super viewDidDisappear:animated];
 }
@@ -232,14 +231,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSInteger numberOfRows = [self.bookmarksStorage bookmarksCountForParent:self.currentFolder];
-/*
-    if ( [self.currentFolder isEqualToBookmark:self.bookmarksStorage.historyFolder] && (self.lastNumberOfRows != numberOfRows) )
-    {
-        [self.bookmarksStorage arrangeHistoryContentByDate];
-        [self.tableView reloadData];
-        self.lastNumberOfRows = numberOfRows;
-    }
-*/    
     return numberOfRows;
 }
 
@@ -375,6 +366,12 @@
     if (bookmarkFolder && [self.currentFolder isEqualToBookmark:bookmarkFolder]) {
         [self.tableView reloadData];
     }
+}
+
+- (void)dealloc
+{
+    [self freeProperties];
+    [super dealloc];
 }
 
 @end
