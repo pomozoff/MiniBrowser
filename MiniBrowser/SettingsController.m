@@ -18,15 +18,6 @@ NSString *const settingSearchEngine = @"setting_search_engine";
 
 - (SearchEngine *)currentSearchEngine
 {
-    /*
-    if (_currentSearchEngine) {
-        if (![searchEngine isEqualToString:self.currentSearchEngine.name]) {
-            [_currentSearchEngine release];
-            _currentSearchEngine = nil;
-        }
-    }
-    */
-    
     if (!_currentSearchEngine) {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults synchronize];

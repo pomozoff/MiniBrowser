@@ -135,6 +135,7 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
 
 - (void)loadSettings
 {
+    self.settingsController.currentSearchEngine = nil;
     self.searchBar.placeholder = self.settingsController.currentSearchEngine.name;
 }
 
