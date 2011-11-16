@@ -106,12 +106,12 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<reference key="IBUIToolbar" ref="186746870"/>
 							</object>
-							<object class="IBUIBarButtonItem" id="309147302">
+							<object class="IBUIBarButtonItem" id="37721182">
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<reference key="IBUIToolbar" ref="186746870"/>
 								<int key="IBUISystemItemIdentifier">5</int>
 							</object>
-							<object class="IBUIBarButtonItem" id="111318642">
+							<object class="IBUIBarButtonItem" id="151529664">
 								<object class="NSCustomResource" key="IBUIImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">newtab.png</string>
@@ -478,6 +478,14 @@
 					<int key="connectionID">120</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">tabsButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="151529664"/>
+					</object>
+					<int key="connectionID">126</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">backPressed:</string>
 						<reference key="source" ref="487248367"/>
@@ -535,11 +543,11 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">bookmarkPressed:</string>
-						<reference key="source" ref="111318642"/>
+						<string key="label">tabsPressed:</string>
+						<reference key="source" ref="151529664"/>
 						<reference key="destination" ref="372490531"/>
 					</object>
-					<int key="connectionID">124</int>
+					<int key="connectionID">125</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -589,8 +597,8 @@
 							<reference ref="597224746"/>
 							<reference ref="556530575"/>
 							<reference ref="323744777"/>
-							<reference ref="309147302"/>
-							<reference ref="111318642"/>
+							<reference ref="37721182"/>
+							<reference ref="151529664"/>
 						</object>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -734,12 +742,12 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">122</int>
-						<reference key="object" ref="309147302"/>
+						<reference key="object" ref="37721182"/>
 						<reference key="parent" ref="186746870"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">123</int>
-						<reference key="object" ref="111318642"/>
+						<reference key="object" ref="151529664"/>
 						<reference key="parent" ref="186746870"/>
 					</object>
 				</object>
@@ -825,7 +833,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">124</int>
+			<int key="maxID">126</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -844,6 +852,7 @@
 							<string>navigationBar</string>
 							<string>navigationToolbar</string>
 							<string>searchBar</string>
+							<string>tabsButton</string>
 							<string>urlField</string>
 							<string>urlLabel</string>
 							<string>webView</string>
@@ -857,6 +866,7 @@
 							<string>UINavigationBar</string>
 							<string>UIToolbar</string>
 							<string>UISearchBar</string>
+							<string>UIBarButtonItem</string>
 							<string>UITextField</string>
 							<string>UILabel</string>
 							<string>UIWebView</string>
@@ -873,6 +883,7 @@
 							<string>navigationBar</string>
 							<string>navigationToolbar</string>
 							<string>searchBar</string>
+							<string>tabsButton</string>
 							<string>urlField</string>
 							<string>urlLabel</string>
 							<string>webView</string>
@@ -906,6 +917,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">searchBar</string>
 								<string key="candidateClassName">UISearchBar</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">tabsButton</string>
+								<string key="candidateClassName">UIBarButtonItem</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">urlField</string>
@@ -952,7 +967,7 @@
 				<string>{30, 30}</string>
 				<string>{26, 26}</string>
 				<string>{26, 26}</string>
-				<string>{48, 48}</string>
+				<string>{32, 32}</string>
 			</object>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">933</string>

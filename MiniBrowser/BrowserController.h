@@ -24,6 +24,7 @@
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *forwardButton;
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *bookmarkButton;
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *actionButton;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *tabsButton;
 @property (nonatomic, retain) IBOutlet UITextField *urlField;
 @property (nonatomic, retain) IBOutlet UILabel *urlLabel;
 @property (nonatomic, retain) IBOutlet UIWebView *webView;

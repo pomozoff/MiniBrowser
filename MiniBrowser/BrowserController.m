@@ -37,6 +37,7 @@
 @synthesize forwardButton = _forwardButton;
 @synthesize bookmarkButton = _bookmarkButton;
 @synthesize actionButton = _actionButton;
+@synthesize tabsButton = _tabsButton;
 @synthesize urlField = _urlField;
 @synthesize urlLabel = _urlLabel;
 @synthesize webView = _webView;
@@ -337,6 +338,10 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
     [self.actionSheet showFromBarButtonItem:sender animated:YES];
 }
 
+- (IBAction)tabsPressed:(id)sender
+{
+}
+
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (actionSheet == self.actionSheet) {
@@ -362,6 +367,8 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
     self.backButton = nil;
     self.forwardButton = nil;
     self.bookmarkButton = nil;
+    self.actionButton = nil;
+    self.tabsButton = nil;
     self.urlField = nil;
     self.urlLabel = nil;
     self.webView = nil;
