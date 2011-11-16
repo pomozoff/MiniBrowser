@@ -338,8 +338,17 @@ NSString *const savedUrlKey = @"savedCurrentUrl";
     [self.actionSheet showFromBarButtonItem:sender animated:YES];
 }
 
+#define MARGIN_X_SIZE 70.0f
+#define TOP_MARGIN_SIZE 100.0f
+#define BOTTOM_MARGIN_SIZE 100.0f
 - (IBAction)tabsPressed:(id)sender
 {
+    CGRect oldFrame = self.webView.frame;
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3];
+    self.webView.frame = CGRectMake(MARGIN_X_SIZE, TOP_MARGIN_SIZE, oldFrame.size.width - MARGIN_X_SIZE * 2, oldFrame.size.height - BOTTOM_MARGIN_SIZE);
+    [UIView commitAnimations];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
