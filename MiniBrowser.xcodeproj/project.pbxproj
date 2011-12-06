@@ -92,21 +92,14 @@
 		26A268B1148E0E5C0087E147 /* SearchEngineYahoo.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268AA148E0E5C0087E147 /* SearchEngineYahoo.m */; };
 		26A268B2148E0E5C0087E147 /* SearchEngineYahoo.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268AA148E0E5C0087E147 /* SearchEngineYahoo.m */; };
 		26A268B3148E0E5C0087E147 /* SearchEngineYahoo.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268AA148E0E5C0087E147 /* SearchEngineYahoo.m */; };
-		26A268B9148E0EC30087E147 /* MiniBrowser-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26A268B4148E0EC30087E147 /* MiniBrowser-Info.plist */; };
-		26A268BA148E0EC30087E147 /* MiniBrowser-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26A268B4148E0EC30087E147 /* MiniBrowser-Info.plist */; };
-		26A268BB148E0EC30087E147 /* MiniBrowser-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26A268B4148E0EC30087E147 /* MiniBrowser-Info.plist */; };
-		26A268BC148E0EC30087E147 /* MiniBrowser3G-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26A268B5148E0EC30087E147 /* MiniBrowser3G-Info.plist */; };
-		26A268BD148E0EC30087E147 /* MiniBrowser3G-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26A268B5148E0EC30087E147 /* MiniBrowser3G-Info.plist */; };
-		26A268BE148E0EC30087E147 /* MiniBrowser3G-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26A268B5148E0EC30087E147 /* MiniBrowser3G-Info.plist */; };
-		26A268BF148E0EC30087E147 /* MiniBrowserOriginal-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26A268B6148E0EC30087E147 /* MiniBrowserOriginal-Info.plist */; };
-		26A268C0148E0EC30087E147 /* MiniBrowserOriginal-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26A268B6148E0EC30087E147 /* MiniBrowserOriginal-Info.plist */; };
-		26A268C1148E0EC30087E147 /* MiniBrowserOriginal-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26A268B6148E0EC30087E147 /* MiniBrowserOriginal-Info.plist */; };
-		26A268C2148E0EC30087E147 /* NSDate+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268B8148E0EC30087E147 /* NSDate+Extended.m */; };
-		26A268C3148E0EC30087E147 /* NSDate+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268B8148E0EC30087E147 /* NSDate+Extended.m */; };
-		26A268C4148E0EC30087E147 /* NSDate+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268B8148E0EC30087E147 /* NSDate+Extended.m */; };
-		26A268C7148E0EF30087E147 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268C6148E0EF30087E147 /* main.m */; };
-		26A268C8148E0EF30087E147 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268C6148E0EF30087E147 /* main.m */; };
-		26A268C9148E0EF30087E147 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268C6148E0EF30087E147 /* main.m */; };
+		26A268CA148E0FE40087E147 /* BookmarksStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2687D148E0E0A0087E147 /* BookmarksStorage.m */; };
+		26A268CB148E0FF00087E147 /* BookmarkItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A26874148E0E0A0087E147 /* BookmarkItem.m */; };
+		26A268D3148E10B40087E147 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268CC148E10B40087E147 /* main.m */; };
+		26A268D4148E10B40087E147 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268CC148E10B40087E147 /* main.m */; };
+		26A268D5148E10B40087E147 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268CC148E10B40087E147 /* main.m */; };
+		26A268DF148E10B40087E147 /* NSDate+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268D2148E10B40087E147 /* NSDate+Extended.m */; };
+		26A268E0148E10B40087E147 /* NSDate+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268D2148E10B40087E147 /* NSDate+Extended.m */; };
+		26A268E1148E10B40087E147 /* NSDate+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268D2148E10B40087E147 /* NSDate+Extended.m */; };
 		26AF9D4D144EF9F100CBBF20 /* BookmarkTreePermanent.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26AF9D48144EF22500CBBF20 /* BookmarkTreePermanent.plist */; };
 		26C8CF8A145881A400536C9B /* MiniBrowserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67B8143CCE8D0025F929 /* MiniBrowserAppDelegate.m */; };
 		26C8CF8B145881A400536C9B /* MiniBrowserAppDelegate_iPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67BC143CCE8D0025F929 /* MiniBrowserAppDelegate_iPhone.m */; };
@@ -223,13 +216,13 @@
 		26A268A8148E0E5C0087E147 /* SearchEngineProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchEngineProtocol.h; path = SearchEngine/SearchEngineProtocol.h; sourceTree = "<group>"; };
 		26A268A9148E0E5C0087E147 /* SearchEngineYahoo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchEngineYahoo.h; path = SearchEngine/SearchEngineYahoo.h; sourceTree = "<group>"; };
 		26A268AA148E0E5C0087E147 /* SearchEngineYahoo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchEngineYahoo.m; path = SearchEngine/SearchEngineYahoo.m; sourceTree = "<group>"; };
-		26A268B4148E0EC30087E147 /* MiniBrowser-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "MiniBrowser-Info.plist"; path = "Supporting Files/MiniBrowser-Info.plist"; sourceTree = "<group>"; };
-		26A268B5148E0EC30087E147 /* MiniBrowser3G-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "MiniBrowser3G-Info.plist"; path = "Supporting Files/MiniBrowser3G-Info.plist"; sourceTree = "<group>"; };
-		26A268B6148E0EC30087E147 /* MiniBrowserOriginal-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "MiniBrowserOriginal-Info.plist"; path = "Supporting Files/MiniBrowserOriginal-Info.plist"; sourceTree = "<group>"; };
-		26A268B7148E0EC30087E147 /* NSDate+Extended.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+Extended.h"; path = "Supporting Files/NSDate+Extended.h"; sourceTree = "<group>"; };
-		26A268B8148E0EC30087E147 /* NSDate+Extended.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+Extended.m"; path = "Supporting Files/NSDate+Extended.m"; sourceTree = "<group>"; };
-		26A268C5148E0EDC0087E147 /* MiniBrowser-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MiniBrowser-Prefix.pch"; path = "Supporting Files/MiniBrowser-Prefix.pch"; sourceTree = "<group>"; };
-		26A268C6148E0EF30087E147 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "Supporting Files/main.m"; sourceTree = "<group>"; };
+		26A268CC148E10B40087E147 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		26A268CD148E10B40087E147 /* MiniBrowser-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MiniBrowser-Info.plist"; sourceTree = "<group>"; };
+		26A268CE148E10B40087E147 /* MiniBrowser-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MiniBrowser-Prefix.pch"; sourceTree = "<group>"; };
+		26A268CF148E10B40087E147 /* MiniBrowser3G-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MiniBrowser3G-Info.plist"; sourceTree = "<group>"; };
+		26A268D0148E10B40087E147 /* MiniBrowserOriginal-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MiniBrowserOriginal-Info.plist"; sourceTree = "<group>"; };
+		26A268D1148E10B40087E147 /* NSDate+Extended.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extended.h"; sourceTree = "<group>"; };
+		26A268D2148E10B40087E147 /* NSDate+Extended.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extended.m"; sourceTree = "<group>"; };
 		26AF9D48144EF22500CBBF20 /* BookmarkTreePermanent.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BookmarkTreePermanent.plist; sourceTree = "<group>"; };
 		26C8CFB4145881A400536C9B /* MiniBrowser3G.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MiniBrowser3G.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26DB365A144EB3D6001C4CBC /* action.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = action.png; sourceTree = "<group>"; };
@@ -363,14 +356,14 @@
 		266D67AF143CCE8D0025F929 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				26A268B4148E0EC30087E147 /* MiniBrowser-Info.plist */,
-				26A268B5148E0EC30087E147 /* MiniBrowser3G-Info.plist */,
-				26A268B6148E0EC30087E147 /* MiniBrowserOriginal-Info.plist */,
-				26A268B7148E0EC30087E147 /* NSDate+Extended.h */,
-				26A268B8148E0EC30087E147 /* NSDate+Extended.m */,
+				26A268CC148E10B40087E147 /* main.m */,
+				26A268CD148E10B40087E147 /* MiniBrowser-Info.plist */,
+				26A268CE148E10B40087E147 /* MiniBrowser-Prefix.pch */,
+				26A268CF148E10B40087E147 /* MiniBrowser3G-Info.plist */,
+				26A268D0148E10B40087E147 /* MiniBrowserOriginal-Info.plist */,
+				26A268D1148E10B40087E147 /* NSDate+Extended.h */,
+				26A268D2148E10B40087E147 /* NSDate+Extended.m */,
 				266D67B1143CCE8D0025F929 /* InfoPlist.strings */,
-				26A268C6148E0EF30087E147 /* main.m */,
-				26A268C5148E0EDC0087E147 /* MiniBrowser-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -596,9 +589,6 @@
 				26A2688D148E0E0A0087E147 /* BookmarkSaveTable.plist in Resources */,
 				26A26899148E0E0A0087E147 /* BookmarkTreePermanent.plist in Resources */,
 				26A268A0148E0E2A0087E147 /* Settings.bundle in Resources */,
-				26A268BB148E0EC30087E147 /* MiniBrowser-Info.plist in Resources */,
-				26A268BE148E0EC30087E147 /* MiniBrowser3G-Info.plist in Resources */,
-				26A268C1148E0EC30087E147 /* MiniBrowserOriginal-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -626,9 +616,6 @@
 				26A2688B148E0E0A0087E147 /* BookmarkSaveTable.plist in Resources */,
 				26A26897148E0E0A0087E147 /* BookmarkTreePermanent.plist in Resources */,
 				26A2689E148E0E2A0087E147 /* Settings.bundle in Resources */,
-				26A268B9148E0EC30087E147 /* MiniBrowser-Info.plist in Resources */,
-				26A268BC148E0EC30087E147 /* MiniBrowser3G-Info.plist in Resources */,
-				26A268BF148E0EC30087E147 /* MiniBrowserOriginal-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -656,9 +643,6 @@
 				26A2688C148E0E0A0087E147 /* BookmarkSaveTable.plist in Resources */,
 				26A26898148E0E0A0087E147 /* BookmarkTreePermanent.plist in Resources */,
 				26A2689F148E0E2A0087E147 /* Settings.bundle in Resources */,
-				26A268BA148E0EC30087E147 /* MiniBrowser-Info.plist in Resources */,
-				26A268BD148E0EC30087E147 /* MiniBrowser3G-Info.plist in Resources */,
-				26A268C0148E0EC30087E147 /* MiniBrowserOriginal-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -709,8 +693,8 @@
 				26A268AD148E0E5C0087E147 /* SearchEngine.m in Sources */,
 				26A268B0148E0E5C0087E147 /* SearchEngineGoogle.m in Sources */,
 				26A268B3148E0E5C0087E147 /* SearchEngineYahoo.m in Sources */,
-				26A268C4148E0EC30087E147 /* NSDate+Extended.m in Sources */,
-				26A268C9148E0EF30087E147 /* main.m in Sources */,
+				26A268D5148E10B40087E147 /* main.m in Sources */,
+				26A268E1148E10B40087E147 /* NSDate+Extended.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -732,8 +716,8 @@
 				26A268AB148E0E5C0087E147 /* SearchEngine.m in Sources */,
 				26A268AE148E0E5C0087E147 /* SearchEngineGoogle.m in Sources */,
 				26A268B1148E0E5C0087E147 /* SearchEngineYahoo.m in Sources */,
-				26A268C2148E0EC30087E147 /* NSDate+Extended.m in Sources */,
-				26A268C7148E0EF30087E147 /* main.m in Sources */,
+				26A268D3148E10B40087E147 /* main.m in Sources */,
+				26A268DF148E10B40087E147 /* NSDate+Extended.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -755,8 +739,8 @@
 				26A268AC148E0E5C0087E147 /* SearchEngine.m in Sources */,
 				26A268AF148E0E5C0087E147 /* SearchEngineGoogle.m in Sources */,
 				26A268B2148E0E5C0087E147 /* SearchEngineYahoo.m in Sources */,
-				26A268C3148E0EC30087E147 /* NSDate+Extended.m in Sources */,
-				26A268C8148E0EF30087E147 /* main.m in Sources */,
+				26A268D4148E10B40087E147 /* main.m in Sources */,
+				26A268E0148E10B40087E147 /* NSDate+Extended.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -764,6 +748,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26A268CB148E0FF00087E147 /* BookmarkItem.m in Sources */,
+				26A268CA148E0FE40087E147 /* BookmarksStorage.m in Sources */,
 				265F359E145978A700EC85B7 /* UnitTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
