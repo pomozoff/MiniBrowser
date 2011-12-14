@@ -46,9 +46,10 @@
 
 @implementation PhoneTabPageScrollView
 
+@synthesize userHeaderView = _userHeaderView;
+
 @synthesize pageDeckBackgroundView = _pageDeckBackgroundView;
 @synthesize pageHeaderView = _pageHeaderView;
-@synthesize userHeaderView = _userHeaderView;
 
 @synthesize pageDeckTitleLabel = _pageDeckTitleLabel;
 @synthesize pageDeckSubtitleLabel = _pageDeckSubtitleLabel;
@@ -58,6 +59,9 @@
 
 @synthesize pageControl = _pageControl;
 @synthesize pageControlTouch = _pageControlTouch;
+
+@synthesize closeButton = _closeButton;
+@synthesize closeButtonTouch = _closeButtonTouch;
 
 @synthesize numberOfPages = _numberOfPages;
 @synthesize numberOfFreshPages = _numberOfFreshPages;
@@ -136,6 +140,7 @@
 	self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight; 
 	self.pageControlTouch.receiver = self.pageControl;
 	self.scrollViewTouch.receiver = self.scrollView;
+    self.closeButtonTouch.receiver = self.closeButton;
 	
 	// setup pageSelector
 	[self.pageControl addTarget:self action:@selector(didChangePageValue:) forControlEvents:UIControlEventValueChanged];
@@ -164,6 +169,9 @@
     
     self.pageControl = nil;
     self.pageControlTouch = nil;
+    
+    self.closeButton = nil;
+    self.closeButtonTouch = nil;
 }
 
 - (void)dealloc
@@ -175,6 +183,7 @@
     self.reusablePages = nil;
 
     self.selectedPage = nil;
+    self.closeButton = nil;
 
     self.indexesBeforeVisibleRange = nil;
     self.indexesWithinVisibleRange = nil;
@@ -299,6 +308,7 @@
     CGRect identityFrame = self.selectedPage.identityFrame;
     CGRect pageFrame = self.selectedPage.frame;
     [self.selectedPage removeFromSuperview];
+    [self.closeButton removeFromSuperview];
     [self.visiblePages removeObject:self.selectedPage];
     self.selectedPage = [self loadPageAtIndex:selectedPageScrollIndex insertIntoVisibleIndex:visibleIndex];
     self.selectedPage.identityFrame = identityFrame;
@@ -384,10 +394,16 @@
 		
 		// reveal the page header view
 		headerView.alpha = 1.0;
+        
+        // remove close button
+        [self.scrollView bringSubviewToFront:self.closeButton];
+        self.closeButton.alpha = 0.0f;
+        self.closeButton.transform = CGAffineTransformMakeTranslation(-50, -30);
 		
 		//remove unnecessary views
 		[self.scrollViewTouch removeFromSuperview];
 		[self.pageControlTouch removeFromSuperview];
+		[self.closeButtonTouch removeFromSuperview];
 	} : ^{
         [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
         
@@ -401,6 +417,7 @@
 		
         // add the page back to the scrollView and transform it
         [self.scrollView addSubview:self.selectedPage];
+        
 		self.selectedPage.transform = CGAffineTransformMakeScale(0.6, 0.6);	
  		CGRect frame = self.selectedPage.frame;
         frame.origin.y = 0;
@@ -408,6 +425,13 @@
         
         // hide the page header view
         headerView.alpha = 0.0;	
+        
+        // add close button
+        //CGSize closeButtonSize = self.closeButton.frame.size;
+        //self.closeButton.frame = CGRectMake(0, 0, closeButtonSize.width, closeButtonSize.height);
+        [self.scrollView addSubview:self.closeButton];
+        self.closeButton.alpha = 1.0f;
+        self.closeButton.transform = CGAffineTransformMakeTranslation(15, 0);
         
         // notify the delegate
 		if ([self.delegate respondsToSelector:@selector(pageScrollView:willDeselectPageAtIndex:)]) {
@@ -426,13 +450,17 @@
 		self.pageControl.hidden = YES;
 		self.scrollView.scrollEnabled = NO;
 		self.selectedPage.alpha = 1.0;
+
 		// copy self.selectedPage up in the view hierarchy, to allow touch events on its entire frame 
 		self.selectedPage.frame = CGRectMake(0, headerView.frame.size.height, self.frame.size.width, self.selectedPage.frame.size.height);
 		[self addSubview:self.selectedPage];
+
 		// notify delegate
 		if ([self.delegate respondsToSelector:@selector(pageScrollView:didSelectPageAtIndex:)]) {
 			[self.delegate pageScrollView:self didSelectPageAtIndex:selectedIndex];
-		}		
+		}
+        
+        [self.closeButton removeFromSuperview];
 	} : ^(BOOL finished){
         [[UIApplication sharedApplication] endIgnoringInteractionEvents];
         
@@ -440,6 +468,8 @@
 		//self.scrollView.frame = CGRectMake(0, self.scrollViewTouch.frame.origin.y, self.frame.size.width, self.scrollViewTouch.frame.size.height);
 		[self addSubview:self.scrollViewTouch];
 		[self addSubview: self.pageControlTouch];
+		[self addSubview: self.closeButtonTouch];
+        
 		if ([self.delegate respondsToSelector:@selector(pageScrollView:didDeselectPageAtIndex:)]) {
 			[self.delegate pageScrollView:self didDeselectPageAtIndex:selectedIndex];
 		}		
@@ -1129,7 +1159,7 @@
 
 - (void)handleTapGestureFrom:(UITapGestureRecognizer *)recognizer 
 {
-    if(!self.selectedPage)
+    if (!self.selectedPage)
         return;
     
 	NSInteger selectedIndex = [self indexForSelectedPage];

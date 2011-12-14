@@ -13,9 +13,10 @@
 
 @interface PhoneTabPageScrollView : TabPageScrollView
 
+@property (nonatomic, retain) UIView *userHeaderView;
+
 @property (nonatomic, retain) IBOutlet UIView *pageDeckBackgroundView;
 @property (nonatomic, retain) IBOutlet UIView *pageHeaderView;
-@property (nonatomic, retain) UIView *userHeaderView;
 
 @property (nonatomic, retain) IBOutlet UILabel *pageDeckTitleLabel;
 @property (nonatomic, retain) IBOutlet UILabel *pageDeckSubtitleLabel;
@@ -25,5 +26,8 @@
 
 @property (nonatomic, retain) IBOutlet UIPageControl *pageControl;
 @property (nonatomic, retain) IBOutlet TabTouchView  *pageControlTouch;
+
+@property (nonatomic, retain) IBOutlet UIButton *closeButton;
+@property (nonatomic, retain) IBOutlet TabTouchView *closeButtonTouch;
 
 @end

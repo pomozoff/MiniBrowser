@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		260D68B01441B6C700093012 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 260D68AF1441B6C700093012 /* plus.png */; };
+		261C43C31498FC2B008655EF /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 261C43C21498FC2B008655EF /* close.png */; };
+		261C43C41498FC2B008655EF /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 261C43C21498FC2B008655EF /* close.png */; };
+		261C43C51498FC2B008655EF /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 261C43C21498FC2B008655EF /* close.png */; };
 		2626A2B314939C30002FD652 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2626A2B214939C30002FD652 /* QuartzCore.framework */; };
 		2626A2B414939C39002FD652 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2626A2B214939C30002FD652 /* QuartzCore.framework */; };
 		2626A2B514939C40002FD652 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2626A2B214939C30002FD652 /* QuartzCore.framework */; };
@@ -189,6 +192,7 @@
 
 /* Begin PBXFileReference section */
 		260D68AF1441B6C700093012 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
+		261C43C21498FC2B008655EF /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
 		2626A2B214939C30002FD652 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2643BECF14606FC00018673B /* MiniBrowserOriginal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MiniBrowserOriginal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		265072D11498D2290065CD03 /* iPhoneTabPageScrollView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = iPhoneTabPageScrollView.xib; path = Tabs/iPhone/iPhoneTabPageScrollView.xib; sourceTree = "<group>"; };
@@ -344,6 +348,7 @@
 				26FE56BC1443269D001622F2 /* bookmark-iPad.png */,
 				26FE56BE144326FB001622F2 /* bookmark-iPhone.png */,
 				26FDCADB1473C48600744D07 /* newtab.png */,
+				261C43C21498FC2B008655EF /* close.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -677,6 +682,7 @@
 				26A268A0148E0E2A0087E147 /* Settings.bundle in Resources */,
 				267E136A1495E1E100F319B8 /* iPhonePageView.xib in Resources */,
 				265072D41498D2290065CD03 /* iPhoneTabPageScrollView.xib in Resources */,
+				261C43C51498FC2B008655EF /* close.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -706,6 +712,7 @@
 				26A2689E148E0E2A0087E147 /* Settings.bundle in Resources */,
 				267E13681495E1E100F319B8 /* iPhonePageView.xib in Resources */,
 				265072D21498D2290065CD03 /* iPhoneTabPageScrollView.xib in Resources */,
+				261C43C31498FC2B008655EF /* close.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -735,6 +742,7 @@
 				26A2689F148E0E2A0087E147 /* Settings.bundle in Resources */,
 				267E13691495E1E100F319B8 /* iPhonePageView.xib in Resources */,
 				265072D31498D2290065CD03 /* iPhoneTabPageScrollView.xib in Resources */,
+				261C43C41498FC2B008655EF /* close.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

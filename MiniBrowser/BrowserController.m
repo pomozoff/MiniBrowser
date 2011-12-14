@@ -285,6 +285,31 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     }
 }
 
+- (IBAction)closeTabPressed:(id)sender
+{
+    TabPageScrollView *pageScrollView = [[self.view subviews] lastObject];
+    
+    // create an index set of the pages we wish to delete
+    // example 1: deleting the page at the current index
+    self.indexesToDelete = [[NSMutableIndexSet alloc] initWithIndex:[pageScrollView indexForSelectedPage]];
+    
+    // example 2: deleting the last 2 pages from the page scroller
+    //NSRange range; range.location = self.tabPageDataArray.count - 2; range.length = 2;
+    //self.indexesToDelete = [[NSMutableIndexSet alloc] initWithIndexesInRange:range];
+    
+    // example 3: deleting the first 2 pages from the page scroller
+    //NSRange range; range.location = 0; range.length = 2;
+    //self.indexesToDelete = [[NSMutableIndexSet alloc] initWithIndexesInRange:range];
+    
+    // we can only delete pages in DECK mode
+    if (pageScrollView.viewMode == TabPageScrollViewModePage) {
+        [pageScrollView deselectPageAnimated:YES];
+    } else {
+        [self removePagesAtIndexSet:self.indexesToDelete];
+        self.indexesToDelete = nil;
+    }
+}
+
 // ******************************************************************************************************************************
 
 #pragma mark - toolbar Actions
@@ -310,31 +335,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     [pageScrollView insertPagesAtIndexes:indexSet animated:YES];
 }
 
-- (IBAction)didClickRemovePage:(id)sender
-{
-    TabPageScrollView *pageScrollView = [[self.view subviews] lastObject];
-    
-    // create an index set of the pages we wish to delete
-    // example 1: deleting the page at the current index
-    self.indexesToDelete = [[NSMutableIndexSet alloc] initWithIndex:[pageScrollView indexForSelectedPage]];
-    
-    // example 2: deleting the last 2 pages from the page scroller
-    //NSRange range; range.location = self.tabPageDataArray.count - 2; range.length = 2;
-    //self.indexesToDelete = [[NSMutableIndexSet alloc] initWithIndexesInRange:range];
-    
-    // example 3: deleting the first 2 pages from the page scroller
-    //NSRange range; range.location = 0; range.length = 2;
-    //self.indexesToDelete = [[NSMutableIndexSet alloc] initWithIndexesInRange:range];
-    
-    // we can only delete pages in DECK mode
-    if (pageScrollView.viewMode == TabPageScrollViewModePage) {
-        [pageScrollView deselectPageAnimated:YES];
-    } else {
-        [self removePagesAtIndexSet:self.indexesToDelete];
-        self.indexesToDelete = nil;
-    }
-}
-
 - (void)removePagesAtIndexSet:(NSIndexSet *)indexSet
 {
     TabPageScrollView *pageScrollView = [[self.view subviews] lastObject];
@@ -346,22 +346,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     [pageScrollView deletePagesAtIndexes:indexSet animated:YES];
     
     self.addTabButton.enabled = YES;
-}
-
-- (IBAction)didClickEditPage:(id)sender
-{
-    TabPageScrollView *pageScrollView = [[self.view subviews] lastObject];
-    
-    NSInteger selectedIndex = [pageScrollView indexForSelectedPage];
-    TabPageData *pageData = [self.tabPageDataArray objectAtIndex:selectedIndex]; 
-    if (!pageData.navController) {
-        PhonePageView *page = (PhonePageView *)[pageScrollView pageAtIndex:selectedIndex];
-        UITextField *textField = (UITextField *)[page viewWithTag:4];
-        textField.hidden = NO;
-        textField.text = pageData.title;
-        textField.delegate = self;
-        [textField becomeFirstResponder];
-    }
 }
 
 // ******************************************************************************************************************************
