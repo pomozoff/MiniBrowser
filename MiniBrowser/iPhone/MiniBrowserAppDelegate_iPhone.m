@@ -43,6 +43,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.browserController.isIPad = NO;
+    self.browserController.xibNameScrollView = @"iPhoneTabPageScrollView";
     [self.navigationController pushViewController:self.browserController animated:NO];
     [self.window addSubview:self.navigationController.view];
 

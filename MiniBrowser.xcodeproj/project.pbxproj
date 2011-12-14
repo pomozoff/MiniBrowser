@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		260D68B01441B6C700093012 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 260D68AF1441B6C700093012 /* plus.png */; };
+		2626A2B314939C30002FD652 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2626A2B214939C30002FD652 /* QuartzCore.framework */; };
+		2626A2B414939C39002FD652 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2626A2B214939C30002FD652 /* QuartzCore.framework */; };
+		2626A2B514939C40002FD652 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2626A2B214939C30002FD652 /* QuartzCore.framework */; };
 		2643BEA514606FC00018673B /* MiniBrowserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67B8143CCE8D0025F929 /* MiniBrowserAppDelegate.m */; };
 		2643BEA614606FC00018673B /* MiniBrowserAppDelegate_iPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67BC143CCE8D0025F929 /* MiniBrowserAppDelegate_iPhone.m */; };
 		2643BEA714606FC00018673B /* MiniBrowserAppDelegate_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67C3143CCE8D0025F929 /* MiniBrowserAppDelegate_iPad.m */; };
@@ -47,6 +50,12 @@
 		266D67C4143CCE8D0025F929 /* MiniBrowserAppDelegate_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67C3143CCE8D0025F929 /* MiniBrowserAppDelegate_iPad.m */; };
 		266D67C7143CCE8E0025F929 /* MainWindow_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 266D67C5143CCE8E0025F929 /* MainWindow_iPad.xib */; };
 		266D67CF143CCF720025F929 /* BrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67CE143CCF720025F929 /* BrowserController.m */; };
+		267E13651495E1E100F319B8 /* PhonePageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 267E13631495E1E100F319B8 /* PhonePageView.m */; };
+		267E13661495E1E100F319B8 /* PhonePageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 267E13631495E1E100F319B8 /* PhonePageView.m */; };
+		267E13671495E1E100F319B8 /* PhonePageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 267E13631495E1E100F319B8 /* PhonePageView.m */; };
+		267E13681495E1E100F319B8 /* iPhonePageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267E13641495E1E100F319B8 /* iPhonePageView.xib */; };
+		267E13691495E1E100F319B8 /* iPhonePageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267E13641495E1E100F319B8 /* iPhonePageView.xib */; };
+		267E136A1495E1E100F319B8 /* iPhonePageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267E13641495E1E100F319B8 /* iPhonePageView.xib */; };
 		26A26869148E0DC30087E147 /* iPhoneBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26A26868148E0DC30087E147 /* iPhoneBrowserView.xib */; };
 		26A2686A148E0DC30087E147 /* iPhoneBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26A26868148E0DC30087E147 /* iPhoneBrowserView.xib */; };
 		26A2686B148E0DC30087E147 /* iPhoneBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26A26868148E0DC30087E147 /* iPhoneBrowserView.xib */; };
@@ -100,6 +109,24 @@
 		26A268DF148E10B40087E147 /* NSDate+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268D2148E10B40087E147 /* NSDate+Extended.m */; };
 		26A268E0148E10B40087E147 /* NSDate+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268D2148E10B40087E147 /* NSDate+Extended.m */; };
 		26A268E1148E10B40087E147 /* NSDate+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268D2148E10B40087E147 /* NSDate+Extended.m */; };
+		26A268ED148E12A80087E147 /* TabPageData.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268EC148E12A80087E147 /* TabPageData.m */; };
+		26A268EE148E12A80087E147 /* TabPageData.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268EC148E12A80087E147 /* TabPageData.m */; };
+		26A268EF148E12A80087E147 /* TabPageData.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268EC148E12A80087E147 /* TabPageData.m */; };
+		26A268F3148E12E50087E147 /* TabPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268F2148E12E50087E147 /* TabPageView.m */; };
+		26A268F4148E12E50087E147 /* TabPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268F2148E12E50087E147 /* TabPageView.m */; };
+		26A268F5148E12E50087E147 /* TabPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268F2148E12E50087E147 /* TabPageView.m */; };
+		26A26918148E3C1E0087E147 /* TabPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A26917148E3C1E0087E147 /* TabPageScrollView.m */; };
+		26A26919148E3C1E0087E147 /* TabPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A26917148E3C1E0087E147 /* TabPageScrollView.m */; };
+		26A2691A148E3C1E0087E147 /* TabPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A26917148E3C1E0087E147 /* TabPageScrollView.m */; };
+		26A26928148F5C1A0087E147 /* TabTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A26927148F5C1A0087E147 /* TabTouchView.m */; };
+		26A26929148F5C1A0087E147 /* TabTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A26927148F5C1A0087E147 /* TabTouchView.m */; };
+		26A2692A148F5C1A0087E147 /* TabTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A26927148F5C1A0087E147 /* TabTouchView.m */; };
+		26A26930148F5F8C0087E147 /* PhoneTabPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2692F148F5F8C0087E147 /* PhoneTabPageScrollView.m */; };
+		26A26931148F5F8C0087E147 /* PhoneTabPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2692F148F5F8C0087E147 /* PhoneTabPageScrollView.m */; };
+		26A26932148F5F8C0087E147 /* PhoneTabPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2692F148F5F8C0087E147 /* PhoneTabPageScrollView.m */; };
+		26A2693C148F638F0087E147 /* iPhoneTabPageScrollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26A2693B148F638E0087E147 /* iPhoneTabPageScrollView.xib */; };
+		26A2693D148F638F0087E147 /* iPhoneTabPageScrollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26A2693B148F638E0087E147 /* iPhoneTabPageScrollView.xib */; };
+		26A2693E148F638F0087E147 /* iPhoneTabPageScrollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26A2693B148F638E0087E147 /* iPhoneTabPageScrollView.xib */; };
 		26AF9D4D144EF9F100CBBF20 /* BookmarkTreePermanent.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26AF9D48144EF22500CBBF20 /* BookmarkTreePermanent.plist */; };
 		26C8CF8A145881A400536C9B /* MiniBrowserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67B8143CCE8D0025F929 /* MiniBrowserAppDelegate.m */; };
 		26C8CF8B145881A400536C9B /* MiniBrowserAppDelegate_iPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67BC143CCE8D0025F929 /* MiniBrowserAppDelegate_iPhone.m */; };
@@ -162,6 +189,7 @@
 
 /* Begin PBXFileReference section */
 		260D68AF1441B6C700093012 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
+		2626A2B214939C30002FD652 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2643BECF14606FC00018673B /* MiniBrowserOriginal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MiniBrowserOriginal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		265CCEBA143D85B9005F348A /* arrowBackGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowBackGray.png; sourceTree = "<group>"; };
 		265CCEBB143D85B9005F348A /* arrowBackLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowBackLight.png; sourceTree = "<group>"; };
@@ -186,6 +214,10 @@
 		266D67C6143CCE8E0025F929 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = iPad/en.lproj/MainWindow_iPad.xib; sourceTree = "<group>"; };
 		266D67CD143CCF720025F929 /* BrowserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserController.h; sourceTree = "<group>"; };
 		266D67CE143CCF720025F929 /* BrowserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserController.m; sourceTree = "<group>"; };
+		267E13611495E10200F319B8 /* PageHeaderInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageHeaderInfo.h; sourceTree = "<group>"; };
+		267E13621495E1E100F319B8 /* PhonePageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhonePageView.h; path = Tabs/iPhone/PhonePageView.h; sourceTree = "<group>"; };
+		267E13631495E1E100F319B8 /* PhonePageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhonePageView.m; path = Tabs/iPhone/PhonePageView.m; sourceTree = "<group>"; };
+		267E13641495E1E100F319B8 /* iPhonePageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = iPhonePageView.xib; path = Tabs/iPhone/iPhonePageView.xib; sourceTree = "<group>"; };
 		26A26868148E0DC30087E147 /* iPhoneBrowserView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = iPhoneBrowserView.xib; path = iPhone/iPhoneBrowserView.xib; sourceTree = "<group>"; };
 		26A2686D148E0DDE0087E147 /* iPadBrowserView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = iPadBrowserView.xib; path = iPad/iPadBrowserView.xib; sourceTree = "<group>"; };
 		26A26871148E0E0A0087E147 /* BookmarkFolderTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BookmarkFolderTableViewController.h; path = Bookmark/BookmarkFolderTableViewController.h; sourceTree = "<group>"; };
@@ -223,6 +255,17 @@
 		26A268D0148E10B40087E147 /* MiniBrowserOriginal-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MiniBrowserOriginal-Info.plist"; sourceTree = "<group>"; };
 		26A268D1148E10B40087E147 /* NSDate+Extended.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extended.h"; sourceTree = "<group>"; };
 		26A268D2148E10B40087E147 /* NSDate+Extended.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extended.m"; sourceTree = "<group>"; };
+		26A268EB148E12A80087E147 /* TabPageData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TabPageData.h; path = Tabs/TabPageData.h; sourceTree = "<group>"; };
+		26A268EC148E12A80087E147 /* TabPageData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TabPageData.m; path = Tabs/TabPageData.m; sourceTree = "<group>"; };
+		26A268F1148E12E50087E147 /* TabPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TabPageView.h; path = Tabs/TabPageView.h; sourceTree = "<group>"; };
+		26A268F2148E12E50087E147 /* TabPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TabPageView.m; path = Tabs/TabPageView.m; sourceTree = "<group>"; };
+		26A26916148E3C1E0087E147 /* TabPageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TabPageScrollView.h; path = Tabs/TabPageScrollView.h; sourceTree = "<group>"; };
+		26A26917148E3C1E0087E147 /* TabPageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TabPageScrollView.m; path = Tabs/TabPageScrollView.m; sourceTree = "<group>"; };
+		26A26926148F5C1A0087E147 /* TabTouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TabTouchView.h; path = Tabs/TabTouchView.h; sourceTree = "<group>"; };
+		26A26927148F5C1A0087E147 /* TabTouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TabTouchView.m; path = Tabs/TabTouchView.m; sourceTree = "<group>"; };
+		26A2692E148F5F8C0087E147 /* PhoneTabPageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhoneTabPageScrollView.h; path = Tabs/iPhone/PhoneTabPageScrollView.h; sourceTree = "<group>"; };
+		26A2692F148F5F8C0087E147 /* PhoneTabPageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhoneTabPageScrollView.m; path = Tabs/iPhone/PhoneTabPageScrollView.m; sourceTree = "<group>"; };
+		26A2693B148F638E0087E147 /* iPhoneTabPageScrollView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = iPhoneTabPageScrollView.xib; sourceTree = "<group>"; };
 		26AF9D48144EF22500CBBF20 /* BookmarkTreePermanent.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BookmarkTreePermanent.plist; sourceTree = "<group>"; };
 		26C8CFB4145881A400536C9B /* MiniBrowser3G.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MiniBrowser3G.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26DB365A144EB3D6001C4CBC /* action.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = action.png; sourceTree = "<group>"; };
@@ -243,6 +286,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2626A2B514939C40002FD652 /* QuartzCore.framework in Frameworks */,
 				2643BEB514606FC00018673B /* UIKit.framework in Frameworks */,
 				2643BEB614606FC00018673B /* Foundation.framework in Frameworks */,
 				2643BEB714606FC00018673B /* CoreGraphics.framework in Frameworks */,
@@ -253,6 +297,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2626A2B314939C30002FD652 /* QuartzCore.framework in Frameworks */,
 				266D67A9143CCE8D0025F929 /* UIKit.framework in Frameworks */,
 				266D67AB143CCE8D0025F929 /* Foundation.framework in Frameworks */,
 				266D67AD143CCE8D0025F929 /* CoreGraphics.framework in Frameworks */,
@@ -263,6 +308,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2626A2B414939C39002FD652 /* QuartzCore.framework in Frameworks */,
 				26C8CF9A145881A400536C9B /* UIKit.framework in Frameworks */,
 				26C8CF9B145881A400536C9B /* Foundation.framework in Frameworks */,
 				26C8CF9C145881A400536C9B /* CoreGraphics.framework in Frameworks */,
@@ -326,6 +372,7 @@
 		266D67A7143CCE8D0025F929 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2626A2B214939C30002FD652 /* QuartzCore.framework */,
 				266D67A8143CCE8D0025F929 /* UIKit.framework */,
 				266D67AA143CCE8D0025F929 /* Foundation.framework */,
 				266D67AC143CCE8D0025F929 /* CoreGraphics.framework */,
@@ -344,6 +391,7 @@
 				266102DC1445A2F0000730FA /* BrowserControllerProtocol.h */,
 				266D67CD143CCF720025F929 /* BrowserController.h */,
 				266D67CE143CCF720025F929 /* BrowserController.m */,
+				26A268F0148E12AF0087E147 /* Tabs */,
 				26C083AF144820D70056B37A /* Bookmark */,
 				26C083AE144820C50056B37A /* Settings */,
 				26C083AD1448209F0056B37A /* SearchEngine */,
@@ -386,6 +434,44 @@
 				266D67C3143CCE8D0025F929 /* MiniBrowserAppDelegate_iPad.m */,
 				266D67C5143CCE8E0025F929 /* MainWindow_iPad.xib */,
 				26A2686D148E0DDE0087E147 /* iPadBrowserView.xib */,
+			);
+			name = iPad;
+			sourceTree = "<group>";
+		};
+		26A268F0148E12AF0087E147 /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				26A2692D148F5F370087E147 /* iPad */,
+				26A2692C148F5F2F0087E147 /* iPhone */,
+				26A26916148E3C1E0087E147 /* TabPageScrollView.h */,
+				26A26917148E3C1E0087E147 /* TabPageScrollView.m */,
+				26A268EB148E12A80087E147 /* TabPageData.h */,
+				26A268EC148E12A80087E147 /* TabPageData.m */,
+				26A268F1148E12E50087E147 /* TabPageView.h */,
+				26A268F2148E12E50087E147 /* TabPageView.m */,
+				26A26926148F5C1A0087E147 /* TabTouchView.h */,
+				26A26927148F5C1A0087E147 /* TabTouchView.m */,
+				267E13611495E10200F319B8 /* PageHeaderInfo.h */,
+			);
+			name = Tabs;
+			sourceTree = "<group>";
+		};
+		26A2692C148F5F2F0087E147 /* iPhone */ = {
+			isa = PBXGroup;
+			children = (
+				267E13621495E1E100F319B8 /* PhonePageView.h */,
+				267E13631495E1E100F319B8 /* PhonePageView.m */,
+				267E13641495E1E100F319B8 /* iPhonePageView.xib */,
+				26A2692E148F5F8C0087E147 /* PhoneTabPageScrollView.h */,
+				26A2692F148F5F8C0087E147 /* PhoneTabPageScrollView.m */,
+				26A2693B148F638E0087E147 /* iPhoneTabPageScrollView.xib */,
+			);
+			name = iPhone;
+			sourceTree = "<group>";
+		};
+		26A2692D148F5F370087E147 /* iPad */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			name = iPad;
 			sourceTree = "<group>";
@@ -589,6 +675,8 @@
 				26A2688D148E0E0A0087E147 /* BookmarkSaveTable.plist in Resources */,
 				26A26899148E0E0A0087E147 /* BookmarkTreePermanent.plist in Resources */,
 				26A268A0148E0E2A0087E147 /* Settings.bundle in Resources */,
+				26A2693E148F638F0087E147 /* iPhoneTabPageScrollView.xib in Resources */,
+				267E136A1495E1E100F319B8 /* iPhonePageView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -616,6 +704,8 @@
 				26A2688B148E0E0A0087E147 /* BookmarkSaveTable.plist in Resources */,
 				26A26897148E0E0A0087E147 /* BookmarkTreePermanent.plist in Resources */,
 				26A2689E148E0E2A0087E147 /* Settings.bundle in Resources */,
+				26A2693C148F638F0087E147 /* iPhoneTabPageScrollView.xib in Resources */,
+				267E13681495E1E100F319B8 /* iPhonePageView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -643,6 +733,8 @@
 				26A2688C148E0E0A0087E147 /* BookmarkSaveTable.plist in Resources */,
 				26A26898148E0E0A0087E147 /* BookmarkTreePermanent.plist in Resources */,
 				26A2689F148E0E2A0087E147 /* Settings.bundle in Resources */,
+				26A2693D148F638F0087E147 /* iPhoneTabPageScrollView.xib in Resources */,
+				267E13691495E1E100F319B8 /* iPhonePageView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -695,6 +787,12 @@
 				26A268B3148E0E5C0087E147 /* SearchEngineYahoo.m in Sources */,
 				26A268D5148E10B40087E147 /* main.m in Sources */,
 				26A268E1148E10B40087E147 /* NSDate+Extended.m in Sources */,
+				26A268EF148E12A80087E147 /* TabPageData.m in Sources */,
+				26A268F5148E12E50087E147 /* TabPageView.m in Sources */,
+				26A2691A148E3C1E0087E147 /* TabPageScrollView.m in Sources */,
+				26A2692A148F5C1A0087E147 /* TabTouchView.m in Sources */,
+				26A26932148F5F8C0087E147 /* PhoneTabPageScrollView.m in Sources */,
+				267E13671495E1E100F319B8 /* PhonePageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -718,6 +816,12 @@
 				26A268B1148E0E5C0087E147 /* SearchEngineYahoo.m in Sources */,
 				26A268D3148E10B40087E147 /* main.m in Sources */,
 				26A268DF148E10B40087E147 /* NSDate+Extended.m in Sources */,
+				26A268ED148E12A80087E147 /* TabPageData.m in Sources */,
+				26A268F3148E12E50087E147 /* TabPageView.m in Sources */,
+				26A26918148E3C1E0087E147 /* TabPageScrollView.m in Sources */,
+				26A26928148F5C1A0087E147 /* TabTouchView.m in Sources */,
+				26A26930148F5F8C0087E147 /* PhoneTabPageScrollView.m in Sources */,
+				267E13651495E1E100F319B8 /* PhonePageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -741,6 +845,12 @@
 				26A268B2148E0E5C0087E147 /* SearchEngineYahoo.m in Sources */,
 				26A268D4148E10B40087E147 /* main.m in Sources */,
 				26A268E0148E10B40087E147 /* NSDate+Extended.m in Sources */,
+				26A268EE148E12A80087E147 /* TabPageData.m in Sources */,
+				26A268F4148E12E50087E147 /* TabPageView.m in Sources */,
+				26A26919148E3C1E0087E147 /* TabPageScrollView.m in Sources */,
+				26A26929148F5C1A0087E147 /* TabTouchView.m in Sources */,
+				26A26931148F5F8C0087E147 /* PhoneTabPageScrollView.m in Sources */,
+				267E13661495E1E100F319B8 /* PhonePageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -831,7 +941,7 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = "i386 armv6 armv7";
+				VALID_ARCHS = "armv6 armv7";
 			};
 			name = "Distibution for testing";
 		};
@@ -845,7 +955,7 @@
 				INFOPLIST_FILE = "MiniBrowser/MiniBrowser-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				VALID_ARCHS = "i386 armv6 armv7";
+				VALID_ARCHS = "armv6 armv7";
 				WRAPPER_EXTENSION = app;
 			};
 			name = "Distibution for testing";
@@ -862,7 +972,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = "i386 armv6 armv7";
+				VALID_ARCHS = "armv6 armv7";
 				WRAPPER_EXTENSION = octest;
 			};
 			name = "Distibution for testing";
@@ -880,7 +990,7 @@
 				INFOPLIST_FILE = "MiniBrowser/MiniBrowserOriginal-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				PRODUCT_NAME = MiniBrowserOriginal;
-				VALID_ARCHS = "i386 armv6 armv7";
+				VALID_ARCHS = "armv6 armv7";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -898,7 +1008,7 @@
 				INFOPLIST_FILE = "MiniBrowser/MiniBrowserOriginal-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				PRODUCT_NAME = MiniBrowserOriginal;
-				VALID_ARCHS = "i386 armv6 armv7";
+				VALID_ARCHS = "armv6 armv7";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -918,7 +1028,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				PRODUCT_NAME = MiniBrowserOriginal;
 				PROVISIONING_PROFILE = "";
-				VALID_ARCHS = "i386 armv6 armv7";
+				VALID_ARCHS = "armv6 armv7";
 				WRAPPER_EXTENSION = app;
 			};
 			name = "Distibution for testing";
@@ -949,7 +1059,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "i386 armv6 armv7";
+				VALID_ARCHS = "armv6 armv7";
 			};
 			name = Debug;
 		};
@@ -974,7 +1084,7 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = "i386 armv6 armv7";
+				VALID_ARCHS = "armv6 armv7";
 			};
 			name = Release;
 		};
@@ -986,7 +1096,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "MiniBrowser/MiniBrowser-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = "i386 armv6 armv7";
+				VALID_ARCHS = "armv6 armv7";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -999,7 +1109,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "MiniBrowser/MiniBrowser-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = "i386 armv6 armv7";
+				VALID_ARCHS = "armv6 armv7";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1017,7 +1127,7 @@
 				INFOPLIST_FILE = "MiniBrowser/MiniBrowser3G-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				PRODUCT_NAME = MiniBrowser3G;
-				VALID_ARCHS = "i386 armv6 armv7";
+				VALID_ARCHS = "armv6 armv7";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1035,7 +1145,7 @@
 				INFOPLIST_FILE = "MiniBrowser/MiniBrowser3G-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				PRODUCT_NAME = MiniBrowser3G;
-				VALID_ARCHS = "i386 armv6 armv7";
+				VALID_ARCHS = "armv6 armv7";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1055,7 +1165,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				PRODUCT_NAME = MiniBrowser3G;
 				PROVISIONING_PROFILE = "";
-				VALID_ARCHS = "i386 armv6 armv7";
+				VALID_ARCHS = "armv6 armv7";
 				WRAPPER_EXTENSION = app;
 			};
 			name = "Distibution for testing";
@@ -1072,7 +1182,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = "i386 armv6 armv7";
+				VALID_ARCHS = "armv6 armv7";
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
@@ -1089,7 +1199,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = "i386 armv6 armv7";
+				VALID_ARCHS = "armv6 armv7";
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
