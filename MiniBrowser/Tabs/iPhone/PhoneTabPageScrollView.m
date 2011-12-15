@@ -305,7 +305,7 @@
     CGRect identityFrame = self.selectedPage.identityFrame;
     CGRect pageFrame = self.selectedPage.frame;
     [self.selectedPage removeFromSuperview];
-    [self.closeButton removeFromSuperview];
+    //[self.closeButton removeFromSuperview];
     [self.visiblePages removeObject:self.selectedPage];
     self.selectedPage = [self loadPageAtIndex:selectedPageScrollIndex insertIntoVisibleIndex:visibleIndex];
     self.selectedPage.identityFrame = identityFrame;
@@ -392,11 +392,13 @@
 		// reveal the page header view
 		headerView.alpha = 1.0;
         
+        /*
         // remove close button
         [self.scrollView bringSubviewToFront:self.closeButton];
         self.closeButton.alpha = 0.0f;
         self.closeButton.transform = CGAffineTransformMakeTranslation(-50, -30);
-		
+		*/
+        
 		//remove unnecessary views
 		[self.scrollViewTouch removeFromSuperview];
 		[self.pageControlTouch removeFromSuperview];
@@ -422,6 +424,7 @@
         // hide the page header view
         headerView.alpha = 0.0;	
         
+        /*
         // add close button
         if (self.visiblePages.count > 1) {
             CGSize closeButtonSize = self.closeButton.frame.size;
@@ -430,6 +433,7 @@
             self.closeButton.alpha = 1.0f;
             self.closeButton.transform = CGAffineTransformMakeTranslation(15, 0);
         }
+        */
         
         // notify the delegate
 		if ([self.delegate respondsToSelector:@selector(pageScrollView:willDeselectPageAtIndex:)]) {
@@ -458,7 +462,7 @@
 			[self.delegate pageScrollView:self didSelectPageAtIndex:selectedIndex];
 		}
         
-        [self.closeButton removeFromSuperview];
+        //[self.closeButton removeFromSuperview];
 	} : ^(BOOL finished){
         [[UIApplication sharedApplication] endIgnoringInteractionEvents];
         
@@ -622,12 +626,12 @@
     [[self.scrollView subviews] enumerateObjectsUsingBlock:^(id existingPage, NSUInteger idx, BOOL *stop) {
         if (existingPage != page && page.frame.origin.x <= ((UIView *)existingPage).frame.origin.x) {
             if (animated) {
-                [self addSubview:self.closeButton];
+                //[self addSubview:self.closeButton];
                 [UIView animateWithDuration:0.4 animations:^(void) {
                     [self shiftPage:existingPage withOffset:self.scrollView.frame.size.width];
                     //self.closeButton.alpha = 0.0f;
                 }];
-                [self.closeButton removeFromSuperview];
+                //[self.closeButton removeFromSuperview];
             } else {
                 [self shiftPage:existingPage withOffset:self.scrollView.frame.size.width];
             }                
@@ -637,11 +641,11 @@
     if (animated) {
         [UIView animateWithDuration:0.4 animations:^(void) {
             [self setAlphaForPage:page];
-            [self showCloseTabButton];
+            //[self showCloseTabButton];
         }];
     } else {
         [self setAlphaForPage:page];
-        [self showCloseTabButton];
+        //[self showCloseTabButton];
     }
 }
 
@@ -667,11 +671,11 @@
             if (animated) {
                 [UIView animateWithDuration:0.4 animations:^(void) {
                     [self shiftPage:remainingPage withOffset:-(removedPages.count * self.scrollView.frame.size.width)];
-                    [self showCloseTabButton];
+                    //[self showCloseTabButton];
                 }];
             } else {
                 [self shiftPage:remainingPage withOffset:-(removedPages.count * self.scrollView.frame.size.width)];
-                [self showCloseTabButton];
+                //[self showCloseTabButton];
             }                
         }
     }];

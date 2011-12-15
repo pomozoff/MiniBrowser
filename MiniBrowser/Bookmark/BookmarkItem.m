@@ -20,6 +20,15 @@
 @synthesize content = _content;
 @synthesize delegateController = _delegateBookmark;
 
+- (NSString *)url
+{
+    if (!_url) {
+        _url = @"";
+    }
+    
+    return _url;
+}
+
 - (NSArray *)content
 {
     if (!_content) {
