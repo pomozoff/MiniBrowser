@@ -453,6 +453,8 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 - (void)loadSettings
 {
+    return;
+    
     self.settingsController.currentSearchEngine = nil;
     self.searchBar.placeholder = self.settingsController.currentSearchEngine.name;
 
