@@ -20,18 +20,25 @@
 
 // ******************************************************************************************************************************
 
-#pragma mark - PageScrollerHeaderInfo
+#pragma mark - Properties initialization
 
 
-- (NSString *)pageTitle
+- (NSString *)title
 {
-    return self.title;
+    if (!_title) {
+        _title = @"Untitled";
+    }
+    
+    return _title;
 }
 
-
-- (NSString *)pageSubtitle
+- (NSString *)subtitle
 {
-    return self.subtitle;
+    if (!_subtitle) {
+        _subtitle = @"";
+    }
+    
+    return _subtitle;
 }
 
 // ******************************************************************************************************************************

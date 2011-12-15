@@ -28,6 +28,5 @@
 @property (nonatomic, retain) IBOutlet TabTouchView  *pageControlTouch;
 
 @property (nonatomic, retain) IBOutlet UIButton *closeButton;
-@property (nonatomic, retain) IBOutlet TabTouchView *closeButtonTouch;
 
 @end

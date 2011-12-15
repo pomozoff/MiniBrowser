@@ -325,8 +325,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     // create new pages and add them to the data set 
     [indexSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
         TabPageData *pageData = [[[TabPageData alloc] init] autorelease];
-        pageData.title = @"Untitled";
-        pageData.subtitle = @"";
         [self.tabPageDataArray insertObject:pageData atIndex:idx];
     }];
     
@@ -396,10 +394,12 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     
     self.actionButton.enabled = !isUrlEmpty;
     
+    /*
     if (isUrlEmpty) {
         self.urlField.text = @"";
         self.urlLabel.text = @"Untitled";
     }
+    */
     
     return isUrlEmpty;
 }
@@ -441,7 +441,9 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 {
     NSMutableArray *urlList = [[NSMutableArray alloc] initWithCapacity:MAX_TABS_COUNT];
     for (TabPageData *pageData in self.tabPageDataArray) {
-        [urlList addObject:pageData.subtitle];
+        if (pageData.subtitle) {
+            [urlList addObject:pageData.subtitle];
+        }
     }
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -1015,13 +1017,13 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 - (NSString *)pageScrollView:(TabPageScrollView *)scrollView titleForPageAtIndex:(NSInteger)index
 {
     id<PageHeaderInfo> headerInfo = (id<PageHeaderInfo>)[self headerInfoForPageAtIndex:index]; 
-    return [headerInfo pageTitle];
+    return headerInfo.title;
 }
 
 - (NSString *)pageScrollView:(TabPageScrollView *)scrollView subtitleForPageAtIndex:(NSInteger)index
 {
     id<PageHeaderInfo> headerInfo = (id<PageHeaderInfo>)[self headerInfoForPageAtIndex:index]; 
-    return [headerInfo pageSubtitle];
+    return headerInfo.subtitle;
 }
 
 - (UIViewController *)headerInfoForPageAtIndex:(NSInteger)index

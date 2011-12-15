@@ -196,7 +196,6 @@
 		2626A2B214939C30002FD652 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2643BECF14606FC00018673B /* MiniBrowserOriginal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MiniBrowserOriginal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		265072D11498D2290065CD03 /* iPhoneTabPageScrollView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = iPhoneTabPageScrollView.xib; path = Tabs/iPhone/iPhoneTabPageScrollView.xib; sourceTree = "<group>"; };
-		265072D61498D2460065CD03 /* PageHeaderInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PageHeaderInfo.h; path = Tabs/PageHeaderInfo.h; sourceTree = "<group>"; };
 		265CCEBA143D85B9005F348A /* arrowBackGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowBackGray.png; sourceTree = "<group>"; };
 		265CCEBB143D85B9005F348A /* arrowBackLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowBackLight.png; sourceTree = "<group>"; };
 		265CCEBC143D85B9005F348A /* arrowForwardGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowForwardGray.png; sourceTree = "<group>"; };
@@ -223,6 +222,7 @@
 		267E13621495E1E100F319B8 /* PhonePageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhonePageView.h; path = Tabs/iPhone/PhonePageView.h; sourceTree = "<group>"; };
 		267E13631495E1E100F319B8 /* PhonePageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhonePageView.m; path = Tabs/iPhone/PhonePageView.m; sourceTree = "<group>"; };
 		267E13641495E1E100F319B8 /* iPhonePageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = iPhonePageView.xib; path = Tabs/iPhone/iPhonePageView.xib; sourceTree = "<group>"; };
+		2697F2241499D7750033E155 /* PageHeaderInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PageHeaderInfo.h; path = Tabs/PageHeaderInfo.h; sourceTree = "<group>"; };
 		26A26868148E0DC30087E147 /* iPhoneBrowserView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = iPhoneBrowserView.xib; path = iPhone/iPhoneBrowserView.xib; sourceTree = "<group>"; };
 		26A2686D148E0DDE0087E147 /* iPadBrowserView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = iPadBrowserView.xib; path = iPad/iPadBrowserView.xib; sourceTree = "<group>"; };
 		26A26871148E0E0A0087E147 /* BookmarkFolderTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BookmarkFolderTableViewController.h; path = Bookmark/BookmarkFolderTableViewController.h; sourceTree = "<group>"; };
@@ -456,7 +456,7 @@
 				26A268F2148E12E50087E147 /* TabPageView.m */,
 				26A26926148F5C1A0087E147 /* TabTouchView.h */,
 				26A26927148F5C1A0087E147 /* TabTouchView.m */,
-				265072D61498D2460065CD03 /* PageHeaderInfo.h */,
+				2697F2241499D7750033E155 /* PageHeaderInfo.h */,
 			);
 			name = Tabs;
 			sourceTree = "<group>";

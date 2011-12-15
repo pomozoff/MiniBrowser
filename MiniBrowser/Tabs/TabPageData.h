@@ -14,9 +14,6 @@
 
 @property (nonatomic, retain) IBOutlet UIWebView *webView;
 
-@property (nonatomic, copy) NSString *title;
-@property (nonatomic, copy) NSString *subtitle;
-
 @property (nonatomic, retain) TabPageView *view;
 
 // an example of using UINavigationController as the owner of the page. 

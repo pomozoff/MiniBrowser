@@ -170,7 +170,7 @@
 										<string key="NSFrame">{{200, 14}, {120, 44}}</string>
 										<reference key="NSSuperview" ref="799766176"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="268753776"/>
+										<reference key="NSNextKeyView" ref="151513942"/>
 										<string key="NSReuseIdentifierKey">_NS:571</string>
 										<int key="IBUIContentMode">3</int>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -321,23 +321,13 @@
 								<bool key="IBUIShowsHorizontalScrollIndicator">NO</bool>
 								<bool key="IBUIShowsVerticalScrollIndicator">NO</bool>
 							</object>
-							<object class="IBUIView" id="88786086">
-								<reference key="NSNextResponder" ref="1031376253"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{0, 85}, {320, 260}}</string>
-								<reference key="NSSuperview" ref="1031376253"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="151513942"/>
-								<reference key="IBUIBackgroundColor" ref="664852275"/>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-							</object>
 							<object class="IBUIButton" id="151513942">
 								<reference key="NSNextResponder" ref="1031376253"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{38, 74}, {24, 24}}</string>
+								<string key="NSFrame">{{37, 73}, {24, 24}}</string>
 								<reference key="NSSuperview" ref="1031376253"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="263929911"/>
+								<reference key="NSNextKeyView" ref="268753776"/>
 								<string key="NSReuseIdentifierKey">_NS:225</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -367,15 +357,14 @@
 									<int key="NSfFlags">16</int>
 								</object>
 							</object>
-							<object class="IBUIView" id="263929911">
+							<object class="IBUIView" id="88786086">
 								<reference key="NSNextResponder" ref="1031376253"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{38, 74}, {24, 24}}</string>
+								<string key="NSFrame">{{0, 85}, {320, 260}}</string>
 								<reference key="NSSuperview" ref="1031376253"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="534602522"/>
-								<string key="NSReuseIdentifierKey">_NS:196</string>
-								<reference key="IBUIBackgroundColor" ref="505281996"/>
+								<reference key="IBUIBackgroundColor" ref="664852275"/>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
 						</array>
@@ -530,14 +519,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">closeButtonTouch</string>
-						<reference key="source" ref="191373211"/>
-						<reference key="destination" ref="263929911"/>
-					</object>
-					<int key="connectionID">54</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="534602522"/>
 						<reference key="destination" ref="191373211"/>
@@ -608,9 +589,8 @@
 							<reference ref="564393350"/>
 							<reference ref="799766176"/>
 							<reference ref="534602522"/>
-							<reference ref="151513942"/>
 							<reference ref="88786086"/>
-							<reference ref="263929911"/>
+							<reference ref="151513942"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 						<string key="objectName">background gradient view</string>
@@ -699,6 +679,7 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">9</int>
 						<reference key="object" ref="88786086"/>
+						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="1031376253"/>
 						<string key="objectName">page scroller touch view</string>
 					</object>
@@ -707,12 +688,6 @@
 						<reference key="object" ref="151513942"/>
 						<reference key="parent" ref="1031376253"/>
 						<string key="objectName">close button</string>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">53</int>
-						<reference key="object" ref="263929911"/>
-						<reference key="parent" ref="1031376253"/>
-						<string key="objectName">close button touch view</string>
 					</object>
 				</array>
 			</object>
@@ -738,8 +713,6 @@
 				<string key="5.CustomClassName">TabTouchView</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="50.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="53.CustomClassName">TabTouchView</string>
-				<string key="53.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="9.CustomClassName">TabTouchView</string>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
@@ -833,7 +806,6 @@
 					<string key="superclassName">TabPageScrollView</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="closeButton">UIButton</string>
-						<string key="closeButtonTouch">TabTouchView</string>
 						<string key="pageControl">UIPageControl</string>
 						<string key="pageControlTouch">TabTouchView</string>
 						<string key="pageDeckBackgroundView">UIView</string>
@@ -847,10 +819,6 @@
 						<object class="IBToOneOutletInfo" key="closeButton">
 							<string key="name">closeButton</string>
 							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="closeButtonTouch">
-							<string key="name">closeButtonTouch</string>
-							<string key="candidateClassName">TabTouchView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="pageControl">
 							<string key="name">pageControl</string>

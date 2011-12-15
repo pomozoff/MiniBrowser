@@ -41,6 +41,7 @@
 - (void)shiftPage:(UIView *)page withOffset:(CGFloat)offset;
 - (void)updateScrolledPage:(TabPageView *)page index:(NSInteger)index;
 - (void)setFrameForPage:(UIView *)page atIndex:(NSInteger)index;
+- (void)showCloseTabButton;
 
 @end
 
@@ -61,7 +62,6 @@
 @synthesize pageControlTouch = _pageControlTouch;
 
 @synthesize closeButton = _closeButton;
-@synthesize closeButtonTouch = _closeButtonTouch;
 
 @synthesize numberOfPages = _numberOfPages;
 @synthesize numberOfFreshPages = _numberOfFreshPages;
@@ -140,7 +140,6 @@
 	self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight; 
 	self.pageControlTouch.receiver = self.pageControl;
 	self.scrollViewTouch.receiver = self.scrollView;
-    self.closeButtonTouch.receiver = self.closeButton;
 	
 	// setup pageSelector
 	[self.pageControl addTarget:self action:@selector(didChangePageValue:) forControlEvents:UIControlEventValueChanged];
@@ -171,7 +170,6 @@
     self.pageControlTouch = nil;
     
     self.closeButton = nil;
-    self.closeButtonTouch = nil;
 }
 
 - (void)dealloc
@@ -183,7 +181,6 @@
     self.reusablePages = nil;
 
     self.selectedPage = nil;
-    self.closeButton = nil;
 
     self.indexesBeforeVisibleRange = nil;
     self.indexesWithinVisibleRange = nil;
@@ -403,7 +400,6 @@
 		//remove unnecessary views
 		[self.scrollViewTouch removeFromSuperview];
 		[self.pageControlTouch removeFromSuperview];
-		[self.closeButtonTouch removeFromSuperview];
 	} : ^{
         [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
         
@@ -427,11 +423,13 @@
         headerView.alpha = 0.0;	
         
         // add close button
-        //CGSize closeButtonSize = self.closeButton.frame.size;
-        //self.closeButton.frame = CGRectMake(0, 0, closeButtonSize.width, closeButtonSize.height);
-        [self.scrollView addSubview:self.closeButton];
-        self.closeButton.alpha = 1.0f;
-        self.closeButton.transform = CGAffineTransformMakeTranslation(15, 0);
+        if (self.visiblePages.count > 1) {
+            CGSize closeButtonSize = self.closeButton.frame.size;
+            self.closeButton.frame = CGRectMake(-closeButtonSize.width / 2 - 2, 42, closeButtonSize.width, closeButtonSize.height);
+            [self addSubview:self.closeButton];
+            self.closeButton.alpha = 1.0f;
+            self.closeButton.transform = CGAffineTransformMakeTranslation(15, 0);
+        }
         
         // notify the delegate
 		if ([self.delegate respondsToSelector:@selector(pageScrollView:willDeselectPageAtIndex:)]) {
@@ -468,7 +466,6 @@
 		//self.scrollView.frame = CGRectMake(0, self.scrollViewTouch.frame.origin.y, self.frame.size.width, self.scrollViewTouch.frame.size.height);
 		[self addSubview:self.scrollViewTouch];
 		[self addSubview: self.pageControlTouch];
-		[self addSubview: self.closeButtonTouch];
         
 		if ([self.delegate respondsToSelector:@selector(pageScrollView:didDeselectPageAtIndex:)]) {
 			[self.delegate pageScrollView:self didDeselectPageAtIndex:selectedIndex];
@@ -487,6 +484,20 @@
 
 #pragma mark - PageControl Data
 
+- (void)showCloseTabButton
+{
+    // add close button if more than one page on hand
+    if (self.visiblePages.count > 1) {
+        CGSize closeButtonSize = self.closeButton.frame.size;
+        CGRect scrollViewFrame = self.scrollView.frame;
+        self.closeButton.frame = CGRectMake(scrollViewFrame.origin.x, scrollViewFrame.origin.y - closeButtonSize.height / 2 - 2, closeButtonSize.width, closeButtonSize.height);
+        [self addSubview:self.closeButton];
+        self.closeButton.alpha = 1.0f;
+    } else {
+        self.closeButton.alpha = 0.0f;
+        [self.closeButton removeFromSuperview];
+    }
+}
 
 - (void)reloadData
 {
@@ -609,14 +620,16 @@
     
     // shift pages at or after the new page offset forward
     [[self.scrollView subviews] enumerateObjectsUsingBlock:^(id existingPage, NSUInteger idx, BOOL *stop) {
-        
-        if (existingPage != page && page.frame.origin.x <= ((UIView*)existingPage).frame.origin.x) {
+        if (existingPage != page && page.frame.origin.x <= ((UIView *)existingPage).frame.origin.x) {
             if (animated) {
+                [self addSubview:self.closeButton];
                 [UIView animateWithDuration:0.4 animations:^(void) {
                     [self shiftPage:existingPage withOffset:self.scrollView.frame.size.width];
+                    //self.closeButton.alpha = 0.0f;
                 }];
+                [self.closeButton removeFromSuperview];
             } else {
-                [self shiftPage : existingPage withOffset: self.scrollView.frame.size.width];
+                [self shiftPage:existingPage withOffset:self.scrollView.frame.size.width];
             }                
         }
     }];
@@ -624,9 +637,11 @@
     if (animated) {
         [UIView animateWithDuration:0.4 animations:^(void) {
             [self setAlphaForPage:page];
+            [self showCloseTabButton];
         }];
     } else {
         [self setAlphaForPage:page];
+        [self showCloseTabButton];
     }
 }
 
@@ -652,9 +667,11 @@
             if (animated) {
                 [UIView animateWithDuration:0.4 animations:^(void) {
                     [self shiftPage:remainingPage withOffset:-(removedPages.count * self.scrollView.frame.size.width)];
+                    [self showCloseTabButton];
                 }];
             } else {
                 [self shiftPage:remainingPage withOffset:-(removedPages.count * self.scrollView.frame.size.width)];
+                [self showCloseTabButton];
             }                
         }
     }];
@@ -679,7 +696,7 @@
             [self updateScrolledPage:newSelectedPage index:newSelectedPageIndex];
         }
     }
-    
+        
     // adjust self.scrollView content size
     //    CGSize newContentSize = self.scrollView.contentSize;
     //    newContentSize.width -= pages.count * self.scrollView.frame.size.width;
@@ -999,7 +1016,7 @@
 		
 		if (neighborExists) {
 			
-			NSInteger neighborPageVisibleIndex = [self.visiblePages indexOfObject:self.selectedPage] + (delta > 0? 1:-1);
+			NSInteger neighborPageVisibleIndex = [self.visiblePages indexOfObject:self.selectedPage] + (delta > 0 ? 1 : -1);
 			TabPageView *neighborPage = [self.visiblePages objectAtIndex:neighborPageVisibleIndex];
 			NSInteger neighborIndex = self.visibleIndexes.location + neighborPageVisibleIndex;
             
@@ -1098,8 +1115,11 @@
 	CGFloat delta = self.scrollView.contentOffset.x - page.frame.origin.x;
 	CGFloat step = self.frame.size.width;
 	CGFloat alpha = 1.0 - fabs(delta/step);
-	if(alpha > 0.95) alpha = 1.0;
-    page.alpha = alpha;    
+
+	if (alpha > 0.95)
+        alpha = 1.0;
+    
+    page.alpha = alpha;
 }
 
 - (void)initHeaderForPageAtIndex:(NSInteger)index
