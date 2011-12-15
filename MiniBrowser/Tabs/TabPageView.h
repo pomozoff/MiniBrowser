@@ -10,6 +10,8 @@
 
 @interface TabPageView : UIView <UIWebViewDelegate>
 
+@property (nonatomic, retain) IBOutlet UIButton *closeButton;
+
 @property (nonatomic, assign) CGRect identityFrame;
 @property (nonatomic, copy) NSString *reuseIdentifier;
 

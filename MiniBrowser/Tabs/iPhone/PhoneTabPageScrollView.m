@@ -60,8 +60,6 @@
 @synthesize pageControl = _pageControl;
 @synthesize pageControlTouch = _pageControlTouch;
 
-@synthesize closeButton = _closeButton;
-
 @synthesize numberOfPages = _numberOfPages;
 @synthesize numberOfFreshPages = _numberOfFreshPages;
 @synthesize visibleIndexes = _visibleIndexes;
@@ -167,8 +165,6 @@
     
     self.pageControl = nil;
     self.pageControlTouch = nil;
-    
-    self.closeButton = nil;
 }
 
 - (void)dealloc
@@ -391,8 +387,8 @@
 		headerView.alpha = 1.0;
         
         // remove close button
-        [self.selectedPage bringSubviewToFront:self.closeButton];
-        self.closeButton.alpha = 0.0f;
+        [self.selectedPage bringSubviewToFront:self.selectedPage.closeButton];
+        self.selectedPage.closeButton.alpha = 0.0f;
         
 		//remove unnecessary views
 		[self.scrollViewTouch removeFromSuperview];
@@ -420,9 +416,9 @@
         // hide the page header view
         headerView.alpha = 0.0;	
         
-        [self.selectedPage addSubview:self.closeButton];
-        self.closeButton.alpha = 1.0f;
-        [self.selectedPage bringSubviewToFront:self.closeButton];
+        [self.selectedPage addSubview:self.selectedPage.closeButton];
+        self.selectedPage.closeButton.alpha = 1.0f;
+        [self.selectedPage bringSubviewToFront:self.selectedPage.closeButton];
         
         // notify the delegate
 		if ([self.delegate respondsToSelector:@selector(pageScrollView:willDeselectPageAtIndex:)]) {
@@ -1089,6 +1085,10 @@
         alpha = 1.0;
     
     page.alpha = alpha;
+    
+    if (page.alpha < 0.4) {
+        
+    }
 }
 
 - (void)initHeaderForPageAtIndex:(NSInteger)index

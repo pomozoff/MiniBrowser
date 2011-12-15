@@ -10,6 +10,8 @@
 
 @implementation TabPageView
 
+@synthesize closeButton = _closeButton;
+
 @synthesize identityFrame = _identityFrame;
 @synthesize reuseIdentifier = _reuseIdentifier;
 
