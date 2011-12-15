@@ -1079,14 +1079,18 @@
 {
 	CGFloat delta = self.scrollView.contentOffset.x - page.frame.origin.x;
 	CGFloat step = self.frame.size.width;
-	CGFloat alpha = 1.0 - fabs(delta/step);
+	CGFloat alpha = 1.00f - fabs(delta / step);
 
-	if (alpha > 0.95)
-        alpha = 1.0;
+	if (alpha > 0.95f)
+        alpha = 1.00f;
     
     page.alpha = alpha;
     
-	CGFloat alphaButton = 1.0 - fabs(delta/step * 1.5);
+	CGFloat alphaButton = 1.00f - fabs(delta / step * 1.50f);
+
+	if (alphaButton > 0.95f)
+        alphaButton = 1.00f;
+    
     page.closeButton.alpha = alphaButton;
 }
 
