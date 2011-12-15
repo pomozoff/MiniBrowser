@@ -32,13 +32,13 @@
 - (void)addPageToScrollView:(TabPageView *)page atIndex:(NSInteger)index;
 - (void)preparePage:(TabPageView *)page forMode:(TabPageScrollViewMode)mode;
 - (void)updateVisiblePages;
-- (void)setAlphaForPage:(UIView *)page;
+- (void)setAlphaForPage:(TabPageView *)page;
 - (NSInteger)indexForSelectedPage;
 - (void)setViewMode:(TabPageScrollViewMode)mode animated:(BOOL)animated;
 - (void)initHeaderForPageAtIndex:(NSInteger)index;
 - (void)initDeckTitlesForPageAtIndex:(NSInteger)index;
 - (void)scrollToPageAtIndex:(NSInteger)index animated:(BOOL)animated;
-- (void)shiftPage:(UIView *)page withOffset:(CGFloat)offset;
+- (void)shiftPage:(TabPageView *)page withOffset:(CGFloat)offset;
 - (void)updateScrolledPage:(TabPageView *)page index:(NSInteger)index;
 - (void)setFrameForPage:(UIView *)page atIndex:(NSInteger)index;
 
@@ -686,7 +686,7 @@
 	page.frame = frame;
 }
 
-- (void)shiftPage:(UIView *)page withOffset:(CGFloat)offset
+- (void)shiftPage:(TabPageView *)page withOffset:(CGFloat)offset
 {
     CGRect frame = page.frame;
     frame.origin.x += offset;
@@ -1075,7 +1075,7 @@
 	}
 }
 
-- (void)setAlphaForPage:(UIView *)page
+- (void)setAlphaForPage:(TabPageView *)page
 {
 	CGFloat delta = self.scrollView.contentOffset.x - page.frame.origin.x;
 	CGFloat step = self.frame.size.width;
@@ -1086,9 +1086,8 @@
     
     page.alpha = alpha;
     
-    if (page.alpha < 0.4) {
-        
-    }
+	CGFloat alphaButton = 1.0 - fabs(delta/step * 1.5);
+    page.closeButton.alpha = alphaButton;
 }
 
 - (void)initHeaderForPageAtIndex:(NSInteger)index
