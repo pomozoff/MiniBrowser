@@ -296,7 +296,7 @@
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 									</object>
 								</array>
-								<string key="NSFrameSize">{320, 59}</string>
+								<string key="NSFrameSize">{320, 58}</string>
 								<reference key="NSSuperview" ref="1031376253"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="851437257"/>
@@ -742,7 +742,6 @@
 					<string key="className">PhoneTabPageScrollView</string>
 					<string key="superclassName">TabPageScrollView</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="closeButton">UIButton</string>
 						<string key="pageControl">UIPageControl</string>
 						<string key="pageControlTouch">TabTouchView</string>
 						<string key="pageDeckBackgroundView">UIView</string>
@@ -753,10 +752,6 @@
 						<string key="scrollViewTouch">TabTouchView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="closeButton">
-							<string key="name">closeButton</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="pageControl">
 							<string key="name">pageControl</string>
 							<string key="candidateClassName">UIPageControl</string>

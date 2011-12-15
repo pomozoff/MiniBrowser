@@ -39,7 +39,7 @@
 					<object class="IBUIWebView" id="499336878">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{0, -1}, {320, 358}}</string>
+						<string key="NSFrameSize">{320, 358}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
@@ -50,7 +50,7 @@
 						<int key="IBUIDataDetectorTypes">1</int>
 						<bool key="IBUIDetectsPhoneNumbers">YES</bool>
 					</object>
-					<object class="IBUIButton" id="990389457">
+					<object class="IBUIButton" id="665803270">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{-20, -20}, {34, 34}}</string>
@@ -91,7 +91,7 @@
 				<string key="NSFrame">{{0, 20}, {320, 416}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="990389457"/>
+				<reference key="NSNextKeyView" ref="665803270"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
 					<bytes key="NSWhite">MQA</bytes>
@@ -119,7 +119,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">closeButton</string>
 						<reference key="source" ref="191373211"/>
-						<reference key="destination" ref="990389457"/>
+						<reference key="destination" ref="665803270"/>
 					</object>
 					<int key="connectionID">31</int>
 				</object>
@@ -137,7 +137,7 @@
 						<reference key="object" ref="191373211"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="499336878"/>
-							<reference ref="990389457"/>
+							<reference ref="665803270"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -159,7 +159,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">30</int>
-						<reference key="object" ref="990389457"/>
+						<reference key="object" ref="665803270"/>
 						<reference key="parent" ref="191373211"/>
 						<string key="objectName">close button</string>
 					</object>

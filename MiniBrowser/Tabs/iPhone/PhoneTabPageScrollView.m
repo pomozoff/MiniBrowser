@@ -416,6 +416,7 @@
         // hide the page header view
         headerView.alpha = 0.0;	
         
+        // add close button
         self.selectedPage.closeButton.alpha = 1.0f;
         [self.selectedPage bringSubviewToFront:self.selectedPage.closeButton];
         
