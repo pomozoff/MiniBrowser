@@ -387,7 +387,7 @@
 		headerView.alpha = 1.0;
         
         // remove close button
-        [self.selectedPage bringSubviewToFront:self.selectedPage.closeButton];
+        //[self.selectedPage bringSubviewToFront:self.selectedPage.closeButton];
         self.selectedPage.closeButton.alpha = 0.0f;
         
 		//remove unnecessary views
@@ -471,6 +471,17 @@
 
 #pragma mark - PageControl Data
 
+
+- (void)updateHeaderForPageWithIndex:(NSInteger)index
+{
+    if ([self.dataSource respondsToSelector:@selector(pageScrollView:titleForPageAtIndex:)]) {
+        self.pageDeckTitleLabel.text = [self.dataSource pageScrollView:self titleForPageAtIndex:index];
+    }
+    if ([self.dataSource respondsToSelector:@selector(pageScrollView:subtitleForPageAtIndex:)]) {
+        self.pageDeckSubtitleLabel.text = [self.dataSource pageScrollView:self subtitleForPageAtIndex:index];
+    }	
+}
+
 - (void)reloadData
 {
     NSInteger numPages = 1;  
@@ -519,12 +530,16 @@
         
         // update deck title and subtitle for selected page
         NSInteger index = [self indexForSelectedPage];
+        [self updateHeaderForPageWithIndex:index];
+        
+        /*
         if ([self.dataSource respondsToSelector:@selector(pageScrollView:titleForPageAtIndex:)]) {
             self.pageDeckTitleLabel.text = [self.dataSource pageScrollView:self titleForPageAtIndex:index];
         }
         if ([self.dataSource respondsToSelector:@selector(pageScrollView:subtitleForPageAtIndex:)]) {
             self.pageDeckSubtitleLabel.text = [self.dataSource pageScrollView:self subtitleForPageAtIndex:index];
-        }	
+        }
+        */
         
         // show deck-mode title/subtitle
         self.pageDeckTitleLabel.hidden = NO;
@@ -1025,7 +1040,9 @@
                 [self.delegate pageScrollView:self didScrollToPage:page atIndex:index];
             }
             self.isPendingScrolledPageUpdateNotification = NO;
-        }	       
+        }
+        
+        [self updateHeaderForPageWithIndex:index];
     }
 }
 

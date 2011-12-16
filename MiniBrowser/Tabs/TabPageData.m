@@ -10,13 +10,13 @@
 
 @implementation TabPageData
 
-@synthesize webView = _webView;
+//@synthesize webView = _webView;
 
 @synthesize title = _title;
 @synthesize subtitle = _subtitle;
 @synthesize navController = _navController;
 
-@synthesize view = _view;
+//@synthesize pageView = _pageView;
 
 // ******************************************************************************************************************************
 
@@ -46,9 +46,19 @@
 #pragma mark - NSObject 
 
 
-- (NSString*) description
+- (NSString *)description
 {
     return [NSString stringWithFormat:@"%@ 0x%x: %@", [self class], self, self.title];
+}
+
+// ******************************************************************************************************************************
+
+#pragma mark - NSCopying 
+
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    return self;
 }
 
 @end

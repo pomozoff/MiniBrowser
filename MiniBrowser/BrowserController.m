@@ -27,11 +27,16 @@
 @property (nonatomic, retain) UIPopoverController *popoverAction;
 @property (nonatomic, retain) UIActionSheet *actionSheet;
 @property (nonatomic, retain) UINavigationController *bookmarkNavigationController;
-@property (nonatomic, retain) TabPageScrollView *mainPageScrollView;
+
 @property (nonatomic, retain) NSMutableArray *tabPageDataArray;
+@property (nonatomic, retain) TabPageScrollView *mainPageScrollView;
+
 @property (nonatomic, retain) NSMutableIndexSet *indexesToDelete;
 @property (nonatomic, retain) NSMutableIndexSet *indexesToInsert;
 @property (nonatomic, retain) NSMutableIndexSet *indexesToReload;
+
+@property (nonatomic, retain) NSMutableDictionary *mapPageDataToView;
+@property (nonatomic, retain) NSMutableDictionary *mapWebViewToPageData;
 
 - (UIViewController *)headerInfoForPageAtIndex:(NSInteger)index;
 - (void)addPagesAtIndexSet:(NSIndexSet *)indexSet;
@@ -69,12 +74,16 @@
 @synthesize popoverAction = _popoverAction;
 @synthesize actionSheet = _actionSheet;
 @synthesize bookmarkNavigationController = _bookmarkNavigationController;
+
 @synthesize tabPageDataArray = _tabPageDataArray;
 @synthesize mainPageScrollView = _mainPageScrollView;
 
 @synthesize indexesToDelete = _indexesToDelete;
 @synthesize indexesToInsert = _indexesToInsert;
 @synthesize indexesToReload = _indexesToReload;
+
+@synthesize mapPageDataToView = _mapPageDataToView;
+@synthesize mapWebViewToPageData = _mapWebViewToPageData;
 
 BOOL userInitiatedJump = NO;
 NSString *const savedOpenedUrls = @"savedOpenedUrls";
@@ -164,6 +173,24 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     }
     
     return _mainPageScrollView;
+}
+
+- (NSMutableDictionary *)mapPageDataToView
+{
+    if (!_mapPageDataToView) {
+        _mapPageDataToView = [[NSMutableDictionary alloc] initWithCapacity:MAX_TABS_COUNT];
+    }
+    
+    return _mapPageDataToView;
+}
+
+- (NSMutableDictionary *)mapWebViewToPageData
+{
+    if (!_mapWebViewToPageData) {
+        _mapWebViewToPageData = [[NSMutableDictionary alloc] initWithCapacity:MAX_TABS_COUNT];
+    }
+    
+    return _mapWebViewToPageData;
 }
 
 // ******************************************************************************************************************************
@@ -420,16 +447,11 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     [webView loadRequest:[NSURLRequest requestWithURL:urlObject]];
 }
 
-- (void)loadUrl:(NSString *)url
-{
-    [self loadUrl:url inWebView:self.webView];
-}
-
 - (void)closePopupsAndLoadUrl:(NSString *)url
 {
     userInitiatedJump = YES;
     [self dismissOpenPopoversAndActionSheet];
-    [self loadUrl:url];
+    [self loadUrl:url inWebView:self.webView];
 }
 
 // ******************************************************************************************************************************
@@ -453,8 +475,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 - (void)loadSettings
 {
-    return;
-    
     self.settingsController.currentSearchEngine = nil;
     self.searchBar.placeholder = self.settingsController.currentSearchEngine.name;
 
@@ -515,10 +535,10 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
                     object:nil];
 }
 
-- (void)setButtonsStatus
+- (void)updateButtonsStatus:(UIWebView *)webView
 {
-    self.backButton.enabled = self.webView.canGoBack;
-    self.forwardButton.enabled = self.webView.canGoForward;
+    self.backButton.enabled = webView.canGoBack;
+    self.forwardButton.enabled = webView.canGoForward;
 }
 
 - (void)loadPageScrollView
@@ -582,9 +602,9 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     [super viewDidLoad];
     
     [self addObservers];
-    [self setButtonsStatus];
     [self loadSettings];
     [self loadPageScrollView];
+    [self updateButtonsStatus:self.webView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -691,7 +711,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
             escapedCallBackUrl = [callBackUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         }
         
-        [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:escapedCallBackUrl]]];
+        [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:escapedCallBackUrl]]];
         
         return NO;
     }
@@ -703,26 +723,26 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     return YES;
 }
 
-- (void)setLabel:(NSString *)label andUrl:(NSString *)url
+- (void)setLabel:(NSString *)label andUrl:(NSString *)url withWebView:(UIWebView *)webView
 {
-    self.urlLabel.text = label;
-    self.urlField.text = url;
-
-    // remember title and subtitle for page
-    TabPageScrollView *pageScrollView = [[self.view subviews] lastObject];
-    NSInteger selectedIndex = [pageScrollView indexForSelectedPage];
-    TabPageData *pageData = [self.tabPageDataArray objectAtIndex:selectedIndex];
+    TabPageData *pageData = [self.mapWebViewToPageData objectForKey:webView];
     pageData.title = label;
     pageData.subtitle = url;
-    
+
+    // set title and url in view
+    self.urlLabel.text = label;
+    self.urlField.text = url;
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    [self setButtonsStatus];
+    [self updateButtonsStatus:webView];
     
-    NSString *label = [self.webView stringByEvaluatingJavaScriptFromString:@"document.title"];
-    NSString *sourceUrl = self.webView.request.URL.absoluteString;
+    NSString *label = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
+    NSString *sourceUrl = webView.request.URL.absoluteString;
+    
+    // print url and title
+    //[self setLabel:label andUrl:sourceUrl withWebView:webView];
     
     BookmarkItem *historyItem = [[BookmarkItem alloc] initWithName:label
                                                                url:sourceUrl
@@ -738,9 +758,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     // remember new history item
     [self.bookmarksStorage addBookmark:historyItem toFolder:self.bookmarksStorage.historyFolder];
     [historyItem release];
-    
-    // print url and title
-    [self setLabel:label andUrl:sourceUrl];
 
     // remove network activity star
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
@@ -748,12 +765,12 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    [self setButtonsStatus];
+    [self updateButtonsStatus:webView];
     
     NSString *logString = [NSString stringWithFormat:@"Error: %@", error.localizedDescription];
-    NSString *sourceUrl = self.webView.request.URL.absoluteString;
+    NSString *sourceUrl = webView.request.URL.absoluteString;
 
-    [self setLabel:logString andUrl:sourceUrl];
+    [self setLabel:logString andUrl:sourceUrl withWebView:webView];
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
@@ -779,7 +796,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     [textField resignFirstResponder];
     userInitiatedJump = YES;
     
-    [self loadUrl:textField.text];
+    [self loadUrl:textField.text inWebView:self.webView];
 
     /*
      TabPageScrollView *pageScrollView = [[self.view subviews] lastObject];
@@ -972,45 +989,27 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     
     if (pageData.navController) {
         pageView = (TabPageView *)pageData.navController.topViewController.view;
-    } else if (pageData.view) {
-        pageView = pageData.view;
     } else {
+        pageView = [self.mapPageDataToView objectForKey:pageData];
+    }
+    
+    if (!pageView) {
         static NSString *pageId = @"pageId";
         
         pageView = (PhonePageView *)[scrollView dequeueReusablePageWithIdentifier:pageId];
         if (!pageView) {
             // load a new page from NIB file
-            pageView = [[[NSBundle mainBundle] loadNibNamed:@"iPhonePageView" owner:pageData options:nil] objectAtIndex:0];
+            pageView = [[[NSBundle mainBundle] loadNibNamed:@"iPhonePageView" owner:self options:nil] objectAtIndex:0];
             //pageView.reuseIdentifier = pageId;
-            pageData.webView.delegate = self;
-            pageData.view = pageView;
+            //pageData.webView.delegate = self;
+            
+            [self.mapPageDataToView setObject:pageView forKey:pageData];
+            [self.mapWebViewToPageData setObject:pageData forKey:pageView.webView];
             
             if (pageData.subtitle) {
-                [self loadUrl:pageData.subtitle inWebView:pageData.webView];
+                [self loadUrl:pageData.subtitle inWebView:pageView.webView];
             }
         }
-        
-        // configure the page
-        //UILabel *titleLabel = (UILabel *)[pageView viewWithTag:1];
-        //titleLabel.text = pageData.title;
-        
-        //UIImageView *imageView = (UIImageView*)[pageView viewWithTag:2];
-        //imageView.image = pageData.image;
-        
-        //UITextView *textView = (UITextView*)[pageView viewWithTag:3];
-        //textView.text = @"some text here";
-        
-        //adjust content size of scroll view
-        //UIScrollView *pageContentsScrollView = (UIScrollView *)[pageView viewWithTag:10];
-        //pageContentsScrollView.scrollEnabled = NO; //initially disable scroll
-        
-        // set the pageView frame height
-        //CGRect frame = pageView.frame;
-        //frame.size.height = 420; 
-        //pageView.frame = frame; 
-
-        //UIScrollView *scrollContentView = (UIScrollView *)[pageView.webView.subviews objectAtIndex:0];
-        //scrollContentView.scrollEnabled = NO;
     }
 
     return pageView;
@@ -1062,42 +1061,9 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 {
     TabPageData *pageData = [self.tabPageDataArray objectAtIndex:index];
     
-    if (!pageData.navController) {
-        /*
-        PhonePageView *page = (PhonePageView *)[scrollView pageAtIndex:index];
-        UIScrollView *pageContentsScrollView = (UIScrollView *)[page viewWithTag:10];
-        if (!page.isInitialized) {
-            // prepare the page for interaction. This is a "second step" initialization of the page 
-            // which we are deferring to just before the page is selected. While the page is initially
-            // requeseted (pageScrollView:viewForPageAtIndex:) this extra step is not required and is preferably 
-            // avoided due to performace reasons.  
-            
-            // asjust text box height to show all text
-            UITextView *textView = (UITextView*)[page viewWithTag:3];
-            CGFloat margin = 12;
-            CGSize size = [textView.text sizeWithFont:textView.font
-                                    constrainedToSize:CGSizeMake(textView.frame.size.width, 2000) //very large height
-                                        lineBreakMode:UILineBreakModeWordWrap];
-            CGRect frame = textView.frame;
-            frame.size.height = size.height + 4 * margin;
-            textView.frame = frame;
-            
-            // adjust content size of scroll view
-            pageContentsScrollView.contentSize = CGSizeMake(pageContentsScrollView.frame.size.width, frame.origin.y + frame.size.height);
-            
-            // mark the page as initialized, so that we don't have to do all of the above again 
-            // the next time this page is selected
-            page.isInitialized = YES;  
-        }
-
-        // enable scroll
-        UIScrollView *pageContentsScrollView = (UIScrollView *)[self.webView.subviews objectAtIndex:0];
-        pageContentsScrollView.scrollEnabled = YES;
-        */
-    }
-    
     if (pageData) {
-        self.webView = pageData.webView;
+        TabPageView *pageView = [self.mapPageDataToView objectForKey:pageData];
+        self.webView = pageView.webView;        
         self.urlLabel.text = pageData.title;
         self.urlField.text = pageData.subtitle;
     }
@@ -1110,20 +1076,13 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     if (pageData.navController) {
         self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         [self presentModalViewController:pageData.navController animated:NO];
-        // copy the toolbar items to the navigation controller
-        //[pageData.navController.topViewController setToolbarItems:self.mainToolbar.items];
-    } else {
-        /*
-        // add "edit" button to the toolbar
-        UIBarButtonItem *editButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(didClickEditPage:)] autorelease];
-        NSMutableArray *items = [NSMutableArray arrayWithArray:self.mainToolbar.items];
-        [items addObject:editButton];
-        self.mainToolbar.items = items;
-        */
     }
     
     // place navigation toolbar to view
     [self changeToolbar:self.tabsToolbar withToolbar:self.navigationToolbar];
+    
+    // update backs/forward buttons
+    [self updateButtonsStatus:self.webView];
 }
 
 - (void)pageScrollView:(TabPageScrollView *)scrollView willDeselectPageAtIndex:(NSInteger)index

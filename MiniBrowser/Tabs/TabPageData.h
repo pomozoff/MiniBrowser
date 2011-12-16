@@ -9,14 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "PageHeaderInfo.h"
 #import "TabPageView.h"
+#import "BrowserController.h"
 
-@interface TabPageData : NSObject <PageHeaderInfo>
-
-@property (nonatomic, retain) IBOutlet UIWebView *webView;
-
-@property (nonatomic, retain) TabPageView *view;
+@interface TabPageData : NSObject <NSCopying, PageHeaderInfo>
 
 // an example of using UINavigationController as the owner of the page. 
 @property (nonatomic, retain) UINavigationController *navController; 
+
+- (id)copyWithZone:(NSZone *)zone;
 
 @end

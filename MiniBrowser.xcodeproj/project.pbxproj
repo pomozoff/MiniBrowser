@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		260D68B01441B6C700093012 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 260D68AF1441B6C700093012 /* plus.png */; };
-		261C43C31498FC2B008655EF /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 261C43C21498FC2B008655EF /* close.png */; };
-		261C43C41498FC2B008655EF /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 261C43C21498FC2B008655EF /* close.png */; };
-		261C43C51498FC2B008655EF /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 261C43C21498FC2B008655EF /* close.png */; };
+		2620E7EF149B35C800518C02 /* closebox.png in Resources */ = {isa = PBXBuildFile; fileRef = 2620E7EE149B35C800518C02 /* closebox.png */; };
+		2620E7F0149B35C800518C02 /* closebox.png in Resources */ = {isa = PBXBuildFile; fileRef = 2620E7EE149B35C800518C02 /* closebox.png */; };
+		2620E7F1149B35C800518C02 /* closebox.png in Resources */ = {isa = PBXBuildFile; fileRef = 2620E7EE149B35C800518C02 /* closebox.png */; };
 		2626A2B314939C30002FD652 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2626A2B214939C30002FD652 /* QuartzCore.framework */; };
 		2626A2B414939C39002FD652 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2626A2B214939C30002FD652 /* QuartzCore.framework */; };
 		2626A2B514939C40002FD652 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2626A2B214939C30002FD652 /* QuartzCore.framework */; };
@@ -130,12 +130,6 @@
 		26A26930148F5F8C0087E147 /* PhoneTabPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2692F148F5F8C0087E147 /* PhoneTabPageScrollView.m */; };
 		26A26931148F5F8C0087E147 /* PhoneTabPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2692F148F5F8C0087E147 /* PhoneTabPageScrollView.m */; };
 		26A26932148F5F8C0087E147 /* PhoneTabPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2692F148F5F8C0087E147 /* PhoneTabPageScrollView.m */; };
-		26A7450C1499EC48009941D7 /* close2.png in Resources */ = {isa = PBXBuildFile; fileRef = 26A7450B1499EC48009941D7 /* close2.png */; };
-		26A7450D1499EC48009941D7 /* close2.png in Resources */ = {isa = PBXBuildFile; fileRef = 26A7450B1499EC48009941D7 /* close2.png */; };
-		26A7450E1499EC48009941D7 /* close2.png in Resources */ = {isa = PBXBuildFile; fileRef = 26A7450B1499EC48009941D7 /* close2.png */; };
-		26A745111499ED7F009941D7 /* close1.png in Resources */ = {isa = PBXBuildFile; fileRef = 26A745101499ED7F009941D7 /* close1.png */; };
-		26A745121499ED7F009941D7 /* close1.png in Resources */ = {isa = PBXBuildFile; fileRef = 26A745101499ED7F009941D7 /* close1.png */; };
-		26A745131499ED7F009941D7 /* close1.png in Resources */ = {isa = PBXBuildFile; fileRef = 26A745101499ED7F009941D7 /* close1.png */; };
 		26AF9D4D144EF9F100CBBF20 /* BookmarkTreePermanent.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26AF9D48144EF22500CBBF20 /* BookmarkTreePermanent.plist */; };
 		26C8CF8A145881A400536C9B /* MiniBrowserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67B8143CCE8D0025F929 /* MiniBrowserAppDelegate.m */; };
 		26C8CF8B145881A400536C9B /* MiniBrowserAppDelegate_iPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67BC143CCE8D0025F929 /* MiniBrowserAppDelegate_iPhone.m */; };
@@ -198,7 +192,7 @@
 
 /* Begin PBXFileReference section */
 		260D68AF1441B6C700093012 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
-		261C43C21498FC2B008655EF /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
+		2620E7EE149B35C800518C02 /* closebox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = closebox.png; sourceTree = "<group>"; };
 		2626A2B214939C30002FD652 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2643BECF14606FC00018673B /* MiniBrowserOriginal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MiniBrowserOriginal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		265072D11498D2290065CD03 /* iPhoneTabPageScrollView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = iPhoneTabPageScrollView.xib; path = Tabs/iPhone/iPhoneTabPageScrollView.xib; sourceTree = "<group>"; };
@@ -276,8 +270,6 @@
 		26A26927148F5C1A0087E147 /* TabTouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TabTouchView.m; path = Tabs/TabTouchView.m; sourceTree = "<group>"; };
 		26A2692E148F5F8C0087E147 /* PhoneTabPageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhoneTabPageScrollView.h; path = Tabs/iPhone/PhoneTabPageScrollView.h; sourceTree = "<group>"; };
 		26A2692F148F5F8C0087E147 /* PhoneTabPageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhoneTabPageScrollView.m; path = Tabs/iPhone/PhoneTabPageScrollView.m; sourceTree = "<group>"; };
-		26A7450B1499EC48009941D7 /* close2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close2.png; sourceTree = "<group>"; };
-		26A745101499ED7F009941D7 /* close1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close1.png; sourceTree = "<group>"; };
 		26AF9D48144EF22500CBBF20 /* BookmarkTreePermanent.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BookmarkTreePermanent.plist; sourceTree = "<group>"; };
 		26C8CFB4145881A400536C9B /* MiniBrowser3G.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MiniBrowser3G.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26DB365A144EB3D6001C4CBC /* action.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = action.png; sourceTree = "<group>"; };
@@ -356,9 +348,7 @@
 				26FE56BC1443269D001622F2 /* bookmark-iPad.png */,
 				26FE56BE144326FB001622F2 /* bookmark-iPhone.png */,
 				26FDCADB1473C48600744D07 /* newtab.png */,
-				261C43C21498FC2B008655EF /* close.png */,
-				26A745101499ED7F009941D7 /* close1.png */,
-				26A7450B1499EC48009941D7 /* close2.png */,
+				2620E7EE149B35C800518C02 /* closebox.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -460,13 +450,13 @@
 				26A2692C148F5F2F0087E147 /* iPhone */,
 				26A26916148E3C1E0087E147 /* TabPageScrollView.h */,
 				26A26917148E3C1E0087E147 /* TabPageScrollView.m */,
+				2697F2241499D7750033E155 /* PageHeaderInfo.h */,
 				26A268EB148E12A80087E147 /* TabPageData.h */,
 				26A268EC148E12A80087E147 /* TabPageData.m */,
 				26A268F1148E12E50087E147 /* TabPageView.h */,
 				26A268F2148E12E50087E147 /* TabPageView.m */,
 				26A26926148F5C1A0087E147 /* TabTouchView.h */,
 				26A26927148F5C1A0087E147 /* TabTouchView.m */,
-				2697F2241499D7750033E155 /* PageHeaderInfo.h */,
 			);
 			name = Tabs;
 			sourceTree = "<group>";
@@ -692,9 +682,7 @@
 				26A268A0148E0E2A0087E147 /* Settings.bundle in Resources */,
 				267E136A1495E1E100F319B8 /* iPhonePageView.xib in Resources */,
 				265072D41498D2290065CD03 /* iPhoneTabPageScrollView.xib in Resources */,
-				261C43C51498FC2B008655EF /* close.png in Resources */,
-				26A7450E1499EC48009941D7 /* close2.png in Resources */,
-				26A745131499ED7F009941D7 /* close1.png in Resources */,
+				2620E7F1149B35C800518C02 /* closebox.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -724,9 +712,7 @@
 				26A2689E148E0E2A0087E147 /* Settings.bundle in Resources */,
 				267E13681495E1E100F319B8 /* iPhonePageView.xib in Resources */,
 				265072D21498D2290065CD03 /* iPhoneTabPageScrollView.xib in Resources */,
-				261C43C31498FC2B008655EF /* close.png in Resources */,
-				26A7450C1499EC48009941D7 /* close2.png in Resources */,
-				26A745111499ED7F009941D7 /* close1.png in Resources */,
+				2620E7EF149B35C800518C02 /* closebox.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -756,9 +742,7 @@
 				26A2689F148E0E2A0087E147 /* Settings.bundle in Resources */,
 				267E13691495E1E100F319B8 /* iPhonePageView.xib in Resources */,
 				265072D31498D2290065CD03 /* iPhoneTabPageScrollView.xib in Resources */,
-				261C43C41498FC2B008655EF /* close.png in Resources */,
-				26A7450D1499EC48009941D7 /* close2.png in Resources */,
-				26A745121499ED7F009941D7 /* close1.png in Resources */,
+				2620E7F0149B35C800518C02 /* closebox.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

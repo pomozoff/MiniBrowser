@@ -10,6 +10,7 @@
 
 @implementation TabPageView
 
+@synthesize webView = _webView;
 @synthesize closeButton = _closeButton;
 
 @synthesize identityFrame = _identityFrame;
