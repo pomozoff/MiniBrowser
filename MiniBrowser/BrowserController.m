@@ -742,7 +742,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     NSString *sourceUrl = webView.request.URL.absoluteString;
     
     // print url and title
-    //[self setLabel:label andUrl:sourceUrl withWebView:webView];
+    [self setLabel:label andUrl:sourceUrl withWebView:webView];
     
     BookmarkItem *historyItem = [[BookmarkItem alloc] initWithName:label
                                                                url:sourceUrl
