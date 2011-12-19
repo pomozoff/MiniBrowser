@@ -60,6 +60,8 @@
 @synthesize pageControl = _pageControl;
 @synthesize pageControlTouch = _pageControlTouch;
 
+@synthesize closePageTouch = _closePageTouch;
+
 @synthesize numberOfPages = _numberOfPages;
 @synthesize numberOfFreshPages = _numberOfFreshPages;
 @synthesize visibleIndexes = _visibleIndexes;
@@ -279,6 +281,7 @@
         
         // update self.selectedPage
         self.selectedPage = [self.visiblePages objectAtIndex:selectedVisibleIndex];
+        self.closePageTouch.receiver = self.selectedPage.closeButton;
         
         // update the page selector (pageControl)
         [self.pageControl setCurrentPage:index];
@@ -306,7 +309,9 @@
     self.selectedPage.frame = pageFrame;
     self.selectedPage.alpha = 1.0;
     [self addSubview:self.selectedPage];
-    
+
+    self.closePageTouch.receiver = self.selectedPage.closeButton;
+
 	[self setViewMode:TabPageScrollViewModeDeck animated:animated];
 }
 
@@ -526,7 +531,9 @@
             // refresh the page at the selected index (it might have changed after reloading the visible pages) 
             self.selectedPage = [self.visiblePages objectAtIndex:selectedIndex];
         }
-        
+
+        self.closePageTouch.receiver = self.selectedPage.closeButton;
+
         // update deck title and subtitle for selected page
         NSInteger index = [self indexForSelectedPage];
         [self updateHeaderForPageWithIndex:index];
@@ -1029,6 +1036,7 @@
         
         // set selected page
         self.selectedPage = page;
+        self.closePageTouch.receiver = self.selectedPage.closeButton;
         //	NSLog(@"selectedPage: 0x%x (index %d)", page, index );
         
         if (self.scrollView.dragging) {
