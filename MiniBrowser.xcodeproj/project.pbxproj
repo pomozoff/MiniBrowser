@@ -1006,7 +1006,7 @@
 				GCC_PREFIX_HEADER = "MiniBrowser/MiniBrowser-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "MiniBrowser/MiniBrowserOriginal-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				PRODUCT_NAME = MiniBrowserOriginal;
 				VALID_ARCHS = "armv6 armv7";
 				WRAPPER_EXTENSION = app;
@@ -1024,7 +1024,7 @@
 				GCC_PREFIX_HEADER = "MiniBrowser/MiniBrowser-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "MiniBrowser/MiniBrowserOriginal-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				PRODUCT_NAME = MiniBrowserOriginal;
 				VALID_ARCHS = "armv6 armv7";
 				WRAPPER_EXTENSION = app;
@@ -1043,7 +1043,7 @@
 				GCC_PREFIX_HEADER = "MiniBrowser/MiniBrowser-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "MiniBrowser/MiniBrowserOriginal-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				PRODUCT_NAME = MiniBrowserOriginal;
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv6 armv7";

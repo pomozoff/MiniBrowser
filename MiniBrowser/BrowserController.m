@@ -1146,7 +1146,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     // place tabs toolbar to view
     [self changeToolbar:self.navigationToolbar withToolbar:self.tabsToolbar];
 
-    self.addTabButton.enabled = (self.tabPageDataArray.count >= MAX_TABS_COUNT);
+    self.addTabButton.enabled = (self.tabPageDataArray.count < MAX_TABS_COUNT);
 }
 
 // ******************************************************************************************************************************

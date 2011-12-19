@@ -43,4 +43,4 @@
 
 @end
 
-#define MAX_TABS_COUNT 10
+#define MAX_TABS_COUNT 8
