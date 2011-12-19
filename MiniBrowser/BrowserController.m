@@ -292,7 +292,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     // create an index set of the pages we wish to add
     // example 1: inserting one page at the current index  
     NSInteger selectedPageIndex = [pageScrollView indexForSelectedPage];
-    self.indexesToInsert = [[NSMutableIndexSet alloc] initWithIndex:(selectedPageIndex == NSNotFound)? 0 : selectedPageIndex];
+    NSMutableIndexSet *indexesToInsert = [[NSMutableIndexSet alloc] initWithIndex:(selectedPageIndex == NSNotFound)? 0 : selectedPageIndex];
     
     // example 2: appending 2 pages at the end of the page scroller 
     //NSRange range; range.location = self.tabPageDataArray.count; range.length = 2;
@@ -302,7 +302,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     //NSRange range; range.location = 0; range.length = 2;
     //self.indexesToInsert = [[NSMutableIndexSet alloc] initWithIndexesInRange:range];
     
-    
+    /*
     // we can only insert pages in DECK mode
     if (pageScrollView.viewMode == TabPageScrollViewModePage) {
         [self tabsPressed:self];
@@ -310,6 +310,10 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
         [self addPagesAtIndexSet:self.indexesToInsert];
         self.indexesToInsert = nil;
     }
+    */
+    
+    [self addPagesAtIndexSet:indexesToInsert];
+    [indexesToInsert release];
 }
 
 - (IBAction)closeTabPressed:(id)sender
@@ -318,7 +322,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     
     // create an index set of the pages we wish to delete
     // example 1: deleting the page at the current index
-    self.indexesToDelete = [[NSMutableIndexSet alloc] initWithIndex:[pageScrollView indexForSelectedPage]];
+    NSMutableIndexSet *indexesToDelete = [[NSMutableIndexSet alloc] initWithIndex:[pageScrollView indexForSelectedPage]];
     
     // example 2: deleting the last 2 pages from the page scroller
     //NSRange range; range.location = self.tabPageDataArray.count - 2; range.length = 2;
@@ -328,6 +332,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     //NSRange range; range.location = 0; range.length = 2;
     //self.indexesToDelete = [[NSMutableIndexSet alloc] initWithIndexesInRange:range];
     
+    /*
     // we can only delete pages in DECK mode
     if (pageScrollView.viewMode == TabPageScrollViewModePage) {
         [pageScrollView deselectPageAnimated:YES];
@@ -335,7 +340,11 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
         [self removePagesAtIndexSet:self.indexesToDelete];
         self.indexesToDelete = nil;
     }
+    */
     
+    [self removePagesAtIndexSet:indexesToDelete];
+    [indexesToDelete release];
+
     if (self.tabPageDataArray.count == 0) {
         [self newTabPressed:nil];
     }
@@ -416,6 +425,8 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     self.urlLabel = nil;
     self.webView = nil;
     self.tabPageDataArray = nil;
+    
+    self.indexesToInsert = nil;
 }
 
 // ******************************************************************************************************************************
@@ -480,6 +491,8 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:(NSArray *)urlList forKey:savedOpenedUrls];
     [defaults synchronize];
+    
+    [urlList release];
 }
 
 - (void)loadSettings

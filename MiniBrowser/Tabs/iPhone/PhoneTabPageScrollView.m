@@ -349,12 +349,11 @@
 		if ([self.dataSource respondsToSelector:@selector(pageScrollView:headerViewForPageAtIndex:)]) {
             UIView *altHeaderView = [self.dataSource pageScrollView:self headerViewForPageAtIndex:selectedIndex];
             [self.userHeaderView removeFromSuperview];
-            [self.userHeaderView release];
             self.userHeaderView = nil;
             if (altHeaderView) {
                 //use the header view initialized by the dataSource 
                 self.pageHeaderView.hidden = YES; 
-                self.userHeaderView = [altHeaderView retain];
+                self.userHeaderView = altHeaderView;
                 CGRect frame = self.userHeaderView.frame;
                 frame.origin.y = 0;
                 self.userHeaderView.frame = frame; 
