@@ -382,6 +382,15 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 {
     TabPageScrollView *pageScrollView = [[self.view subviews] lastObject];
     
+    NSArray *deletingObjects = [self.tabPageDataArray objectsAtIndexes:indexSet];
+    for (TabPageData *pageData in deletingObjects) {
+        //TabPageView *pageView = [self.mapPageDataToView objectForKey:pageData];
+        //[self.mapWebViewToPageData removeObjectForKey:pageView.webView];
+        //self.webView = nil;
+        
+        //[self.mapPageDataToView removeObjectForKey:pageData];
+    }
+    
     // remove from the data set
     [self.tabPageDataArray removeObjectsAtIndexes:indexSet];
     
