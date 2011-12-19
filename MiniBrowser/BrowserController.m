@@ -35,8 +35,8 @@
 @property (nonatomic, retain) NSMutableIndexSet *indexesToInsert;
 @property (nonatomic, retain) NSMutableIndexSet *indexesToReload;
 
-@property (nonatomic, retain) NSMutableDictionary *mapPageDataToView;
-@property (nonatomic, retain) NSMutableDictionary *mapWebViewToPageData;
+@property (nonatomic, retain) NSMutableDictionary *mapPageView;
+@property (nonatomic, retain) NSMutableArray *webViewArray;
 
 - (UIViewController *)headerInfoForPageAtIndex:(NSInteger)index;
 - (void)addPagesAtIndexSet:(NSIndexSet *)indexSet;
@@ -82,8 +82,8 @@
 @synthesize indexesToInsert = _indexesToInsert;
 @synthesize indexesToReload = _indexesToReload;
 
-@synthesize mapPageDataToView = _mapPageDataToView;
-@synthesize mapWebViewToPageData = _mapWebViewToPageData;
+@synthesize mapPageView = _mapPageView;
+@synthesize webViewArray = _webViewArray;
 
 BOOL userInitiatedJump = NO;
 NSString *const savedOpenedUrls = @"savedOpenedUrls";
@@ -175,22 +175,22 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     return _mainPageScrollView;
 }
 
-- (NSMutableDictionary *)mapPageDataToView
+- (NSMutableDictionary *)mapPageView
 {
-    if (!_mapPageDataToView) {
-        _mapPageDataToView = [[NSMutableDictionary alloc] initWithCapacity:MAX_TABS_COUNT];
+    if (!_mapPageView) {
+        _mapPageView = [[NSMutableDictionary alloc] initWithCapacity:MAX_TABS_COUNT];
     }
     
-    return _mapPageDataToView;
+    return _mapPageView;
 }
 
-- (NSMutableDictionary *)mapWebViewToPageData
+- (NSMutableArray *)webViewArray
 {
-    if (!_mapWebViewToPageData) {
-        _mapWebViewToPageData = [[NSMutableDictionary alloc] initWithCapacity:MAX_TABS_COUNT];
+    if (!_webViewArray) {
+        _webViewArray = [[NSMutableArray alloc] initWithCapacity:MAX_TABS_COUNT];
     }
     
-    return _mapWebViewToPageData;
+    return _webViewArray;
 }
 
 // ******************************************************************************************************************************
@@ -287,16 +287,18 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 - (IBAction)newTabPressed:(id)sender
 {
-    TabPageScrollView *pageScrollView = [[self.view subviews] lastObject];
+    //TabPageScrollView *pageScrollView = [[self.view subviews] lastObject];
     
     // create an index set of the pages we wish to add
     // example 1: inserting one page at the current index  
-    NSInteger selectedPageIndex = [pageScrollView indexForSelectedPage];
-    NSMutableIndexSet *indexesToInsert = [[NSMutableIndexSet alloc] initWithIndex:(selectedPageIndex == NSNotFound)? 0 : selectedPageIndex];
+    //NSInteger selectedPageIndex = [pageScrollView indexForSelectedPage];
+    //NSMutableIndexSet *indexesToInsert = [[NSMutableIndexSet alloc] initWithIndex:(selectedPageIndex == NSNotFound)? 0 : selectedPageIndex];
     
-    // example 2: appending 2 pages at the end of the page scroller 
-    //NSRange range; range.location = self.tabPageDataArray.count; range.length = 2;
-    //self.indexesToInsert = [[NSMutableIndexSet alloc] initWithIndexesInRange:range];
+    // example 2: appending 1 page at the end of the page scroller 
+    NSRange range;
+    range.location = self.tabPageDataArray.count;
+    range.length = 1;
+    NSMutableIndexSet *indexesToInsert = [[NSMutableIndexSet alloc] initWithIndexesInRange:range];
     
     // example 3: inserting 2 pages at the beginning of the page scroller 
     //NSRange range; range.location = 0; range.length = 2;
@@ -380,15 +382,19 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 - (void)removePagesAtIndexSet:(NSIndexSet *)indexSet
 {
+    self.webView = nil;
+
     TabPageScrollView *pageScrollView = [[self.view subviews] lastObject];
     
     NSArray *deletingObjects = [self.tabPageDataArray objectsAtIndexes:indexSet];
     for (TabPageData *pageData in deletingObjects) {
-        //TabPageView *pageView = [self.mapPageDataToView objectForKey:pageData];
-        //[self.mapWebViewToPageData removeObjectForKey:pageView.webView];
-        //self.webView = nil;
+        NSUInteger index = [self.tabPageDataArray indexOfObject:pageData];
+        NSNumber *key = [NSNumber numberWithInt:index];
         
-        //[self.mapPageDataToView removeObjectForKey:pageData];
+        TabPageView *pageView = [self.mapPageView objectForKey:key];
+        [self.webViewArray removeObject:pageView];
+        
+        [self.mapPageView removeObjectForKey:key];
     }
     
     // remove from the data set
@@ -574,44 +580,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 - (void)loadPageScrollView
 {
-    /*
-    TabPageData *pageData = [[TabPageData alloc] init];
-    pageData.title = @"Yahoo";
-    pageData.subtitle = @"yahoo.com";
-    [self.tabPageDataArray addObject:pageData];
-    [pageData release];
-
-    pageData = [[TabPageData alloc] init];
-    pageData.title = @"Google";
-    pageData.subtitle = @"google.com";
-    [self.tabPageDataArray addObject:pageData];
-    [pageData release];
-    
-    pageData = [[TabPageData alloc] init];
-    pageData.title = @"Wiki";
-    pageData.subtitle = @"wiki.org";
-    [self.tabPageDataArray addObject:pageData];
-    [pageData release];
-    
-    pageData = [[TabPageData alloc] init];
-    pageData.title = @"Apple";
-    pageData.subtitle = @"apple.com";
-    [self.tabPageDataArray addObject:pageData];
-    [pageData release];
-    
-    pageData = [[TabPageData alloc] init];
-    pageData.title = @"Flickr";
-    pageData.subtitle = @"flickr.com";
-    [self.tabPageDataArray addObject:pageData];
-    [pageData release];
-    
-    pageData = [[TabPageData alloc] init];
-    pageData.title = @"AOL";
-    pageData.subtitle = @"aol.com";
-    [self.tabPageDataArray addObject:pageData];
-    [pageData release];
-    */
-    
     if (self.tabPageDataArray.count == 0) {
         TabPageData *pageData = [[TabPageData alloc] init];
         pageData.title = @"Unitiled";
@@ -757,7 +725,8 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 - (void)setLabel:(NSString *)label andUrl:(NSString *)url withWebView:(UIWebView *)webView
 {
-    TabPageData *pageData = [self.mapWebViewToPageData objectForKey:webView];
+    NSUInteger index = [self.webViewArray indexOfObject:webView];
+    TabPageData *pageData = [self.tabPageDataArray objectAtIndex:index];
     pageData.title = label;
     pageData.subtitle = url;
 
@@ -1024,7 +993,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     if (pageData.navController) {
         pageView = (TabPageView *)pageData.navController.topViewController.view;
     } else {
-        pageView = [self.mapPageDataToView objectForKey:pageData];
+        pageView = [self.mapPageView objectForKey:[NSNumber numberWithInt:index]];
     }
     
     if (!pageView) {
@@ -1037,8 +1006,8 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
             //pageView.reuseIdentifier = pageId;
             //pageData.webView.delegate = self;
             
-            [self.mapPageDataToView setObject:pageView forKey:pageData];
-            [self.mapWebViewToPageData setObject:pageData forKey:pageView.webView];
+            [self.mapPageView setObject:pageView forKey:[NSNumber numberWithInt:index]];
+            [self.webViewArray addObject:pageView.webView];
             
             if (pageData.subtitle) {
                 [self loadUrl:pageData.subtitle inWebView:pageView.webView];
@@ -1096,7 +1065,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     TabPageData *pageData = [self.tabPageDataArray objectAtIndex:index];
     
     if (pageData) {
-        TabPageView *pageView = [self.mapPageDataToView objectForKey:pageData];
+        TabPageView *pageView = [self.mapPageView objectForKey:[NSNumber numberWithInt:index]];
         self.webView = pageView.webView;        
         self.urlLabel.text = pageData.title;
         self.urlField.text = pageData.subtitle;

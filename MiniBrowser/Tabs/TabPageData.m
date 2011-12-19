@@ -48,17 +48,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"%@ 0x%x: %@", [self class], self, self.title];
-}
-
-// ******************************************************************************************************************************
-
-#pragma mark - NSCopying 
-
-
-- (id)copyWithZone:(NSZone *)zone
-{
-    return self;
+    return [NSString stringWithFormat:@"%@ 0x%x: %@, %@", [self class], self, self.title, self.subtitle];
 }
 
 @end
