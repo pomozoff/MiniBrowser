@@ -717,7 +717,8 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     }
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    self.urlLabel.text = [NSString stringWithFormat:@"Loading: %@", request.URL.absoluteString];
+    //self.urlLabel.text = [NSString stringWithFormat:@"Loading: %@", request.URL.absoluteString];
+    self.urlLabel.text = @"Loading";
     self.urlField.text = request.URL.absoluteString;
 
     return YES;
@@ -730,8 +731,10 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     pageData.subtitle = url;
 
     // set title and url in view
-    self.urlLabel.text = label;
-    self.urlField.text = url;
+    if (webView == self.webView) {
+        self.urlLabel.text = label;
+        self.urlField.text = url;
+    }
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
