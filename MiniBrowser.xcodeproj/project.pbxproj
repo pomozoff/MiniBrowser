@@ -130,6 +130,9 @@
 		26A26930148F5F8C0087E147 /* PhoneTabPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2692F148F5F8C0087E147 /* PhoneTabPageScrollView.m */; };
 		26A26931148F5F8C0087E147 /* PhoneTabPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2692F148F5F8C0087E147 /* PhoneTabPageScrollView.m */; };
 		26A26932148F5F8C0087E147 /* PhoneTabPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2692F148F5F8C0087E147 /* PhoneTabPageScrollView.m */; };
+		26AC6FD1149B7ADA00AFCCDA /* UIWebView+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 26AC6FD0149B7ADA00AFCCDA /* UIWebView+Extended.m */; };
+		26AC6FD2149B7ADA00AFCCDA /* UIWebView+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 26AC6FD0149B7ADA00AFCCDA /* UIWebView+Extended.m */; };
+		26AC6FD3149B7ADA00AFCCDA /* UIWebView+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 26AC6FD0149B7ADA00AFCCDA /* UIWebView+Extended.m */; };
 		26AF9D4D144EF9F100CBBF20 /* BookmarkTreePermanent.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26AF9D48144EF22500CBBF20 /* BookmarkTreePermanent.plist */; };
 		26C8CF8A145881A400536C9B /* MiniBrowserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67B8143CCE8D0025F929 /* MiniBrowserAppDelegate.m */; };
 		26C8CF8B145881A400536C9B /* MiniBrowserAppDelegate_iPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67BC143CCE8D0025F929 /* MiniBrowserAppDelegate_iPhone.m */; };
@@ -270,6 +273,8 @@
 		26A26927148F5C1A0087E147 /* TabTouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TabTouchView.m; path = Tabs/TabTouchView.m; sourceTree = "<group>"; };
 		26A2692E148F5F8C0087E147 /* PhoneTabPageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhoneTabPageScrollView.h; path = Tabs/iPhone/PhoneTabPageScrollView.h; sourceTree = "<group>"; };
 		26A2692F148F5F8C0087E147 /* PhoneTabPageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhoneTabPageScrollView.m; path = Tabs/iPhone/PhoneTabPageScrollView.m; sourceTree = "<group>"; };
+		26AC6FCF149B7ADA00AFCCDA /* UIWebView+Extended.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+Extended.h"; sourceTree = "<group>"; };
+		26AC6FD0149B7ADA00AFCCDA /* UIWebView+Extended.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+Extended.m"; sourceTree = "<group>"; };
 		26AF9D48144EF22500CBBF20 /* BookmarkTreePermanent.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BookmarkTreePermanent.plist; sourceTree = "<group>"; };
 		26C8CFB4145881A400536C9B /* MiniBrowser3G.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MiniBrowser3G.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26DB365A144EB3D6001C4CBC /* action.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = action.png; sourceTree = "<group>"; };
@@ -417,6 +422,8 @@
 				26A268D1148E10B40087E147 /* NSDate+Extended.h */,
 				26A268D2148E10B40087E147 /* NSDate+Extended.m */,
 				266D67B1143CCE8D0025F929 /* InfoPlist.strings */,
+				26AC6FCF149B7ADA00AFCCDA /* UIWebView+Extended.h */,
+				26AC6FD0149B7ADA00AFCCDA /* UIWebView+Extended.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -801,6 +808,7 @@
 				26A2692A148F5C1A0087E147 /* TabTouchView.m in Sources */,
 				26A26932148F5F8C0087E147 /* PhoneTabPageScrollView.m in Sources */,
 				267E13671495E1E100F319B8 /* PhonePageView.m in Sources */,
+				26AC6FD3149B7ADA00AFCCDA /* UIWebView+Extended.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -830,6 +838,7 @@
 				26A26928148F5C1A0087E147 /* TabTouchView.m in Sources */,
 				26A26930148F5F8C0087E147 /* PhoneTabPageScrollView.m in Sources */,
 				267E13651495E1E100F319B8 /* PhonePageView.m in Sources */,
+				26AC6FD1149B7ADA00AFCCDA /* UIWebView+Extended.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -859,6 +868,7 @@
 				26A26929148F5C1A0087E147 /* TabTouchView.m in Sources */,
 				26A26931148F5F8C0087E147 /* PhoneTabPageScrollView.m in Sources */,
 				267E13661495E1E100F319B8 /* PhonePageView.m in Sources */,
+				26AC6FD2149B7ADA00AFCCDA /* UIWebView+Extended.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

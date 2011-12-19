@@ -312,7 +312,7 @@
 								<string key="NSFrame">{{49, 85}, {222, 260}}</string>
 								<reference key="NSSuperview" ref="1031376253"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="790957506"/>
+								<reference key="NSNextKeyView"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -328,18 +328,6 @@
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="534602522"/>
 								<reference key="IBUIBackgroundColor" ref="664852275"/>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-							</object>
-							<object class="IBUIView" id="790957506">
-								<reference key="NSNextResponder" ref="1031376253"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{55, 75}, {22, 22}}</string>
-								<reference key="NSSuperview" ref="1031376253"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="343965168"/>
-								<string key="NSReuseIdentifierKey">_NS:196</string>
-								<reference key="IBUIBackgroundColor" ref="664852275"/>
-								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
 						</array>
@@ -486,14 +474,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">pageCloseTouch</string>
-						<reference key="source" ref="191373211"/>
-						<reference key="destination" ref="790957506"/>
-					</object>
-					<int key="connectionID">56</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="534602522"/>
 						<reference key="destination" ref="191373211"/>
@@ -556,7 +536,6 @@
 							<reference ref="799766176"/>
 							<reference ref="534602522"/>
 							<reference ref="88786086"/>
-							<reference ref="790957506"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 						<string key="objectName">background gradient view</string>
@@ -648,12 +627,6 @@
 						<reference key="parent" ref="1031376253"/>
 						<string key="objectName">page scroller touch view</string>
 					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">55</int>
-						<reference key="object" ref="790957506"/>
-						<reference key="parent" ref="1031376253"/>
-						<string key="objectName">close view touch</string>
-					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -677,8 +650,6 @@
 				<string key="40.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="5.CustomClassName">TabTouchView</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="55.CustomClassName">TabTouchView</string>
-				<string key="55.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="9.CustomClassName">TabTouchView</string>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
@@ -686,7 +657,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">56</int>
+			<int key="maxID">54</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -707,7 +678,6 @@
 						<string key="tabsToolbar">UIToolbar</string>
 						<string key="urlField">UITextField</string>
 						<string key="urlLabel">UILabel</string>
-						<string key="webView">UIWebView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="actionButton">
@@ -762,10 +732,6 @@
 							<string key="name">urlLabel</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="webView">
-							<string key="name">webView</string>
-							<string key="candidateClassName">UIWebView</string>
-						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
@@ -776,7 +742,6 @@
 					<string key="className">PhoneTabPageScrollView</string>
 					<string key="superclassName">TabPageScrollView</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="pageCloseTouch">TabTouchView</string>
 						<string key="pageControl">UIPageControl</string>
 						<string key="pageControlTouch">TabTouchView</string>
 						<string key="pageDeckBackgroundView">UIView</string>
@@ -787,10 +752,6 @@
 						<string key="scrollViewTouch">TabTouchView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="pageCloseTouch">
-							<string key="name">pageCloseTouch</string>
-							<string key="candidateClassName">TabTouchView</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="pageControl">
 							<string key="name">pageControl</string>
 							<string key="candidateClassName">UIPageControl</string>
