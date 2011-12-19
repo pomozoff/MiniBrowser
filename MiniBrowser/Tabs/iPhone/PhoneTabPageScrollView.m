@@ -1172,8 +1172,13 @@
         return;
     
 	NSInteger selectedIndex = [self indexForSelectedPage];
-	
-	[self selectPageAtIndex:selectedIndex animated:YES];
+    CGPoint tapPoint = [recognizer locationInView:self.selectedPage.closeButton];
+
+	if ([self.selectedPage.closeButton pointInside:tapPoint withEvent:nil]) {
+        [self.delegate closeCurrentPage];
+	} else {
+        [self selectPageAtIndex:selectedIndex animated:YES];
+    }
 }
 
 // *******************************************************************************************************************************

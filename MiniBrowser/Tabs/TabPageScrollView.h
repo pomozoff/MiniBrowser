@@ -54,8 +54,8 @@ typedef enum {
 @optional
 
 // Dragging
-- (void) pageScrollViewWillBeginDragging:(TabPageScrollView *)scrollView;
-- (void) pageScrollViewDidEndDragging:(TabPageScrollView *)scrollView willDecelerate:(BOOL)decelerate;
+- (void)pageScrollViewWillBeginDragging:(TabPageScrollView *)scrollView;
+- (void)pageScrollViewDidEndDragging:(TabPageScrollView *)scrollView willDecelerate:(BOOL)decelerate;
 
 // Decelaration
 - (void)pageScrollViewWillBeginDecelerating:(TabPageScrollView *)scrollView;
@@ -74,6 +74,9 @@ typedef enum {
 // Called after the user changes the selection.
 - (void)pageScrollView:(TabPageScrollView *)scrollView didSelectPageAtIndex:(NSInteger)index;
 - (void)pageScrollView:(TabPageScrollView *)scrollView didDeselectPageAtIndex:(NSInteger)index;
+
+// Close current page
+- (void)closeCurrentPage;
 
 @end
 

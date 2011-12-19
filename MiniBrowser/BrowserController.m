@@ -335,6 +335,15 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
         [self removePagesAtIndexSet:self.indexesToDelete];
         self.indexesToDelete = nil;
     }
+    
+    if (self.tabPageDataArray.count == 0) {
+        [self newTabPressed:nil];
+    }
+}
+
+- (void)closeCurrentPage
+{
+    [self closeTabPressed:nil];
 }
 
 // ******************************************************************************************************************************
@@ -1123,6 +1132,8 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     
     // place tabs toolbar to view
     [self changeToolbar:self.navigationToolbar withToolbar:self.tabsToolbar];
+
+    self.addTabButton.enabled = (self.tabPageDataArray.count >= MAX_TABS_COUNT);
 }
 
 // ******************************************************************************************************************************
