@@ -167,6 +167,8 @@
     
     self.pageControl = nil;
     self.pageControlTouch = nil;
+    
+    self.closePageTouch = nil;
 }
 
 - (void)dealloc
@@ -360,7 +362,7 @@
                 self.pageHeaderView.hidden = YES; 
                 self.userHeaderView = altHeaderView;
                 CGRect frame = self.userHeaderView.frame;
-                frame.origin.y = 0;
+                frame.origin.y = 0.0f;
                 self.userHeaderView.frame = frame; 
                 headerView = self.userHeaderView;
                 [self addSubview : self.userHeaderView];
@@ -388,15 +390,15 @@
 		self.selectedPage.frame = frame;
 		
 		// reveal the page header view
-		headerView.alpha = 1.0;
+		headerView.alpha = 1.0f;
         
         // remove close button
-        //[self.selectedPage bringSubviewToFront:self.selectedPage.closeButton];
         self.selectedPage.closeButton.alpha = 0.0f;
         
 		//remove unnecessary views
 		[self.scrollViewTouch removeFromSuperview];
 		[self.pageControlTouch removeFromSuperview];
+        [self.closePageTouch removeFromSuperview];
 	} : ^{
         [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
         
@@ -411,18 +413,22 @@
         // add the page back to the scrollView and transform it
         [self.scrollView addSubview:self.selectedPage];
         
-		self.selectedPage.transform = CGAffineTransformMakeScale(0.6, 0.6);
+		self.selectedPage.transform = CGAffineTransformMakeScale(0.6f, 0.6f);
         
  		CGRect frame = self.selectedPage.frame;
-        frame.origin.y = 0;
+        frame.origin.y = 0.0f;
         self.selectedPage.frame = frame;
         
         // hide the page header view
-        headerView.alpha = 0.0;	
+        headerView.alpha = 0.0f;	
         
-        // add close button
-        self.selectedPage.closeButton.alpha = 1.0f;
-        [self.selectedPage bringSubviewToFront:self.selectedPage.closeButton];
+        // add close button if at least one not empty page presents
+        if (self.numberOfPages == 1) {
+            [self.selectedPage.closeButton removeFromSuperview];
+        } else {
+            self.selectedPage.closeButton.alpha = 1.0f;
+            [self.selectedPage bringSubviewToFront:self.selectedPage.closeButton];
+        }
         
         // notify the delegate
 		if ([self.delegate respondsToSelector:@selector(pageScrollView:willDeselectPageAtIndex:)]) {
@@ -440,10 +446,10 @@
 		self.pageDeckSubtitleLabel.hidden = YES;
 		self.pageControl.hidden = YES;
 		self.scrollView.scrollEnabled = NO;
-		self.selectedPage.alpha = 1.0;
+		self.selectedPage.alpha = 1.0f;
 
 		// copy self.selectedPage up in the view hierarchy, to allow touch events on its entire frame 
-		self.selectedPage.frame = CGRectMake(0, headerView.frame.size.height, self.frame.size.width, self.selectedPage.frame.size.height);
+		self.selectedPage.frame = CGRectMake(0.0f, headerView.frame.size.height, self.frame.size.width, self.selectedPage.frame.size.height);
 		[self addSubview:self.selectedPage];
 
 		// notify delegate
@@ -456,7 +462,11 @@
 		self.scrollView.scrollEnabled = YES;				
 		//self.scrollView.frame = CGRectMake(0, self.scrollViewTouch.frame.origin.y, self.frame.size.width, self.scrollViewTouch.frame.size.height);
 		[self addSubview:self.scrollViewTouch];
-		[self addSubview: self.pageControlTouch];
+		[self addSubview:self.pageControlTouch];
+        
+        if ([[self.selectedPage subviews] indexOfObject:self.selectedPage.closeButton] != NSNotFound) {
+            [self addSubview:self.closePageTouch];
+        }
         
 		if ([self.delegate respondsToSelector:@selector(pageScrollView:didDeselectPageAtIndex:)]) {
 			[self.delegate pageScrollView:self didDeselectPageAtIndex:selectedIndex];
@@ -464,7 +474,7 @@
 	};
 	
 	if (animated) {
-		[UIView animateWithDuration:0.3 animations:SelectBlock completion:CompletionBlock];
+		[UIView animateWithDuration:0.3f animations:SelectBlock completion:CompletionBlock];
 	} else {
 		SelectBlock();
 		CompletionBlock(YES);
@@ -802,7 +812,8 @@
     [self.indexesWithinVisibleRange enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
         TabPageView *page = [self loadPageAtIndex:idx insertIntoVisibleIndex: idx - self.visibleIndexes.location];
         [self insertPageInScrollView:page atIndex:idx animated:animated]; 
-        _visibleIndexes.length++; 
+        _visibleIndexes.length++;
+        
         if (self.visibleIndexes.length > 3) {
             TabPageView *page = [self.visiblePages lastObject];
             [page removeFromSuperview];
@@ -820,6 +831,17 @@
     if (self.indexesAfterVisibleRange.count > 0) {
         self.numberOfPages = self.numberOfPages + self.indexesAfterVisibleRange.count;
     }
+    
+    // remove close button if one empty page left
+    [self.indexesWithinVisibleRange enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        TabPageView *visiblePage = [self.dataSource pageScrollView:self viewForPageAtIndex:idx];
+        
+        if (self.numberOfPages == 1) {
+            [visiblePage.closeButton removeFromSuperview];
+        } else if ([[visiblePage subviews] indexOfObject:visiblePage.closeButton] == NSNotFound) {
+            [visiblePage addSubview:visiblePage.closeButton];
+        }
+    }];
 }
 
 - (void)deletePagesAtIndexes:(NSIndexSet *)indexes animated:(BOOL)animated
@@ -841,6 +863,7 @@
         [self.deletedPages addObject:pseudoPage];
         _visibleIndexes.location--;
     }];
+    
     if (self.deletedPages.count > 0) {
         // removePagesFromScrollView:animated shifts all pages which follow the deleted pages backwards, and trims the scrollView contentSize respectively. As a result UIScrollView may adjust its contentOffset (if it is larger than the new contentSize). 
         // Here we store the oldOffset to make sure we adjust it by exactly the number of pages deleted. 
@@ -859,7 +882,6 @@
     self.numberOfFreshPages = 0;
     NSInteger numPagesAfterDeletion = self.numberOfPages -= self.indexesWithinVisibleRange.count + self.indexesAfterVisibleRange.count; 
     [self.indexesWithinVisibleRange enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        
         // get the deleted page 
         [self.deletedPages addObject: [self pageAtIndex:idx]];
         
@@ -893,14 +915,13 @@
                 _visibleIndexes.location -= delta; 
                 
                 //load 'delta' pages from before the visible range to replace deleted pages
-                for (int i=0; i<delta; i++) {
+                for (int i = 0; i < delta; i++) {
                     TabPageView *page = [self loadPageAtIndex:self.visibleIndexes.location + i insertIntoVisibleIndex:i];    
                     [self addPageToScrollView:page atIndex:self.visibleIndexes.location + i]; 
                 }
             }
         }               
     }
-    
     
     //update number of pages.  
     self.numberOfPages = numPagesAfterDeletion;
@@ -917,7 +938,6 @@
     //        self.scrollView.contentSize = CGSizeMake(self.numberOfPages * self.scrollView.bounds.size.width, self.scrollView.bounds.size.height);            
     //        self.pageControl.numberOfPages = self.numberOfPages;      
     //    }
-    
 }
 
 - (void)reloadPagesAtIndexes:(NSIndexSet *)indexes

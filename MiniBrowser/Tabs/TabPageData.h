@@ -11,6 +11,9 @@
 #import "TabPageView.h"
 #import "BrowserController.h"
 
+#define NAVBAR_HEIGHT 58
+#define TOOLBAR_HEIGHT 44
+
 @interface TabPageData : NSObject <UIWebViewDelegate, PageHeaderInfo>
 
 @property (nonatomic, retain) UIWebView *webView;

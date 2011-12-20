@@ -312,7 +312,7 @@
 								<string key="NSFrame">{{49, 85}, {222, 260}}</string>
 								<reference key="NSSuperview" ref="1031376253"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="658114077"/>
+								<reference key="NSNextKeyView" ref="108669614"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -330,7 +330,7 @@
 								<reference key="IBUIBackgroundColor" ref="664852275"/>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
-							<object class="IBUIView" id="658114077">
+							<object class="IBUIView" id="108669614">
 								<reference key="NSNextResponder" ref="1031376253"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{55, 75}, {22, 22}}</string>
@@ -476,19 +476,19 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">closePageTouch</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="108669614"/>
+					</object>
+					<int key="connectionID">56</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">scrollViewTouch</string>
 						<reference key="source" ref="191373211"/>
 						<reference key="destination" ref="88786086"/>
 					</object>
 					<int key="connectionID">14</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">closePageTouch</string>
-						<reference key="source" ref="191373211"/>
-						<reference key="destination" ref="658114077"/>
-					</object>
-					<int key="connectionID">56</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -554,7 +554,7 @@
 							<reference ref="799766176"/>
 							<reference ref="534602522"/>
 							<reference ref="88786086"/>
-							<reference ref="658114077"/>
+							<reference ref="108669614"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 						<string key="objectName">background gradient view</string>
@@ -641,16 +641,16 @@
 						<string key="objectName">page scroller</string>
 					</object>
 					<object class="IBObjectRecord">
+						<int key="objectID">55</int>
+						<reference key="object" ref="108669614"/>
+						<reference key="parent" ref="1031376253"/>
+						<string key="objectName">close page touch</string>
+					</object>
+					<object class="IBObjectRecord">
 						<int key="objectID">9</int>
 						<reference key="object" ref="88786086"/>
 						<reference key="parent" ref="1031376253"/>
 						<string key="objectName">page scroller touch view</string>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">55</int>
-						<reference key="object" ref="658114077"/>
-						<reference key="parent" ref="1031376253"/>
-						<string key="objectName">close page touch</string>
 					</object>
 				</array>
 			</object>

@@ -27,9 +27,13 @@
 - (UIWebView *)webView
 {
     if (!_webView) {
-        _webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 300, 400)];
+        CGRect appFrame = [[UIScreen mainScreen] applicationFrame];
+        
+        CGFloat height = appFrame.size.height - NAVBAR_HEIGHT - TOOLBAR_HEIGHT;
+        _webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, appFrame.size.width, height)];
         _webView.delegate = self;
         _webView.tag = 100;
+        _webView.scalesPageToFit = YES;
     }
     
     return _webView;

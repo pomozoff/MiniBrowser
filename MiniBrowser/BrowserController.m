@@ -329,10 +329,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     
     [self removePagesAtIndexSet:indexesToDelete];
     [indexesToDelete release];
-
-    if (self.tabPageDataArray.count == 0) {
-        [self newTabPressed:nil];
-    }
 }
 
 - (void)closeCurrentPage
@@ -376,6 +372,10 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     [self.mainPageScrollView deletePagesAtIndexes:indexSet animated:YES];
     
     self.addTabButton.enabled = YES;
+    
+    if (self.tabPageDataArray.count == 0) {
+        [self newTabPressed:nil];
+    }
 }
 
 // ******************************************************************************************************************************
