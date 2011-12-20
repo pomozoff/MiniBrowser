@@ -11,9 +11,14 @@
 #import "TabPageView.h"
 #import "BrowserController.h"
 
-@interface TabPageData : NSObject <PageHeaderInfo>
+@interface TabPageData : NSObject <UIWebViewDelegate, PageHeaderInfo>
+
+@property (nonatomic, retain) UIWebView *webView;
+@property (nonatomic, retain) id<UIWebViewDelegate> webViewDelegate;
 
 // an example of using UINavigationController as the owner of the page. 
 @property (nonatomic, retain) UINavigationController *navController; 
+
+- (void)loadUrl:(NSString *)url;
 
 @end

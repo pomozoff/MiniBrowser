@@ -10,7 +10,8 @@
 
 @implementation TabPageData
 
-//@synthesize webView = _webView;
+@synthesize webView = _webView;
+@synthesize webViewDelegate = _webViewDelegate;
 
 @synthesize title = _title;
 @synthesize subtitle = _subtitle;
@@ -22,6 +23,17 @@
 
 #pragma mark - Properties initialization
 
+
+- (UIWebView *)webView
+{
+    if (!_webView) {
+        _webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 300, 400)];
+        _webView.delegate = self;
+        _webView.tag = 100;
+    }
+    
+    return _webView;
+}
 
 - (NSString *)title
 {
@@ -51,5 +63,67 @@
     return [NSString stringWithFormat:@"%@ 0x%x: %@", [self class], self, self.title];
 }
 
+// ******************************************************************************************************************************
+
+#pragma mark - WebView Delegate
+
+
+- (void)setLabel:(NSString *)label andUrl:(NSString *)url
+{
+    self.title = label;
+    self.subtitle = url;
+}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    BOOL result = [self.webViewDelegate webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
+    if (result) {
+        [self setLabel:@"Loading" andUrl:request.URL.absoluteString];
+    }
+    
+    return result;
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    NSString *label = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
+    NSString *sourceUrl = webView.request.URL.absoluteString;
+    
+    [self setLabel:label andUrl:sourceUrl];
+    [self.webViewDelegate webViewDidFinishLoad:webView];
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    NSString *logString = [NSString stringWithFormat:@"Error: %@", error.localizedDescription];
+    NSString *sourceUrl = webView.request.URL.absoluteString;
+    
+    [self setLabel:logString andUrl:sourceUrl];
+    [self.webViewDelegate webView:webView didFailLoadWithError:error];
+}
+
+// ******************************************************************************************************************************
+
+#pragma mark - Page Data Delegate
+
+
+- (void)loadUrl:(NSString *)url
+{
+    NSString *trimmedUrl = [url stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    BOOL isUrlEmpty = !trimmedUrl || [trimmedUrl isEqualToString:@""];
+
+    if (isUrlEmpty) {
+        return;
+    }
+    
+    NSString *readyUrl = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURL *urlObject = [NSURL URLWithString:readyUrl];
+    
+    if (!urlObject.scheme) {
+        urlObject = [NSURL URLWithString:[@"http://" stringByAppendingString:urlObject.absoluteString]];
+    }
+    
+    [self.webView loadRequest:[NSURLRequest requestWithURL:urlObject]];
+}
 
 @end

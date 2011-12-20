@@ -10,7 +10,6 @@
 
 @implementation TabPageView
 
-@synthesize webView = _webView;
 @synthesize closeButton = _closeButton;
 
 @synthesize identityFrame = _identityFrame;
@@ -40,6 +39,7 @@
 {
 	//reset modified properties
 	self.transform = CGAffineTransformIdentity;
+    [[self viewWithTag:100] removeFromSuperview];
 }
 
 @end
