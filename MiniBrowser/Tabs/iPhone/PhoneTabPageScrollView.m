@@ -121,8 +121,8 @@
 	// set gradient for background view
 	CAGradientLayer *glayer = [CAGradientLayer layer];
 	glayer.frame = self.pageDeckBackgroundView.bounds;
-	UIColor *topColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];    //light blue-gray
-	UIColor *bottomColor = [UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1.0]; //dark blue-gray
+	UIColor *topColor = [UIColor colorWithRed:0.57 green:0.63 blue:0.68 alpha:1.0];    // light blue-gray
+	UIColor *bottomColor = [UIColor colorWithRed:0.31 green:0.41 blue:0.48 alpha:1.0]; // dark blue-gray
 	glayer.colors = [NSArray arrayWithObjects:(id)[topColor CGColor], (id)[bottomColor CGColor], nil];
     [self.pageDeckBackgroundView.layer insertSublayer:glayer atIndex:0];
 	
@@ -1187,7 +1187,7 @@
 	NSInteger selectedIndex = [self indexForSelectedPage];
     CGPoint tapPoint = [recognizer locationInView:self.selectedPage.closeButton];
 
-	if ([self.selectedPage.closeButton pointInside:tapPoint withEvent:nil]) {
+	if ([[self.selectedPage subviews] indexOfObject:self.selectedPage.closeButton] != NSNotFound && [self.selectedPage.closeButton pointInside:tapPoint withEvent:nil]) {
         [self.delegate closeCurrentPage];
 	} else {
         [self selectPageAtIndex:selectedIndex animated:YES];
