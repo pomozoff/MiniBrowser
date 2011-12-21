@@ -622,11 +622,14 @@
     [[self.scrollView subviews] enumerateObjectsUsingBlock:^(id existingPage, NSUInteger idx, BOOL *stop) {
         if (existingPage != page && page.frame.origin.x <= ((UIView *)existingPage).frame.origin.x) {
             if (animated) {
-                [UIView animateWithDuration:0.4 animations:^(void) {
-                    [self shiftPage:existingPage withOffset:self.scrollView.frame.size.width];
-                } completion:^(BOOL finished) {
-                    [self selectPageAtIndex:index animated:animated];
-                }];
+                
+                [UIView animateWithDuration:0.3 animations:^(void) {
+                        [self shiftPage:existingPage withOffset:self.scrollView.frame.size.width];
+                    } completion:^(BOOL finished) {
+                        if (finished) {
+                            [self selectPageAtIndex:index animated:animated];
+                        }
+                    }];
             } else {
                 [self shiftPage:existingPage withOffset:self.scrollView.frame.size.width];
             }                
@@ -721,7 +724,7 @@
     page.frame = frame; 
     
     // also refresh the alpha of the shifted page
-    [self setAlphaForPage : page];	
+    [self setAlphaForPage:page];	
 }
 
 // *******************************************************************************************************************************

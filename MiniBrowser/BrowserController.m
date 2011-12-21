@@ -329,6 +329,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     
     [self removePagesAtIndexSet:indexesToDelete];
     [indexesToDelete release];
+    self.webView = nil;
 }
 
 - (void)closeCurrentPage

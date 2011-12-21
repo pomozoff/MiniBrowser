@@ -67,6 +67,18 @@
     return [NSString stringWithFormat:@"%@ 0x%x: %@", [self class], self, self.title];
 }
 
+- (void)dealloc
+{
+    self.webView = nil;
+    self.webViewDelegate = nil;
+    
+    self.title = nil;
+    self.subtitle = nil;
+    self.navController = nil;
+    
+    [super dealloc];
+}
+
 // ******************************************************************************************************************************
 
 #pragma mark - WebView Delegate
