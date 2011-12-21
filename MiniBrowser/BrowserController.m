@@ -934,6 +934,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 - (UIView *)pageScrollView:(TabPageScrollView *)scrollView headerViewForPageAtIndex:(NSInteger)index
 {
     TabPageData *pageData = [self.tabPageDataArray objectAtIndex:index];
+    
     if (pageData.navController) {
         UIView *navBarCopy = [[[UINavigationBar alloc] initWithFrame:pageData.navController.navigationBar.frame] autorelease];
         return navBarCopy;

@@ -342,7 +342,7 @@
     
 	NSInteger selectedIndex = [self indexForSelectedPage];
     
-	void (^SelectBlock)(void) = (mode == TabPageScrollViewModePage)? ^{
+	void (^SelectBlock)(void) = (mode == TabPageScrollViewModePage) ? ^{
         [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
         
         UIView *headerView = self.pageHeaderView;
@@ -355,8 +355,10 @@
 		[self.scrollView bringSubviewToFront:self.selectedPage];
 		if ([self.dataSource respondsToSelector:@selector(pageScrollView:headerViewForPageAtIndex:)]) {
             UIView *altHeaderView = [self.dataSource pageScrollView:self headerViewForPageAtIndex:selectedIndex];
+            
             [self.userHeaderView removeFromSuperview];
             self.userHeaderView = nil;
+            
             if (altHeaderView) {
                 //use the header view initialized by the dataSource 
                 self.pageHeaderView.hidden = YES; 
@@ -392,7 +394,7 @@
 		// reveal the page header view
 		headerView.alpha = 1.0f;
         
-        // remove close button
+        // hide close button
         self.selectedPage.closeButton.alpha = 0.0f;
         
 		//remove unnecessary views
@@ -421,15 +423,10 @@
         
         // hide the page header view
         headerView.alpha = 0.0f;	
-        
-        // add close button if at least one not empty page presents
-        if (self.numberOfPages == 1) {
-            [self.selectedPage.closeButton removeFromSuperview];
-        } else {
-            self.selectedPage.closeButton.alpha = 1.0f;
-            [self.selectedPage bringSubviewToFront:self.selectedPage.closeButton];
-        }
-        
+
+        // display close button
+        self.selectedPage.closeButton.alpha = 1.0f;
+
         // notify the delegate
 		if ([self.delegate respondsToSelector:@selector(pageScrollView:willDeselectPageAtIndex:)]) {
 			[self.delegate pageScrollView:self willDeselectPageAtIndex:selectedIndex];
@@ -831,17 +828,6 @@
     if (self.indexesAfterVisibleRange.count > 0) {
         self.numberOfPages = self.numberOfPages + self.indexesAfterVisibleRange.count;
     }
-    
-    // remove close button if one empty page left
-    [self.indexesWithinVisibleRange enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        TabPageView *visiblePage = [self.dataSource pageScrollView:self viewForPageAtIndex:idx];
-        
-        if (self.numberOfPages == 1) {
-            [visiblePage.closeButton removeFromSuperview];
-        } else if ([[visiblePage subviews] indexOfObject:visiblePage.closeButton] == NSNotFound) {
-            [visiblePage addSubview:visiblePage.closeButton];
-        }
-    }];
 }
 
 - (void)deletePagesAtIndexes:(NSIndexSet *)indexes animated:(BOOL)animated
@@ -1132,7 +1118,7 @@
     
 	CGFloat alphaButton = 1.00f - fabs(delta / step * 1.50f);
 
-	if (alphaButton > 0.95f)
+	if (alphaButton > 0.92f)
         alphaButton = 1.00f;
     
     page.closeButton.alpha = alphaButton;
