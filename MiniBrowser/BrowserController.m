@@ -394,6 +394,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     self.popoverAction = nil;
     self.actionSheet = nil;
     self.bookmarkNavigationController = nil;
+    self.webView = nil;
 }
 
 - (void)freeProperties
@@ -410,7 +411,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     self.tabsButton = nil;
     self.urlField = nil;
     self.urlLabel = nil;
-    self.webView = nil;
     self.tabPageDataArray = nil;
     
     self.indexesToInsert = nil;
