@@ -410,8 +410,8 @@
 			isa = PBXGroup;
 			children = (
 				26A268CC148E10B40087E147 /* main.m */,
-				26A268CD148E10B40087E147 /* MiniBrowser-Info.plist */,
 				26A268CE148E10B40087E147 /* MiniBrowser-Prefix.pch */,
+				26A268CD148E10B40087E147 /* MiniBrowser-Info.plist */,
 				26A268CF148E10B40087E147 /* MiniBrowser3G-Info.plist */,
 				26A268D0148E10B40087E147 /* MiniBrowserOriginal-Info.plist */,
 				26A268D1148E10B40087E147 /* NSDate+Extended.h */,

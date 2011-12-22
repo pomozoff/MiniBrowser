@@ -394,7 +394,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     self.popoverAction = nil;
     self.actionSheet = nil;
     self.bookmarkNavigationController = nil;
-    self.mainPageScrollView = nil;
 }
 
 - (void)freeProperties
@@ -415,6 +414,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     self.tabPageDataArray = nil;
     
     self.indexesToInsert = nil;
+    self.mainPageScrollView = nil;
 }
 
 // ******************************************************************************************************************************

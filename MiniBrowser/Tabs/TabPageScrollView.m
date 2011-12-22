@@ -44,9 +44,10 @@
 
 - (void)dealloc
 {
+    self.delegate = nil;
+    self.dataSource = nil;
+    
     [super dealloc];
-    
-    
 }
 
 - (NSInteger)numberOfPages
