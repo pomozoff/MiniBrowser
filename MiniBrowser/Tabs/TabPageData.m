@@ -7,6 +7,7 @@
 //
 
 #import "TabPageData.h"
+#import "UIWebView+Extended.h"
 
 @implementation TabPageData
 
@@ -35,6 +36,7 @@
         _webView.tag = 100;
         _webView.scalesPageToFit = YES;
         _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        _webView.isThreaded = NO;
     }
     
     return _webView;

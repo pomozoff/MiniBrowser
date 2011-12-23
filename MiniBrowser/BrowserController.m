@@ -16,6 +16,7 @@
 #import "TabPageData.h"
 #import "PhonePageView.h"
 #import "PageHeaderInfo.h"
+#import "UIWebView+Extended.h"
 
 @interface BrowserController()
 
@@ -676,6 +677,18 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     }
 }
 
+- (void)loadWebView:(NSArray *)arguments {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    UIWebView *webView = (UIWebView *)[arguments objectAtIndex:0];
+    NSURLRequest *request=(NSURLRequest *)[arguments objectAtIndex:1];
+    
+    webView.isThreaded = YES;
+    [webView loadRequest:request];
+    
+    [pool drain];
+}
+
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     if (userInitiatedJump) {
@@ -694,8 +707,18 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
         return NO;
     }
     
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [self setLabel:@"Loading" andUrl:request.URL.absoluteString withWebView:webView];
+    
+    if (webView == self.webView) {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    }
+    
+    if (!webView.isThreaded) {
+        NSArray *arguments = [NSArray arrayWithObjects:webView, request, nil];
+        [NSThread detachNewThreadSelector:@selector(loadWebView:) toTarget:self withObject:arguments];
+
+        return NO;
+    }
 
     return YES;
 }
@@ -726,7 +749,9 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     [historyItem release];
 
     // remove network activity star
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    if (webView == self.webView) {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    }
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
@@ -738,7 +763,9 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
     [self setLabel:logString andUrl:sourceUrl withWebView:webView];
     
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    if (webView == self.webView) {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    }
 }
 
 // ******************************************************************************************************************************
@@ -964,6 +991,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
             
             self.webView = pageData.webView;
         }
+        
         [pageView insertSubview:pageData.webView belowSubview:pageView.closeButton];
     }
     
