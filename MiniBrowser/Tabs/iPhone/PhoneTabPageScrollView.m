@@ -388,7 +388,7 @@
         self.selectedPage.identityFrame = frame; 
         
         // finally crop frame to fit inside new superview (see CompletionBlock) 
-		frame.size.height = self.frame.size.height - headerView.frame.size.height;
+		frame.size.height -= headerView.frame.size.height;
 		self.selectedPage.frame = frame;
 		
 		// reveal the page header view
@@ -918,7 +918,6 @@
     [self.visiblePages removeObjectsInArray:self.deletedPages];
     // ...and from the scrollView
     [self removePagesFromScrollView:self.deletedPages animated:animated];
-    
     
     [self.deletedPages removeAllObjects];
     

@@ -13,7 +13,7 @@
 
 @interface TabPageData : NSObject <UIWebViewDelegate, PageHeaderInfo>
 
-@property (nonatomic, retain) UIImage *previewImage;
+@property (nonatomic, retain) UIImageView *previewImageView;
 @property (nonatomic, retain) UIWebView *webView;
 @property (nonatomic, retain) id<UIWebViewDelegate> webViewDelegate;
 
@@ -21,5 +21,6 @@
 @property (nonatomic, retain) UINavigationController *navController; 
 
 - (void)loadUrl:(NSString *)url;
+- (void)makeScreenShotFromTheView:(UIView *)view;
 
 @end

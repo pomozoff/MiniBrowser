@@ -352,9 +352,10 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     
     // create new pages and add them to the data set 
     [indexSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        TabPageData *pageData = [[[TabPageData alloc] init] autorelease];
+        TabPageData *pageData = [[TabPageData alloc] init];
         pageData.webViewDelegate = self;
         [self.tabPageDataArray insertObject:pageData atIndex:idx];
+        [pageData release];
     }];
     
     // update the page scroller 
@@ -677,7 +678,8 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     }
 }
 
-- (void)loadWebView:(NSArray *)arguments {
+- (void)loadWebView:(NSArray *)arguments
+{
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
     UIWebView *webView = (UIWebView *)[arguments objectAtIndex:0];
@@ -715,6 +717,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     
     if (!webView.isThreaded) {
         NSArray *arguments = [NSArray arrayWithObjects:webView, request, nil];
+        [NSThread setThreadPriority:0.5f];
         [NSThread detachNewThreadSelector:@selector(loadWebView:) toTarget:self withObject:arguments];
 
         return NO;
@@ -752,6 +755,9 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     if (webView == self.webView) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     }
+    
+    // make screenshot loaded page
+    [self makeScreenShotFromTheView:self.webView];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
@@ -990,10 +996,11 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
             pageView.reuseIdentifier = pageId;
             
             self.webView = pageData.webView;
-            self.webView.frame = pageView.frame;
         }
         
-        [pageView insertSubview:pageData.webView belowSubview:pageView.closeButton];
+        if ([[pageView subviews] indexOfObject:pageData.previewImageView] == NSNotFound) {
+            [pageView insertSubview:pageData.previewImageView belowSubview:pageView.closeButton];
+        }
     }
     
     return pageView;
@@ -1048,6 +1055,12 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     self.webView = pageData.webView;
     self.urlLabel.text = pageData.title;
     self.urlField.text = pageData.subtitle;
+    
+    TabPageView *pageView = [scrollView pageAtIndex:index];
+    CGRect frame = pageView.identityFrame;
+    frame.origin.x = 0.0f;
+    frame.origin.y = 0.0f;
+    self.webView.frame = frame;
 }
 
 - (void)pageScrollView:(TabPageScrollView *)scrollView didSelectPageAtIndex:(NSInteger)index
@@ -1064,6 +1077,13 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     
     // update backs/forward buttons
     [self updateButtonsStatus:self.webView];
+    
+    // remove webView's screenshot
+    [pageData.previewImageView removeFromSuperview];
+    
+    // place webView to the screen
+    TabPageView *pageView = [scrollView pageAtIndex:index];
+    [pageView addSubview:pageData.webView];
 }
 
 - (void)pageScrollView:(TabPageScrollView *)scrollView willDeselectPageAtIndex:(NSInteger)index
@@ -1085,18 +1105,18 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
         */
     }
     
-    
-    // Get screenshot of the current webView
-    TabPageView *pageView = [scrollView pageAtIndex:index];
-     
-     CGSize imageSize = pageView.bounds.size;
-     if (NULL != UIGraphicsBeginImageContextWithOptions)
-         UIGraphicsBeginImageContextWithOptions(imageSize, NO, 0);
-     else
-         UIGraphicsBeginImageContext(imageSize);
+    // remove preview
+    [pageData.previewImageView removeFromSuperview];
 
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    [pageView.layer renderInContext:context];
+    // get screenshot of the current webView
+    TabPageView *pageView = [scrollView pageAtIndex:index];
+    [pageData makeScreenShotFromTheView:pageView];
+    
+    // remove webView from the screen
+    [pageData.webView removeFromSuperview];
+
+    // place an image from pageData
+    [pageView insertSubview:pageData.previewImageView belowSubview:pageView.closeButton];
 }
 
 - (void)pageScrollView:(TabPageScrollView *)scrollView didDeselectPageAtIndex:(NSInteger)index
@@ -1114,7 +1134,8 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     
     // place tabs toolbar to view
     [self changeToolbar:self.navigationToolbar withToolbar:self.tabsToolbar];
-
+    
+    // Enable "new tab" button if amount of tabs less than max tabs count
     self.addTabButton.enabled = (self.tabPageDataArray.count < MAX_TABS_COUNT);
 }
 

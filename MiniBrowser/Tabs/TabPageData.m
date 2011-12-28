@@ -6,12 +6,14 @@
 //  Copyright (c) 2011 Alma. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "TabPageData.h"
 #import "UIWebView+Extended.h"
 
 @implementation TabPageData
 
-@synthesize previewImage = _previewImage;
+@synthesize previewImageView = _previewImage;
 @synthesize webView = _webView;
 @synthesize webViewDelegate = _webViewDelegate;
 
@@ -31,7 +33,6 @@
     if (!_webView) {
         _webView = [[UIWebView alloc] init];
         _webView.delegate = self;
-        _webView.tag = 100;
         _webView.scalesPageToFit = YES;
         _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         _webView.isThreaded = NO;
@@ -70,6 +71,7 @@
 
 - (void)dealloc
 {
+    self.previewImageView = nil;
     self.webView = nil;
     self.webViewDelegate = nil;
     
@@ -141,6 +143,26 @@
     }
     
     [self.webView loadRequest:[NSURLRequest requestWithURL:urlObject]];
+}
+
+- (void)makeScreenShotFromTheView:(UIView *)view
+{
+    CGSize imageSize = view.bounds.size;
+    if (NULL != UIGraphicsBeginImageContextWithOptions)
+        UIGraphicsBeginImageContextWithOptions(imageSize, NO, 0);
+    else
+        UIGraphicsBeginImageContext(imageSize);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    [view.layer renderInContext:context];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    // remember imageview
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    self.previewImageView = imageView;
+    self.previewImageView.tag = 100;
+    [imageView release];
 }
 
 @end
