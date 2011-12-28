@@ -13,6 +13,7 @@
 
 @interface TabPageData : NSObject <UIWebViewDelegate, PageHeaderInfo>
 
+@property (nonatomic, retain) UIImage *previewImage;
 @property (nonatomic, retain) UIWebView *webView;
 @property (nonatomic, retain) id<UIWebViewDelegate> webViewDelegate;
 

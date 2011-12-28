@@ -1084,6 +1084,19 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
         self.mainToolbar.items = items;
         */
     }
+    
+    
+    // Get screenshot of the current webView
+    TabPageView *pageView = [scrollView pageAtIndex:index];
+     
+     CGSize imageSize = pageView.bounds.size;
+     if (NULL != UIGraphicsBeginImageContextWithOptions)
+         UIGraphicsBeginImageContextWithOptions(imageSize, NO, 0);
+     else
+         UIGraphicsBeginImageContext(imageSize);
+
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    [pageView.layer renderInContext:context];
 }
 
 - (void)pageScrollView:(TabPageScrollView *)scrollView didDeselectPageAtIndex:(NSInteger)index

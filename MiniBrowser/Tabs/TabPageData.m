@@ -11,6 +11,7 @@
 
 @implementation TabPageData
 
+@synthesize previewImage = _previewImage;
 @synthesize webView = _webView;
 @synthesize webViewDelegate = _webViewDelegate;
 
