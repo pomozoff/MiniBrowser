@@ -990,6 +990,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
             pageView.reuseIdentifier = pageId;
             
             self.webView = pageData.webView;
+            self.webView.frame = pageView.frame;
         }
         
         [pageView insertSubview:pageData.webView belowSubview:pageView.closeButton];
