@@ -493,6 +493,13 @@
     }	
 }
 
+- (void)updateHeaderForPage:(TabPageView *)pageView WithIndex:(NSInteger)index
+{
+    if ([self.selectedPage isEqual:pageView]) {
+        [self updateHeaderForPageWithIndex:index];
+    }
+}
+
 - (void)reloadData
 {
     NSInteger numPages = 1;  

@@ -110,4 +110,10 @@
     
 }
 
+- (void)updateHeaderForPage:(TabPageView *)pageView WithIndex:(NSInteger)index;
+{
+    
+}
+
+
 @end

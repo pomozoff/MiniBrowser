@@ -13,6 +13,7 @@
 
 @implementation TabPageData
 
+@synthesize pageViewSize = _pageViewSize;
 @synthesize previewImageView = _previewImage;
 @synthesize webView = _webView;
 @synthesize webViewDelegate = _webViewDelegate;
@@ -110,6 +111,15 @@
     
     [self setLabel:label andUrl:sourceUrl];
     [self.webViewDelegate webViewDidFinishLoad:webView];
+
+    if (CGSizeEqualToSize(webView.frame.size, CGSizeZero)) {
+        CGRect frame = webView.frame;
+        frame.size = self.pageViewSize;
+        webView.frame = frame;
+    }
+    
+    // make screenshot loaded page
+    [self makeScreenShotFromTheView:webView];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
@@ -119,12 +129,20 @@
     
     [self setLabel:logString andUrl:sourceUrl];
     [self.webViewDelegate webView:webView didFailLoadWithError:error];
+    
+    // make screenshot loaded page
+    [self makeScreenShotFromTheView:webView];
 }
 
 // ******************************************************************************************************************************
 
 #pragma mark - Page Data Delegate
 
+
+- (void)loadUrl
+{
+    [self loadUrl:self.subtitle];
+}
 
 - (void)loadUrl:(NSString *)url
 {
@@ -147,11 +165,14 @@
 
 - (void)makeScreenShotFromTheView:(UIView *)view
 {
-    CGSize imageSize = view.bounds.size;
+    if (CGSizeEqualToSize(view.frame.size, CGSizeZero)) {
+        return;
+    }
+    
     if (NULL != UIGraphicsBeginImageContextWithOptions)
-        UIGraphicsBeginImageContextWithOptions(imageSize, NO, 0);
+        UIGraphicsBeginImageContextWithOptions(self.pageViewSize, NO, 0);
     else
-        UIGraphicsBeginImageContext(imageSize);
+        UIGraphicsBeginImageContext(self.pageViewSize);
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     [view.layer renderInContext:context];
@@ -163,6 +184,10 @@
     self.previewImageView = imageView;
     self.previewImageView.tag = 100;
     [imageView release];
+    
+    // replace new screenshot
+    [self.previewImageView removeFromSuperview];
+    [self.webViewDelegate placeScreenshotOnPageViewFromPageData:self];
 }
 
 @end

@@ -9,11 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "BookmarkItem.h"
 
+@class TabPageData;
+
 @protocol BrowserControllerDelegate <NSObject>
 
 @property (nonatomic, assign) BOOL isIPad;
 
 - (void)closePopupsAndLoadUrl:(NSString *)url;
 - (void)dismissPopoverActionAndCleanUp;
+- (void)placeScreenshotOnPageViewFromPageData:(TabPageData *)pageData;
 
 @end

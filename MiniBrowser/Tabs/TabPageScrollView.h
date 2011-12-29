@@ -152,4 +152,7 @@ typedef enum {
 
 - (void)reloadPagesAtIndexes:(NSIndexSet *)indexes;
 
+// Update page title and subtitle when deck mode
+- (void)updateHeaderForPage:(TabPageView *)pageView WithIndex:(NSInteger)index;
+
 @end

@@ -9,17 +9,19 @@
 #import <Foundation/Foundation.h>
 #import "PageHeaderInfo.h"
 #import "TabPageView.h"
-#import "BrowserController.h"
+#import "BrowserControllerProtocol.h"
 
 @interface TabPageData : NSObject <UIWebViewDelegate, PageHeaderInfo>
 
+@property (nonatomic, assign) CGSize pageViewSize;
 @property (nonatomic, retain) UIImageView *previewImageView;
 @property (nonatomic, retain) UIWebView *webView;
-@property (nonatomic, retain) id<UIWebViewDelegate> webViewDelegate;
+@property (nonatomic, retain) id<UIWebViewDelegate, BrowserControllerDelegate> webViewDelegate;
 
 // an example of using UINavigationController as the owner of the page. 
 @property (nonatomic, retain) UINavigationController *navController; 
 
+- (void)loadUrl;
 - (void)loadUrl:(NSString *)url;
 - (void)makeScreenShotFromTheView:(UIView *)view;
 

@@ -494,7 +494,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
         pageData.subtitle = url;
 
         [self.tabPageDataArray addObject:pageData];
-        [pageData loadUrl:url];
 
         [pageData release];
     }
@@ -755,9 +754,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     if (webView == self.webView) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     }
-    
-    // make screenshot loaded page
-    [self makeScreenShotFromTheView:self.webView];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
@@ -1001,6 +997,11 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
         if ([[pageView subviews] indexOfObject:pageData.previewImageView] == NSNotFound) {
             [pageView insertSubview:pageData.previewImageView belowSubview:pageView.closeButton];
         }
+
+        if ([pageData.title isEqualToString:@""] && ![pageData.subtitle isEqualToString:@""]) {
+            pageData.pageViewSize = pageView.identityFrame.size;
+            [pageData loadUrl];
+        }
     }
     
     return pageView;
@@ -1110,13 +1111,14 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
     // get screenshot of the current webView
     TabPageView *pageView = [scrollView pageAtIndex:index];
-    [pageData makeScreenShotFromTheView:pageView];
+    pageData.pageViewSize = pageView.identityFrame.size;
+    [pageData makeScreenShotFromTheView:pageData.webView];
+     
+    // place an image from pageData
+    [pageView insertSubview:pageData.previewImageView belowSubview:pageView.closeButton];
     
     // remove webView from the screen
     [pageData.webView removeFromSuperview];
-
-    // place an image from pageData
-    [pageView insertSubview:pageData.previewImageView belowSubview:pageView.closeButton];
 }
 
 - (void)pageScrollView:(TabPageScrollView *)scrollView didDeselectPageAtIndex:(NSInteger)index
@@ -1149,6 +1151,22 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     //TabPageScrollView *pageScrollView = [[self.view subviews] lastObject];
     
     [self.mainPageScrollView reloadPagesAtIndexes:self.indexesToReload];
+}
+
+- (void)placeScreenshotOnPageViewFromPageData:(TabPageData *)pageData
+{
+    NSUInteger index = [self.tabPageDataArray indexOfObject:pageData];
+    if (index == NSNotFound) {
+        return;
+    }
+    
+    TabPageView *pageView = [self.mainPageScrollView pageAtIndex:index];
+    
+    if (self.mainPageScrollView.viewMode == TabPageScrollViewModeDeck) {
+        [pageView insertSubview:pageData.previewImageView belowSubview:pageView.closeButton];
+    }
+    
+    [self.mainPageScrollView updateHeaderForPage:pageView WithIndex:index];
 }
 
 @end
