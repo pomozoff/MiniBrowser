@@ -178,6 +178,8 @@
     [view.layer renderInContext:context];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+
+    [self.previewImageView removeFromSuperview];
     
     // remember imageview
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
@@ -186,7 +188,6 @@
     [imageView release];
     
     // replace new screenshot
-    [self.previewImageView removeFromSuperview];
     [self.webViewDelegate placeScreenshotOnPageViewFromPageData:self];
 }
 
