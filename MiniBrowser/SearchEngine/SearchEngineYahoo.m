@@ -25,7 +25,7 @@
 {
     self.searchUrl = @"http://search.yahoo.com/search?p=%@";
     NSString *readyUrl = [NSString stringWithFormat:self.searchUrl, text];
-    readyUrl = [readyUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    //readyUrl = [readyUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     return [NSURL URLWithString:readyUrl];
 }

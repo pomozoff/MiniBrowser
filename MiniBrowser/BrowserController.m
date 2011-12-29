@@ -816,7 +816,8 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     userInitiatedJump = YES;
     
     NSURL *searchUrl = [self.settingsController.currentSearchEngine searchUrlForText:text];
-    [self.webView loadRequest:[NSURLRequest requestWithURL:searchUrl]];
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:searchUrl];
+    [self.webView loadRequest:urlRequest];
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
