@@ -23,11 +23,11 @@
 
 - (NSURL *)searchUrlForText:(NSString *)text
 {
-    self.searchUrl = @"http://www.google.com/search?q=%@&ie=utf-8&oe=utf-8";
-    NSString *readyUrl = [NSString stringWithFormat:self.searchUrl, text];
-    readyUrl = [readyUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-       
-    return [NSURL URLWithString:readyUrl];
+    NSString *encodedText = [text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    self.searchUrl = [@"http://www.google.com/search?ie=utf-8&oe=utf-8&q=" stringByAppendingString:encodedText];
+    NSURL *theUrl = [NSURL URLWithString:self.searchUrl];
+    
+    return theUrl;
 }
 
 @end

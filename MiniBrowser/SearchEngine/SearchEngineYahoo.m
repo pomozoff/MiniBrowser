@@ -23,11 +23,11 @@
 
 - (NSURL *)searchUrlForText:(NSString *)text
 {
-    self.searchUrl = @"http://search.yahoo.com/search?p=%@";
-    NSString *readyUrl = [NSString stringWithFormat:self.searchUrl, text];
-    //readyUrl = [readyUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *encodedText = [text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    self.searchUrl = [@"http://search.yahoo.com/search?p=%@" stringByAppendingString:encodedText];
+    NSURL *theUrl = [NSURL URLWithString:self.searchUrl];
     
-    return [NSURL URLWithString:readyUrl];
+    return theUrl;
 }
 
 @end

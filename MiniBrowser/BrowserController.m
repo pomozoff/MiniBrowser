@@ -697,13 +697,9 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
      
         NSString *sourceUrl = request.URL.absoluteString;
         NSString *callBackUrl = [self urlCallBack:sourceUrl navigationType:navigationType];
-        NSString *escapedCallBackUrl = callBackUrl;
+        NSURL *theUrl = [NSURL URLWithString:callBackUrl];
         
-        if (navigationType == UIWebViewNavigationTypeOther) {
-            escapedCallBackUrl = [callBackUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        }
-        
-        [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:escapedCallBackUrl]]];
+        [webView loadRequest:[NSURLRequest requestWithURL:theUrl]];
         
         return NO;
     }
