@@ -12,6 +12,7 @@
 
 @synthesize closeButton = _closeButton;
 
+@synthesize isInitialized = _isInitialized;
 @synthesize identityFrame = _identityFrame;
 @synthesize reuseIdentifier = _reuseIdentifier;
 

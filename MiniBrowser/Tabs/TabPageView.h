@@ -12,6 +12,7 @@
 
 @property (nonatomic, retain) IBOutlet UIButton *closeButton;
 
+@property (nonatomic, assign) BOOL isInitialized;
 @property (nonatomic, assign) CGRect identityFrame;
 @property (nonatomic, copy) NSString *reuseIdentifier;
 

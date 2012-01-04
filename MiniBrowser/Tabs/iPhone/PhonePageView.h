@@ -10,6 +10,4 @@
 
 @interface PhonePageView : TabPageView
 
-@property (nonatomic, assign) BOOL isInitialized;
-
 @end

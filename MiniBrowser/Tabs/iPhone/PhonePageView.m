@@ -10,6 +10,4 @@
 
 @implementation PhonePageView
 
-@synthesize isInitialized = _isInitialized;
-
 @end
