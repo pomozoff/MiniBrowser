@@ -692,7 +692,11 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    if (userInitiatedJump) {
+    if (userInitiatedJump
+        || navigationType == UIWebViewNavigationTypeLinkClicked
+        || navigationType == UIWebViewNavigationTypeFormSubmitted
+        || navigationType == UIWebViewNavigationTypeFormResubmitted)
+    {
         userInitiatedJump = NO;
      
         NSString *sourceUrl = request.URL.absoluteString;
