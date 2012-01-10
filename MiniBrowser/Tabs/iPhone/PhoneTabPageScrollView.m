@@ -19,8 +19,6 @@
 @property (nonatomic, retain) NSMutableArray *deletedPages;
 @property (nonatomic, retain) NSMutableDictionary *reusablePages;
 
-@property (nonatomic, retain) TabPageView *selectedPage;
-
 @property (nonatomic, retain) NSIndexSet *indexesBeforeVisibleRange; 
 @property (nonatomic, retain) NSIndexSet *indexesWithinVisibleRange; 
 @property (nonatomic, retain) NSIndexSet *indexesAfterVisibleRange; 
