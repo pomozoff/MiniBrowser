@@ -47,6 +47,7 @@
 
 @synthesize isIPad = _isIPad;
 @synthesize xibNameScrollView = _xibNameScrollView;
+@synthesize xibNamePageView = _xibNameTabPageView;
 
 @synthesize navigationBar = _navigationBar;
 @synthesize searchBar = _searchBar;
@@ -163,8 +164,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 {
     if (!_mainPageScrollView) {
         _mainPageScrollView = [[[NSBundle mainBundle] loadNibNamed:self.xibNameScrollView owner:self options:nil] objectAtIndex:0];
-        _mainPageScrollView.delegate = self;
-        _mainPageScrollView.dataSource = self;
     }
     
     return _mainPageScrollView;
@@ -417,6 +416,9 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     
     self.indexesToInsert = nil;
     self.mainPageScrollView = nil;
+    
+    self.xibNameScrollView = nil;
+    self.xibNamePageView = nil;
 }
 
 // ******************************************************************************************************************************
@@ -986,10 +988,10 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     if (!pageView) {
         static NSString *pageId = @"pageId";
         
-        pageView = (PhonePageView *)[scrollView dequeueReusablePageWithIdentifier:pageId];
+        pageView = (TabPageView *)[scrollView dequeueReusablePageWithIdentifier:pageId];
         if (!pageView) {
             // load a new page from NIB file
-            pageView = [[[NSBundle mainBundle] loadNibNamed:@"iPhonePageView" owner:pageData options:nil] objectAtIndex:0];
+            pageView = [[[NSBundle mainBundle] loadNibNamed:self.xibNamePageView owner:pageData options:nil] objectAtIndex:0];
             pageView.reuseIdentifier = pageId;
             
             self.webView = pageData.webView;

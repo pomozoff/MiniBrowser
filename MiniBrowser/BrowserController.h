@@ -22,6 +22,7 @@
                                                  TabPageScrollViewDataSource>
 
 @property (nonatomic, copy) NSString *xibNameScrollView;
+@property (nonatomic, copy) NSString *xibNamePageView;
 
 @property (nonatomic, retain) IBOutlet UINavigationBar *navigationBar;
 @property (nonatomic, retain) IBOutlet UISearchBar *searchBar;

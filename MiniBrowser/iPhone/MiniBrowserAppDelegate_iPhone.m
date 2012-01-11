@@ -44,6 +44,7 @@
 {
     self.browserController.isIPad = NO;
     self.browserController.xibNameScrollView = @"iPhoneTabPageScrollView";
+    self.browserController.xibNamePageView = @"iPhonePageView";
     [self.navigationController pushViewController:self.browserController animated:NO];
     [self.window addSubview:self.navigationController.view];
 

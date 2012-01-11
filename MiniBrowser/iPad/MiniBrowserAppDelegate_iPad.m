@@ -27,6 +27,7 @@
 {
     self.browserController.isIPad = YES;
     self.browserController.xibNameScrollView = @"iPadTabPageScrollView";
+    self.browserController.xibNamePageView = @"iPadPageView";
 
     [self.window addSubview:self.browserController.view];
     

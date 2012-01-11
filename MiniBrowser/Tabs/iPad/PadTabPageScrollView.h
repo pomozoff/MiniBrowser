@@ -8,6 +8,8 @@
 
 #import "TabPageScrollView.h"
 
+#define VISIBLE_PAGES_COUNT 5
+
 @interface PadTabPageScrollView : TabPageScrollView
 
 @property (nonatomic, retain) IBOutlet UIView *pageDeckBackgroundView;

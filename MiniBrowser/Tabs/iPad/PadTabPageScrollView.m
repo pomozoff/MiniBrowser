@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSMutableArray *visiblePages;
 
 - (void)reloadData; 
+- (TabPageView *)loadPageAtIndex:(NSInteger)index;
 - (void)setViewMode:(TabPageScrollViewMode)mode animated:(BOOL)animated;
 - (void)initHeaderForPageAtIndex:(NSInteger)index;
 - (void)initDeckTitlesForPageAtIndex:(NSInteger)index;
@@ -33,6 +34,20 @@
 
 @synthesize numberOfPages = _numberOfPages;
 @synthesize visiblePages = _visiblePages;
+
+// ******************************************************************************************************************************
+
+#pragma mark - Properites initialization
+
+
+- (NSMutableArray *)visiblePages
+{
+    if (!_visiblePages) {
+        _visiblePages = [[NSMutableArray alloc] initWithCapacity:VISIBLE_PAGES_COUNT];
+    }
+    
+    return _visiblePages;
+}
 
 // ******************************************************************************************************************************
 
@@ -134,7 +149,7 @@
     CGRect identityFrame = self.selectedPage.identityFrame;
     CGRect pageFrame = self.selectedPage.frame;
     [self.selectedPage removeFromSuperview];
-    self.selectedPage = [self.dataSource pageScrollView:self viewForPageAtIndex:index];
+    self.selectedPage = [self loadPageAtIndex:index];
     self.selectedPage.identityFrame = identityFrame;
     self.selectedPage.frame = pageFrame;
     self.selectedPage.alpha = 1.0;
@@ -328,6 +343,9 @@
 	
     NSInteger selectedIndex = self.selectedPage ? [self.visiblePages indexOfObject:self.selectedPage] : NSNotFound;
     
+	// reset visible pages array
+	[self.visiblePages removeAllObjects];
+
 	// remove all subviews from scrollView
     /*
     [[self.pageDeckBackgroundView subviews] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -343,7 +361,7 @@
 	if (self.numberOfPages > 0) {
 		// reload visible pages
 		for (int index = 0; index < self.numberOfPages; index++) {
-			TabPageView *page = [self.dataSource pageScrollView:self viewForPageAtIndex:index];
+			TabPageView *page = [self loadPageAtIndex:index];
             [self addPageToDeck:page atIndex:index];
 		}
 		
@@ -389,6 +407,29 @@
         self.viewMode = TabPageScrollViewModeDeck;
         [self setViewMode:TabPageScrollViewModePage animated:NO];
     }
+}
+
+- (TabPageView *)loadPageAtIndex:(NSInteger)index
+{
+	TabPageView *visiblePage = [self.dataSource pageScrollView:self viewForPageAtIndex:index];
+
+    /*
+	if (visiblePage.reuseIdentifier) {
+		NSMutableArray *reusables = [self.reusablePages objectForKey:visiblePage.reuseIdentifier];
+		if (!reusables) {
+			reusables = [[[NSMutableArray alloc] initWithCapacity:4] autorelease];
+		}
+		if (![reusables containsObject:visiblePage]) {
+			[reusables addObject:visiblePage];
+		}
+		[self.reusablePages setObject:reusables forKey:visiblePage.reuseIdentifier];
+	}
+     */
+	
+	// add the page to the visible pages array
+	[self.visiblePages insertObject:visiblePage atIndex:index];
+     
+    return visiblePage;
 }
 
 // *******************************************************************************************************************************

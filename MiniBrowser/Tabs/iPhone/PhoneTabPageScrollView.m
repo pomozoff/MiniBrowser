@@ -82,6 +82,7 @@
 
 #pragma mark - Properites initialization
 
+
 - (NSMutableArray *)visiblePages
 {
     if (!_visiblePages) {
