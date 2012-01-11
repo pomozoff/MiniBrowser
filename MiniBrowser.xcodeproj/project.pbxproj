@@ -164,9 +164,6 @@
 		26DA65C714B4FF3E000EBBAE /* iPadTabPageScrollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DA65C614B4FF3E000EBBAE /* iPadTabPageScrollView.xib */; };
 		26DA65C814B4FF3E000EBBAE /* iPadTabPageScrollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DA65C614B4FF3E000EBBAE /* iPadTabPageScrollView.xib */; };
 		26DA65C914B4FF3E000EBBAE /* iPadTabPageScrollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DA65C614B4FF3E000EBBAE /* iPadTabPageScrollView.xib */; };
-		26DA65CB14B501F8000EBBAE /* iPadTabTemplate.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DA65CA14B501F8000EBBAE /* iPadTabTemplate.xib */; };
-		26DA65CC14B501F8000EBBAE /* iPadTabTemplate.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DA65CA14B501F8000EBBAE /* iPadTabTemplate.xib */; };
-		26DA65CD14B501F8000EBBAE /* iPadTabTemplate.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DA65CA14B501F8000EBBAE /* iPadTabTemplate.xib */; };
 		26DA65D014B5040C000EBBAE /* PadTabPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26DA65CF14B5040C000EBBAE /* PadTabPageScrollView.m */; };
 		26DA65D114B5040C000EBBAE /* PadTabPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26DA65CF14B5040C000EBBAE /* PadTabPageScrollView.m */; };
 		26DA65D214B5040C000EBBAE /* PadTabPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26DA65CF14B5040C000EBBAE /* PadTabPageScrollView.m */; };
@@ -177,6 +174,12 @@
 		26DB36AD144EC19C001C4CBC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266D67AC143CCE8D0025F929 /* CoreGraphics.framework */; };
 		26DB36B3144EC19C001C4CBC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26DB36B1144EC19C001C4CBC /* InfoPlist.strings */; };
 		26DB36B5144EC19C001C4CBC /* UnitTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 26DB36B4144EC19C001C4CBC /* UnitTests.h */; };
+		26E32D3114BD93F1004DD808 /* iPadTabPageTemplate.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26E32D3014BD93F1004DD808 /* iPadTabPageTemplate.xib */; };
+		26E32D3214BD93F1004DD808 /* iPadTabPageTemplate.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26E32D3014BD93F1004DD808 /* iPadTabPageTemplate.xib */; };
+		26E32D3314BD93F1004DD808 /* iPadTabPageTemplate.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26E32D3014BD93F1004DD808 /* iPadTabPageTemplate.xib */; };
+		26E32D3614BD95AD004DD808 /* PadTabPageTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 26E32D3514BD95AD004DD808 /* PadTabPageTemplate.m */; };
+		26E32D3714BD95AD004DD808 /* PadTabPageTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 26E32D3514BD95AD004DD808 /* PadTabPageTemplate.m */; };
+		26E32D3814BD95AD004DD808 /* PadTabPageTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 26E32D3514BD95AD004DD808 /* PadTabPageTemplate.m */; };
 		26FDCADC1473C48600744D07 /* newtab.png in Resources */ = {isa = PBXBuildFile; fileRef = 26FDCADB1473C48600744D07 /* newtab.png */; };
 		26FDCADD1473C48600744D07 /* newtab.png in Resources */ = {isa = PBXBuildFile; fileRef = 26FDCADB1473C48600744D07 /* newtab.png */; };
 		26FDCADE1473C48600744D07 /* newtab.png in Resources */ = {isa = PBXBuildFile; fileRef = 26FDCADB1473C48600744D07 /* newtab.png */; };
@@ -215,6 +218,7 @@
 		262C020514A4AB73002D9FE9 /* UIWebView+Extended.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+Extended.h"; sourceTree = "<group>"; };
 		262C020614A4AB73002D9FE9 /* UIWebView+Extended.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+Extended.m"; sourceTree = "<group>"; };
 		2643BECF14606FC00018673B /* MiniBrowserOriginal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MiniBrowserOriginal.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		264DDB9D14BD9A5400BB3F92 /* PageTemplateDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PageTemplateDelegate.h; path = Tabs/PageTemplateDelegate.h; sourceTree = "<group>"; };
 		265072D11498D2290065CD03 /* iPhoneTabPageScrollView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = iPhoneTabPageScrollView.xib; path = Tabs/iPhone/iPhoneTabPageScrollView.xib; sourceTree = "<group>"; };
 		265CCEBA143D85B9005F348A /* arrowBackGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowBackGray.png; sourceTree = "<group>"; };
 		265CCEBB143D85B9005F348A /* arrowBackLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowBackLight.png; sourceTree = "<group>"; };
@@ -296,7 +300,6 @@
 		26DA65BD14B4FE3D000EBBAE /* PadPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PadPageView.m; path = Tabs/iPad/PadPageView.m; sourceTree = "<group>"; };
 		26DA65C214B4FE5E000EBBAE /* iPadPageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = iPadPageView.xib; path = Tabs/iPad/iPadPageView.xib; sourceTree = "<group>"; };
 		26DA65C614B4FF3E000EBBAE /* iPadTabPageScrollView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = iPadTabPageScrollView.xib; path = Tabs/iPad/iPadTabPageScrollView.xib; sourceTree = "<group>"; };
-		26DA65CA14B501F8000EBBAE /* iPadTabTemplate.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = iPadTabTemplate.xib; path = Tabs/iPad/iPadTabTemplate.xib; sourceTree = "<group>"; };
 		26DA65CE14B5040C000EBBAE /* PadTabPageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PadTabPageScrollView.h; path = Tabs/iPad/PadTabPageScrollView.h; sourceTree = "<group>"; };
 		26DA65CF14B5040C000EBBAE /* PadTabPageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PadTabPageScrollView.m; path = Tabs/iPad/PadTabPageScrollView.m; sourceTree = "<group>"; };
 		26DB365A144EB3D6001C4CBC /* action.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = action.png; sourceTree = "<group>"; };
@@ -307,6 +310,9 @@
 		26DB36B4144EC19C001C4CBC /* UnitTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UnitTests.h; sourceTree = "<group>"; };
 		26DB36B6144EC19C001C4CBC /* UnitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UnitTests.m; sourceTree = "<group>"; };
 		26DB36B8144EC19C001C4CBC /* UnitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnitTests-Prefix.pch"; sourceTree = "<group>"; };
+		26E32D3014BD93F1004DD808 /* iPadTabPageTemplate.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = iPadTabPageTemplate.xib; path = Tabs/iPad/iPadTabPageTemplate.xib; sourceTree = "<group>"; };
+		26E32D3414BD95AD004DD808 /* PadTabPageTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PadTabPageTemplate.h; path = Tabs/iPad/PadTabPageTemplate.h; sourceTree = "<group>"; };
+		26E32D3514BD95AD004DD808 /* PadTabPageTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PadTabPageTemplate.m; path = Tabs/iPad/PadTabPageTemplate.m; sourceTree = "<group>"; };
 		26FDCADB1473C48600744D07 /* newtab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newtab.png; sourceTree = "<group>"; };
 		26FE56BC1443269D001622F2 /* bookmark-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bookmark-iPad.png"; sourceTree = "<group>"; };
 		26FE56BE144326FB001622F2 /* bookmark-iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bookmark-iPhone.png"; sourceTree = "<group>"; };
@@ -486,6 +492,7 @@
 				26A268F2148E12E50087E147 /* TabPageView.m */,
 				26A26926148F5C1A0087E147 /* TabTouchView.h */,
 				26A26927148F5C1A0087E147 /* TabTouchView.m */,
+				264DDB9D14BD9A5400BB3F92 /* PageTemplateDelegate.h */,
 			);
 			name = Tabs;
 			sourceTree = "<group>";
@@ -512,7 +519,9 @@
 				26DA65CE14B5040C000EBBAE /* PadTabPageScrollView.h */,
 				26DA65CF14B5040C000EBBAE /* PadTabPageScrollView.m */,
 				26DA65C614B4FF3E000EBBAE /* iPadTabPageScrollView.xib */,
-				26DA65CA14B501F8000EBBAE /* iPadTabTemplate.xib */,
+				26E32D3414BD95AD004DD808 /* PadTabPageTemplate.h */,
+				26E32D3514BD95AD004DD808 /* PadTabPageTemplate.m */,
+				26E32D3014BD93F1004DD808 /* iPadTabPageTemplate.xib */,
 			);
 			name = iPad;
 			sourceTree = "<group>";
@@ -721,7 +730,7 @@
 				2620E7F1149B35C800518C02 /* closebox.png in Resources */,
 				26DA65C514B4FE5E000EBBAE /* iPadPageView.xib in Resources */,
 				26DA65C914B4FF3E000EBBAE /* iPadTabPageScrollView.xib in Resources */,
-				26DA65CD14B501F8000EBBAE /* iPadTabTemplate.xib in Resources */,
+				26E32D3314BD93F1004DD808 /* iPadTabPageTemplate.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -754,7 +763,7 @@
 				2620E7EF149B35C800518C02 /* closebox.png in Resources */,
 				26DA65C314B4FE5E000EBBAE /* iPadPageView.xib in Resources */,
 				26DA65C714B4FF3E000EBBAE /* iPadTabPageScrollView.xib in Resources */,
-				26DA65CB14B501F8000EBBAE /* iPadTabTemplate.xib in Resources */,
+				26E32D3114BD93F1004DD808 /* iPadTabPageTemplate.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -787,7 +796,7 @@
 				2620E7F0149B35C800518C02 /* closebox.png in Resources */,
 				26DA65C414B4FE5E000EBBAE /* iPadPageView.xib in Resources */,
 				26DA65C814B4FF3E000EBBAE /* iPadTabPageScrollView.xib in Resources */,
-				26DA65CC14B501F8000EBBAE /* iPadTabTemplate.xib in Resources */,
+				26E32D3214BD93F1004DD808 /* iPadTabPageTemplate.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -849,6 +858,7 @@
 				262C020914A4AB73002D9FE9 /* UIWebView+Extended.m in Sources */,
 				26DA65C014B4FE3D000EBBAE /* PadPageView.m in Sources */,
 				26DA65D214B5040C000EBBAE /* PadTabPageScrollView.m in Sources */,
+				26E32D3814BD95AD004DD808 /* PadTabPageTemplate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -881,6 +891,7 @@
 				262C020714A4AB73002D9FE9 /* UIWebView+Extended.m in Sources */,
 				26DA65BE14B4FE3D000EBBAE /* PadPageView.m in Sources */,
 				26DA65D014B5040C000EBBAE /* PadTabPageScrollView.m in Sources */,
+				26E32D3614BD95AD004DD808 /* PadTabPageTemplate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -913,6 +924,7 @@
 				262C020814A4AB73002D9FE9 /* UIWebView+Extended.m in Sources */,
 				26DA65BF14B4FE3D000EBBAE /* PadPageView.m in Sources */,
 				26DA65D114B5040C000EBBAE /* PadTabPageScrollView.m in Sources */,
+				26E32D3714BD95AD004DD808 /* PadTabPageTemplate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

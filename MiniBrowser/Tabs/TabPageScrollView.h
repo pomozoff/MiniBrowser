@@ -107,8 +107,6 @@ typedef enum {
 
 @property (nonatomic, assign) TabPageScrollViewMode viewMode;
 
-@property (nonatomic, retain) TabPageView *selectedPage;
-
 // ******************************************************************************************************************************
 //
 // Info 

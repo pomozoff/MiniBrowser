@@ -11,6 +11,8 @@
 
 @interface PhoneTabPageScrollView()
 
+@property (nonatomic, retain) TabPageView *selectedPage;
+
 @property (nonatomic, assign) NSInteger numberOfPages;
 @property (nonatomic, assign) NSInteger numberOfFreshPages;
 @property (nonatomic, assign) NSRange visibleIndexes;
@@ -203,14 +205,12 @@
 #pragma mark - Info
 
 
-- (NSInteger)numberOfPages 
-{
-	return _numberOfPages;
-}
-
 - (TabPageView *)pageAtIndex:(NSInteger)index            // returns nil if page is not visible or the index is out of range
 {
-	if (index == NSNotFound || index < self.visibleIndexes.location || index > self.visibleIndexes.location + self.visibleIndexes.length-1) {
+	if (index == NSNotFound
+        || index < self.visibleIndexes.location
+        || index > self.visibleIndexes.location + self.visibleIndexes.length - 1
+        ) {
 		return nil;
 	}
     
@@ -365,7 +365,7 @@
                 frame.origin.y = 0.0f;
                 self.userHeaderView.frame = frame; 
                 headerView = self.userHeaderView;
-                [self addSubview : self.userHeaderView];
+                [self addSubview:self.userHeaderView];
             } else {
                 self.pageHeaderView.hidden = NO; 
                 [self initHeaderForPageAtIndex:selectedIndex];
@@ -402,7 +402,7 @@
 	} : ^{
         [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
         
-        UIView *headerView = self.userHeaderView ? self.userHeaderView : self.pageHeaderView;
+        UIView *headerView = self.userHeaderView ? self.userHeaderView:self.pageHeaderView;
         
 		// move to TabPageScrollViewModeDeck
 		self.pageControl.hidden = NO;
@@ -434,7 +434,7 @@
 	void (^CompletionBlock)(BOOL) = (mode == TabPageScrollViewModePage)? ^(BOOL finished){
         [[UIApplication sharedApplication] endIgnoringInteractionEvents];
         
-        UIView *headerView = self.userHeaderView ? self.userHeaderView : self.pageHeaderView;
+        UIView *headerView = self.userHeaderView ? self.userHeaderView:self.pageHeaderView;
         
         // set flags
 		self.pageDeckTitleLabel.hidden = YES;
@@ -491,7 +491,7 @@
     }	
 }
 
-- (void)updateHeaderForPage:(TabPageView *)pageView WithIndex:(NSInteger)index
+- (void)updateHeaderForPage:(TabPageView *)pageView withIndex:(NSInteger)index
 {
     if ([self.selectedPage isEqual:pageView]) {
         [self updateHeaderForPageWithIndex:index];
@@ -840,7 +840,7 @@
 
 - (void)deletePagesAtIndexes:(NSIndexSet *)indexes animated:(BOOL)animated
 {
-    [self prepareForDataUpdate : TabPageScrollViewUpdateMethodDelete withIndexSet:indexes];
+    [self prepareForDataUpdate:TabPageScrollViewUpdateMethodDelete withIndexSet:indexes];
     
     // handle deletion of indexes _before_ the visible range. 
     [self.indexesBeforeVisibleRange enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
@@ -935,12 +935,12 @@
 
 - (void)reloadPagesAtIndexes:(NSIndexSet *)indexes
 {
-    [self prepareForDataUpdate : TabPageScrollViewUpdateMethodReload withIndexSet:indexes];
+    [self prepareForDataUpdate:TabPageScrollViewUpdateMethodReload withIndexSet:indexes];
     
     // only reload pages within the visible range
     [self.indexesWithinVisibleRange enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
         TabPageView *page = [self pageAtIndex:idx];
-        [self.visiblePages removeObject : page]; // remove from visiblePages
+        [self.visiblePages removeObject:page]; // remove from visiblePages
         [page removeFromSuperview];          // remove from scrollView
         
         page = [self loadPageAtIndex:idx insertIntoVisibleIndex: idx - self.visibleIndexes.location];
@@ -1134,12 +1134,12 @@
 - (void)initHeaderForPageAtIndex:(NSInteger)index
 {
 	if ([self.dataSource respondsToSelector:@selector(pageScrollView:titleForPageAtIndex:)]) {
-		UILabel *titleLabel = (UILabel*)[self.pageHeaderView viewWithTag:1];
+		UILabel *titleLabel = (UILabel *)[self.pageHeaderView viewWithTag:1];
 		titleLabel.text = [self.dataSource pageScrollView:self titleForPageAtIndex:index];
 	}
 	
 	if ([self.dataSource respondsToSelector:@selector(pageScrollView:subtitleForPageAtIndex:)]) {		
-		UILabel *subtitleLabel = (UILabel*)[self.pageHeaderView viewWithTag:2];
+		UILabel *subtitleLabel = (UILabel *)[self.pageHeaderView viewWithTag:2];
 		subtitleLabel.text = [self.dataSource pageScrollView:self subtitleForPageAtIndex:index];
 	}
 }

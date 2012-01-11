@@ -13,7 +13,4 @@
 @property (nonatomic, retain) IBOutlet UIView *pageDeckBackgroundView;
 @property (nonatomic, retain) IBOutlet UIView *pageHeaderView;
 
-@property (nonatomic, retain) IBOutlet UILabel *pageDeckTitleLabel;
-@property (nonatomic, retain) IBOutlet TabTouchView *closePageTouch;
-
 @end
