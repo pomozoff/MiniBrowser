@@ -33,7 +33,7 @@
 @synthesize selectedPage = _selectedPage;
 
 @synthesize numberOfPages = _numberOfPages;
-@synthesize visiblePages = _visiblePages;
+@synthesize visiblePages = _visiblePages; // array of created tabs
 
 // ******************************************************************************************************************************
 
@@ -57,7 +57,7 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-    
+/*    
 	// set gradient for background view
 	CAGradientLayer *glayer = [CAGradientLayer layer];
 	glayer.frame = self.pageDeckBackgroundView.bounds;
@@ -65,7 +65,7 @@
 	UIColor *bottomColor = [UIColor colorWithRed:0.31 green:0.41 blue:0.48 alpha:1.0]; // dark blue-gray
 	glayer.colors = [NSArray arrayWithObjects:(id)[topColor CGColor], (id)[bottomColor CGColor], nil];
     [self.pageDeckBackgroundView.layer insertSublayer:glayer atIndex:0];
-	
+*/	
 	// default number of pages 
 	self.numberOfPages = 1;
     
@@ -162,6 +162,13 @@
 
 - (void)preparePage:(TabPageView *)page forMode:(TabPageScrollViewMode)mode
 {
+    // When a page is presented in TabPageScrollViewModePage mode, it is scaled up and is moved to a different superview. 
+    // As it captures the full screen, it may be cropped to fit inside its new superview's frame. 
+    // So when moving it back to TabPageScrollViewModeDeck, we restore the page's proportions to prepare it to Deck mode.  
+	if (mode == TabPageScrollViewModeDeck && 
+        CGAffineTransformEqualToTransform(page.transform, CGAffineTransformIdentity)) {
+        page.frame = page.identityFrame;
+	}
 }
 
 - (void)setViewMode:(TabPageScrollViewMode)mode animated:(BOOL)animated
@@ -181,8 +188,6 @@
 	void (^SelectBlock)(void) = (mode == TabPageScrollViewModePage) ? ^{
         [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
         
-        UIView *headerView = self.pageHeaderView;
-        
 		// move to TabPageScrollViewModePage
 		if ([self.delegate respondsToSelector:@selector(pageScrollView:willSelectPageAtIndex:)]) {
 			[self.delegate pageScrollView:self willSelectPageAtIndex:selectedIndex];
@@ -191,22 +196,34 @@
         self.pageHeaderView.hidden = NO; 
         [self initHeaderForPageAtIndex:selectedIndex]; 
         
+        // adjust the frame
+        CGRect frame = self.selectedPage.frame;
+		frame.origin.y = self.pageHeaderView.frame.size.height;
+        
+        // finally crop frame to fit inside new superview (see CompletionBlock) 
+		frame.size.height -= self.pageHeaderView.frame.size.height;
+		self.selectedPage.frame = frame;
+        
+        // store this frame for the backward animation
+        self.selectedPage.identityFrame = frame; 
+		
 		// scale the page up to it 1:1 (identity) scale
 		self.selectedPage.transform = CGAffineTransformIdentity; 
         
 		// reveal the page header view
-		headerView.alpha = 1.0f;
+		self.pageHeaderView.alpha = 1.0f;
         
         // hide close button
         self.selectedPage.closeButton.alpha = 0.0f;
         
 		//remove unnecessary views
+        /*
         NSInteger pagesCount = [self.dataSource numberOfPagesInScrollView:self];
         for (NSInteger currentIndex = 0; currentIndex < pagesCount; pagesCount++) {
             TabPageView *currentPage = [self.dataSource pageScrollView:self viewForPageAtIndex:currentIndex];
             [currentPage removeFromSuperview];
         }
-
+        */
         //[self.closePageTouch removeFromSuperview];
 	} : ^{
         [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
@@ -215,7 +232,7 @@
 		//self.pageDeckTitleLabel.hidden = NO;
 		[self initDeckTitlesForPageAtIndex:selectedIndex];
 		
-		self.selectedPage.transform = CGAffineTransformMakeScale(0.6f, 0.6f);
+		self.selectedPage.transform = CGAffineTransformMakeScale(0.3f, 0.3f);
         
  		CGRect frame = self.selectedPage.frame;
         frame.origin.y = 0.0f;
@@ -238,7 +255,7 @@
 		self.selectedPage.alpha = 1.0f;
         
 		// copy self.selectedPage up in the view hierarchy, to allow touch events on its entire frame 
-		//self.selectedPage.frame = CGRectMake(0.0f, headerView.frame.size.height, self.frame.size.width, self.selectedPage.frame.size.height);
+		self.selectedPage.frame = CGRectMake(0.0f, self.pageHeaderView.frame.size.height, self.frame.size.width, self.selectedPage.frame.size.height);
 		[self addSubview:self.selectedPage];
         
 		// notify delegate
@@ -290,6 +307,7 @@
 
 - (void)setFrameForPage:(UIView *)page atIndex:(NSInteger)index
 {
+    /*
     page.transform = CGAffineTransformMakeScale(0.6f, 0.6f);
     
     NSInteger xOffset = 0;
@@ -311,6 +329,11 @@
 	pageFrame.origin.y = margin + (pageFrame.size.height + margin) * yOffset;
     
 	page.frame = pageFrame;
+
+	CGRect pageFrame = page.frame;
+    pageFrame.size.height -= self.pageHeaderView.frame.size.height;
+    page.frame = CGRectOffset(pageFrame, 0, self.pageHeaderView.frame.size.height);
+     */
 }
 
 // add a page to the scroll view at a given index. No adjustments are made to existing pages offsets. 
@@ -331,7 +354,7 @@
     page.layer.shadowPath = path.CGPath;	
     
     // add the page to the scroller
-	[self.pageDeckBackgroundView addSubview:page];
+	[self addSubview:page];
 }
 
 - (void)reloadData
@@ -340,9 +363,8 @@
 	if ([self.dataSource respondsToSelector:@selector(numberOfPagesInScrollView:)]) {
 		numPages = [self.dataSource numberOfPagesInScrollView:self];
 	}
+	self.numberOfPages = numPages;
 	
-    NSInteger selectedIndex = self.selectedPage ? [self.visiblePages indexOfObject:self.selectedPage] : NSNotFound;
-    
 	// reset visible pages array
 	[self.visiblePages removeAllObjects];
 
@@ -353,8 +375,6 @@
     }];
     */
     
-	self.numberOfPages = numPages;
-	
     // hide view components initially
     self.pageHeaderView.alpha = 0.0f;	
     
@@ -365,14 +385,17 @@
             [self addPageToDeck:page atIndex:index];
 		}
 		
+        /*
 		// this will load any additional views which become visible  
-		//[self updateVisiblePages];
+		[self updateVisiblePages];
 		
         // set initial alpha values for all visible pages
         [self.visiblePages enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            //[self setAlphaForPage:obj];
+            [self setAlphaForPage:obj];
         }];
-		
+		*/
+        
+        NSInteger selectedIndex = self.selectedPage ? [self.visiblePages indexOfObject:self.selectedPage] : NSNotFound;
         if (selectedIndex == NSNotFound) {
             // if no page is selected, select the first page
             self.selectedPage = [self.visiblePages objectAtIndex:0];
@@ -382,11 +405,13 @@
         }
         
         // IMPORTANT
-        //self.closePageTouch.receiver = self.selectedPage.closeButton;
+        /*
+        self.closePageTouch.receiver = self.selectedPage.closeButton;
         
         // update deck title and subtitle for selected page
         NSInteger index = [self indexForSelectedPage];
         [self updateHeaderForPageWithIndex:index];
+        */
         
         /*
         if ([self.dataSource respondsToSelector:@selector(pageScrollView:titleForPageAtIndex:)]) {

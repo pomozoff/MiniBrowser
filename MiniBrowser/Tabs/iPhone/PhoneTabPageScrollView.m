@@ -435,7 +435,7 @@
 	void (^CompletionBlock)(BOOL) = (mode == TabPageScrollViewModePage)? ^(BOOL finished){
         [[UIApplication sharedApplication] endIgnoringInteractionEvents];
         
-        UIView *headerView = self.userHeaderView ? self.userHeaderView:self.pageHeaderView;
+        UIView *headerView = self.userHeaderView ? self.userHeaderView : self.pageHeaderView;
         
         // set flags
 		self.pageDeckTitleLabel.hidden = YES;
