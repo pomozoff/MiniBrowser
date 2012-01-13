@@ -23,7 +23,7 @@
 - (void)setViewMode:(TabPageScrollViewMode)mode animated:(BOOL)animated;
 - (void)initHeaderForPageAtIndex:(NSInteger)index;
 - (void)initDeckTitlesForPageAtIndex:(NSInteger)index;
-- (void)setFrameForPage:(UIView *)page atIndex:(NSInteger)index;
+- (void)setOriginForPage:(UIView *)page atIndex:(NSInteger)index;
 
 @end
 
@@ -215,6 +215,7 @@
         
         // adjust the frame
         CGRect frame = self.selectedPage.frame;
+        frame.origin.x = 0;
 		frame.origin.y = self.pageHeaderView.frame.size.height;
         
         // store this frame for the backward animation
@@ -224,9 +225,6 @@
 		frame.size.height -= self.pageHeaderView.frame.size.height;
 		self.selectedPage.frame = frame;
 		
-		// scale the page up to it 1:1 (identity) scale
-		self.selectedPage.transform = CGAffineTransformIdentity; 
-        
 		// reveal the page header view
 		self.pageHeaderView.alpha = 1.0f;
         
@@ -249,11 +247,10 @@
 		//self.pageDeckTitleLabel.hidden = NO;
 		[self initDeckTitlesForPageAtIndex:selectedIndex];
 		
-		self.selectedPage.transform = CGAffineTransformMakeScale(0.3f, 0.3f);
+		self.selectedPage.transform = CGAffineTransformMakeScale(TRANSFORM_PAGE_SCALE, TRANSFORM_PAGE_SCALE);
+        [self setOriginForPage:self.selectedPage atIndex:selectedIndex];
         
- 		CGRect frame = self.selectedPage.frame;
-        frame.origin.y = 0.0f;
-        self.selectedPage.frame = frame;
+        self.pageHeaderView.alpha = 0.0f;
         
         // display close button
         self.selectedPage.closeButton.alpha = 1.0f;
@@ -344,10 +341,9 @@
     }
 }
 
-- (void)setFrameForPage:(UIView *)page atIndex:(NSInteger)index
+- (void)setOriginForPage:(UIView *)page atIndex:(NSInteger)index
 {
-    /*
-    page.transform = CGAffineTransformMakeScale(0.6f, 0.6f);
+    page.transform = CGAffineTransformMakeScale(TRANSFORM_PAGE_SCALE, TRANSFORM_PAGE_SCALE);
     
     NSInteger xOffset = 0;
     NSInteger yOffset = 0;
@@ -357,7 +353,7 @@
     CGRect appFrame = [[UIScreen mainScreen] applicationFrame];
     
     for (NSInteger pageIndex = 0; pageIndex <= index; pageIndex++) {
-        CGFloat pagesWidth = pageIndex * (pageFrame.size.width + margin);
+        CGFloat pagesWidth = (++pageIndex) * (pageFrame.size.width + margin);
         if (appFrame.size.width < pagesWidth) {
             xOffset = 1;
             yOffset++;
@@ -368,11 +364,6 @@
 	pageFrame.origin.y = margin + (pageFrame.size.height + margin) * yOffset;
     
 	page.frame = pageFrame;
-
-	CGRect pageFrame = page.frame;
-    pageFrame.size.height -= self.pageHeaderView.frame.size.height;
-    page.frame = CGRectOffset(pageFrame, 0, self.pageHeaderView.frame.size.height);
-     */
 }
 
 - (void)shiftPage:(TabPageView *)page withOffset:(CGFloat)offset
@@ -392,7 +383,7 @@
     [self preparePage:page forMode:TabPageScrollViewModeDeck];
     
 	// configure the page frame
-    [self setFrameForPage:page atIndex:index];
+    //[self setFrameForPage:page atIndex:index];
     
 	// add shadow (use shadowPath to improve rendering performance)
 	page.layer.shadowColor = [[UIColor blackColor] CGColor];	

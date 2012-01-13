@@ -9,6 +9,7 @@
 #import "TabPageScrollView.h"
 
 #define VISIBLE_PAGES_COUNT 5
+#define TRANSFORM_PAGE_SCALE 0.25f
 
 @interface PadTabPageScrollView : TabPageScrollView
 
