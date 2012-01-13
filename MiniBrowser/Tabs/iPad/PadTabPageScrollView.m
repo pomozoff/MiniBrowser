@@ -14,6 +14,8 @@
 @property (nonatomic, retain) TabPageView *selectedPage;
 
 @property (nonatomic, assign) NSInteger numberOfPages;
+
+@property (nonatomic, retain) NSMutableArray *deletedPages;
 @property (nonatomic, retain) NSMutableArray *visiblePages;
 
 - (void)reloadData; 
@@ -33,12 +35,23 @@
 @synthesize selectedPage = _selectedPage;
 
 @synthesize numberOfPages = _numberOfPages;
+
+@synthesize deletedPages = _deletedPages;
 @synthesize visiblePages = _visiblePages; // array of created tabs
 
 // ******************************************************************************************************************************
 
 #pragma mark - Properites initialization
 
+
+- (NSMutableArray *)deletedPages
+{
+    if (!_deletedPages) {
+        _deletedPages = [[NSMutableArray alloc] initWithCapacity:0];
+    }
+    
+    return _deletedPages;
+}
 
 - (NSMutableArray *)visiblePages
 {
@@ -57,7 +70,7 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-/*    
+
 	// set gradient for background view
 	CAGradientLayer *glayer = [CAGradientLayer layer];
 	glayer.frame = self.pageDeckBackgroundView.bounds;
@@ -65,7 +78,7 @@
 	UIColor *bottomColor = [UIColor colorWithRed:0.31 green:0.41 blue:0.48 alpha:1.0]; // dark blue-gray
 	glayer.colors = [NSArray arrayWithObjects:(id)[topColor CGColor], (id)[bottomColor CGColor], nil];
     [self.pageDeckBackgroundView.layer insertSublayer:glayer atIndex:0];
-*/	
+
 	// default number of pages 
 	self.numberOfPages = 1;
     
@@ -82,6 +95,7 @@
 {
     [self freeOutlets];
     
+    self.deletedPages = nil;
     self.visiblePages = nil;
     self.selectedPage = nil;
     
@@ -196,16 +210,19 @@
         self.pageHeaderView.hidden = NO; 
         [self initHeaderForPageAtIndex:selectedIndex]; 
         
+		// scale the page up to it 1:1 (identity) scale
+		self.selectedPage.transform = CGAffineTransformIdentity; 
+        
         // adjust the frame
         CGRect frame = self.selectedPage.frame;
 		frame.origin.y = self.pageHeaderView.frame.size.height;
         
+        // store this frame for the backward animation
+        self.selectedPage.identityFrame = frame; 
+        
         // finally crop frame to fit inside new superview (see CompletionBlock) 
 		frame.size.height -= self.pageHeaderView.frame.size.height;
 		self.selectedPage.frame = frame;
-        
-        // store this frame for the backward animation
-        self.selectedPage.identityFrame = frame; 
 		
 		// scale the page up to it 1:1 (identity) scale
 		self.selectedPage.transform = CGAffineTransformIdentity; 
@@ -298,6 +315,28 @@
     */
 }
 
+- (void)updateScrolledPage:(TabPageView *)page index:(NSInteger)index
+{
+    if (!page) {
+        self.selectedPage = nil;
+    } else {
+        // notify delegate
+        if ([self.delegate respondsToSelector:@selector(pageScrollView:willScrollToPage:atIndex:)]) {
+            [self.delegate pageScrollView:self willScrollToPage:page atIndex:index];
+        }
+        
+        // set selected page
+        self.selectedPage = page;
+        
+        // notify delegate again
+        if ([self.delegate respondsToSelector:@selector(pageScrollView:didScrollToPage:atIndex:)]) {
+            [self.delegate pageScrollView:self didScrollToPage:page atIndex:index];
+        }
+        
+        [self updateHeaderForPageWithIndex:index];
+    }
+}
+
 - (void)updateHeaderForPage:(TabPageView *)pageView withIndex:(NSInteger)index
 {
     if ([self.selectedPage isEqual:pageView]) {
@@ -334,6 +373,16 @@
     pageFrame.size.height -= self.pageHeaderView.frame.size.height;
     page.frame = CGRectOffset(pageFrame, 0, self.pageHeaderView.frame.size.height);
      */
+}
+
+- (void)shiftPage:(TabPageView *)page withOffset:(CGFloat)offset
+{
+    CGRect frame = page.frame;
+    frame.origin.x += offset;
+    page.frame = frame; 
+    
+    // also refresh the alpha of the shifted page
+    //[self setAlphaForPage:page];	
 }
 
 // add a page to the scroll view at a given index. No adjustments are made to existing pages offsets. 
@@ -436,25 +485,174 @@
 
 - (TabPageView *)loadPageAtIndex:(NSInteger)index
 {
-	TabPageView *visiblePage = [self.dataSource pageScrollView:self viewForPageAtIndex:index];
-
-    /*
-	if (visiblePage.reuseIdentifier) {
-		NSMutableArray *reusables = [self.reusablePages objectForKey:visiblePage.reuseIdentifier];
-		if (!reusables) {
-			reusables = [[[NSMutableArray alloc] initWithCapacity:4] autorelease];
-		}
-		if (![reusables containsObject:visiblePage]) {
-			[reusables addObject:visiblePage];
-		}
-		[self.reusablePages setObject:reusables forKey:visiblePage.reuseIdentifier];
-	}
-     */
-	
-	// add the page to the visible pages array
-	[self.visiblePages insertObject:visiblePage atIndex:index];
+    TabPageView *visiblePage = nil;
+        
+    if (index < self.visiblePages.count) {
+        visiblePage = [self.visiblePages objectAtIndex:index];
+    } else {
+        visiblePage = [self.dataSource pageScrollView:self viewForPageAtIndex:index];
+        
+        CGRect frame = visiblePage.frame;
+		frame.origin.y = self.pageHeaderView.frame.size.height;
+        visiblePage.identityFrame = frame; 
+		frame.size.height -= self.pageHeaderView.frame.size.height;
+		visiblePage.frame = frame;
+        
+        // add the page to the visible pages array
+        if ([self.visiblePages indexOfObject:visiblePage] == NSNotFound) {
+            [self.visiblePages addObject:visiblePage];
+        }
+    }
      
     return visiblePage;
+}
+
+- (void)removePagesFromScrollView:(NSArray *)pages animated:(BOOL)animated
+{
+    CGFloat selectedPageOffset = NSNotFound;
+    if ([pages containsObject:self.selectedPage]) {
+        selectedPageOffset = self.selectedPage.frame.origin.x;
+    }
+    
+    // remove the pages from the scrollView
+    [pages enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [obj removeFromSuperview];
+    }];
+    
+    // shift the remaining pages in the scrollView
+    /*
+    [self.visiblePages enumerateObjectsUsingBlock:^(id remainingPage, NSUInteger idx, BOOL *stop) {
+        NSIndexSet *removedPages = [pages indexesOfObjectsPassingTest:^BOOL(id removedPage, NSUInteger idx, BOOL *stop) {
+            return ((UIView *)removedPage).frame.origin.x < ((UIView *)remainingPage).frame.origin.x;
+        }]; 
+        
+        if (removedPages.count > 0) {
+            if (animated) {
+                [UIView animateWithDuration:0.4 animations:^(void) {
+                    [self shiftPage:remainingPage withOffset:-(removedPages.count)];
+                    //[self showCloseTabButton];
+                }];
+            } else {
+                [self shiftPage:remainingPage withOffset:-(removedPages.count)];
+                //[self showCloseTabButton];
+            }                
+        }
+    }];
+    
+    // update the selected page if it has been removed 
+    if (selectedPageOffset != NSNotFound) {
+        NSInteger index = [self.visiblePages indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+            CGFloat delta = fabsf(((UIView *)obj).frame.origin.x - selectedPageOffset);
+            return delta < 0.1;
+        }];
+        
+        TabPageView *newSelectedPage = nil;
+        if (index != NSNotFound) {
+            // replace selected page with the new page which is in the same offset 
+            newSelectedPage = [self.visiblePages objectAtIndex:index];
+        } else {
+            // replace selected page with last visible page 
+            newSelectedPage = [self.visiblePages lastObject];
+        }
+        
+        NSInteger newSelectedPageIndex = [self indexForVisiblePage:newSelectedPage];
+        if (newSelectedPage != self.selectedPage) {
+            [self updateScrolledPage:newSelectedPage index:newSelectedPageIndex];
+        }
+    }
+    */
+}
+
+// *******************************************************************************************************************************
+
+#pragma mark - insertion/deletion/reloading
+
+
+- (void)prepareForDataUpdate:(TabPageScrollViewUpdateMethod)method withIndexSet:(NSIndexSet *)indexes
+{
+    // check if current mode allows data update
+    if(self.viewMode == TabPageScrollViewModePage) {
+        // deleting pages is (currently) only supported in DECK mode.
+        NSException *exception = [NSException exceptionWithName:kExceptionNameInvalidOperation
+                                                         reason:kExceptionReasonInvalidOperation
+                                                       userInfo:nil];
+        [exception raise];
+    }
+    
+    // check number of pages
+    if ([self.dataSource respondsToSelector:@selector(numberOfPagesInScrollView:)]) {
+        NSInteger newNumberOfPages = [self.dataSource numberOfPagesInScrollView:self];
+        
+        NSInteger expectedNumberOfPages = 0;
+        NSString *reason;
+        switch (method) {
+            case TabPageScrollViewUpdateMethodDelete:
+                expectedNumberOfPages = self.numberOfPages - indexes.count;
+                reason = [NSString stringWithFormat:kExceptionReasonInvalidUpdate, newNumberOfPages, self.numberOfPages, 0, indexes.count];
+                break;
+            case TabPageScrollViewUpdateMethodInsert:
+                expectedNumberOfPages = self.numberOfPages + indexes.count;
+                reason = [NSString stringWithFormat:kExceptionReasonInvalidUpdate, newNumberOfPages, self.numberOfPages, indexes.count, 0];
+                break;
+            case TabPageScrollViewUpdateMethodReload:
+                reason = [NSString stringWithFormat:kExceptionReasonInvalidUpdate, newNumberOfPages, self.numberOfPages, 0, 0];
+            default:
+                expectedNumberOfPages = self.numberOfPages;
+                break;
+        }
+        
+        if (newNumberOfPages != expectedNumberOfPages) {
+            NSException *exception = [NSException exceptionWithName:kExceptionNameInvalidUpdate reason:reason userInfo:nil];
+            [exception raise];
+        }
+	}
+}
+
+- (void)insertPagesAtIndexes:(NSIndexSet *)indexes animated:(BOOL)animated
+{
+    [self prepareForDataUpdate:TabPageScrollViewUpdateMethodInsert withIndexSet:indexes];
+    
+    NSInteger selectedPageIndex = (self.numberOfPages > 0) ? [self indexForSelectedPage] : 0;
+    [self loadPageAtIndex:selectedPageIndex];
+    
+    // update selected page if necessary
+    [self updateScrolledPage:[self.visiblePages objectAtIndex:selectedPageIndex] index:selectedPageIndex];
+}
+
+- (void)deletePagesAtIndexes:(NSIndexSet *)indexes animated:(BOOL)animated
+{
+    [self prepareForDataUpdate:TabPageScrollViewUpdateMethodDelete withIndexSet:indexes];
+    
+    // handle deletion of pages _within_ and _after_ the visible range. 
+    NSInteger numPagesAfterDeletion = self.numberOfPages - indexes.count;
+    [indexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+        // get the deleted page 
+        [self.deletedPages addObject:[self pageAtIndex:index]];
+    }];
+    
+    //update number of pages.  
+    self.numberOfPages = numPagesAfterDeletion;
+    // remove the pages marked for deletion from visiblePages 
+    [self.visiblePages removeObjectsInArray:self.deletedPages];
+    // ...and from the scrollView
+    [self removePagesFromScrollView:self.deletedPages animated:animated];
+    
+    [self.deletedPages removeAllObjects];
+}
+
+- (void)reloadPagesAtIndexes:(NSIndexSet *)indexes
+{
+    [self prepareForDataUpdate:TabPageScrollViewUpdateMethodReload withIndexSet:indexes];
+    
+    // only reload pages within the visible range
+    [indexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+        TabPageView *page = [self pageAtIndex:index];
+        [self.visiblePages removeObject:page]; // remove from visiblePages
+        [page removeFromSuperview];          // remove from scrollView
+        
+        page = [self loadPageAtIndex:index];
+        [self addPageToDeck:page atIndex:index];
+    }];        
 }
 
 // *******************************************************************************************************************************

@@ -201,6 +201,37 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     [self.searchBar resignFirstResponder];
 }
 
+- (void)closePageAtIndex:(NSInteger)index
+{
+    //TabPageScrollView *pageScrollView = [[self.view subviews] lastObject];
+    
+    // create an index set of the pages we wish to delete
+    // example 1: deleting the page at the current index
+    NSMutableIndexSet *indexesToDelete = [[NSMutableIndexSet alloc] initWithIndex:index];
+    
+    // example 2: deleting the last 2 pages from the page scroller
+    //NSRange range; range.location = self.tabPageDataArray.count - 2; range.length = 2;
+    //self.indexesToDelete = [[NSMutableIndexSet alloc] initWithIndexesInRange:range];
+    
+    // example 3: deleting the first 2 pages from the page scroller
+    //NSRange range; range.location = 0; range.length = 2;
+    //self.indexesToDelete = [[NSMutableIndexSet alloc] initWithIndexesInRange:range];
+    
+    /*
+     // we can only delete pages in DECK mode
+     if (pageScrollView.viewMode == TabPageScrollViewModePage) {
+     [pageScrollView deselectPageAnimated:YES];
+     } else {
+     [self removePagesAtIndexSet:self.indexesToDelete];
+     self.indexesToDelete = nil;
+     }
+     */
+    
+    [self removePagesAtIndexSet:indexesToDelete];
+    [indexesToDelete release];
+    self.webView = nil;
+}
+
 - (IBAction)backPressed:(id)sender
 {
     [self.webView goBack];
@@ -303,33 +334,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 - (IBAction)closeTabPressed:(id)sender
 {
-    //TabPageScrollView *pageScrollView = [[self.view subviews] lastObject];
-    
-    // create an index set of the pages we wish to delete
-    // example 1: deleting the page at the current index
-    NSMutableIndexSet *indexesToDelete = [[NSMutableIndexSet alloc] initWithIndex:[self.mainPageScrollView indexForSelectedPage]];
-    
-    // example 2: deleting the last 2 pages from the page scroller
-    //NSRange range; range.location = self.tabPageDataArray.count - 2; range.length = 2;
-    //self.indexesToDelete = [[NSMutableIndexSet alloc] initWithIndexesInRange:range];
-    
-    // example 3: deleting the first 2 pages from the page scroller
-    //NSRange range; range.location = 0; range.length = 2;
-    //self.indexesToDelete = [[NSMutableIndexSet alloc] initWithIndexesInRange:range];
-    
-    /*
-    // we can only delete pages in DECK mode
-    if (pageScrollView.viewMode == TabPageScrollViewModePage) {
-        [pageScrollView deselectPageAnimated:YES];
-    } else {
-        [self removePagesAtIndexSet:self.indexesToDelete];
-        self.indexesToDelete = nil;
-    }
-    */
-    
-    [self removePagesAtIndexSet:indexesToDelete];
-    [indexesToDelete release];
-    self.webView = nil;
+    [self closePageAtIndex:[self.mainPageScrollView indexForSelectedPage]];
 }
 
 - (void)closeCurrentPage
@@ -350,10 +355,11 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     }
     
     // create new pages and add them to the data set 
-    [indexSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+    [indexSet enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
         TabPageData *pageData = [[TabPageData alloc] init];
         pageData.webViewDelegate = self;
-        [self.tabPageDataArray insertObject:pageData atIndex:idx];
+        pageData.index = index;
+        [self.tabPageDataArray insertObject:pageData atIndex:index];
         [pageData release];
     }];
     
@@ -374,8 +380,8 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     [self.mainPageScrollView deletePagesAtIndexes:indexSet animated:YES];
     
     self.addTabButton.enabled = YES;
-    
-    if (self.tabPageDataArray.count == 0) {
+
+    if (!self.isIPad && self.tabPageDataArray.count == 0) {
         [self newTabPressed:nil];
     }
 }
@@ -416,9 +422,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     
     self.indexesToInsert = nil;
     self.mainPageScrollView = nil;
-    
-    self.xibNameScrollView = nil;
-    self.xibNamePageView = nil;
 }
 
 // ******************************************************************************************************************************
@@ -1115,7 +1118,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     // get screenshot of the current webView
     TabPageView *pageView = [scrollView pageAtIndex:index];
     pageData.pageViewSize = pageView.identityFrame.size;
-    [pageData makeScreenShotFromTheView:pageData.webView];
+    [pageData makeScreenShotOfTheView:pageData.webView];
      
     // place an image from pageData
     [pageView insertSubview:pageData.previewImageView belowSubview:pageView.closeButton];

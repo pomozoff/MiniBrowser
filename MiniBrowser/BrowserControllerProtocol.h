@@ -18,5 +18,6 @@
 - (void)closePopupsAndLoadUrl:(NSString *)url;
 - (void)dismissPopoverActionAndCleanUp;
 - (void)placeScreenshotOnPageViewFromPageData:(TabPageData *)pageData;
+- (void)closePageAtIndex:(NSInteger)index;
 
 @end

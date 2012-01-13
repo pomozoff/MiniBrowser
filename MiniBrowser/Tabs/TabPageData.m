@@ -13,6 +13,7 @@
 
 @implementation TabPageData
 
+@synthesize index = _index;
 @synthesize pageViewSize = _pageViewSize;
 @synthesize previewImageView = _previewImage;
 @synthesize webView = _webView;
@@ -122,7 +123,7 @@
     }
     
     // make screenshot loaded page
-    [self makeScreenShotFromTheView:webView];
+    [self makeScreenShotOfTheView:webView];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
@@ -134,7 +135,7 @@
     [self.webViewDelegate webView:webView didFailLoadWithError:error];
     
     // make screenshot loaded page
-    [self makeScreenShotFromTheView:webView];
+    [self makeScreenShotOfTheView:webView];
 }
 
 // ******************************************************************************************************************************
@@ -166,7 +167,7 @@
     [self.webView loadRequest:[NSURLRequest requestWithURL:urlObject]];
 }
 
-- (void)makeScreenShotFromTheView:(UIView *)view
+- (void)makeScreenShotOfTheView:(UIView *)view
 {
     if (CGSizeEqualToSize(view.frame.size, CGSizeZero)) {
         return;
@@ -187,11 +188,21 @@
     // remember imageview
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
     self.previewImageView = imageView;
-    self.previewImageView.tag = 100;
+    self.previewImageView.tag = PREVIEW_IMAGE_TAG;
     [imageView release];
     
     // replace new screenshot
     [self.webViewDelegate placeScreenshotOnPageViewFromPageData:self];
+}
+
+// ******************************************************************************************************************************
+
+#pragma mark - Page Data Actions
+
+
+- (IBAction)closePage:(id)sender
+{
+    [self.webViewDelegate closePageAtIndex:self.index];
 }
 
 @end

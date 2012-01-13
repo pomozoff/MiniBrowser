@@ -41,7 +41,7 @@
 	//reset modified properties
 	self.transform = CGAffineTransformIdentity;
     
-    UIView *imageView = [self viewWithTag:100];
+    UIView *imageView = [self viewWithTag:PREVIEW_IMAGE_TAG];
     [imageView removeFromSuperview];
 }
 

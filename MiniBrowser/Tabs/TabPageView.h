@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define PREVIEW_IMAGE_TAG 100
+
 @interface TabPageView : UIView <UIWebViewDelegate>
 
 @property (nonatomic, retain) IBOutlet UIButton *closeButton;

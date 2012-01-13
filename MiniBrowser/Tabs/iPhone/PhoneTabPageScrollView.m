@@ -853,9 +853,11 @@
         // in order to shift pages backwards and trim the content size, the WIDTH of each deleted page needs to be known. 
         // We don't have an instance of the deleted pages and we cannot ask the data source to provide them because they've already been deleted. As a temp solution we take the default page width of 320. 
         // This assumption may be wrong if the data source uses anotehr page width or alternatively varying page widths.   
-        UIView *pseudoPage = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)] autorelease];
+        UIView *pseudoPage = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
         [self setFrameForPage:pseudoPage atIndex:idx];
         [self.deletedPages addObject:pseudoPage];
+        [pseudoPage release];
+        
         _visibleIndexes.location--;
     }];
     

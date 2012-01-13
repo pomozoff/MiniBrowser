@@ -13,6 +13,7 @@
 
 @interface TabPageData : NSObject <UIWebViewDelegate, PageHeaderInfo>
 
+@property (nonatomic, assign) NSInteger index;
 @property (nonatomic, assign) CGSize pageViewSize;
 @property (nonatomic, retain) UIImageView *previewImageView;
 @property (nonatomic, retain) UIWebView *webView;
@@ -21,8 +22,10 @@
 // an example of using UINavigationController as the owner of the page. 
 @property (nonatomic, retain) UINavigationController *navController; 
 
+- (IBAction)closePage:(id)sender;
+
 - (void)loadUrl;
 - (void)loadUrl:(NSString *)url;
-- (void)makeScreenShotFromTheView:(UIView *)view;
+- (void)makeScreenShotOfTheView:(UIView *)view;
 
 @end
