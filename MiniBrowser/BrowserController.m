@@ -48,6 +48,7 @@
 @synthesize isIPad = _isIPad;
 @synthesize xibNameScrollView = _xibNameScrollView;
 @synthesize xibNamePageView = _xibNameTabPageView;
+@synthesize maxTabsAmount = _maxTabsAmount;
 
 @synthesize navigationBar = _navigationBar;
 @synthesize searchBar = _searchBar;
@@ -154,7 +155,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 - (NSMutableArray *)tabPageDataArray
 {
     if (!_tabPageDataArray) {
-        _tabPageDataArray = [[NSMutableArray alloc] initWithCapacity:MAX_TABS_COUNT];
+        _tabPageDataArray = [[NSMutableArray alloc] initWithCapacity:self.maxTabsAmount];
     }
     
     return _tabPageDataArray;
@@ -203,7 +204,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 - (void)closePageAtIndex:(NSInteger)index
 {
-    //TabPageScrollView *pageScrollView = [[self.view subviews] lastObject];
+    //TabPageScrollView *pageScrollView = [self.view.subviews lastObject];
     
     // create an index set of the pages we wish to delete
     // example 1: deleting the page at the current index
@@ -292,7 +293,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 - (IBAction)newTabPressed:(id)sender
 {
-    //TabPageScrollView *pageScrollView = [[self.view subviews] lastObject];
+    //TabPageScrollView *pageScrollView = [self.view.subviews lastObject];
     
     // create an index set of the pages we wish to add
     // example 1: inserting one page at the current index  
@@ -322,11 +323,20 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     NSMutableIndexSet *indexesToInsert = [[NSMutableIndexSet alloc] initWithIndexesInRange:range];
      */
 
-    //TabPageScrollView *pageScrollView = [[self.view subviews] lastObject];
+    //TabPageScrollView *pageScrollView = [self.view.subviews lastObject];
+
     
+    // example 2: appending a page at the end of the page scroller 
+    NSRange range;
+    range.location = self.tabPageDataArray.count;
+    range.length = 1;
+    NSMutableIndexSet *indexesToInsert = [[NSMutableIndexSet alloc] initWithIndexesInRange:range];
+
+    /*
     NSInteger selectedPageIndex = [self.mainPageScrollView indexForSelectedPage];
     NSMutableIndexSet *indexesToInsert = [[NSMutableIndexSet alloc] initWithIndex:(selectedPageIndex == NSNotFound)? 0 : selectedPageIndex];
-
+   */
+    
     [self addPagesAtIndexSet:indexesToInsert];
     
     [indexesToInsert release];
@@ -349,7 +359,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 - (void)addPagesAtIndexSet:(NSIndexSet *)indexSet
 {
-    if (self.tabPageDataArray.count >= MAX_TABS_COUNT) {
+    if (self.tabPageDataArray.count >= self.maxTabsAmount) {
         self.addTabButton.enabled = NO;
         return;
     }
@@ -364,14 +374,14 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     }];
     
     // update the page scroller 
-    //TabPageScrollView *pageScrollView = [[self.view subviews] lastObject];
+    //TabPageScrollView *pageScrollView = [self.view.subviews lastObject];
     
     [self.mainPageScrollView insertPagesAtIndexes:indexSet animated:YES];
 }
 
 - (void)removePagesAtIndexSet:(NSIndexSet *)indexSet
 {
-    //TabPageScrollView *pageScrollView = [[self.view subviews] lastObject];
+    //TabPageScrollView *pageScrollView = [self.view.subviews lastObject];
     
     // remove from the data set
     [self.tabPageDataArray removeObjectsAtIndexes:indexSet];
@@ -468,7 +478,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 - (void)saveSettings
 {
-    NSMutableArray *urlList = [[NSMutableArray alloc] initWithCapacity:MAX_TABS_COUNT];
+    NSMutableArray *urlList = [[NSMutableArray alloc] initWithCapacity:self.maxTabsAmount];
     for (TabPageData *pageData in self.tabPageDataArray) {
         if (pageData.subtitle) {
             [urlList addObject:pageData.subtitle];
@@ -794,7 +804,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     [self loadUrl:textField.text];
 
     /*
-     TabPageScrollView *pageScrollView = [[self.view subviews] lastObject];
+     TabPageScrollView *pageScrollView = [self.view.subviews lastObject];
      NSInteger selectedIndex = [pageScrollView indexForSelectedPage];
      TabPageData *pageData = [self.tabPageDataArray objectAtIndex:selectedIndex]; 
      
@@ -997,10 +1007,14 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
             pageView = [[[NSBundle mainBundle] loadNibNamed:self.xibNamePageView owner:pageData options:nil] objectAtIndex:0];
             pageView.reuseIdentifier = pageId;
             
-            self.webView = pageData.webView;
+            // prepare new tab for use right now
+            if (index < (self.tabPageDataArray.count - 1)) {
+                [pageView.buttonNewTabView removeFromSuperview];
+                self.webView = pageData.webView;
+            }
         }
         
-        if ([[pageView subviews] indexOfObject:pageData.previewImageView] == NSNotFound) {
+        if ([pageView.subviews indexOfObject:pageData.previewImageView] == NSNotFound) {
             [pageView insertSubview:pageData.previewImageView belowSubview:pageView.closeButton];
         }
 
@@ -1088,8 +1102,16 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     // remove webView's screenshot
     [pageData.previewImageView removeFromSuperview];
     
-    // place webView to the screen
     TabPageView *pageView = [scrollView pageAtIndex:index];
+    
+    // add new tab if it's an iPad
+    // and remove default image view
+    if (self.isIPad && [pageView.subviews containsObject:pageView.buttonNewTabView]) {
+        [pageView.buttonNewTabView removeFromSuperview];
+        [self newTabPressed:nil];
+    }
+    
+    // place webView to the screen
     [pageView addSubview:pageData.webView];
 }
 
@@ -1144,7 +1166,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     [self changeToolbar:self.navigationToolbar withToolbar:self.tabsToolbar];
     
     // Enable "new tab" button if amount of tabs less than max tabs count
-    self.addTabButton.enabled = (self.tabPageDataArray.count < MAX_TABS_COUNT);
+    self.addTabButton.enabled = (self.tabPageDataArray.count < self.maxTabsAmount);
 }
 
 // ******************************************************************************************************************************
@@ -1154,7 +1176,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 - (void)reloadPagesAtIndexSet:(NSIndexSet *)indexSet
 {
-    //TabPageScrollView *pageScrollView = [[self.view subviews] lastObject];
+    //TabPageScrollView *pageScrollView = [self.view.subviews lastObject];
     
     [self.mainPageScrollView reloadPagesAtIndexes:self.indexesToReload];
 }

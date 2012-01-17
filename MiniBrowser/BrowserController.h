@@ -23,6 +23,7 @@
 
 @property (nonatomic, copy) NSString *xibNameScrollView;
 @property (nonatomic, copy) NSString *xibNamePageView;
+@property (nonatomic, assign) NSUInteger maxTabsAmount;
 
 @property (nonatomic, retain) IBOutlet UINavigationBar *navigationBar;
 @property (nonatomic, retain) IBOutlet UISearchBar *searchBar;
@@ -43,5 +44,3 @@
 - (void)dismissOpenPopoversAndActionSheet;
 
 @end
-
-#define MAX_TABS_COUNT 8

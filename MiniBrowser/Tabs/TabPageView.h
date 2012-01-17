@@ -12,6 +12,7 @@
 
 @interface TabPageView : UIView <UIWebViewDelegate>
 
+@property (nonatomic, retain) IBOutlet UIImageView *buttonNewTabView;
 @property (nonatomic, retain) IBOutlet UIButton *closeButton;
 
 @property (nonatomic, assign) BOOL isNewTabButton;

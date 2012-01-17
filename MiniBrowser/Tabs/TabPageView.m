@@ -10,6 +10,7 @@
 
 @implementation TabPageView
 
+@synthesize buttonNewTabView = _buttonNewTabView;
 @synthesize closeButton = _closeButton;
 
 @synthesize isNewTabButton = _isNewTabButton;

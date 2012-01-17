@@ -10,6 +10,8 @@
 
 #define MAX_TABS_COUNT 5
 #define TRANSFORM_PAGE_SCALE 0.25f
+#define TABS_COUNT_IN_ROW 3
+#define TABS_COUNT_IN_COLUMN 3
 
 @interface PadTabPageScrollView : TabPageScrollView
 

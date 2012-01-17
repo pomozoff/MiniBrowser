@@ -77,6 +77,7 @@ typedef enum {
 
 // Close current page
 - (void)closeCurrentPage;
+- (void)closePageAtIndex:(NSInteger)index;
 
 @end
 

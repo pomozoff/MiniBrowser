@@ -38,7 +38,7 @@
 					<object class="IBUIButton" id="665803270">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">295</int>
-						<string key="NSFrame">{{-30, -30}, {60, 60}}</string>
+						<string key="NSFrame">{{-23, -23}, {46, 46}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
@@ -193,17 +193,20 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">TabPageView</string>
 					<string key="superclassName">UIView</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">closeButton</string>
-						<string key="NS.object.0">UIButton</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">closeButton</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="buttonNewTabView">UIImageView</string>
+						<string key="closeButton">UIButton</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="buttonNewTabView">
+							<string key="name">buttonNewTabView</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="closeButton">
 							<string key="name">closeButton</string>
 							<string key="candidateClassName">UIButton</string>
 						</object>
-					</object>
+					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/TabPageView.h</string>

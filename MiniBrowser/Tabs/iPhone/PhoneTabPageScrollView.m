@@ -460,7 +460,7 @@
 		[self addSubview:self.scrollViewTouch];
 		[self addSubview:self.pageControlTouch];
         
-        if ([[self.selectedPage subviews] indexOfObject:self.selectedPage.closeButton] != NSNotFound) {
+        if ([self.selectedPage.subviews indexOfObject:self.selectedPage.closeButton] != NSNotFound) {
             [self addSubview:self.closePageTouch];
         }
         
@@ -511,7 +511,7 @@
 	// reset visible pages array
 	[self.visiblePages removeAllObjects];
 	// remove all subviews from scrollView
-    [[self.scrollView subviews] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    [self.scrollView.subviews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [obj removeFromSuperview];
     }]; 
     
@@ -625,7 +625,7 @@
 	[self addPageToScrollView:page atIndex:index]; 
     
     // shift pages at or after the new page offset forward
-    [[self.scrollView subviews] enumerateObjectsUsingBlock:^(id existingPage, NSUInteger idx, BOOL *stop) {
+    [self.scrollView.subviews enumerateObjectsUsingBlock:^(id existingPage, NSUInteger idx, BOOL *stop) {
         if (existingPage != page && page.frame.origin.x <= ((UIView *)existingPage).frame.origin.x) {
             if (animated) {
                 
@@ -664,7 +664,7 @@
     }];
     
     // shift the remaining pages in the scrollView
-    [[self.scrollView subviews] enumerateObjectsUsingBlock:^(id remainingPage, NSUInteger idx, BOOL *stop) {
+    [self.scrollView.subviews enumerateObjectsUsingBlock:^(id remainingPage, NSUInteger idx, BOOL *stop) {
         NSIndexSet *removedPages = [pages indexesOfObjectsPassingTest:^BOOL(id removedPage, NSUInteger idx, BOOL *stop) {
             return ((UIView *)removedPage).frame.origin.x < ((UIView *)remainingPage).frame.origin.x;
         }]; 
@@ -684,7 +684,7 @@
     
     // update the selected page if it has been removed 
     if (selectedPageOffset != NSNotFound) {
-        NSInteger index = [[self.scrollView subviews] indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        NSInteger index = [self.scrollView.subviews indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
             CGFloat delta = fabsf(((UIView *)obj).frame.origin.x - selectedPageOffset);
             return delta < 0.1;
         }];
@@ -692,7 +692,7 @@
         TabPageView *newSelectedPage=nil;
         if (index != NSNotFound) {
             // replace selected page with the new page which is in the same offset 
-            newSelectedPage = [[self.scrollView subviews] objectAtIndex:index];
+            newSelectedPage = [self.scrollView.subviews objectAtIndex:index];
         } else {
             // replace selected page with last visible page 
             newSelectedPage = [self.visiblePages lastObject];
@@ -797,7 +797,7 @@
     // handle insertion of pages before the visible range. Shift pages forward.
     if (self.indexesBeforeVisibleRange.count > 0) {
         self.numberOfPages += self.indexesBeforeVisibleRange.count;
-        [[self.scrollView subviews] enumerateObjectsUsingBlock:^(id page, NSUInteger idx, BOOL *stop) {
+        [self.scrollView.subviews enumerateObjectsUsingBlock:^(id page, NSUInteger idx, BOOL *stop) {
             [self shiftPage:page withOffset:self.indexesBeforeVisibleRange.count * self.scrollView.frame.size.width];
         }];
         
@@ -1197,7 +1197,7 @@
 	NSInteger selectedIndex = [self indexForSelectedPage];
     CGPoint tapPoint = [recognizer locationInView:self.selectedPage.closeButton];
 
-	if ([[self.selectedPage subviews] indexOfObject:self.selectedPage.closeButton] != NSNotFound && [self.selectedPage.closeButton pointInside:tapPoint withEvent:nil]) {
+	if ([self.selectedPage.subviews indexOfObject:self.selectedPage.closeButton] != NSNotFound && [self.selectedPage.closeButton pointInside:tapPoint withEvent:nil]) {
         [self.delegate closeCurrentPage];
 	} else {
         [self selectPageAtIndex:selectedIndex animated:YES];
