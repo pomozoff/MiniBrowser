@@ -19,7 +19,7 @@
 @property (nonatomic, retain) NSMutableArray *visiblePages;
 
 - (void)reloadData; 
-- (TabPageView *)loadPageAtIndex:(NSInteger)index;
+- (TabPageView *)loadPageAtIndex:(NSInteger)index isNewTabButton:(BOOL)isNewTabButton;
 - (void)setViewMode:(TabPageScrollViewMode)mode animated:(BOOL)animated;
 - (void)initHeaderForPageAtIndex:(NSInteger)index;
 - (void)initDeckTitlesForPageAtIndex:(NSInteger)index;
@@ -56,7 +56,7 @@
 - (NSMutableArray *)visiblePages
 {
     if (!_visiblePages) {
-        _visiblePages = [[NSMutableArray alloc] initWithCapacity:VISIBLE_PAGES_COUNT];
+        _visiblePages = [[NSMutableArray alloc] initWithCapacity:MAX_TABS_COUNT];
     }
     
     return _visiblePages;
@@ -100,6 +100,55 @@
     self.selectedPage = nil;
     
     [super dealloc];
+}
+
+// *******************************************************************************************************************************
+
+#pragma mark - Handling Touches
+
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    BOOL shouldReceive = self.viewMode == TabPageScrollViewModeDeck;
+    
+	return shouldReceive;	
+}
+
+- (void)handleTapGestureFrom:(UITapGestureRecognizer *)recognizer 
+{
+    //CGPoint tapPoint = [recognizer locationInView:self.pageDeckBackgroundView];
+    
+    for (TabPageView *page in self.visiblePages) {
+        /*
+        if ([page pointInside:tapPoint withEvent:nil]) {
+            self.selectedPage = page;
+            [self setViewMode:TabPageScrollViewModePage animated:YES];
+        }
+        */
+
+        CGPoint tapPoint = [recognizer locationInView:page];
+        
+        if ([[page subviews] indexOfObject:page.closeButton] != NSNotFound && CGRectContainsPoint(page.closeButton.frame, tapPoint)) {
+            [self.delegate closeCurrentPage];
+        } else {
+            NSInteger selectedIndex = [self.visiblePages indexOfObject:page];
+            [self selectPageAtIndex:selectedIndex animated:YES];
+        }
+    }
+    
+/*
+    if (!self.selectedPage)
+        return;
+    
+	NSInteger selectedIndex = [self indexForSelectedPage];
+    CGPoint tapPoint = [recognizer locationInView:self.selectedPage.closeButton];
+    
+	if ([[self.selectedPage subviews] indexOfObject:self.selectedPage.closeButton] != NSNotFound && [self.selectedPage.closeButton pointInside:tapPoint withEvent:nil]) {
+        [self.delegate closeCurrentPage];
+	} else {
+        [self selectPageAtIndex:selectedIndex animated:YES];
+    }
+    */
 }
 
 // *******************************************************************************************************************************
@@ -163,7 +212,7 @@
     CGRect identityFrame = self.selectedPage.identityFrame;
     CGRect pageFrame = self.selectedPage.frame;
     [self.selectedPage removeFromSuperview];
-    self.selectedPage = [self loadPageAtIndex:index];
+    self.selectedPage = [self loadPageAtIndex:index isNewTabButton:NO];
     self.selectedPage.identityFrame = identityFrame;
     self.selectedPage.frame = pageFrame;
     self.selectedPage.alpha = 1.0;
@@ -246,14 +295,14 @@
 		// move to TabPageScrollViewModeDeck
 		//self.pageDeckTitleLabel.hidden = NO;
 		[self initDeckTitlesForPageAtIndex:selectedIndex];
-		
+
 		self.selectedPage.transform = CGAffineTransformMakeScale(TRANSFORM_PAGE_SCALE, TRANSFORM_PAGE_SCALE);
         [self setOriginForPage:self.selectedPage atIndex:selectedIndex];
         
-        self.pageHeaderView.alpha = 0.0f;
-        
         // display close button
         self.selectedPage.closeButton.alpha = 1.0f;
+        
+        self.pageHeaderView.alpha = 0.0f;
         
         // notify the delegate
 		if ([self.delegate respondsToSelector:@selector(pageScrollView:willDeselectPageAtIndex:)]) {
@@ -383,7 +432,7 @@
     [self preparePage:page forMode:TabPageScrollViewModeDeck];
     
 	// configure the page frame
-    //[self setFrameForPage:page atIndex:index];
+    [self setOriginForPage:page atIndex:index];
     
 	// add shadow (use shadowPath to improve rendering performance)
 	page.layer.shadowColor = [[UIColor blackColor] CGColor];	
@@ -418,13 +467,19 @@
     // hide view components initially
     self.pageHeaderView.alpha = 0.0f;	
     
+    // add new tab button
+    if (self.numberOfPages < MAX_TABS_COUNT) {
+        TabPageView *page = [self loadPageAtIndex:(self.numberOfPages - 1) isNewTabButton:YES];
+        [self addPageToDeck:page atIndex:self.numberOfPages];
+    }
+
 	if (self.numberOfPages > 0) {
 		// reload visible pages
 		for (int index = 0; index < self.numberOfPages; index++) {
-			TabPageView *page = [self loadPageAtIndex:index];
+			TabPageView *page = [self loadPageAtIndex:index isNewTabButton:NO];
             [self addPageToDeck:page atIndex:index];
 		}
-		
+        
         /*
 		// this will load any additional views which become visible  
 		[self updateVisiblePages];
@@ -466,6 +521,8 @@
         */
 	}
     
+    self.numberOfPages = self.visiblePages.count;
+    
     // reloading the data implicitely resets the viewMode to UIPageScrollViewModeDeck. 
     // here we restore the view mode in case this is not the first time reloadData is called (i.e. if there if a self.selectedPage).   
     if (self.selectedPage && self.viewMode == TabPageScrollViewModePage) { 
@@ -474,7 +531,7 @@
     }
 }
 
-- (TabPageView *)loadPageAtIndex:(NSInteger)index
+- (TabPageView *)loadPageAtIndex:(NSInteger)index isNewTabButton:(BOOL)isNewTabButton
 {
     TabPageView *visiblePage = nil;
         
@@ -482,6 +539,13 @@
         visiblePage = [self.visiblePages objectAtIndex:index];
     } else {
         visiblePage = [self.dataSource pageScrollView:self viewForPageAtIndex:index];
+        visiblePage.isNewTabButton = isNewTabButton;
+        
+        // set tap gesture recognizer for page selection
+        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGestureFrom:)];
+        [visiblePage addGestureRecognizer:recognizer];
+        recognizer.delegate = self;
+        [recognizer release];
         
         CGRect frame = visiblePage.frame;
 		frame.origin.y = self.pageHeaderView.frame.size.height;
@@ -491,7 +555,15 @@
         
         // add the page to the visible pages array
         if ([self.visiblePages indexOfObject:visiblePage] == NSNotFound) {
-            [self.visiblePages addObject:visiblePage];
+            if (isNewTabButton) {
+                [self.visiblePages addObject:visiblePage];
+            } else {
+                [self.visiblePages insertObject:visiblePage atIndex:(self.visiblePages.count - 1)];
+            }
+            
+            if (self.visiblePages.count > MAX_TABS_COUNT) {
+                [self.visiblePages removeObjectAtIndex:(self.visiblePages.count - 1)];
+            }
         }
     }
      
@@ -604,7 +676,7 @@
     [self prepareForDataUpdate:TabPageScrollViewUpdateMethodInsert withIndexSet:indexes];
     
     NSInteger selectedPageIndex = (self.numberOfPages > 0) ? [self indexForSelectedPage] : 0;
-    [self loadPageAtIndex:selectedPageIndex];
+    [self loadPageAtIndex:selectedPageIndex isNewTabButton:NO];
     
     // update selected page if necessary
     [self updateScrolledPage:[self.visiblePages objectAtIndex:selectedPageIndex] index:selectedPageIndex];
@@ -639,9 +711,9 @@
     [indexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
         TabPageView *page = [self pageAtIndex:index];
         [self.visiblePages removeObject:page]; // remove from visiblePages
-        [page removeFromSuperview];          // remove from scrollView
+        [page removeFromSuperview];            // remove from scrollView
         
-        page = [self loadPageAtIndex:index];
+        page = [self loadPageAtIndex:index isNewTabButton:page.isNewTabButton];
         [self addPageToDeck:page atIndex:index];
     }];        
 }

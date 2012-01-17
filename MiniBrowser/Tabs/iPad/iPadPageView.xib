@@ -37,8 +37,8 @@
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUIButton" id="1061843281">
 						<reference key="NSNextResponder" ref="596009750"/>
-						<int key="NSvFlags">295</int>
-						<string key="NSFrame">{{-60, -50}, {120, 120}}</string>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{-60, -60}, {120, 120}}</string>
 						<reference key="NSSuperview" ref="596009750"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
@@ -219,7 +219,7 @@
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="NS.key.0">closebox.png</string>
-			<string key="NS.object.0">{31, 32}</string>
+			<string key="NS.object.0">{23, 23}</string>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">933</string>
 	</data>
