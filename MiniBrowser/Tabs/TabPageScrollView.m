@@ -10,6 +10,10 @@
 
 @implementation TabPageScrollView
 
+@synthesize deletedPages = _deletedPages;
+@synthesize visiblePages = _visiblePages; // array of created tabs
+@synthesize reusablePages = _reusablePages;
+
 @synthesize delegate = _delegate;
 @synthesize dataSource = _dataSource;
 
@@ -44,6 +48,10 @@
 
 - (void)dealloc
 {
+    self.visiblePages = nil;
+    self.deletedPages = nil;
+    self.reusablePages = nil;
+
     self.delegate = nil;
     self.dataSource = nil;
     
@@ -60,9 +68,23 @@
     return nil;
 }
 
+// Used by the delegate to acquire an already allocated page, instead of allocating a new one
 - (TabPageView *)dequeueReusablePageWithIdentifier:(NSString *)identifier
 {
-    return nil;
+	TabPageView *reusablePage = nil;
+    
+	NSArray *reusables = [self.reusablePages objectForKey:identifier];
+	if (reusables){
+		NSEnumerator *enumerator = [reusables objectEnumerator];
+		while ((reusablePage = [enumerator nextObject])) {
+			if(![self.visiblePages containsObject:reusablePage]){
+				[reusablePage prepareForReuse];
+				break;
+			}
+		}
+	}
+    
+	return reusablePage;
 }
 
 - (NSInteger)indexForSelectedPage
@@ -114,6 +136,5 @@
 {
     
 }
-
 
 @end

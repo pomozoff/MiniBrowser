@@ -45,7 +45,7 @@
     self.browserController.isIPad = NO;
     self.browserController.xibNameScrollView = @"iPhoneTabPageScrollView";
     self.browserController.xibNamePageView = @"iPhonePageView";
-    self.browserController.maxTabsAmount = 8;
+    self.browserController.maxTabsAmount = TABS_AMOUNT_IPHONE;
 
     [self.navigationController pushViewController:self.browserController animated:NO];
     [self.window addSubview:self.navigationController.view];

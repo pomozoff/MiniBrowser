@@ -10,6 +10,8 @@
 #import "TabTouchView.h"
 #import "TabPageView.h"
 
+#define REUSABLE_PAGES_COUNT 4
+
 // *******************************************************************************************************************************
 
 #pragma mark - Page Mode
@@ -102,6 +104,10 @@ typedef enum {
 @end
 
 @interface TabPageScrollView : UIView <UIScrollViewDelegate, UIGestureRecognizerDelegate>
+
+@property (nonatomic, retain) NSMutableArray *deletedPages;
+@property (nonatomic, retain) NSMutableArray *visiblePages;
+@property (nonatomic, retain) NSMutableDictionary *reusablePages;
 
 @property (nonatomic, retain) IBOutlet id<TabPageScrollViewDelegate> delegate;
 @property (nonatomic, retain) IBOutlet id<TabPageScrollViewDataSource> dataSource;

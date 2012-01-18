@@ -9,7 +9,6 @@
 #import "TabPageScrollView.h"
 
 #define VISIBLE_PAGES_COUNT 3
-#define REUSABLE_PAGES_COUNT 3
 
 @interface PhoneTabPageScrollView : TabPageScrollView
 

@@ -28,7 +28,7 @@
     self.browserController.isIPad = YES;
     self.browserController.xibNameScrollView = @"iPadTabPageScrollView";
     self.browserController.xibNamePageView = @"iPadPageView";
-    self.browserController.maxTabsAmount = 5;
+    self.browserController.maxTabsAmount = TABS_AMOUNT_IPAD;
 
     [self.window addSubview:self.browserController.view];
     

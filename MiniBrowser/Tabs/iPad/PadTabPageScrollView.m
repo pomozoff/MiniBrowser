@@ -15,9 +15,6 @@
 
 @property (nonatomic, assign) NSInteger numberOfPages;
 
-@property (nonatomic, retain) NSMutableArray *deletedPages;
-@property (nonatomic, retain) NSMutableArray *visiblePages;
-
 - (void)reloadData; 
 - (TabPageView *)loadPageAtIndex:(NSInteger)index;
 - (void)setViewMode:(TabPageScrollViewMode)mode animated:(BOOL)animated;
@@ -39,6 +36,7 @@
 
 @synthesize deletedPages = _deletedPages;
 @synthesize visiblePages = _visiblePages; // array of created tabs
+@synthesize reusablePages = _reusablePages;
 
 // ******************************************************************************************************************************
 
@@ -61,6 +59,15 @@
     }
     
     return _visiblePages;
+}
+
+- (NSMutableDictionary *)reusablePages
+{
+    if (!_reusablePages) {
+        _reusablePages = [[NSMutableDictionary alloc] initWithCapacity:REUSABLE_PAGES_COUNT_IPAD];
+    }
+    
+    return _reusablePages;
 }
 
 // ******************************************************************************************************************************
@@ -96,8 +103,6 @@
 {
     [self freeOutlets];
     
-    self.deletedPages = nil;
-    self.visiblePages = nil;
     self.selectedPage = nil;
     
     [super dealloc];
@@ -558,6 +563,17 @@
     } else {
         visiblePage = [self.dataSource pageScrollView:self viewForPageAtIndex:index];
         
+        if (visiblePage.reuseIdentifier) {
+            NSMutableArray *reusables = [self.reusablePages objectForKey:visiblePage.reuseIdentifier];
+            if (!reusables) {
+                reusables = [[[NSMutableArray alloc] initWithCapacity:REUSABLE_PAGES_COUNT_IPAD] autorelease];
+            }
+            if (![reusables containsObject:visiblePage]) {
+                [reusables addObject:visiblePage];
+            }
+            [self.reusablePages setObject:reusables forKey:visiblePage.reuseIdentifier];
+        }
+        
         // set tap gesture recognizer for page selection
         UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGestureFrom:)];
         [visiblePage addGestureRecognizer:recognizer];
@@ -701,8 +717,12 @@
     [self prepareForDataUpdate:TabPageScrollViewUpdateMethodInsert withIndexSet:indexes];
     
     [indexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
-        [self loadPageAtIndex:index];
+        TabPageView *pageView = [self loadPageAtIndex:index];
 
+        if (self.viewMode == TabPageScrollViewModeDeck && pageView.isNewTabButton) {
+            [self addPageToDeck:pageView atIndex:index];
+        }
+        
         // update selected page if necessary
         if (animated) {
             [self updateScrolledPage:[self.visiblePages objectAtIndex:index] index:index];

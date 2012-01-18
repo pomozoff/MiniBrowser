@@ -17,10 +17,6 @@
 @property (nonatomic, assign) NSInteger numberOfFreshPages;
 @property (nonatomic, assign) NSRange visibleIndexes;
 
-@property (nonatomic, retain) NSMutableArray *visiblePages;
-@property (nonatomic, retain) NSMutableArray *deletedPages;
-@property (nonatomic, retain) NSMutableDictionary *reusablePages;
-
 @property (nonatomic, retain) NSIndexSet *indexesBeforeVisibleRange; 
 @property (nonatomic, retain) NSIndexSet *indexesWithinVisibleRange; 
 @property (nonatomic, retain) NSIndexSet *indexesAfterVisibleRange; 
@@ -175,10 +171,6 @@
 - (void)dealloc
 {
     [self freeOutlets];
-    
-    self.visiblePages = nil;
-    self.deletedPages = nil;
-    self.reusablePages = nil;
 
     self.selectedPage = nil;
 
@@ -580,7 +572,7 @@
 	if (visiblePage.reuseIdentifier) {
 		NSMutableArray *reusables = [self.reusablePages objectForKey:visiblePage.reuseIdentifier];
 		if (!reusables) {
-			reusables = [[[NSMutableArray alloc] initWithCapacity:4] autorelease];
+			reusables = [[[NSMutableArray alloc] initWithCapacity:REUSABLE_PAGES_COUNT] autorelease];
 		}
 		if (![reusables containsObject:visiblePage]) {
 			[reusables addObject:visiblePage];
@@ -1156,25 +1148,6 @@
 	if ([self.dataSource respondsToSelector:@selector(pageScrollView:subtitleForPageAtIndex:)]) {
 		self.pageDeckSubtitleLabel.text = [self.dataSource pageScrollView:self subtitleForPageAtIndex:index];
 	}
-}
-
-// Used by the delegate to acquire an already allocated page, instead of allocating a new one
-- (TabPageView *)dequeueReusablePageWithIdentifier:(NSString *)identifier
-{
-	TabPageView *reusablePage = nil;
-    
-	NSArray *reusables = [self.reusablePages objectForKey:identifier];
-	if (reusables){
-		NSEnumerator *enumerator = [reusables objectEnumerator];
-		while ((reusablePage = [enumerator nextObject])) {
-			if(![self.visiblePages containsObject:reusablePage]){
-				[reusablePage prepareForReuse];
-				break;
-			}
-		}
-	}
-    
-	return reusablePage;
 }
 
 // *******************************************************************************************************************************

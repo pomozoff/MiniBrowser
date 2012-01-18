@@ -361,7 +361,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 - (void)addPagesAtIndexSet:(NSIndexSet *)indexSet animated:(BOOL)animated
 {
     if (self.tabPageDataArray.count >= self.maxTabsAmount) {
-        self.addTabButton.enabled = NO;
+        self.addTabButton.enabled = NO || self.isIPad;
         return;
     }
     
@@ -388,7 +388,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 - (void)removePagesAtIndexSet:(NSIndexSet *)indexSet
 {
     //TabPageScrollView *pageScrollView = [self.view.subviews lastObject];
-    
+
     // remove from the data set
     [self.tabPageDataArray removeObjectsAtIndexes:indexSet];
     
@@ -397,7 +397,12 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     
     self.addTabButton.enabled = YES;
 
-    if (!self.isIPad && self.tabPageDataArray.count == 0) {
+    if (self.isIPad) {
+        TabPageView *lastPageView = [self.mainPageScrollView pageAtIndex:(self.tabPageDataArray.count - 1)];
+        if (!lastPageView.isNewTabButton) {
+            [self addNewTabAnimated:NO];
+        }
+    } else if (self.tabPageDataArray.count == 0) {
         [self newTabPressed:nil];
     }
 }
@@ -999,6 +1004,9 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 {
     if (pageView.isNewTabButton) {
         [pageView.closeButton removeFromSuperview];
+        if (![pageView.subviews containsObject:pageView.buttonNewTabView]) {
+            [pageView addSubview:pageView.buttonNewTabView];
+        }
     } else if (![pageView.subviews containsObject:pageView.closeButton]) {
         [pageView addSubview:pageView.closeButton];
     }
@@ -1016,7 +1024,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     if (!pageView) {
         static NSString *pageId = @"pageId";
         
-        pageView = (TabPageView *)[scrollView dequeueReusablePageWithIdentifier:pageId];
+        //pageView = (TabPageView *)[scrollView dequeueReusablePageWithIdentifier:pageId];
         if (!pageView) {
             // load a new page from NIB file
             pageView = [[[NSBundle mainBundle] loadNibNamed:self.xibNamePageView owner:pageData options:nil] objectAtIndex:0];
@@ -1104,8 +1112,9 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
     // add new tab if it's an iPad
     // and remove default image view
-    if (self.isIPad && [pageView.subviews containsObject:pageView.buttonNewTabView]) {
+    if (self.isIPad && pageView.isNewTabButton) {
         [pageView.buttonNewTabView removeFromSuperview];
+        pageView.isNewTabButton = NO;
         [self addNewTabAnimated:NO];
     }
 }
