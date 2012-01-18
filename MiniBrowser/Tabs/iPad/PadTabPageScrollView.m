@@ -263,8 +263,6 @@
 		return;
 	}
 	
-	self.viewMode = mode;
-	
 	if (self.selectedPage) {
         [self preparePage:self.selectedPage forMode:mode];
     }
@@ -344,6 +342,8 @@
 		self.selectedPage.frame = CGRectMake(0.0f, self.pageHeaderView.frame.size.height, self.frame.size.width, self.selectedPage.frame.size.height);
 		[self addSubview:self.selectedPage];
         
+        self.viewMode = mode;
+        
 		// notify delegate
 		if ([self.delegate respondsToSelector:@selector(pageScrollView:didSelectPageAtIndex:)]) {
 			[self.delegate pageScrollView:self didSelectPageAtIndex:selectedIndex];
@@ -356,6 +356,8 @@
             [self addSubview:self.closePageTouch];
         }
         */
+        
+        self.viewMode = mode;
         
 		if ([self.delegate respondsToSelector:@selector(pageScrollView:didDeselectPageAtIndex:)]) {
 			[self.delegate pageScrollView:self didDeselectPageAtIndex:selectedIndex];
@@ -684,8 +686,11 @@
     
     [indexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
         [self loadPageAtIndex:index];
+
         // update selected page if necessary
-        [self updateScrolledPage:[self.visiblePages objectAtIndex:index] index:index];
+        if (animated) {
+            [self updateScrolledPage:[self.visiblePages objectAtIndex:index] index:index];
+        }
     }];
 
     /*

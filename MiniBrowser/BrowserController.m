@@ -38,6 +38,7 @@
 
 - (UIViewController *)headerInfoForPageAtIndex:(NSInteger)index;
 - (void)addPagesAtIndexSet:(NSIndexSet *)indexSet;
+- (void)addPagesAtIndexSet:(NSIndexSet *)indexSet animated:(BOOL)animated;
 - (void)removePagesAtIndexSet:(NSIndexSet *)indexSet;
 - (void)reloadPagesAtIndexSet:(NSIndexSet *)indexSet;
 
@@ -291,6 +292,17 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 	}
 }
 
+- (void)addNewTabAnimated:(BOOL)animated
+{
+    NSRange range;
+    range.location = self.tabPageDataArray.count;
+    range.length = 1;
+    NSMutableIndexSet *indexesToInsert = [[NSMutableIndexSet alloc] initWithIndexesInRange:range];
+    [self addPagesAtIndexSet:indexesToInsert animated:animated];
+    
+    [indexesToInsert release];
+}
+
 - (IBAction)newTabPressed:(id)sender
 {
     //TabPageScrollView *pageScrollView = [self.view.subviews lastObject];
@@ -323,23 +335,12 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     NSMutableIndexSet *indexesToInsert = [[NSMutableIndexSet alloc] initWithIndexesInRange:range];
      */
 
-    //TabPageScrollView *pageScrollView = [self.view.subviews lastObject];
-
-    
-    // example 2: appending a page at the end of the page scroller 
-    NSRange range;
-    range.location = self.tabPageDataArray.count;
-    range.length = 1;
-    NSMutableIndexSet *indexesToInsert = [[NSMutableIndexSet alloc] initWithIndexesInRange:range];
-
     /*
+    TabPageScrollView *pageScrollView = [self.view.subviews lastObject];
     NSInteger selectedPageIndex = [self.mainPageScrollView indexForSelectedPage];
     NSMutableIndexSet *indexesToInsert = [[NSMutableIndexSet alloc] initWithIndex:(selectedPageIndex == NSNotFound)? 0 : selectedPageIndex];
    */
-    
-    [self addPagesAtIndexSet:indexesToInsert];
-    
-    [indexesToInsert release];
+    [self addNewTabAnimated:YES];
 }
 
 - (IBAction)closeTabPressed:(id)sender
@@ -357,7 +358,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 #pragma mark - toolbar Actions
 
 
-- (void)addPagesAtIndexSet:(NSIndexSet *)indexSet
+- (void)addPagesAtIndexSet:(NSIndexSet *)indexSet animated:(BOOL)animated
 {
     if (self.tabPageDataArray.count >= self.maxTabsAmount) {
         self.addTabButton.enabled = NO;
@@ -376,7 +377,12 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     // update the page scroller 
     //TabPageScrollView *pageScrollView = [self.view.subviews lastObject];
     
-    [self.mainPageScrollView insertPagesAtIndexes:indexSet animated:YES];
+    [self.mainPageScrollView insertPagesAtIndexes:indexSet animated:animated];
+}
+
+- (void)addPagesAtIndexSet:(NSIndexSet *)indexSet
+{
+    [self addPagesAtIndexSet:indexSet animated:YES];
 }
 
 - (void)removePagesAtIndexSet:(NSIndexSet *)indexSet
@@ -989,6 +995,15 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     return nil;
 }
 
+- (void)drawCloseButtonForPage:(TabPageView *)pageView atIndex:(NSInteger)index
+{
+    if (pageView.isNewTabButton) {
+        [pageView.closeButton removeFromSuperview];
+    } else if (![pageView.subviews containsObject:pageView.closeButton]) {
+        [pageView addSubview:pageView.closeButton];
+    }
+}
+
 - (TabPageView *)pageScrollView:(TabPageScrollView *)scrollView viewForPageAtIndex:(NSInteger)index
 {
     TabPageData *pageData = [self.tabPageDataArray objectAtIndex:index];
@@ -1011,6 +1026,8 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
             if (index < (self.tabPageDataArray.count - 1)) {
                 [pageView.buttonNewTabView removeFromSuperview];
                 self.webView = pageData.webView;
+            } else {
+                pageView.isNewTabButton = YES;
             }
         }
         
@@ -1022,6 +1039,8 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
             pageData.pageViewSize = pageView.identityFrame.size;
             [pageData loadUrl];
         }
+        
+        [self drawCloseButtonForPage:pageView atIndex:index];
     }
     
     return pageView;
@@ -1082,6 +1101,13 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     frame.origin.x = 0.0f;
     frame.origin.y = 0.0f;
     self.webView.frame = frame;
+
+    // add new tab if it's an iPad
+    // and remove default image view
+    if (self.isIPad && [pageView.subviews containsObject:pageView.buttonNewTabView]) {
+        [pageView.buttonNewTabView removeFromSuperview];
+        [self addNewTabAnimated:NO];
+    }
 }
 
 - (void)pageScrollView:(TabPageScrollView *)scrollView didSelectPageAtIndex:(NSInteger)index
@@ -1103,13 +1129,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     [pageData.previewImageView removeFromSuperview];
     
     TabPageView *pageView = [scrollView pageAtIndex:index];
-    
-    // add new tab if it's an iPad
-    // and remove default image view
-    if (self.isIPad && [pageView.subviews containsObject:pageView.buttonNewTabView]) {
-        [pageView.buttonNewTabView removeFromSuperview];
-        [self newTabPressed:nil];
-    }
     
     // place webView to the screen
     [pageView addSubview:pageData.webView];
@@ -1147,6 +1166,8 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     
     // remove webView from the screen
     [pageData.webView removeFromSuperview];
+    
+    [self drawCloseButtonForPage:pageView atIndex:index];
 }
 
 - (void)pageScrollView:(TabPageScrollView *)scrollView didDeselectPageAtIndex:(NSInteger)index

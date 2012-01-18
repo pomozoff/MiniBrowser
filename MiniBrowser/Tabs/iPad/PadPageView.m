@@ -12,17 +12,15 @@
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
-    CGRect preparedPageFrame = self.identityFrame;
-    preparedPageFrame.origin.x = 0;
-    preparedPageFrame.origin.y = 0;
+    UIView *result;
     
     if (CGRectContainsPoint(self.closeButton.frame, point)) {
-        return self.closeButton;
-    } else if (CGRectContainsPoint(preparedPageFrame, point)) {
-        return self;
+        result = self.closeButton;
+    } else {
+        result = [super hitTest:point withEvent:event];
     }
     
-    return nil;
+    return result;
 }
 
 @end
