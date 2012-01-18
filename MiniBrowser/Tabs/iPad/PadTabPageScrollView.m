@@ -581,15 +581,31 @@
 
 - (void)removePagesFromScrollView:(NSArray *)pages animated:(BOOL)animated
 {
+    /*
+    // remember selected page's frame
     CGFloat selectedPageOffset = NSNotFound;
     if ([pages containsObject:self.selectedPage]) {
         selectedPageOffset = self.selectedPage.frame.origin.x;
     }
+    */
     
     // remove the pages from the scrollView
     [pages enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [obj removeFromSuperview];
     }];
+    
+    // shift the remaining pages in the view
+    if (pages.count > 0) {
+        [self.visiblePages enumerateObjectsUsingBlock:^(TabPageView *remainingPage, NSUInteger index, BOOL *stop) {
+            if (animated) {
+                [UIView animateWithDuration:0.4 animations:^(void) {
+                    [self setOriginForPage:remainingPage atIndex:index];
+                }];
+            } else {
+                [self setOriginForPage:remainingPage atIndex:index];
+            }                
+        }];
+}
     
     // shift the remaining pages in the scrollView
     /*
@@ -692,6 +708,8 @@
             [self updateScrolledPage:[self.visiblePages objectAtIndex:index] index:index];
         }
     }];
+    
+    self.numberOfPages += indexes.count;
 
     /*
     NSInteger selectedPageIndex = (self.numberOfPages > 0) ? [self indexForSelectedPage] : 0;
