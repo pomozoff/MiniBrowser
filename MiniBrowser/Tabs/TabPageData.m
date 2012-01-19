@@ -183,6 +183,9 @@
 
     [self.previewImageView removeFromSuperview];
     
+    // remove old view from superview
+    [self.previewImageView removeFromSuperview];
+    
     // remember imageview
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
     self.previewImageView = imageView;

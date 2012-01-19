@@ -328,10 +328,6 @@
 			[self.delegate pageScrollView:self willDeselectPageAtIndex:selectedIndex];
 		}
         
-		// move to TabPageScrollViewModeDeck
-		//self.pageDeckTitleLabel.hidden = NO;
-		//[self initDeckTitlesForPageAtIndex:selectedIndex];
-        
         // show title label
         [self showTitleForPages:self.visiblePages show:YES];
         

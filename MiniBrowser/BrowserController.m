@@ -1094,6 +1094,32 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 // ******************************************************************************************************************************
 
+#pragma mark - preview
+
+
+- (void)putPreview:(UIImageView *)preview onPageView:(TabPageView *)pageView
+{
+    [pageView insertSubview:preview belowSubview:pageView.closeButton];
+}
+
+- (void)placeScreenshotOnPageViewFromPageData:(TabPageData *)pageData
+{
+    NSUInteger index = [self.tabPageDataArray indexOfObject:pageData];
+    if (index == NSNotFound) {
+        return;
+    }
+    
+    TabPageView *pageView = [self.mainPageScrollView pageAtIndex:index];
+    
+    if (self.mainPageScrollView.viewMode == TabPageScrollViewModeDeck || pageData.webView != self.webView) {
+        [self putPreview:pageData.previewImageView onPageView:pageView];
+    }
+    
+    [self.mainPageScrollView updateHeaderForPage:pageView WithIndex:index];
+}
+
+// ******************************************************************************************************************************
+
 #pragma mark - TabPageScrollViewDelegate
 
 
@@ -1192,7 +1218,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     [pageData makeScreenShotOfTheView:pageData.webView];
     
     // place a preview on pageView
-    [pageView insertSubview:pageData.previewImageView belowSubview:pageView.closeButton];
+    [self putPreview:pageData.previewImageView onPageView:pageView];
     
     [pageData.webView removeFromSuperview];
     
@@ -1229,22 +1255,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     //TabPageScrollView *pageScrollView = [self.view.subviews lastObject];
     
     [self.mainPageScrollView reloadPagesAtIndexes:self.indexesToReload];
-}
-
-- (void)placeScreenshotOnPageViewFromPageData:(TabPageData *)pageData
-{
-    NSUInteger index = [self.tabPageDataArray indexOfObject:pageData];
-    if (index == NSNotFound) {
-        return;
-    }
-    
-    TabPageView *pageView = [self.mainPageScrollView pageAtIndex:index];
-    
-    if (self.mainPageScrollView.viewMode == TabPageScrollViewModeDeck) {
-        [pageView insertSubview:pageData.previewImageView belowSubview:pageView.closeButton];
-    }
-    
-    [self.mainPageScrollView updateHeaderForPage:pageView WithIndex:index];
 }
 
 @end
