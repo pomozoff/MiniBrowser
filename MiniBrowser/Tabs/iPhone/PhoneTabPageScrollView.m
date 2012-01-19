@@ -82,7 +82,7 @@
 - (NSMutableArray *)visiblePages
 {
     if (!_visiblePages) {
-        _visiblePages = [[NSMutableArray alloc] initWithCapacity:VISIBLE_PAGES_COUNT];
+        _visiblePages = [[NSMutableArray alloc] initWithCapacity:VISIBLE_PAGES_AMOUNT];
     }
     
     return _visiblePages;
@@ -411,7 +411,7 @@
         // add the page back to the scrollView and transform it
         [self.scrollView addSubview:self.selectedPage];
         
-		self.selectedPage.transform = CGAffineTransformMakeScale(0.6f, 0.6f);
+		self.selectedPage.transform = CGAffineTransformMakeScale(TRANSFORM_PAGE_SCALE_IPHONE, TRANSFORM_PAGE_SCALE_IPHONE);
         
  		CGRect frame = self.selectedPage.frame;
         frame.origin.y = 0.0f;
@@ -706,7 +706,7 @@
 
 - (void)setFrameForPage:(UIView *)page atIndex:(NSInteger)index
 {
-    page.transform = CGAffineTransformMakeScale(0.6, 0.6);
+    page.transform = CGAffineTransformMakeScale(TRANSFORM_PAGE_SCALE_IPHONE, TRANSFORM_PAGE_SCALE_IPHONE);
 	CGFloat contentOffset = index * self.scrollView.frame.size.width;
 	CGFloat margin = (self.scrollView.frame.size.width - page.frame.size.width) / 2; 
 	CGRect frame = page.frame;

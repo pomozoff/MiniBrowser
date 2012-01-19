@@ -10,7 +10,8 @@
 #import "TabTouchView.h"
 #import "TabPageView.h"
 
-#define REUSABLE_PAGES_COUNT 4
+#define TRANSFORM_PAGE_SCALE_IPAD 0.25f
+#define TRANSFORM_PAGE_SCALE_IPHONE 0.60f
 
 // *******************************************************************************************************************************
 
@@ -90,6 +91,8 @@ typedef enum {
 // Page display. Implementers should *always* try to reuse pageViews by setting each page's reuseIdentifier. 
 // This mechanism works the same as in UITableViewCells.  
 - (TabPageView *)pageScrollView:(TabPageScrollView *)scrollView viewForPageAtIndex:(NSInteger)index;
+
+- (NSUInteger)maxPagesAmount;
 
 @optional
 

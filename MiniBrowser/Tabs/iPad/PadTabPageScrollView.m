@@ -55,7 +55,7 @@
 - (NSMutableArray *)visiblePages
 {
     if (!_visiblePages) {
-        _visiblePages = [[NSMutableArray alloc] initWithCapacity:MAX_TABS_COUNT];
+        _visiblePages = [[NSMutableArray alloc] initWithCapacity:[self.dataSource maxPagesAmount]];
     }
     
     return _visiblePages;
@@ -64,7 +64,7 @@
 - (NSMutableDictionary *)reusablePages
 {
     if (!_reusablePages) {
-        _reusablePages = [[NSMutableDictionary alloc] initWithCapacity:REUSABLE_PAGES_COUNT_IPAD];
+        _reusablePages = [[NSMutableDictionary alloc] initWithCapacity:[self.dataSource maxPagesAmount]];
     }
     
     return _reusablePages;
@@ -335,7 +335,7 @@
         // show title label
         [self showTitleForPages:self.visiblePages show:YES];
         
-		self.selectedPage.transform = CGAffineTransformMakeScale(TRANSFORM_PAGE_SCALE, TRANSFORM_PAGE_SCALE);
+		self.selectedPage.transform = CGAffineTransformMakeScale(TRANSFORM_PAGE_SCALE_IPAD, TRANSFORM_PAGE_SCALE_IPAD);
         [self setOriginForPage:self.selectedPage atIndex:selectedIndex];
         
         // display close button
@@ -431,7 +431,7 @@
 
 - (void)setOriginForPage:(UIView *)page atIndex:(NSInteger)index
 {
-    page.transform = CGAffineTransformMakeScale(TRANSFORM_PAGE_SCALE, TRANSFORM_PAGE_SCALE);
+    page.transform = CGAffineTransformMakeScale(TRANSFORM_PAGE_SCALE_IPAD, TRANSFORM_PAGE_SCALE_IPAD);
     
 	CGRect pageFrame = page.frame;
     CGRect appFrame = [[UIScreen mainScreen] applicationFrame];
@@ -575,7 +575,7 @@
         if (visiblePage.reuseIdentifier) {
             NSMutableArray *reusables = [self.reusablePages objectForKey:visiblePage.reuseIdentifier];
             if (!reusables) {
-                reusables = [[[NSMutableArray alloc] initWithCapacity:REUSABLE_PAGES_COUNT_IPAD] autorelease];
+                reusables = [[[NSMutableArray alloc] initWithCapacity:[self.dataSource maxPagesAmount]] autorelease];
             }
             if (![reusables containsObject:visiblePage]) {
                 [reusables addObject:visiblePage];

@@ -988,6 +988,11 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 	return self.tabPageDataArray.count;
 }
 
+- (NSUInteger)maxPagesAmount
+{
+    return self.maxTabsAmount;
+}
+
 - (UIView *)pageScrollView:(TabPageScrollView *)scrollView headerViewForPageAtIndex:(NSInteger)index
 {
     TabPageData *pageData = [self.tabPageDataArray objectAtIndex:index];
