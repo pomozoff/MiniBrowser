@@ -37,9 +37,7 @@
         _webView.delegate = self;
         _webView.scalesPageToFit = YES;
         _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth
-            | UIViewAutoresizingFlexibleHeight
-            | UIViewAutoresizingFlexibleRightMargin
-            | UIViewAutoresizingFlexibleBottomMargin;
+            | UIViewAutoresizingFlexibleHeight;
         _webView.isThreaded = NO;
     }
     
@@ -105,6 +103,12 @@
         [self setLabel:@"Loading" andUrl:request.URL.absoluteString];
     }
     
+    if (CGSizeEqualToSize(webView.frame.size, CGSizeZero)) {
+        CGRect frame = webView.frame;
+        frame.size = self.pageViewSize;
+        webView.frame = frame;
+    }
+    
     return result;
 }
 
@@ -115,12 +119,6 @@
     
     [self setLabel:label andUrl:sourceUrl];
     [self.webViewDelegate webViewDidFinishLoad:webView];
-
-    if (CGSizeEqualToSize(webView.frame.size, CGSizeZero)) {
-        CGRect frame = webView.frame;
-        frame.size = self.pageViewSize;
-        webView.frame = frame;
-    }
     
     // make screenshot loaded page
     [self makeScreenShotOfTheView:webView];

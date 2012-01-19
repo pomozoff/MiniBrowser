@@ -1007,6 +1007,10 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 - (void)drawCloseButtonForPage:(TabPageView *)pageView atIndex:(NSInteger)index
 {
+    if (!self.isIPad) {
+        return;
+    }
+    
     if (pageView.isNewTabButton) {
         [pageView.closeButton removeFromSuperview];
         if (![pageView.subviews containsObject:pageView.buttonNewTabView]) {
@@ -1042,6 +1046,8 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
             } else {
                 pageView.isNewTabButton = YES;
             }
+            
+            self.webView.frame = pageView.frame;
         }
         
         if ([pageView.subviews indexOfObject:pageData.previewImageView] == NSNotFound) {
@@ -1140,9 +1146,12 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     
     TabPageView *pageView = [scrollView pageAtIndex:index];
     CGRect frame = pageView.identityFrame;
+    
     frame.origin.x = 0.0f;
     frame.origin.y = 0.0f;
-    frame.size.height -= self.mainPageScrollView.pageHeaderView.frame.size.height;
+
+    // cut webview height with pageHeader height
+    frame.size.height -= self.mainPageScrollView.pageHeaderView.frame.size.height - 1;
     self.webView.frame = frame;
     
     // place webView to the screen
@@ -1171,15 +1180,20 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     // remove preview
     [pageData.previewImageView removeFromSuperview];
 
-    // get screenshot of the current webView
     TabPageView *pageView = [scrollView pageAtIndex:index];
+
+    // return full webview size
+    CGRect frame = pageData.webView.frame;
+    frame.size.height = pageView.identityFrame.size.height;
+    pageData.webView.frame = frame;
+
+    // get screenshot of the current webView
     pageData.pageViewSize = pageView.identityFrame.size;
     [pageData makeScreenShotOfTheView:pageData.webView];
-     
-    // place an image from pageData
+    
+    // place a preview on pageView
     [pageView insertSubview:pageData.previewImageView belowSubview:pageView.closeButton];
     
-    // remove webView from the screen
     [pageData.webView removeFromSuperview];
     
     [self drawCloseButtonForPage:pageView atIndex:index];

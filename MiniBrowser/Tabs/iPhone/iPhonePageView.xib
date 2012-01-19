@@ -194,10 +194,15 @@
 					<string key="className">TabPageView</string>
 					<string key="superclassName">UIView</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="bottomView">UIView</string>
 						<string key="buttonNewTabView">UIImageView</string>
 						<string key="closeButton">UIButton</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="bottomView">
+							<string key="name">bottomView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="buttonNewTabView">
 							<string key="name">buttonNewTabView</string>
 							<string key="candidateClassName">UIImageView</string>
