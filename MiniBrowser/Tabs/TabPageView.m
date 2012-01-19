@@ -12,6 +12,7 @@
 
 @synthesize buttonNewTabView = _buttonNewTabView;
 @synthesize closeButton = _closeButton;
+@synthesize bottomView = _bottomView;
 
 @synthesize isNewTabButton = _isNewTabButton;
 @synthesize isInitialized = _isInitialized;

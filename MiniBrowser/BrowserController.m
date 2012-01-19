@@ -1105,10 +1105,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     self.urlField.text = pageData.subtitle;
     
     TabPageView *pageView = [scrollView pageAtIndex:index];
-    CGRect frame = pageView.identityFrame;
-    frame.origin.x = 0.0f;
-    frame.origin.y = 0.0f;
-    self.webView.frame = frame;
 
     // add new tab if it's an iPad
     // and remove default image view
@@ -1138,6 +1134,11 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     [pageData.previewImageView removeFromSuperview];
     
     TabPageView *pageView = [scrollView pageAtIndex:index];
+    CGRect frame = pageView.identityFrame;
+    frame.origin.x = 0.0f;
+    frame.origin.y = 0.0f;
+    frame.size.height -= self.mainPageScrollView.pageHeaderView.frame.size.height;
+    self.webView.frame = frame;
     
     // place webView to the screen
     [pageView addSubview:pageData.webView];

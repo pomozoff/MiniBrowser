@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 
 #define PREVIEW_IMAGE_TAG 100
+#define TITLE_LABEL_TAG_IPAD 10
 
 @interface TabPageView : UIView <UIWebViewDelegate>
 
 @property (nonatomic, retain) IBOutlet UIImageView *buttonNewTabView;
 @property (nonatomic, retain) IBOutlet UIButton *closeButton;
+@property (nonatomic, retain) IBOutlet UIView *bottomView;
 
 @property (nonatomic, assign) BOOL isNewTabButton;
 @property (nonatomic, assign) BOOL isInitialized;

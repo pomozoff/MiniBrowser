@@ -10,6 +10,9 @@
 
 @implementation TabPageScrollView
 
+@synthesize pageDeckBackgroundView = _pageDeckBackgroundView;
+@synthesize pageHeaderView = _pageHeaderView;
+
 @synthesize deletedPages = _deletedPages;
 @synthesize visiblePages = _visiblePages; // array of created tabs
 @synthesize reusablePages = _reusablePages;

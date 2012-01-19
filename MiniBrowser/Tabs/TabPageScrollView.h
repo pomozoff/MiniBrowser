@@ -105,6 +105,9 @@ typedef enum {
 
 @interface TabPageScrollView : UIView <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
+@property (nonatomic, retain) IBOutlet UIView *pageDeckBackgroundView;
+@property (nonatomic, retain) IBOutlet UIView *pageHeaderView;
+
 @property (nonatomic, retain) NSMutableArray *deletedPages;
 @property (nonatomic, retain) NSMutableArray *visiblePages;
 @property (nonatomic, retain) NSMutableDictionary *reusablePages;

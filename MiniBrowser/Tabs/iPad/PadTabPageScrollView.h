@@ -16,7 +16,4 @@
 
 @interface PadTabPageScrollView : TabPageScrollView
 
-@property (nonatomic, retain) IBOutlet UIView *pageDeckBackgroundView;
-@property (nonatomic, retain) IBOutlet UIView *pageHeaderView;
-
 @end

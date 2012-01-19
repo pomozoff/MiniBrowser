@@ -395,6 +395,11 @@
 	} : ^{
         [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
         
+        // notify the delegate
+		if ([self.delegate respondsToSelector:@selector(pageScrollView:willDeselectPageAtIndex:)]) {
+			[self.delegate pageScrollView:self willDeselectPageAtIndex:selectedIndex];
+		}		
+        
         UIView *headerView = self.userHeaderView ? self.userHeaderView:self.pageHeaderView;
         
 		// move to TabPageScrollViewModeDeck
@@ -417,11 +422,6 @@
 
         // display close button
         self.selectedPage.closeButton.alpha = 1.0f;
-
-        // notify the delegate
-		if ([self.delegate respondsToSelector:@selector(pageScrollView:willDeselectPageAtIndex:)]) {
-			[self.delegate pageScrollView:self willDeselectPageAtIndex:selectedIndex];
-		}		
 	};
 	
 	void (^CompletionBlock)(BOOL) = (mode == TabPageScrollViewModePage)? ^(BOOL finished){

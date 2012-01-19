@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 Alma. All rights reserved.
 //
 
-#import "PadTabPageScrollView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "PadTabPageScrollView.h"
 
 @interface PadTabPageScrollView()
 
@@ -79,6 +79,7 @@
 {
     [super awakeFromNib];
 
+    /*
 	// set gradient for background view
 	CAGradientLayer *glayer = [CAGradientLayer layer];
 	glayer.frame = self.pageDeckBackgroundView.bounds;
@@ -86,7 +87,8 @@
 	UIColor *bottomColor = [UIColor colorWithRed:0.31 green:0.41 blue:0.48 alpha:1.0]; // dark blue-gray
 	glayer.colors = [NSArray arrayWithObjects:(id)[topColor CGColor], (id)[bottomColor CGColor], nil];
     [self.pageDeckBackgroundView.layer insertSublayer:glayer atIndex:0];
-
+    */
+    
 	// default number of pages 
 	self.numberOfPages = 1;
     
@@ -262,6 +264,17 @@
 	}
 }
 
+- (void)showTitleForPages:(NSArray *)pages show:(BOOL)show
+{
+    [pages enumerateObjectsUsingBlock:^(TabPageView *pageView, NSUInteger index, BOOL *stop) {
+        pageView.bottomView.alpha = show;
+        
+        if (show) {
+            [self initDeckTitlesForPageAtIndex:index];
+        }
+    }];
+}
+
 - (void)setViewMode:(TabPageScrollViewMode)mode animated:(BOOL)animated
 {
 	if (self.viewMode == mode) {
@@ -283,7 +296,6 @@
 		}
         
         self.pageHeaderView.hidden = NO; 
-        [self initHeaderForPageAtIndex:selectedIndex]; 
         
 		// scale the page up to it 1:1 (identity) scale
 		self.selectedPage.transform = CGAffineTransformIdentity; 
@@ -306,34 +318,31 @@
         // hide close button
         self.selectedPage.closeButton.alpha = 0.0f;
         
-		//remove unnecessary views
-        /*
-        NSInteger pagesCount = [self.dataSource numberOfPagesInScrollView:self];
-        for (NSInteger currentIndex = 0; currentIndex < pagesCount; pagesCount++) {
-            TabPageView *currentPage = [self.dataSource pageScrollView:self viewForPageAtIndex:currentIndex];
-            [currentPage removeFromSuperview];
-        }
-        */
-        //[self.closePageTouch removeFromSuperview];
+        // hide title labels
+        [self showTitleForPages:self.visiblePages show:NO];
 	} : ^{
         [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
         
+        // notify the delegate
+		if ([self.delegate respondsToSelector:@selector(pageScrollView:willDeselectPageAtIndex:)]) {
+			[self.delegate pageScrollView:self willDeselectPageAtIndex:selectedIndex];
+		}
+        
 		// move to TabPageScrollViewModeDeck
 		//self.pageDeckTitleLabel.hidden = NO;
-		[self initDeckTitlesForPageAtIndex:selectedIndex];
-
+		//[self initDeckTitlesForPageAtIndex:selectedIndex];
+        
+        // show title label
+        [self showTitleForPages:self.visiblePages show:YES];
+        
 		self.selectedPage.transform = CGAffineTransformMakeScale(TRANSFORM_PAGE_SCALE, TRANSFORM_PAGE_SCALE);
         [self setOriginForPage:self.selectedPage atIndex:selectedIndex];
         
         // display close button
         self.selectedPage.closeButton.alpha = 1.0f;
         
+        // show header with address and buttons
         self.pageHeaderView.alpha = 0.0f;
-        
-        // notify the delegate
-		if ([self.delegate respondsToSelector:@selector(pageScrollView:willDeselectPageAtIndex:)]) {
-			[self.delegate pageScrollView:self willDeselectPageAtIndex:selectedIndex];
-		}
 	};
 	
 	void (^CompletionBlock)(BOOL) = (mode == TabPageScrollViewModePage)? ^(BOOL finished){
@@ -597,14 +606,6 @@
 
 - (void)removePagesFromScrollView:(NSArray *)pages animated:(BOOL)animated
 {
-    /*
-    // remember selected page's frame
-    CGFloat selectedPageOffset = NSNotFound;
-    if ([pages containsObject:self.selectedPage]) {
-        selectedPageOffset = self.selectedPage.frame.origin.x;
-    }
-    */
-    
     // remove the pages from the scrollView
     [pages enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [obj removeFromSuperview];
@@ -621,50 +622,7 @@
                 [self setOriginForPage:remainingPage atIndex:index];
             }                
         }];
-}
-    
-    // shift the remaining pages in the scrollView
-    /*
-    [self.visiblePages enumerateObjectsUsingBlock:^(id remainingPage, NSUInteger idx, BOOL *stop) {
-        NSIndexSet *removedPages = [pages indexesOfObjectsPassingTest:^BOOL(id removedPage, NSUInteger idx, BOOL *stop) {
-            return ((UIView *)removedPage).frame.origin.x < ((UIView *)remainingPage).frame.origin.x;
-        }]; 
-        
-        if (removedPages.count > 0) {
-            if (animated) {
-                [UIView animateWithDuration:0.4 animations:^(void) {
-                    [self shiftPage:remainingPage withOffset:-(removedPages.count)];
-                    //[self showCloseTabButton];
-                }];
-            } else {
-                [self shiftPage:remainingPage withOffset:-(removedPages.count)];
-                //[self showCloseTabButton];
-            }                
-        }
-    }];
-    
-    // update the selected page if it has been removed 
-    if (selectedPageOffset != NSNotFound) {
-        NSInteger index = [self.visiblePages indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-            CGFloat delta = fabsf(((UIView *)obj).frame.origin.x - selectedPageOffset);
-            return delta < 0.1;
-        }];
-        
-        TabPageView *newSelectedPage = nil;
-        if (index != NSNotFound) {
-            // replace selected page with the new page which is in the same offset 
-            newSelectedPage = [self.visiblePages objectAtIndex:index];
-        } else {
-            // replace selected page with last visible page 
-            newSelectedPage = [self.visiblePages lastObject];
-        }
-        
-        NSInteger newSelectedPageIndex = [self indexForVisiblePage:newSelectedPage];
-        if (newSelectedPage != self.selectedPage) {
-            [self updateScrolledPage:newSelectedPage index:newSelectedPageIndex];
-        }
     }
-    */
 }
 
 // *******************************************************************************************************************************
@@ -796,11 +754,12 @@
 
 - (void)initDeckTitlesForPageAtIndex:(NSInteger)index
 {
-    /*
 	if ([self.dataSource respondsToSelector:@selector(pageScrollView:titleForPageAtIndex:)]) {
-		self.pageDeckTitleLabel.text = [self.dataSource pageScrollView:self titleForPageAtIndex:index];
+        TabPageView *page = [self.visiblePages objectAtIndex:index];
+        UILabel *titleLabel = (UILabel *)[page viewWithTag:TITLE_LABEL_TAG_IPAD];
+        NSString *titleText = [self.dataSource pageScrollView:self titleForPageAtIndex:index];
+        titleLabel.text = titleText;
 	}
-    */
 }
 
 @end
