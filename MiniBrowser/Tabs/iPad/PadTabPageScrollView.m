@@ -375,7 +375,7 @@
 	};
 	
 	if (animated) {
-		[UIView animateWithDuration:0.3f animations:SelectBlock completion:CompletionBlock];
+		[UIView animateWithDuration:ANIMATION_CHANGE_MODE_DURATION animations:SelectBlock completion:CompletionBlock];
 	} else {
 		SelectBlock();
 		CompletionBlock(YES);

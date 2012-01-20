@@ -12,6 +12,7 @@
 
 #define TRANSFORM_PAGE_SCALE_IPAD 0.25f
 #define TRANSFORM_PAGE_SCALE_IPHONE 0.60f
+#define ANIMATION_CHANGE_MODE_DURATION 0.3f
 
 // *******************************************************************************************************************************
 

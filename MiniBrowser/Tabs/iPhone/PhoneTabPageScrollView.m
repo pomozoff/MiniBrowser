@@ -325,8 +325,6 @@
 		return;
 	}
 	
-	self.viewMode = mode;
-	
 	if (self.selectedPage) {
         [self preparePage:self.selectedPage forMode:mode];
     }
@@ -439,6 +437,8 @@
 		// copy self.selectedPage up in the view hierarchy, to allow touch events on its entire frame 
 		self.selectedPage.frame = CGRectMake(0.0f, headerView.frame.size.height, self.frame.size.width, self.selectedPage.frame.size.height);
 		[self addSubview:self.selectedPage];
+        
+        self.viewMode = mode;
 
 		// notify delegate
 		if ([self.delegate respondsToSelector:@selector(pageScrollView:didSelectPageAtIndex:)]) {
@@ -456,13 +456,15 @@
             [self addSubview:self.closePageTouch];
         }
         
+        self.viewMode = mode;
+        
 		if ([self.delegate respondsToSelector:@selector(pageScrollView:didDeselectPageAtIndex:)]) {
 			[self.delegate pageScrollView:self didDeselectPageAtIndex:selectedIndex];
 		}		
 	};
 	
 	if (animated) {
-		[UIView animateWithDuration:0.3f animations:SelectBlock completion:CompletionBlock];
+		[UIView animateWithDuration:ANIMATION_CHANGE_MODE_DURATION animations:SelectBlock completion:CompletionBlock];
 	} else {
 		SelectBlock();
 		CompletionBlock(YES);

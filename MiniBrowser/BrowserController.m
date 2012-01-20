@@ -640,6 +640,28 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     return YES;
 }
 
+- (CGRect)rotate90DegreesTheRect:(CGRect)rect
+{
+    CGRect frame = CGRectMake(rect.origin.x, rect.origin.y, rect.size.height, rect.size.width);
+
+    return frame;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    [self.tabPageDataArray enumerateObjectsUsingBlock:^(TabPageData *pageData, NSUInteger index, BOOL *stop) {
+        TabPageView *pageView = [self.mainPageScrollView pageAtIndex:index];
+        
+        CGRect frame = [self rotate90DegreesTheRect:pageView.identityFrame];
+        pageView.identityFrame = frame;
+
+        frame = [self rotate90DegreesTheRect:pageData.webView.frame];
+        pageData.webView.frame = frame;
+    }];
+}
+
 - (void)dealloc
 {
 	[self freeProperties];
@@ -1123,7 +1145,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 #pragma mark - TabPageScrollViewDelegate
 
 
-- (void)changeToolbar:(UIToolbar *)hideToolbar withToolbar:(UIToolbar *)showToolbar
+- (void)replaceToolbar:(UIToolbar *)hideToolbar withToolbar:(UIToolbar *)showToolbar
 {
     [hideToolbar removeFromSuperview];
     
@@ -1162,7 +1184,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     }
     
     // place navigation toolbar to view
-    [self changeToolbar:self.tabsToolbar withToolbar:self.navigationToolbar];
+    [self replaceToolbar:self.tabsToolbar withToolbar:self.navigationToolbar];
     
     // update backs/forward buttons
     [self updateButtonsStatus:self.webView];
@@ -1204,12 +1226,13 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     }
     
     // remove preview
-    [pageData.previewImageView removeFromSuperview];
+    //[pageData.previewImageView removeFromSuperview];
 
     TabPageView *pageView = [scrollView pageAtIndex:index];
 
     // return full webview size
     CGRect frame = pageData.webView.frame;
+    frame.size.width = pageView.identityFrame.size.width;
     frame.size.height = pageView.identityFrame.size.height;
     pageData.webView.frame = frame;
 
@@ -1239,7 +1262,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     }
     
     // place tabs toolbar to view
-    [self changeToolbar:self.navigationToolbar withToolbar:self.tabsToolbar];
+    [self replaceToolbar:self.navigationToolbar withToolbar:self.tabsToolbar];
     
     // Enable "new tab" button if amount of tabs less than max tabs count
     self.addTabButton.enabled = (self.tabPageDataArray.count < self.maxTabsAmount);
