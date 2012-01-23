@@ -12,8 +12,9 @@
 @interface PadTabPageScrollView()
 
 @property (nonatomic, retain) TabPageView *selectedPage;
-
 @property (nonatomic, assign) NSInteger numberOfPages;
+@property (nonatomic, assign) NSUInteger numberOfTabsInRow;
+@property (nonatomic, assign) NSUInteger numberOfTabsInColumn;
 
 - (void)reloadData; 
 - (TabPageView *)loadPageAtIndex:(NSInteger)index;
@@ -33,6 +34,8 @@
 @synthesize selectedPage = _selectedPage;
 
 @synthesize numberOfPages = _numberOfPages;
+@synthesize numberOfTabsInRow = _numberOfTabsInRow;
+@synthesize numberOfTabsInColumn = _numberOfTabsInColumn;
 
 @synthesize deletedPages = _deletedPages;
 @synthesize visiblePages = _visiblePages; // array of created tabs
@@ -68,6 +71,20 @@
     }
     
     return _reusablePages;
+}
+
+- (NSUInteger)numberOfTabsInRow
+{
+    NSUInteger numberOfTabs = 3;
+    
+    return numberOfTabs;
+}
+
+- (NSUInteger)numberOfTabsInColumn
+{
+    NSUInteger numberOfTabs = 3;
+    
+    return numberOfTabs;
 }
 
 // ******************************************************************************************************************************
@@ -431,11 +448,11 @@
     
 	CGRect pageFrame = page.frame;
     CGRect appFrame = [[UIScreen mainScreen] applicationFrame];
-    CGFloat marginX = (appFrame.size.width - TABS_COUNT_IN_ROW * pageFrame.size.width) / (TABS_COUNT_IN_ROW + 1);
-    CGFloat marginY = (appFrame.size.height - TABS_COUNT_IN_COLUMN * pageFrame.size.height) / (TABS_COUNT_IN_COLUMN + 1);
+    CGFloat marginX = (appFrame.size.width - self.numberOfTabsInRow * pageFrame.size.width) / (self.numberOfTabsInRow + 1);
+    CGFloat marginY = (appFrame.size.height - self.numberOfTabsInColumn * pageFrame.size.height) / (self.numberOfTabsInColumn + 1);
     
-    NSInteger yOffset = ceil(index / TABS_COUNT_IN_ROW);
-    NSInteger xOffset = index - yOffset * TABS_COUNT_IN_ROW;
+    NSInteger yOffset = ceil(index / self.numberOfTabsInRow);
+    NSInteger xOffset = index - yOffset * self.numberOfTabsInRow;
     
 	pageFrame.origin.x = marginX + (pageFrame.size.width  + marginX) * xOffset;
 	pageFrame.origin.y = marginY + (pageFrame.size.height + marginY) * yOffset;

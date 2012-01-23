@@ -25,6 +25,8 @@
     if (self) {
         // Initialization code
         self.identityFrame = self.frame;
+        self.autoresizingMask = UIViewAutoresizingFlexibleWidth
+            | UIViewAutoresizingFlexibleHeight;
     }
     
     return self;

@@ -93,7 +93,7 @@
 					</object>
 					<object class="IBUIView" id="698823593">
 						<reference key="NSNextResponder" ref="596009750"/>
-						<int key="NSvFlags">292</int>
+						<int key="NSvFlags">266</int>
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="IBUILabel" id="130801263">
 								<reference key="NSNextResponder" ref="698823593"/>

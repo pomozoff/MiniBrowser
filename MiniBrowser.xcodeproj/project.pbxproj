@@ -9,38 +9,9 @@
 /* Begin PBXBuildFile section */
 		260D68B01441B6C700093012 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 260D68AF1441B6C700093012 /* plus.png */; };
 		2620E7EF149B35C800518C02 /* closebox.png in Resources */ = {isa = PBXBuildFile; fileRef = 2620E7EE149B35C800518C02 /* closebox.png */; };
-		2620E7F0149B35C800518C02 /* closebox.png in Resources */ = {isa = PBXBuildFile; fileRef = 2620E7EE149B35C800518C02 /* closebox.png */; };
-		2620E7F1149B35C800518C02 /* closebox.png in Resources */ = {isa = PBXBuildFile; fileRef = 2620E7EE149B35C800518C02 /* closebox.png */; };
 		2626A2B314939C30002FD652 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2626A2B214939C30002FD652 /* QuartzCore.framework */; };
-		2626A2B414939C39002FD652 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2626A2B214939C30002FD652 /* QuartzCore.framework */; };
-		2626A2B514939C40002FD652 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2626A2B214939C30002FD652 /* QuartzCore.framework */; };
 		262C020714A4AB73002D9FE9 /* UIWebView+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 262C020614A4AB73002D9FE9 /* UIWebView+Extended.m */; };
-		262C020814A4AB73002D9FE9 /* UIWebView+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 262C020614A4AB73002D9FE9 /* UIWebView+Extended.m */; };
-		262C020914A4AB73002D9FE9 /* UIWebView+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 262C020614A4AB73002D9FE9 /* UIWebView+Extended.m */; };
-		2643BEA514606FC00018673B /* MiniBrowserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67B8143CCE8D0025F929 /* MiniBrowserAppDelegate.m */; };
-		2643BEA614606FC00018673B /* MiniBrowserAppDelegate_iPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67BC143CCE8D0025F929 /* MiniBrowserAppDelegate_iPhone.m */; };
-		2643BEA714606FC00018673B /* MiniBrowserAppDelegate_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67C3143CCE8D0025F929 /* MiniBrowserAppDelegate_iPad.m */; };
-		2643BEA814606FC00018673B /* BrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67CE143CCF720025F929 /* BrowserController.m */; };
-		2643BEB514606FC00018673B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266D67A8143CCE8D0025F929 /* UIKit.framework */; };
-		2643BEB614606FC00018673B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266D67AA143CCE8D0025F929 /* Foundation.framework */; };
-		2643BEB714606FC00018673B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266D67AC143CCE8D0025F929 /* CoreGraphics.framework */; };
-		2643BEBA14606FC00018673B /* MainWindow_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 266D67BE143CCE8D0025F929 /* MainWindow_iPhone.xib */; };
-		2643BEBB14606FC00018673B /* MainWindow_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 266D67C5143CCE8E0025F929 /* MainWindow_iPad.xib */; };
-		2643BEBE14606FC00018673B /* arrowBackGray.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBA143D85B9005F348A /* arrowBackGray.png */; };
-		2643BEBF14606FC00018673B /* arrowBackLight.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBB143D85B9005F348A /* arrowBackLight.png */; };
-		2643BEC014606FC00018673B /* arrowForwardGray.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBC143D85B9005F348A /* arrowForwardGray.png */; };
-		2643BEC114606FC00018673B /* arrowForwardLight.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBD143D85B9005F348A /* arrowForwardLight.png */; };
-		2643BEC214606FC00018673B /* clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBE143D85B9005F348A /* clock.png */; };
-		2643BEC314606FC00018673B /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBF143D85B9005F348A /* heart.png */; };
-		2643BEC414606FC00018673B /* preferences.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEC0143D85B9005F348A /* preferences.png */; };
-		2643BEC514606FC00018673B /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 260D68AF1441B6C700093012 /* plus.png */; };
-		2643BEC614606FC00018673B /* bookmark-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 26FE56BC1443269D001622F2 /* bookmark-iPad.png */; };
-		2643BEC714606FC00018673B /* bookmark-iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 26FE56BE144326FB001622F2 /* bookmark-iPhone.png */; };
-		2643BECA14606FC00018673B /* action.png in Resources */ = {isa = PBXBuildFile; fileRef = 26DB365A144EB3D6001C4CBC /* action.png */; };
-		2643BED814607B760018673B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 266D67B1143CCE8D0025F929 /* InfoPlist.strings */; };
 		265072D21498D2290065CD03 /* iPhoneTabPageScrollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 265072D11498D2290065CD03 /* iPhoneTabPageScrollView.xib */; };
-		265072D31498D2290065CD03 /* iPhoneTabPageScrollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 265072D11498D2290065CD03 /* iPhoneTabPageScrollView.xib */; };
-		265072D41498D2290065CD03 /* iPhoneTabPageScrollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 265072D11498D2290065CD03 /* iPhoneTabPageScrollView.xib */; };
 		265CCEC1143D85B9005F348A /* arrowBackGray.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBA143D85B9005F348A /* arrowBackGray.png */; };
 		265CCEC2143D85B9005F348A /* arrowBackLight.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBB143D85B9005F348A /* arrowBackLight.png */; };
 		265CCEC3143D85B9005F348A /* arrowForwardGray.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBC143D85B9005F348A /* arrowForwardGray.png */; };
@@ -60,113 +31,36 @@
 		266D67C7143CCE8E0025F929 /* MainWindow_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 266D67C5143CCE8E0025F929 /* MainWindow_iPad.xib */; };
 		266D67CF143CCF720025F929 /* BrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67CE143CCF720025F929 /* BrowserController.m */; };
 		267E13651495E1E100F319B8 /* PhonePageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 267E13631495E1E100F319B8 /* PhonePageView.m */; };
-		267E13661495E1E100F319B8 /* PhonePageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 267E13631495E1E100F319B8 /* PhonePageView.m */; };
-		267E13671495E1E100F319B8 /* PhonePageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 267E13631495E1E100F319B8 /* PhonePageView.m */; };
 		267E13681495E1E100F319B8 /* iPhonePageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267E13641495E1E100F319B8 /* iPhonePageView.xib */; };
-		267E13691495E1E100F319B8 /* iPhonePageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267E13641495E1E100F319B8 /* iPhonePageView.xib */; };
-		267E136A1495E1E100F319B8 /* iPhonePageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 267E13641495E1E100F319B8 /* iPhonePageView.xib */; };
 		26A26869148E0DC30087E147 /* iPhoneBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26A26868148E0DC30087E147 /* iPhoneBrowserView.xib */; };
-		26A2686A148E0DC30087E147 /* iPhoneBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26A26868148E0DC30087E147 /* iPhoneBrowserView.xib */; };
-		26A2686B148E0DC30087E147 /* iPhoneBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26A26868148E0DC30087E147 /* iPhoneBrowserView.xib */; };
 		26A2686E148E0DDE0087E147 /* iPadBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26A2686D148E0DDE0087E147 /* iPadBrowserView.xib */; };
-		26A2686F148E0DDE0087E147 /* iPadBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26A2686D148E0DDE0087E147 /* iPadBrowserView.xib */; };
-		26A26870148E0DDE0087E147 /* iPadBrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26A2686D148E0DDE0087E147 /* iPadBrowserView.xib */; };
 		26A26882148E0E0A0087E147 /* BookmarkFolderTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A26872148E0E0A0087E147 /* BookmarkFolderTableViewController.m */; };
-		26A26883148E0E0A0087E147 /* BookmarkFolderTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A26872148E0E0A0087E147 /* BookmarkFolderTableViewController.m */; };
-		26A26884148E0E0A0087E147 /* BookmarkFolderTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A26872148E0E0A0087E147 /* BookmarkFolderTableViewController.m */; };
 		26A26885148E0E0A0087E147 /* BookmarkItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A26874148E0E0A0087E147 /* BookmarkItem.m */; };
-		26A26886148E0E0A0087E147 /* BookmarkItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A26874148E0E0A0087E147 /* BookmarkItem.m */; };
-		26A26887148E0E0A0087E147 /* BookmarkItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A26874148E0E0A0087E147 /* BookmarkItem.m */; };
 		26A26888148E0E0A0087E147 /* BookmarkSaveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A26876148E0E0A0087E147 /* BookmarkSaveModel.m */; };
-		26A26889148E0E0A0087E147 /* BookmarkSaveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A26876148E0E0A0087E147 /* BookmarkSaveModel.m */; };
-		26A2688A148E0E0A0087E147 /* BookmarkSaveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A26876148E0E0A0087E147 /* BookmarkSaveModel.m */; };
 		26A2688B148E0E0A0087E147 /* BookmarkSaveTable.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26A26878148E0E0A0087E147 /* BookmarkSaveTable.plist */; };
-		26A2688C148E0E0A0087E147 /* BookmarkSaveTable.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26A26878148E0E0A0087E147 /* BookmarkSaveTable.plist */; };
-		26A2688D148E0E0A0087E147 /* BookmarkSaveTable.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26A26878148E0E0A0087E147 /* BookmarkSaveTable.plist */; };
 		26A2688E148E0E0A0087E147 /* BookmarkSaveTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2687A148E0E0A0087E147 /* BookmarkSaveTableViewController.m */; };
-		26A2688F148E0E0A0087E147 /* BookmarkSaveTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2687A148E0E0A0087E147 /* BookmarkSaveTableViewController.m */; };
-		26A26890148E0E0A0087E147 /* BookmarkSaveTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2687A148E0E0A0087E147 /* BookmarkSaveTableViewController.m */; };
 		26A26891148E0E0A0087E147 /* BookmarksStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2687D148E0E0A0087E147 /* BookmarksStorage.m */; };
-		26A26892148E0E0A0087E147 /* BookmarksStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2687D148E0E0A0087E147 /* BookmarksStorage.m */; };
-		26A26893148E0E0A0087E147 /* BookmarksStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2687D148E0E0A0087E147 /* BookmarksStorage.m */; };
 		26A26894148E0E0A0087E147 /* BookmarksTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A26880148E0E0A0087E147 /* BookmarksTableViewController.m */; };
-		26A26895148E0E0A0087E147 /* BookmarksTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A26880148E0E0A0087E147 /* BookmarksTableViewController.m */; };
-		26A26896148E0E0A0087E147 /* BookmarksTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A26880148E0E0A0087E147 /* BookmarksTableViewController.m */; };
 		26A26897148E0E0A0087E147 /* BookmarkTreePermanent.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26A26881148E0E0A0087E147 /* BookmarkTreePermanent.plist */; };
-		26A26898148E0E0A0087E147 /* BookmarkTreePermanent.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26A26881148E0E0A0087E147 /* BookmarkTreePermanent.plist */; };
-		26A26899148E0E0A0087E147 /* BookmarkTreePermanent.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26A26881148E0E0A0087E147 /* BookmarkTreePermanent.plist */; };
 		26A2689E148E0E2A0087E147 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 26A2689A148E0E2A0087E147 /* Settings.bundle */; };
-		26A2689F148E0E2A0087E147 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 26A2689A148E0E2A0087E147 /* Settings.bundle */; };
-		26A268A0148E0E2A0087E147 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 26A2689A148E0E2A0087E147 /* Settings.bundle */; };
 		26A268A1148E0E2A0087E147 /* SettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2689C148E0E2A0087E147 /* SettingsController.m */; };
-		26A268A2148E0E2A0087E147 /* SettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2689C148E0E2A0087E147 /* SettingsController.m */; };
-		26A268A3148E0E2A0087E147 /* SettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2689C148E0E2A0087E147 /* SettingsController.m */; };
 		26A268AB148E0E5C0087E147 /* SearchEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268A5148E0E5C0087E147 /* SearchEngine.m */; };
-		26A268AC148E0E5C0087E147 /* SearchEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268A5148E0E5C0087E147 /* SearchEngine.m */; };
-		26A268AD148E0E5C0087E147 /* SearchEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268A5148E0E5C0087E147 /* SearchEngine.m */; };
 		26A268AE148E0E5C0087E147 /* SearchEngineGoogle.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268A7148E0E5C0087E147 /* SearchEngineGoogle.m */; };
-		26A268AF148E0E5C0087E147 /* SearchEngineGoogle.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268A7148E0E5C0087E147 /* SearchEngineGoogle.m */; };
-		26A268B0148E0E5C0087E147 /* SearchEngineGoogle.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268A7148E0E5C0087E147 /* SearchEngineGoogle.m */; };
 		26A268B1148E0E5C0087E147 /* SearchEngineYahoo.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268AA148E0E5C0087E147 /* SearchEngineYahoo.m */; };
-		26A268B2148E0E5C0087E147 /* SearchEngineYahoo.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268AA148E0E5C0087E147 /* SearchEngineYahoo.m */; };
-		26A268B3148E0E5C0087E147 /* SearchEngineYahoo.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268AA148E0E5C0087E147 /* SearchEngineYahoo.m */; };
 		26A268CA148E0FE40087E147 /* BookmarksStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2687D148E0E0A0087E147 /* BookmarksStorage.m */; };
 		26A268CB148E0FF00087E147 /* BookmarkItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A26874148E0E0A0087E147 /* BookmarkItem.m */; };
 		26A268D3148E10B40087E147 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268CC148E10B40087E147 /* main.m */; };
-		26A268D4148E10B40087E147 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268CC148E10B40087E147 /* main.m */; };
-		26A268D5148E10B40087E147 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268CC148E10B40087E147 /* main.m */; };
 		26A268DF148E10B40087E147 /* NSDate+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268D2148E10B40087E147 /* NSDate+Extended.m */; };
-		26A268E0148E10B40087E147 /* NSDate+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268D2148E10B40087E147 /* NSDate+Extended.m */; };
-		26A268E1148E10B40087E147 /* NSDate+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268D2148E10B40087E147 /* NSDate+Extended.m */; };
 		26A268ED148E12A80087E147 /* TabPageData.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268EC148E12A80087E147 /* TabPageData.m */; };
-		26A268EE148E12A80087E147 /* TabPageData.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268EC148E12A80087E147 /* TabPageData.m */; };
-		26A268EF148E12A80087E147 /* TabPageData.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268EC148E12A80087E147 /* TabPageData.m */; };
 		26A268F3148E12E50087E147 /* TabPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268F2148E12E50087E147 /* TabPageView.m */; };
-		26A268F4148E12E50087E147 /* TabPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268F2148E12E50087E147 /* TabPageView.m */; };
-		26A268F5148E12E50087E147 /* TabPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268F2148E12E50087E147 /* TabPageView.m */; };
 		26A26918148E3C1E0087E147 /* TabPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A26917148E3C1E0087E147 /* TabPageScrollView.m */; };
-		26A26919148E3C1E0087E147 /* TabPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A26917148E3C1E0087E147 /* TabPageScrollView.m */; };
-		26A2691A148E3C1E0087E147 /* TabPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A26917148E3C1E0087E147 /* TabPageScrollView.m */; };
 		26A26928148F5C1A0087E147 /* TabTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A26927148F5C1A0087E147 /* TabTouchView.m */; };
-		26A26929148F5C1A0087E147 /* TabTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A26927148F5C1A0087E147 /* TabTouchView.m */; };
-		26A2692A148F5C1A0087E147 /* TabTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A26927148F5C1A0087E147 /* TabTouchView.m */; };
 		26A26930148F5F8C0087E147 /* PhoneTabPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2692F148F5F8C0087E147 /* PhoneTabPageScrollView.m */; };
-		26A26931148F5F8C0087E147 /* PhoneTabPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2692F148F5F8C0087E147 /* PhoneTabPageScrollView.m */; };
-		26A26932148F5F8C0087E147 /* PhoneTabPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2692F148F5F8C0087E147 /* PhoneTabPageScrollView.m */; };
 		26AF9D4D144EF9F100CBBF20 /* BookmarkTreePermanent.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26AF9D48144EF22500CBBF20 /* BookmarkTreePermanent.plist */; };
-		26C8CF8A145881A400536C9B /* MiniBrowserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67B8143CCE8D0025F929 /* MiniBrowserAppDelegate.m */; };
-		26C8CF8B145881A400536C9B /* MiniBrowserAppDelegate_iPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67BC143CCE8D0025F929 /* MiniBrowserAppDelegate_iPhone.m */; };
-		26C8CF8C145881A400536C9B /* MiniBrowserAppDelegate_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67C3143CCE8D0025F929 /* MiniBrowserAppDelegate_iPad.m */; };
-		26C8CF8D145881A400536C9B /* BrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266D67CE143CCF720025F929 /* BrowserController.m */; };
-		26C8CF9A145881A400536C9B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266D67A8143CCE8D0025F929 /* UIKit.framework */; };
-		26C8CF9B145881A400536C9B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266D67AA143CCE8D0025F929 /* Foundation.framework */; };
-		26C8CF9C145881A400536C9B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266D67AC143CCE8D0025F929 /* CoreGraphics.framework */; };
-		26C8CF9E145881A400536C9B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 266D67B1143CCE8D0025F929 /* InfoPlist.strings */; };
-		26C8CF9F145881A400536C9B /* MainWindow_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 266D67BE143CCE8D0025F929 /* MainWindow_iPhone.xib */; };
-		26C8CFA0145881A400536C9B /* MainWindow_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 266D67C5143CCE8E0025F929 /* MainWindow_iPad.xib */; };
-		26C8CFA3145881A400536C9B /* arrowBackGray.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBA143D85B9005F348A /* arrowBackGray.png */; };
-		26C8CFA4145881A400536C9B /* arrowBackLight.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBB143D85B9005F348A /* arrowBackLight.png */; };
-		26C8CFA5145881A400536C9B /* arrowForwardGray.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBC143D85B9005F348A /* arrowForwardGray.png */; };
-		26C8CFA6145881A400536C9B /* arrowForwardLight.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBD143D85B9005F348A /* arrowForwardLight.png */; };
-		26C8CFA7145881A400536C9B /* clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBE143D85B9005F348A /* clock.png */; };
-		26C8CFA8145881A400536C9B /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEBF143D85B9005F348A /* heart.png */; };
-		26C8CFA9145881A400536C9B /* preferences.png in Resources */ = {isa = PBXBuildFile; fileRef = 265CCEC0143D85B9005F348A /* preferences.png */; };
-		26C8CFAA145881A400536C9B /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 260D68AF1441B6C700093012 /* plus.png */; };
-		26C8CFAB145881A400536C9B /* bookmark-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 26FE56BC1443269D001622F2 /* bookmark-iPad.png */; };
-		26C8CFAC145881A400536C9B /* bookmark-iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 26FE56BE144326FB001622F2 /* bookmark-iPhone.png */; };
-		26C8CFAF145881A400536C9B /* action.png in Resources */ = {isa = PBXBuildFile; fileRef = 26DB365A144EB3D6001C4CBC /* action.png */; };
 		26DA65BE14B4FE3D000EBBAE /* PadPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26DA65BD14B4FE3D000EBBAE /* PadPageView.m */; };
-		26DA65BF14B4FE3D000EBBAE /* PadPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26DA65BD14B4FE3D000EBBAE /* PadPageView.m */; };
-		26DA65C014B4FE3D000EBBAE /* PadPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26DA65BD14B4FE3D000EBBAE /* PadPageView.m */; };
 		26DA65C314B4FE5E000EBBAE /* iPadPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DA65C214B4FE5E000EBBAE /* iPadPageView.xib */; };
-		26DA65C414B4FE5E000EBBAE /* iPadPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DA65C214B4FE5E000EBBAE /* iPadPageView.xib */; };
-		26DA65C514B4FE5E000EBBAE /* iPadPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DA65C214B4FE5E000EBBAE /* iPadPageView.xib */; };
 		26DA65C714B4FF3E000EBBAE /* iPadTabPageScrollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DA65C614B4FF3E000EBBAE /* iPadTabPageScrollView.xib */; };
-		26DA65C814B4FF3E000EBBAE /* iPadTabPageScrollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DA65C614B4FF3E000EBBAE /* iPadTabPageScrollView.xib */; };
-		26DA65C914B4FF3E000EBBAE /* iPadTabPageScrollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26DA65C614B4FF3E000EBBAE /* iPadTabPageScrollView.xib */; };
 		26DA65D014B5040C000EBBAE /* PadTabPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26DA65CF14B5040C000EBBAE /* PadTabPageScrollView.m */; };
-		26DA65D114B5040C000EBBAE /* PadTabPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26DA65CF14B5040C000EBBAE /* PadTabPageScrollView.m */; };
-		26DA65D214B5040C000EBBAE /* PadTabPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26DA65CF14B5040C000EBBAE /* PadTabPageScrollView.m */; };
 		26DB365B144EB3D6001C4CBC /* action.png in Resources */ = {isa = PBXBuildFile; fileRef = 26DB365A144EB3D6001C4CBC /* action.png */; };
 		26DB36AA144EC19C001C4CBC /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26DB36A9144EC19C001C4CBC /* SenTestingKit.framework */; };
 		26DB36AB144EC19C001C4CBC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266D67A8143CCE8D0025F929 /* UIKit.framework */; };
@@ -175,27 +69,11 @@
 		26DB36B3144EC19C001C4CBC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26DB36B1144EC19C001C4CBC /* InfoPlist.strings */; };
 		26DB36B5144EC19C001C4CBC /* UnitTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 26DB36B4144EC19C001C4CBC /* UnitTests.h */; };
 		26FDCADC1473C48600744D07 /* newtab.png in Resources */ = {isa = PBXBuildFile; fileRef = 26FDCADB1473C48600744D07 /* newtab.png */; };
-		26FDCADD1473C48600744D07 /* newtab.png in Resources */ = {isa = PBXBuildFile; fileRef = 26FDCADB1473C48600744D07 /* newtab.png */; };
-		26FDCADE1473C48600744D07 /* newtab.png in Resources */ = {isa = PBXBuildFile; fileRef = 26FDCADB1473C48600744D07 /* newtab.png */; };
 		26FE56BD1443269D001622F2 /* bookmark-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 26FE56BC1443269D001622F2 /* bookmark-iPad.png */; };
 		26FE56BF144326FB001622F2 /* bookmark-iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 26FE56BE144326FB001622F2 /* bookmark-iPhone.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		2643BEA214606FC00018673B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 266D679B143CCE8D0025F929 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 26DB36A7144EC19C001C4CBC;
-			remoteInfo = UnitTests;
-		};
-		26C8CF87145881A400536C9B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 266D679B143CCE8D0025F929 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 26DB36A7144EC19C001C4CBC;
-			remoteInfo = UnitTests;
-		};
 		26DB36BE144EC1E2001C4CBC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 266D679B143CCE8D0025F929 /* Project object */;
@@ -211,7 +89,6 @@
 		2626A2B214939C30002FD652 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		262C020514A4AB73002D9FE9 /* UIWebView+Extended.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+Extended.h"; sourceTree = "<group>"; };
 		262C020614A4AB73002D9FE9 /* UIWebView+Extended.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+Extended.m"; sourceTree = "<group>"; };
-		2643BECF14606FC00018673B /* MiniBrowserOriginal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MiniBrowserOriginal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		264DDB9D14BD9A5400BB3F92 /* PageTemplateDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PageTemplateDelegate.h; path = Tabs/PageTemplateDelegate.h; sourceTree = "<group>"; };
 		265072D11498D2290065CD03 /* iPhoneTabPageScrollView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = iPhoneTabPageScrollView.xib; path = Tabs/iPhone/iPhoneTabPageScrollView.xib; sourceTree = "<group>"; };
 		265CCEBA143D85B9005F348A /* arrowBackGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowBackGray.png; sourceTree = "<group>"; };
@@ -289,7 +166,6 @@
 		26A2692E148F5F8C0087E147 /* PhoneTabPageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhoneTabPageScrollView.h; path = Tabs/iPhone/PhoneTabPageScrollView.h; sourceTree = "<group>"; };
 		26A2692F148F5F8C0087E147 /* PhoneTabPageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhoneTabPageScrollView.m; path = Tabs/iPhone/PhoneTabPageScrollView.m; sourceTree = "<group>"; };
 		26AF9D48144EF22500CBBF20 /* BookmarkTreePermanent.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BookmarkTreePermanent.plist; sourceTree = "<group>"; };
-		26C8CFB4145881A400536C9B /* MiniBrowser3G.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MiniBrowser3G.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26DA65BC14B4FE3D000EBBAE /* PadPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PadPageView.h; path = Tabs/iPad/PadPageView.h; sourceTree = "<group>"; };
 		26DA65BD14B4FE3D000EBBAE /* PadPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PadPageView.m; path = Tabs/iPad/PadPageView.m; sourceTree = "<group>"; };
 		26DA65C214B4FE5E000EBBAE /* iPadPageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = iPadPageView.xib; path = Tabs/iPad/iPadPageView.xib; sourceTree = "<group>"; };
@@ -310,17 +186,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		2643BEB414606FC00018673B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2626A2B514939C40002FD652 /* QuartzCore.framework in Frameworks */,
-				2643BEB514606FC00018673B /* UIKit.framework in Frameworks */,
-				2643BEB614606FC00018673B /* Foundation.framework in Frameworks */,
-				2643BEB714606FC00018673B /* CoreGraphics.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		266D67A1143CCE8D0025F929 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -329,17 +194,6 @@
 				266D67A9143CCE8D0025F929 /* UIKit.framework in Frameworks */,
 				266D67AB143CCE8D0025F929 /* Foundation.framework in Frameworks */,
 				266D67AD143CCE8D0025F929 /* CoreGraphics.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		26C8CF99145881A400536C9B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2626A2B414939C39002FD652 /* QuartzCore.framework in Frameworks */,
-				26C8CF9A145881A400536C9B /* UIKit.framework in Frameworks */,
-				26C8CF9B145881A400536C9B /* Foundation.framework in Frameworks */,
-				26C8CF9C145881A400536C9B /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,8 +246,6 @@
 			children = (
 				266D67A4143CCE8D0025F929 /* MiniBrowser.app */,
 				26DB36A8144EC19C001C4CBC /* UnitTests.octest */,
-				26C8CFB4145881A400536C9B /* MiniBrowser3G.app */,
-				2643BECF14606FC00018673B /* MiniBrowserOriginal.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -587,24 +439,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2643BEA014606FC00018673B /* MiniBrowserOriginal */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2643BECB14606FC00018673B /* Build configuration list for PBXNativeTarget "MiniBrowserOriginal" */;
-			buildPhases = (
-				2643BEA314606FC00018673B /* Sources */,
-				2643BEB414606FC00018673B /* Frameworks */,
-				2643BEB814606FC00018673B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				2643BEA114606FC00018673B /* PBXTargetDependency */,
-			);
-			name = MiniBrowserOriginal;
-			productName = MiniBrowser;
-			productReference = 2643BECF14606FC00018673B /* MiniBrowserOriginal.app */;
-			productType = "com.apple.product-type.application";
-		};
 		266D67A3143CCE8D0025F929 /* MiniBrowser */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 266D67CA143CCE8E0025F929 /* Build configuration list for PBXNativeTarget "MiniBrowser" */;
@@ -621,24 +455,6 @@
 			name = MiniBrowser;
 			productName = MiniBrowser;
 			productReference = 266D67A4143CCE8D0025F929 /* MiniBrowser.app */;
-			productType = "com.apple.product-type.application";
-		};
-		26C8CF85145881A400536C9B /* MiniBrowser3G */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 26C8CFB0145881A400536C9B /* Build configuration list for PBXNativeTarget "MiniBrowser3G" */;
-			buildPhases = (
-				26C8CF88145881A400536C9B /* Sources */,
-				26C8CF99145881A400536C9B /* Frameworks */,
-				26C8CF9D145881A400536C9B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				26C8CF86145881A400536C9B /* PBXTargetDependency */,
-			);
-			name = MiniBrowser3G;
-			productName = MiniBrowser;
-			productReference = 26C8CFB4145881A400536C9B /* MiniBrowser3G.app */;
 			productType = "com.apple.product-type.application";
 		};
 		26DB36A7144EC19C001C4CBC /* UnitTests */ = {
@@ -681,46 +497,12 @@
 			projectRoot = "";
 			targets = (
 				266D67A3143CCE8D0025F929 /* MiniBrowser */,
-				26C8CF85145881A400536C9B /* MiniBrowser3G */,
-				2643BEA014606FC00018673B /* MiniBrowserOriginal */,
 				26DB36A7144EC19C001C4CBC /* UnitTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		2643BEB814606FC00018673B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2643BED814607B760018673B /* InfoPlist.strings in Resources */,
-				2643BEBA14606FC00018673B /* MainWindow_iPhone.xib in Resources */,
-				2643BEBB14606FC00018673B /* MainWindow_iPad.xib in Resources */,
-				2643BEBE14606FC00018673B /* arrowBackGray.png in Resources */,
-				2643BEBF14606FC00018673B /* arrowBackLight.png in Resources */,
-				2643BEC014606FC00018673B /* arrowForwardGray.png in Resources */,
-				2643BEC114606FC00018673B /* arrowForwardLight.png in Resources */,
-				2643BEC214606FC00018673B /* clock.png in Resources */,
-				2643BEC314606FC00018673B /* heart.png in Resources */,
-				2643BEC414606FC00018673B /* preferences.png in Resources */,
-				2643BEC514606FC00018673B /* plus.png in Resources */,
-				2643BEC614606FC00018673B /* bookmark-iPad.png in Resources */,
-				2643BEC714606FC00018673B /* bookmark-iPhone.png in Resources */,
-				2643BECA14606FC00018673B /* action.png in Resources */,
-				26FDCADE1473C48600744D07 /* newtab.png in Resources */,
-				26A2686B148E0DC30087E147 /* iPhoneBrowserView.xib in Resources */,
-				26A26870148E0DDE0087E147 /* iPadBrowserView.xib in Resources */,
-				26A2688D148E0E0A0087E147 /* BookmarkSaveTable.plist in Resources */,
-				26A26899148E0E0A0087E147 /* BookmarkTreePermanent.plist in Resources */,
-				26A268A0148E0E2A0087E147 /* Settings.bundle in Resources */,
-				267E136A1495E1E100F319B8 /* iPhonePageView.xib in Resources */,
-				265072D41498D2290065CD03 /* iPhoneTabPageScrollView.xib in Resources */,
-				2620E7F1149B35C800518C02 /* closebox.png in Resources */,
-				26DA65C514B4FE5E000EBBAE /* iPadPageView.xib in Resources */,
-				26DA65C914B4FF3E000EBBAE /* iPadTabPageScrollView.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		266D67A2143CCE8D0025F929 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -753,38 +535,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		26C8CF9D145881A400536C9B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				26C8CF9E145881A400536C9B /* InfoPlist.strings in Resources */,
-				26C8CF9F145881A400536C9B /* MainWindow_iPhone.xib in Resources */,
-				26C8CFA0145881A400536C9B /* MainWindow_iPad.xib in Resources */,
-				26C8CFA3145881A400536C9B /* arrowBackGray.png in Resources */,
-				26C8CFA4145881A400536C9B /* arrowBackLight.png in Resources */,
-				26C8CFA5145881A400536C9B /* arrowForwardGray.png in Resources */,
-				26C8CFA6145881A400536C9B /* arrowForwardLight.png in Resources */,
-				26C8CFA7145881A400536C9B /* clock.png in Resources */,
-				26C8CFA8145881A400536C9B /* heart.png in Resources */,
-				26C8CFA9145881A400536C9B /* preferences.png in Resources */,
-				26C8CFAA145881A400536C9B /* plus.png in Resources */,
-				26C8CFAB145881A400536C9B /* bookmark-iPad.png in Resources */,
-				26C8CFAC145881A400536C9B /* bookmark-iPhone.png in Resources */,
-				26C8CFAF145881A400536C9B /* action.png in Resources */,
-				26FDCADD1473C48600744D07 /* newtab.png in Resources */,
-				26A2686A148E0DC30087E147 /* iPhoneBrowserView.xib in Resources */,
-				26A2686F148E0DDE0087E147 /* iPadBrowserView.xib in Resources */,
-				26A2688C148E0E0A0087E147 /* BookmarkSaveTable.plist in Resources */,
-				26A26898148E0E0A0087E147 /* BookmarkTreePermanent.plist in Resources */,
-				26A2689F148E0E2A0087E147 /* Settings.bundle in Resources */,
-				267E13691495E1E100F319B8 /* iPhonePageView.xib in Resources */,
-				265072D31498D2290065CD03 /* iPhoneTabPageScrollView.xib in Resources */,
-				2620E7F0149B35C800518C02 /* closebox.png in Resources */,
-				26DA65C414B4FE5E000EBBAE /* iPadPageView.xib in Resources */,
-				26DA65C814B4FF3E000EBBAE /* iPadTabPageScrollView.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		26DB36A5144EC19C001C4CBC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -814,38 +564,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		2643BEA314606FC00018673B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2643BEA514606FC00018673B /* MiniBrowserAppDelegate.m in Sources */,
-				2643BEA614606FC00018673B /* MiniBrowserAppDelegate_iPhone.m in Sources */,
-				2643BEA714606FC00018673B /* MiniBrowserAppDelegate_iPad.m in Sources */,
-				2643BEA814606FC00018673B /* BrowserController.m in Sources */,
-				26A26884148E0E0A0087E147 /* BookmarkFolderTableViewController.m in Sources */,
-				26A26887148E0E0A0087E147 /* BookmarkItem.m in Sources */,
-				26A2688A148E0E0A0087E147 /* BookmarkSaveModel.m in Sources */,
-				26A26890148E0E0A0087E147 /* BookmarkSaveTableViewController.m in Sources */,
-				26A26893148E0E0A0087E147 /* BookmarksStorage.m in Sources */,
-				26A26896148E0E0A0087E147 /* BookmarksTableViewController.m in Sources */,
-				26A268A3148E0E2A0087E147 /* SettingsController.m in Sources */,
-				26A268AD148E0E5C0087E147 /* SearchEngine.m in Sources */,
-				26A268B0148E0E5C0087E147 /* SearchEngineGoogle.m in Sources */,
-				26A268B3148E0E5C0087E147 /* SearchEngineYahoo.m in Sources */,
-				26A268D5148E10B40087E147 /* main.m in Sources */,
-				26A268E1148E10B40087E147 /* NSDate+Extended.m in Sources */,
-				26A268EF148E12A80087E147 /* TabPageData.m in Sources */,
-				26A268F5148E12E50087E147 /* TabPageView.m in Sources */,
-				26A2691A148E3C1E0087E147 /* TabPageScrollView.m in Sources */,
-				26A2692A148F5C1A0087E147 /* TabTouchView.m in Sources */,
-				26A26932148F5F8C0087E147 /* PhoneTabPageScrollView.m in Sources */,
-				267E13671495E1E100F319B8 /* PhonePageView.m in Sources */,
-				262C020914A4AB73002D9FE9 /* UIWebView+Extended.m in Sources */,
-				26DA65C014B4FE3D000EBBAE /* PadPageView.m in Sources */,
-				26DA65D214B5040C000EBBAE /* PadTabPageScrollView.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		266D67A0143CCE8D0025F929 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -878,38 +596,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		26C8CF88145881A400536C9B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				26C8CF8A145881A400536C9B /* MiniBrowserAppDelegate.m in Sources */,
-				26C8CF8B145881A400536C9B /* MiniBrowserAppDelegate_iPhone.m in Sources */,
-				26C8CF8C145881A400536C9B /* MiniBrowserAppDelegate_iPad.m in Sources */,
-				26C8CF8D145881A400536C9B /* BrowserController.m in Sources */,
-				26A26883148E0E0A0087E147 /* BookmarkFolderTableViewController.m in Sources */,
-				26A26886148E0E0A0087E147 /* BookmarkItem.m in Sources */,
-				26A26889148E0E0A0087E147 /* BookmarkSaveModel.m in Sources */,
-				26A2688F148E0E0A0087E147 /* BookmarkSaveTableViewController.m in Sources */,
-				26A26892148E0E0A0087E147 /* BookmarksStorage.m in Sources */,
-				26A26895148E0E0A0087E147 /* BookmarksTableViewController.m in Sources */,
-				26A268A2148E0E2A0087E147 /* SettingsController.m in Sources */,
-				26A268AC148E0E5C0087E147 /* SearchEngine.m in Sources */,
-				26A268AF148E0E5C0087E147 /* SearchEngineGoogle.m in Sources */,
-				26A268B2148E0E5C0087E147 /* SearchEngineYahoo.m in Sources */,
-				26A268D4148E10B40087E147 /* main.m in Sources */,
-				26A268E0148E10B40087E147 /* NSDate+Extended.m in Sources */,
-				26A268EE148E12A80087E147 /* TabPageData.m in Sources */,
-				26A268F4148E12E50087E147 /* TabPageView.m in Sources */,
-				26A26919148E3C1E0087E147 /* TabPageScrollView.m in Sources */,
-				26A26929148F5C1A0087E147 /* TabTouchView.m in Sources */,
-				26A26931148F5F8C0087E147 /* PhoneTabPageScrollView.m in Sources */,
-				267E13661495E1E100F319B8 /* PhonePageView.m in Sources */,
-				262C020814A4AB73002D9FE9 /* UIWebView+Extended.m in Sources */,
-				26DA65BF14B4FE3D000EBBAE /* PadPageView.m in Sources */,
-				26DA65D114B5040C000EBBAE /* PadTabPageScrollView.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		26DB36A3144EC19C001C4CBC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -923,16 +609,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		2643BEA114606FC00018673B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 26DB36A7144EC19C001C4CBC /* UnitTests */;
-			targetProxy = 2643BEA214606FC00018673B /* PBXContainerItemProxy */;
-		};
-		26C8CF86145881A400536C9B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 26DB36A7144EC19C001C4CBC /* UnitTests */;
-			targetProxy = 26C8CF87145881A400536C9B /* PBXContainerItemProxy */;
-		};
 		26DB36BF144EC1E2001C4CBC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 26DB36A7144EC19C001C4CBC /* UnitTests */;
@@ -989,7 +665,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "";
 				PROVISIONING_PROFILE = "";
@@ -1033,62 +709,6 @@
 			};
 			name = "Distibution for testing";
 		};
-		2643BECC14606FC00018673B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = (
-					"$(ARCHS_STANDARD_32_BIT)",
-					armv6,
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MiniBrowser/MiniBrowser-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				INFOPLIST_FILE = "MiniBrowser/MiniBrowserOriginal-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
-				PRODUCT_NAME = MiniBrowserOriginal;
-				VALID_ARCHS = "armv6 armv7";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Debug;
-		};
-		2643BECD14606FC00018673B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = (
-					"$(ARCHS_STANDARD_32_BIT)",
-					armv6,
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MiniBrowser/MiniBrowser-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				INFOPLIST_FILE = "MiniBrowser/MiniBrowserOriginal-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
-				PRODUCT_NAME = MiniBrowserOriginal;
-				VALID_ARCHS = "armv6 armv7";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
-		2643BECE14606FC00018673B /* Distibution for testing */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = (
-					"$(ARCHS_STANDARD_32_BIT)",
-					armv6,
-				);
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MiniBrowser/MiniBrowser-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				INFOPLIST_FILE = "MiniBrowser/MiniBrowserOriginal-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
-				PRODUCT_NAME = MiniBrowserOriginal;
-				PROVISIONING_PROFILE = "";
-				VALID_ARCHS = "armv6 armv7";
-				WRAPPER_EXTENSION = app;
-			};
-			name = "Distibution for testing";
-		};
 		266D67C8143CCE8E0025F929 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1109,7 +729,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				OTHER_LDFLAGS = "";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1132,7 +752,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "";
 				PROVISIONING_PROFILE = "";
@@ -1169,62 +789,6 @@
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
-		};
-		26C8CFB1145881A400536C9B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = (
-					"$(ARCHS_STANDARD_32_BIT)",
-					armv6,
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MiniBrowser/MiniBrowser-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				INFOPLIST_FILE = "MiniBrowser/MiniBrowser3G-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
-				PRODUCT_NAME = MiniBrowser3G;
-				VALID_ARCHS = "armv6 armv7";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Debug;
-		};
-		26C8CFB2145881A400536C9B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = (
-					"$(ARCHS_STANDARD_32_BIT)",
-					armv6,
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MiniBrowser/MiniBrowser-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				INFOPLIST_FILE = "MiniBrowser/MiniBrowser3G-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
-				PRODUCT_NAME = MiniBrowser3G;
-				VALID_ARCHS = "armv6 armv7";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
-		26C8CFB3145881A400536C9B /* Distibution for testing */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = (
-					"$(ARCHS_STANDARD_32_BIT)",
-					armv6,
-				);
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MiniBrowser/MiniBrowser-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				INFOPLIST_FILE = "MiniBrowser/MiniBrowser3G-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
-				PRODUCT_NAME = MiniBrowser3G;
-				PROVISIONING_PROFILE = "";
-				VALID_ARCHS = "armv6 armv7";
-				WRAPPER_EXTENSION = app;
-			};
-			name = "Distibution for testing";
 		};
 		26DB36BA144EC19C001C4CBC /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1263,16 +827,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2643BECB14606FC00018673B /* Build configuration list for PBXNativeTarget "MiniBrowserOriginal" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2643BECC14606FC00018673B /* Debug */,
-				2643BECD14606FC00018673B /* Release */,
-				2643BECE14606FC00018673B /* Distibution for testing */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
 		266D679E143CCE8D0025F929 /* Build configuration list for PBXProject "MiniBrowser" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1289,16 +843,6 @@
 				266D67CB143CCE8E0025F929 /* Debug */,
 				266D67CC143CCE8E0025F929 /* Release */,
 				263157FD145574E5006F6368 /* Distibution for testing */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		26C8CFB0145881A400536C9B /* Build configuration list for PBXNativeTarget "MiniBrowser3G" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				26C8CFB1145881A400536C9B /* Debug */,
-				26C8CFB2145881A400536C9B /* Release */,
-				26C8CFB3145881A400536C9B /* Distibution for testing */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

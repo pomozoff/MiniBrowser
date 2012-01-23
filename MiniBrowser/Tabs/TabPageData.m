@@ -37,7 +37,9 @@
         _webView.delegate = self;
         _webView.scalesPageToFit = YES;
         _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth
-            | UIViewAutoresizingFlexibleHeight;
+            | UIViewAutoresizingFlexibleHeight
+            | UIViewAutoresizingFlexibleTopMargin
+            | UIViewAutoresizingFlexibleBottomMargin;
         _webView.isThreaded = NO;
     }
     

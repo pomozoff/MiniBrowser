@@ -647,6 +647,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     return frame;
 }
 
+/*
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
@@ -661,6 +662,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
         pageData.webView.frame = frame;
     }];
 }
+*/
 
 - (void)dealloc
 {
@@ -740,10 +742,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    if (userInitiatedJump
-        || navigationType == UIWebViewNavigationTypeLinkClicked
-        || navigationType == UIWebViewNavigationTypeFormSubmitted
-        || navigationType == UIWebViewNavigationTypeFormResubmitted)
+    if (userInitiatedJump || navigationType == UIWebViewNavigationTypeLinkClicked)
     {
         userInitiatedJump = NO;
      
