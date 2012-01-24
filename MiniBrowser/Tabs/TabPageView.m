@@ -23,10 +23,9 @@
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        // Initialization code
+        // Initialization code        
         self.identityFrame = self.frame;
-        self.autoresizingMask = UIViewAutoresizingFlexibleWidth
-            | UIViewAutoresizingFlexibleHeight;
+        self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     }
     
     return self;

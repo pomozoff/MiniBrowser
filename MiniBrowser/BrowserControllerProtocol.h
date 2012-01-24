@@ -19,5 +19,6 @@
 - (void)dismissPopoverActionAndCleanUp;
 - (void)placeScreenshotOnPageViewFromPageData:(TabPageData *)pageData;
 - (void)closePageAtIndex:(NSInteger)index;
+- (CGRect)rotateFrame:(CGRect)frame;
 
 @end

@@ -145,7 +145,8 @@
     
     for (TabPageView *page in self.visiblePages) {
         CGRect closeButtonFrameScaled = page.closeButton.frame;
-        closeButtonFrameScaled.size.width *= page.transform.a;
+        
+        closeButtonFrameScaled.size.width  *= page.transform.a;
         closeButtonFrameScaled.size.height *= page.transform.d;
 
         closeButtonFrameScaled.origin.x *= page.transform.a;
@@ -230,7 +231,6 @@
 	}
     
 	[self setViewMode:TabPageScrollViewModePage animated:animated];
-    
     for (TabPageView *page in self.visiblePages) {
         if (page != self.selectedPage) {
             [page removeFromSuperview];
@@ -255,19 +255,6 @@
             [self addPageToDeck:page atIndex:index];
         }
     }
-
-    /*
-    // Before moving back to DECK mode, refresh the selected page
-    NSInteger index = [self indexForSelectedPage];
-    CGRect identityFrame = self.selectedPage.identityFrame;
-    CGRect pageFrame = self.selectedPage.frame;
-    [self.selectedPage removeFromSuperview];
-    self.selectedPage = [self loadPageAtIndex:index];
-    self.selectedPage.identityFrame = identityFrame;
-    self.selectedPage.frame = pageFrame;
-    self.selectedPage.alpha = 1.0;
-    [self addSubview:self.selectedPage];
-    */
 }
 
 - (void)preparePage:(TabPageView *)page forMode:(TabPageScrollViewMode)mode
@@ -348,7 +335,7 @@
         // show title label
         [self showTitleForPages:self.visiblePages show:YES];
         
-		self.selectedPage.transform = CGAffineTransformMakeScale(TRANSFORM_PAGE_SCALE_IPAD, TRANSFORM_PAGE_SCALE_IPAD);
+		//self.selectedPage.transform = CGAffineTransformMakeScale(TRANSFORM_PAGE_SCALE_IPAD, TRANSFORM_PAGE_SCALE_IPAD);
         [self setOriginForPage:self.selectedPage atIndex:selectedIndex];
         
         // display close button
@@ -447,9 +434,8 @@
     page.transform = CGAffineTransformMakeScale(TRANSFORM_PAGE_SCALE_IPAD, TRANSFORM_PAGE_SCALE_IPAD);
     
 	CGRect pageFrame = page.frame;
-    CGRect appFrame = [[UIScreen mainScreen] applicationFrame];
-    CGFloat marginX = (appFrame.size.width - self.numberOfTabsInRow * pageFrame.size.width) / (self.numberOfTabsInRow + 1);
-    CGFloat marginY = (appFrame.size.height - self.numberOfTabsInColumn * pageFrame.size.height) / (self.numberOfTabsInColumn + 1);
+    CGFloat marginX = (self.frame.size.width - self.numberOfTabsInRow * pageFrame.size.width) / (self.numberOfTabsInRow + 1);
+    CGFloat marginY = (self.frame.size.height - self.numberOfTabsInColumn * pageFrame.size.height) / (self.numberOfTabsInColumn + 1);
     
     NSInteger yOffset = ceil(index / self.numberOfTabsInRow);
     NSInteger xOffset = index - yOffset * self.numberOfTabsInRow;
@@ -524,6 +510,11 @@
 		// reload visible pages
 		for (int index = 0; index < self.numberOfPages; index++) {
 			TabPageView *page = [self loadPageAtIndex:index];
+            
+            if (!self.selectedPage) {
+                self.selectedPage = page;
+            }
+            
             [self addPageToDeck:page atIndex:index];
 		}
         
@@ -691,6 +682,7 @@
         TabPageView *pageView = [self loadPageAtIndex:index];
 
         if (self.viewMode == TabPageScrollViewModeDeck && pageView.isNewTabButton) {
+            [pageView removeFromSuperview];
             [self addPageToDeck:pageView atIndex:index];
         }
         

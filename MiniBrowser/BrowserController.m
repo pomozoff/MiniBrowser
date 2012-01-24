@@ -530,18 +530,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 #pragma mark - Object lifecycle
 
 
-/*
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-            // Custom initialization
-    }
-    
-    return self;
-}
-*/
-
 - (void)addObservers
 {
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
@@ -592,6 +580,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     [self.mainPageScrollView selectPageAtIndex:0 animated:NO];
 }
 
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
@@ -606,12 +595,10 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+
     // Correct view frame to show the status bar
-    CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
-    self.view.frame = CGRectOffset(self.view.frame, 0, statusBarHeight);
-    
-//    [self loadSettings];
+    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+    self.view.frame = CGRectOffset(self.view.frame, 0, statusBarFrame.size.height);
 }
 
 - (void)viewDidUnload
@@ -635,34 +622,71 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
+{    // Return YES for supported orientations
+
     return YES;
-}
-
-- (CGRect)rotate90DegreesTheRect:(CGRect)rect
-{
-    CGRect frame = CGRectMake(rect.origin.x, rect.origin.y, rect.size.height, rect.size.width);
-
-    return frame;
 }
 
 /*
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    
     [self.tabPageDataArray enumerateObjectsUsingBlock:^(TabPageData *pageData, NSUInteger index, BOOL *stop) {
         TabPageView *pageView = [self.mainPageScrollView pageAtIndex:index];
-        
-        CGRect frame = [self rotate90DegreesTheRect:pageView.identityFrame];
-        pageView.identityFrame = frame;
-
-        frame = [self rotate90DegreesTheRect:pageData.webView.frame];
-        pageData.webView.frame = frame;
+        //pageView.identityFrame = [self rotate90DegreesTheRect:pageView.identityFrame];
     }];
 }
 */
+- (CGRect)rotateFrame:(CGRect)frame
+{
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    
+    CGFloat tmp = frame.size.width;
+    frame.size.width = frame.size.height;
+    frame.size.height = tmp;
+    
+    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+    if (UIInterfaceOrientationIsPortrait(orientation)) {
+        frame.size.height += statusBarFrame.size.height;
+        frame.size.width  -= statusBarFrame.size.height;
+    } else {
+        frame.size.height -= statusBarFrame.size.width;
+        frame.size.width  += statusBarFrame.size.width;
+    }
+    
+    return frame;
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    BOOL sameOrientation =
+    ( UIInterfaceOrientationIsLandscape(orientation) && UIInterfaceOrientationIsLandscape(fromInterfaceOrientation) ) ||
+    ( UIInterfaceOrientationIsPortrait(orientation)  && UIInterfaceOrientationIsPortrait(fromInterfaceOrientation) );
+    
+    if (!sameOrientation) {
+        [self.tabPageDataArray enumerateObjectsUsingBlock:^(TabPageData *pageData, NSUInteger index, BOOL *stop) {
+            TabPageView *pageView = [self.mainPageScrollView pageAtIndex:index];
+            pageView.identityFrame = [self rotateFrame:pageView.identityFrame];
+
+            pageData.pageViewSize = pageView.identityFrame.size;
+            pageData.previewImageView.frame = [self rotateFrame:pageData.previewImageView.frame];
+
+            if (![self.mainPageScrollView.subviews containsObject:pageView]) {
+                pageView.bounds = [self rotateFrame:pageView.bounds];
+                pageData.webView.frame = [self rotateFrame:pageData.webView.frame];
+            }
+        }];
+    }
+    /*
+    [self.tabPageDataArray enumerateObjectsUsingBlock:^(TabPageData *pageData, NSUInteger index, BOOL *stop) {
+        TabPageView *pageView = [self.mainPageScrollView pageAtIndex:index];
+        [self.mainPageScrollView rotatePages];
+    }];
+    */
+}
 
 - (void)dealloc
 {
@@ -1059,8 +1083,8 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
             // load a new page from NIB file
             pageView = [[[NSBundle mainBundle] loadNibNamed:self.xibNamePageView owner:pageData options:nil] objectAtIndex:0];
             pageView.reuseIdentifier = pageId;
-            
-            // prepare new tab for use right now
+
+            // prepare new tab to use right now
             if (index < (self.tabPageDataArray.count - 1)) {
                 [pageView.buttonNewTabView removeFromSuperview];
                 self.webView = pageData.webView;
@@ -1198,7 +1222,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     frame.origin.y = 0.0f;
 
     // cut webview height with pageHeader height
-    frame.size.height -= self.mainPageScrollView.pageHeaderView.frame.size.height - 1;
+    frame.size.height -= self.mainPageScrollView.pageHeaderView.frame.size.height;
     self.webView.frame = frame;
     
     // place webView to the screen

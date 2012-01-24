@@ -90,6 +90,16 @@
 	return reusablePage;
 }
 
+- (void)rotatePages
+{
+    
+}
+
+- (void)setOriginForPage:(UIView *)page atIndex:(NSInteger)index
+{
+    
+}
+
 - (NSInteger)indexForSelectedPage
 {
     return 0;

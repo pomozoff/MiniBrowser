@@ -36,10 +36,7 @@
         _webView = [[UIWebView alloc] init];
         _webView.delegate = self;
         _webView.scalesPageToFit = YES;
-        _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth
-            | UIViewAutoresizingFlexibleHeight
-            | UIViewAutoresizingFlexibleTopMargin
-            | UIViewAutoresizingFlexibleBottomMargin;
+        _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         _webView.isThreaded = NO;
     }
     
@@ -183,13 +180,13 @@
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
-    [self.previewImageView removeFromSuperview];
-    
     // remove old view from superview
     [self.previewImageView removeFromSuperview];
     
     // remember imageview
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
     self.previewImageView = imageView;
     self.previewImageView.tag = PREVIEW_IMAGE_TAG;
     [imageView release];

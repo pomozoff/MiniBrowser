@@ -133,7 +133,7 @@
 	self.scrollView.decelerationRate = UIScrollViewDecelerationRateNormal;
     self.scrollView.delaysContentTouches = NO;
     self.scrollView.clipsToBounds = NO;
-	self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight; 
+	self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	self.pageControlTouch.receiver = self.pageControl;
 	self.scrollViewTouch.receiver = self.scrollView;
 	

@@ -324,8 +324,8 @@
 		26A268F0148E12AF0087E147 /* Tabs */ = {
 			isa = PBXGroup;
 			children = (
-				26A2692D148F5F370087E147 /* iPad */,
 				26A2692C148F5F2F0087E147 /* iPhone */,
+				26A2692D148F5F370087E147 /* iPad */,
 				26A26916148E3C1E0087E147 /* TabPageScrollView.h */,
 				26A26917148E3C1E0087E147 /* TabPageScrollView.m */,
 				2697F2241499D7750033E155 /* PageHeaderInfo.h */,
