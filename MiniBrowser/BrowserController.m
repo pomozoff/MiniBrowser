@@ -670,12 +670,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
             }
         }];
     }
-    /*
-    [self.tabPageDataArray enumerateObjectsUsingBlock:^(TabPageData *pageData, NSUInteger index, BOOL *stop) {
-        TabPageView *pageView = [self.mainPageScrollView pageAtIndex:index];
-        [self.mainPageScrollView rotatePages];
-    }];
-    */
 }
 
 - (void)dealloc
