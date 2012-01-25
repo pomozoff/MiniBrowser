@@ -13,6 +13,7 @@
 @synthesize pageDeckBackgroundView = _pageDeckBackgroundView;
 @synthesize pageHeaderView = _pageHeaderView;
 
+@synthesize selectedPage = _selectedPage;
 @synthesize deletedPages = _deletedPages;
 @synthesize visiblePages = _visiblePages; // array of created tabs
 @synthesize reusablePages = _reusablePages;
@@ -88,11 +89,6 @@
 	}
     
 	return reusablePage;
-}
-
-- (void)rotatePages
-{
-    
 }
 
 - (void)setOriginForPage:(UIView *)page atIndex:(NSInteger)index

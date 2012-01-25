@@ -112,6 +112,7 @@ typedef enum {
 @property (nonatomic, retain) IBOutlet UIView *pageDeckBackgroundView;
 @property (nonatomic, retain) IBOutlet UIView *pageHeaderView;
 
+@property (nonatomic, retain) TabPageView *selectedPage;
 @property (nonatomic, retain) NSMutableArray *deletedPages;
 @property (nonatomic, retain) NSMutableArray *visiblePages;
 @property (nonatomic, retain) NSMutableDictionary *reusablePages;
@@ -133,6 +134,7 @@ typedef enum {
 // Appearance
 //
 - (TabPageView *)dequeueReusablePageWithIdentifier:(NSString *)identifier; // Used by the delegate to acquire an already allocated page, instead of allocating a new one
+- (void)setOriginForPage:(UIView *)page atIndex:(NSInteger)index;
 
 // -----------------------------------------------------------------------------------------------------------------------------------
 //

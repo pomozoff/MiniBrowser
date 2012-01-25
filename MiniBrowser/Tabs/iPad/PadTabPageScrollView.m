@@ -11,7 +11,6 @@
 
 @interface PadTabPageScrollView()
 
-@property (nonatomic, retain) TabPageView *selectedPage;
 @property (nonatomic, assign) NSInteger numberOfPages;
 @property (nonatomic, assign) NSUInteger numberOfTabsInRow;
 @property (nonatomic, assign) NSUInteger numberOfTabsInColumn;
@@ -223,7 +222,7 @@
     
 	if (index != [self indexForSelectedPage]) {
         // reload the data for the new indexes
-        [self reloadData];
+        //[self reloadData];
         
         // update self.selectedPage
         self.selectedPage = [self.visiblePages objectAtIndex:index];

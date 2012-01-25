@@ -630,10 +630,25 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    /*
     [self.tabPageDataArray enumerateObjectsUsingBlock:^(TabPageData *pageData, NSUInteger index, BOOL *stop) {
         TabPageView *pageView = [self.mainPageScrollView pageAtIndex:index];
         //pageView.identityFrame = [self rotate90DegreesTheRect:pageView.identityFrame];
     }];
+    
+    [self.tabPageDataArray enumerateObjectsUsingBlock:^(TabPageData *pageData, NSUInteger index, BOOL *stop) {
+        TabPageView *pageView = [self.mainPageScrollView pageAtIndex:index];
+        pageView.identityFrame = [self rotateFrame:pageView.identityFrame];
+        
+        pageData.pageViewSize = pageView.identityFrame.size;
+        pageData.previewImageView.frame = [self rotateFrame:pageData.previewImageView.frame];
+        
+        if (![self.mainPageScrollView.subviews containsObject:pageView]) {
+            pageView.bounds = [self rotateFrame:pageView.bounds];
+            pageData.webView.frame = [self rotateFrame:pageData.webView.frame];
+        }
+    }];
+     */
 }
 
 - (CGRect)rotateFrame:(CGRect)frame
@@ -646,8 +661,8 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     
     CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
     if (UIInterfaceOrientationIsPortrait(orientation)) {
-        frame.size.height += statusBarFrame.size.height;
-        frame.size.width  -= statusBarFrame.size.height;
+        frame.size.height -= statusBarFrame.size.height;
+        frame.size.width  += statusBarFrame.size.height;
     } else {
         frame.size.height -= statusBarFrame.size.width;
         frame.size.width  += statusBarFrame.size.width;
@@ -659,7 +674,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-
+    
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     BOOL sameOrientation =
     ( UIInterfaceOrientationIsLandscape(orientation) && UIInterfaceOrientationIsLandscape(fromInterfaceOrientation) ) ||
@@ -672,10 +687,15 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
             
             pageData.pageViewSize = pageView.identityFrame.size;
             pageData.previewImageView.frame = [self rotateFrame:pageData.previewImageView.frame];
-
-            if (![self.mainPageScrollView.subviews containsObject:pageView]) {
+            
+            if (![self.mainPageScrollView.subviews containsObject:pageView])
+            {
                 pageView.bounds = [self rotateFrame:pageView.bounds];
                 pageData.webView.frame = [self rotateFrame:pageData.webView.frame];
+            }
+            
+            if (self.mainPageScrollView.viewMode == TabPageScrollViewModeDeck || self.mainPageScrollView.selectedPage != pageView) {
+                [self.mainPageScrollView setOriginForPage:pageView atIndex:index];
             }
         }];
     }
@@ -1188,6 +1208,8 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
         pageView.isNewTabButton = NO;
         [self addNewTabAnimated:NO];
     }
+    
+    pageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 }
 
 - (void)pageScrollView:(TabPageScrollView *)scrollView didSelectPageAtIndex:(NSInteger)index
@@ -1245,6 +1267,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     //[pageData.previewImageView removeFromSuperview];
 
     TabPageView *pageView = [scrollView pageAtIndex:index];
+    pageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
 
     // return full webview size
     CGRect frame = pageData.webView.frame;

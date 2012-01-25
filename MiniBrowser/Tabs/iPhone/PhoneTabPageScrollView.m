@@ -11,8 +11,6 @@
 
 @interface PhoneTabPageScrollView()
 
-@property (nonatomic, retain) TabPageView *selectedPage;
-
 @property (nonatomic, assign) NSInteger numberOfPages;
 @property (nonatomic, assign) NSInteger numberOfFreshPages;
 @property (nonatomic, assign) NSRange visibleIndexes;

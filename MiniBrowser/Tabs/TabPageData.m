@@ -185,7 +185,8 @@
     
     // remember imageview
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-    imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    //imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
+    imageView.autoresizingMask = 0;
     
     self.previewImageView = imageView;
     self.previewImageView.tag = PREVIEW_IMAGE_TAG;
