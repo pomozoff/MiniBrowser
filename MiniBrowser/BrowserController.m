@@ -628,30 +628,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     return YES;
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    /*
-    [self.tabPageDataArray enumerateObjectsUsingBlock:^(TabPageData *pageData, NSUInteger index, BOOL *stop) {
-        TabPageView *pageView = [self.mainPageScrollView pageAtIndex:index];
-        //pageView.identityFrame = [self rotate90DegreesTheRect:pageView.identityFrame];
-    }];
-    
-    [self.tabPageDataArray enumerateObjectsUsingBlock:^(TabPageData *pageData, NSUInteger index, BOOL *stop) {
-        TabPageView *pageView = [self.mainPageScrollView pageAtIndex:index];
-        pageView.identityFrame = [self rotateFrame:pageView.identityFrame];
-        
-        pageData.pageViewSize = pageView.identityFrame.size;
-        pageData.previewImageView.frame = [self rotateFrame:pageData.previewImageView.frame];
-        
-        if (![self.mainPageScrollView.subviews containsObject:pageView]) {
-            pageView.bounds = [self rotateFrame:pageView.bounds];
-            pageData.webView.frame = [self rotateFrame:pageData.webView.frame];
-        }
-    }];
-     */
-}
-
 - (CGRect)rotateFrame:(CGRect)frame
 {
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
