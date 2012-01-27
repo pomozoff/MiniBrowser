@@ -676,6 +676,9 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
             pageView.identityFrame = [self rotateFrame:pageView.identityFrame];
             pageData.pageViewSize = pageView.identityFrame.size;
             
+            [pageData makeScreenShotOfTheView:pageData.webView];
+            [self putPreview:pageData.previewImageView onPageView:pageView];
+            
             if (self.mainPageScrollView.viewMode == TabPageScrollViewModeDeck || self.mainPageScrollView.selectedPage != pageView) {
                 [self.mainPageScrollView setOriginForPage:pageView atIndex:index];
             }
