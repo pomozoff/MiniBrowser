@@ -6,6 +6,7 @@
 //  Copyright (c) 2011 Alma. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "TabPageView.h"
 
 @implementation TabPageView
@@ -39,6 +40,23 @@
     // Drawing code
 }
 */
+
+- (void)drawShadowForPage:(TabPageView *)page
+{
+    // (use shadowPath to improve rendering performance)
+	page.layer.shadowColor = [[UIColor blackColor] CGColor];	
+	page.layer.shadowOffset = CGSizeMake(8.0f, 12.0f);
+	page.layer.shadowOpacity = 0.3f;
+    page.layer.masksToBounds = NO;
+    UIBezierPath *path = [UIBezierPath bezierPathWithRect:page.bounds];
+    page.layer.shadowPath = path.CGPath;	
+}
+
+- (void)setFrame:(CGRect)newFrame
+{
+    [super setFrame:newFrame];
+    [self drawShadowForPage:self];
+}
 
 - (void)prepareForReuse;
 {

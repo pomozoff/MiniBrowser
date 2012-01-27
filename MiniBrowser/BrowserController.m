@@ -41,6 +41,7 @@
 - (void)addPagesAtIndexSet:(NSIndexSet *)indexSet animated:(BOOL)animated;
 - (void)removePagesAtIndexSet:(NSIndexSet *)indexSet;
 - (void)reloadPagesAtIndexSet:(NSIndexSet *)indexSet;
+- (void)putPreview:(UIImageView *)preview onPageView:(TabPageView *)pageView;
 
 @end
 
@@ -683,16 +684,21 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     if (!sameOrientation) {
         [self.tabPageDataArray enumerateObjectsUsingBlock:^(TabPageData *pageData, NSUInteger index, BOOL *stop) {
             TabPageView *pageView = [self.mainPageScrollView pageAtIndex:index];
-            pageView.identityFrame = [self rotateFrame:pageView.identityFrame];
             
-            pageData.pageViewSize = pageView.identityFrame.size;
-            pageData.previewImageView.frame = [self rotateFrame:pageData.previewImageView.frame];
-            
-            if (![self.mainPageScrollView.subviews containsObject:pageView])
-            {
+            if (![self.mainPageScrollView.subviews containsObject:pageView]) {
                 pageView.bounds = [self rotateFrame:pageView.bounds];
+            }
+            
+            if (![pageView.subviews containsObject:pageData.webView]) {
                 pageData.webView.frame = [self rotateFrame:pageData.webView.frame];
             }
+            
+            if (![pageView.subviews containsObject:pageData.previewImageView]) {
+                pageData.previewImageView.frame = [self rotateFrame:pageData.previewImageView.frame];
+            }
+
+            pageView.identityFrame = [self rotateFrame:pageView.identityFrame];
+            pageData.pageViewSize = pageView.identityFrame.size;
             
             if (self.mainPageScrollView.viewMode == TabPageScrollViewModeDeck || self.mainPageScrollView.selectedPage != pageView) {
                 [self.mainPageScrollView setOriginForPage:pageView atIndex:index];
@@ -1096,6 +1102,11 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
             // load a new page from NIB file
             pageView = [[[NSBundle mainBundle] loadNibNamed:self.xibNamePageView owner:pageData options:nil] objectAtIndex:0];
             pageView.reuseIdentifier = pageId;
+            
+            UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+            if (UIInterfaceOrientationIsLandscape(orientation)) {
+                pageView.frame = [self rotateFrame:pageView.frame];
+            }
 
             // prepare new tab to use right now
             if (index < (self.tabPageDataArray.count - 1)) {
@@ -1274,10 +1285,10 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     frame.size.width = pageView.identityFrame.size.width;
     frame.size.height = pageView.identityFrame.size.height;
     pageData.webView.frame = frame;
-
+    pageData.previewImageView.frame = frame;
+    
     // get screenshot of the current webView
     pageData.pageViewSize = pageView.identityFrame.size;
-    [pageData makeScreenShotOfTheView:pageData.webView];
     
     // place a preview on pageView
     [self putPreview:pageData.previewImageView onPageView:pageView];

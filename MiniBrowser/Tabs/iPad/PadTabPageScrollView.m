@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 Alma. All rights reserved.
 //
 
-#import <QuartzCore/QuartzCore.h>
 #import "PadTabPageScrollView.h"
 
 @interface PadTabPageScrollView()
@@ -455,6 +454,19 @@
     //[self setAlphaForPage:page];	
 }
 
+/*
+- (void)drawShadowForPage:(TabPageView *)page
+{
+    // (use shadowPath to improve rendering performance)
+	page.layer.shadowColor = [[UIColor blackColor] CGColor];	
+	page.layer.shadowOffset = CGSizeMake(8.0f, 12.0f);
+	page.layer.shadowOpacity = 0.3f;
+    page.layer.masksToBounds = NO;
+    UIBezierPath *path = [UIBezierPath bezierPathWithRect:page.bounds];
+    page.layer.shadowPath = path.CGPath;	
+}
+*/
+
 // add a page to the scroll view at a given index. No adjustments are made to existing pages offsets. 
 - (void)addPageToDeck:(TabPageView *)page atIndex:(NSInteger)index
 {
@@ -464,13 +476,8 @@
 	// configure the page frame
     [self setOriginForPage:page atIndex:index];
     
-	// add shadow (use shadowPath to improve rendering performance)
-	page.layer.shadowColor = [[UIColor blackColor] CGColor];	
-	page.layer.shadowOffset = CGSizeMake(8.0f, 12.0f);
-	page.layer.shadowOpacity = 0.3f;
-    page.layer.masksToBounds = NO;
-    UIBezierPath *path = [UIBezierPath bezierPathWithRect:page.bounds];
-    page.layer.shadowPath = path.CGPath;	
+	// add shadow
+    //[self drawShadowForPage:page];
     
     // add the page to the scroller
     if (page == self.selectedPage) {

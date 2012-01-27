@@ -96,6 +96,11 @@
     
 }
 
+- (void)drawShadowForPage:(TabPageView *)page
+{
+
+}
+
 - (NSInteger)indexForSelectedPage
 {
     return 0;

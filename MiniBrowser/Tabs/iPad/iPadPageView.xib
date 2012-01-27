@@ -59,7 +59,7 @@
 					<object class="IBUIButton" id="1061843281">
 						<reference key="NSNextResponder" ref="596009750"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{-60, -60}, {120, 120}}</string>
+						<string key="NSFrame">{{-50, -50}, {120, 120}}</string>
 						<reference key="NSSuperview" ref="596009750"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="973076295"/>
@@ -95,12 +95,12 @@
 					</object>
 					<object class="IBUIView" id="698823593">
 						<reference key="NSNextResponder" ref="596009750"/>
-						<int key="NSvFlags">258</int>
+						<int key="NSvFlags">266</int>
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="IBUILabel" id="130801263">
 								<reference key="NSNextResponder" ref="698823593"/>
 								<int key="NSvFlags">266</int>
-								<string key="NSFrame">{{20, 33}, {728, 30}}</string>
+								<string key="NSFrame">{{20, 11}, {728, 52}}</string>
 								<reference key="NSSuperview" ref="698823593"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView"/>
@@ -121,11 +121,11 @@
 									<string key="name">Helvetica-Bold</string>
 									<string key="family">Helvetica</string>
 									<int key="traits">2</int>
-									<double key="pointSize">26</double>
+									<double key="pointSize">48</double>
 								</object>
 								<object class="NSFont" key="IBUIFont">
 									<string key="NSName">Helvetica-Bold</string>
-									<double key="NSSize">26</double>
+									<double key="NSSize">48</double>
 									<int key="NSfFlags">16</int>
 								</object>
 							</object>
@@ -135,6 +135,10 @@
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="130801263"/>
 						<string key="NSReuseIdentifierKey">_NS:212</string>
+						<object class="NSColor" key="IBUIBackgroundColor">
+							<int key="NSColorSpace">3</int>
+							<bytes key="NSWhite">MAA</bytes>
+						</object>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 					</object>
 				</array>
@@ -144,10 +148,11 @@
 				<reference key="NSNextKeyView" ref="1061843281"/>
 				<string key="NSReuseIdentifierKey">_NS:212</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
-					<int key="NSColorSpace">1</int>
-					<bytes key="NSRGB">MSAwLjY1MTY1ODk2MTQgMC4xMDg2MjgyOTYAA</bytes>
+					<int key="NSColorSpace">3</int>
+					<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
 				</object>
 				<bool key="IBUIOpaque">NO</bool>
+				<bool key="IBUIClipsSubviews">YES</bool>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics">
 					<int key="IBUIStatusBarStyle">2</int>
 				</object>

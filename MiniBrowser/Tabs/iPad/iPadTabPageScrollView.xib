@@ -278,8 +278,8 @@
 						<reference key="NSNextKeyView" ref="319945440"/>
 						<string key="NSReuseIdentifierKey">_NS:212</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC41Mjk0MjI2Mjk3IDAuODUzMjYwODY5NiAwLjQwODcwMjUyMTIAA</bytes>
+							<int key="NSColorSpace">3</int>
+							<bytes key="NSWhite">MAA</bytes>
 						</object>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 					</object>

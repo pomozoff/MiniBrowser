@@ -15,7 +15,7 @@
 
 @synthesize index = _index;
 @synthesize pageViewSize = _pageViewSize;
-@synthesize previewImageView = _previewImage;
+@synthesize previewImageView = _previewImageView;
 @synthesize webView = _webView;
 @synthesize webViewDelegate = _webViewDelegate;
 
@@ -63,25 +63,64 @@
 
 // ******************************************************************************************************************************
 
-#pragma mark - NSObject 
+#pragma mark - Page Data Delegate
 
 
-- (NSString *)description
+- (void)loadUrl
 {
-    return [NSString stringWithFormat:@"%@ 0x%x: %@", [self class], self, self.title];
+    [self loadUrl:self.subtitle];
 }
 
-- (void)dealloc
+- (void)loadUrl:(NSString *)url
 {
-    self.previewImageView = nil;
-    self.webView = nil;
-    self.webViewDelegate = nil;
+    NSString *trimmedUrl = [url stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    BOOL isUrlEmpty = !trimmedUrl || [trimmedUrl isEqualToString:@""];
     
-    self.title = nil;
-    self.subtitle = nil;
-    self.navController = nil;
+    if (isUrlEmpty) {
+        return;
+    }
     
-    [super dealloc];
+    NSString *readyUrl = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURL *urlObject = [NSURL URLWithString:readyUrl];
+    
+    if (!urlObject.scheme) {
+        urlObject = [NSURL URLWithString:[@"http://" stringByAppendingString:urlObject.absoluteString]];
+    }
+    
+    [self.webView loadRequest:[NSURLRequest requestWithURL:urlObject]];
+}
+
+- (void)makeScreenShotOfTheView:(UIView *)view
+{
+    if (CGSizeEqualToSize(view.frame.size, CGSizeZero)) {
+        return;
+    }
+    
+    if (NULL != UIGraphicsBeginImageContextWithOptions)
+        UIGraphicsBeginImageContextWithOptions(self.pageViewSize, NO, 0);
+    else
+        UIGraphicsBeginImageContext(self.pageViewSize);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    [view.layer renderInContext:context];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    // remove old view from superview
+    [self.previewImageView removeFromSuperview];
+    
+    // remember imageview
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
+    imageView.clipsToBounds = YES;
+    
+    self.previewImageView = imageView;
+    self.previewImageView.tag = PREVIEW_IMAGE_TAG;
+    [imageView release];
+    
+    // replace new screenshot
+    [self.webViewDelegate placeScreenshotOnPageViewFromPageData:self];
 }
 
 // ******************************************************************************************************************************
@@ -137,73 +176,35 @@
 
 // ******************************************************************************************************************************
 
-#pragma mark - Page Data Delegate
-
-
-- (void)loadUrl
-{
-    [self loadUrl:self.subtitle];
-}
-
-- (void)loadUrl:(NSString *)url
-{
-    NSString *trimmedUrl = [url stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    BOOL isUrlEmpty = !trimmedUrl || [trimmedUrl isEqualToString:@""];
-
-    if (isUrlEmpty) {
-        return;
-    }
-    
-    NSString *readyUrl = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSURL *urlObject = [NSURL URLWithString:readyUrl];
-    
-    if (!urlObject.scheme) {
-        urlObject = [NSURL URLWithString:[@"http://" stringByAppendingString:urlObject.absoluteString]];
-    }
-    
-    [self.webView loadRequest:[NSURLRequest requestWithURL:urlObject]];
-}
-
-- (void)makeScreenShotOfTheView:(UIView *)view
-{
-    if (CGSizeEqualToSize(view.frame.size, CGSizeZero)) {
-        return;
-    }
-    
-    if (NULL != UIGraphicsBeginImageContextWithOptions)
-        UIGraphicsBeginImageContextWithOptions(self.pageViewSize, NO, 0);
-    else
-        UIGraphicsBeginImageContext(self.pageViewSize);
-    
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    [view.layer renderInContext:context];
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-
-    // remove old view from superview
-    [self.previewImageView removeFromSuperview];
-    
-    // remember imageview
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-    //imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
-    imageView.autoresizingMask = 0;
-    
-    self.previewImageView = imageView;
-    self.previewImageView.tag = PREVIEW_IMAGE_TAG;
-    [imageView release];
-    
-    // replace new screenshot
-    [self.webViewDelegate placeScreenshotOnPageViewFromPageData:self];
-}
-
-// ******************************************************************************************************************************
-
 #pragma mark - Page Data Actions
 
 
 - (IBAction)closePage:(id)sender
 {
     [self.webViewDelegate closePageAtIndex:self.index];
+}
+
+// ******************************************************************************************************************************
+
+#pragma mark - NSObject 
+
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"%@ 0x%x: %@", [self class], self, self.title];
+}
+
+- (void)dealloc
+{
+    self.previewImageView = nil;
+    self.webView = nil;
+    self.webViewDelegate = nil;
+    
+    self.title = nil;
+    self.subtitle = nil;
+    self.navController = nil;
+    
+    [super dealloc];
 }
 
 @end

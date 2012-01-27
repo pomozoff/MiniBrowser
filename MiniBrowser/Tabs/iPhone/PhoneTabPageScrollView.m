@@ -6,8 +6,8 @@
 //  Copyright (c) 2011 Alma. All rights reserved.
 //
 
-#import "PhoneTabPageScrollView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "PhoneTabPageScrollView.h"
 
 @interface PhoneTabPageScrollView()
 
@@ -594,14 +594,6 @@
     
 	// configure the page frame
     [self setFrameForPage:page atIndex:index];
-    
-	// add shadow (use shadowPath to improve rendering performance)
-	page.layer.shadowColor = [[UIColor blackColor] CGColor];	
-	page.layer.shadowOffset = CGSizeMake(8.0f, 12.0f);
-	page.layer.shadowOpacity = 0.3f;
-    page.layer.masksToBounds = NO;
-    UIBezierPath *path = [UIBezierPath bezierPathWithRect:page.bounds];
-    page.layer.shadowPath = path.CGPath;	
     
     // add the page to the scroller
 	[self.scrollView insertSubview:page atIndex:0];

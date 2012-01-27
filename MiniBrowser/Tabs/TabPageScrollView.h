@@ -135,6 +135,7 @@ typedef enum {
 //
 - (TabPageView *)dequeueReusablePageWithIdentifier:(NSString *)identifier; // Used by the delegate to acquire an already allocated page, instead of allocating a new one
 - (void)setOriginForPage:(UIView *)page atIndex:(NSInteger)index;
+- (void)drawShadowForPage:(TabPageView *)page;
 
 // -----------------------------------------------------------------------------------------------------------------------------------
 //
