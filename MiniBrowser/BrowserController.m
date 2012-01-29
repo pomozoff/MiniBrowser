@@ -745,7 +745,9 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     // set title and url in view
     if (webView == self.webView) {
         self.urlLabel.text = label;
-        self.urlField.text = url;
+        if (url) {
+            self.urlField.text = url;
+        }
     }
 }
 
@@ -773,12 +775,11 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
         NSURL *theUrl = [NSURL URLWithString:callBackUrl];
         
         [webView loadRequest:[NSURLRequest requestWithURL:theUrl]];
+        [self setLabel:@"Loading" andUrl:request.URL.absoluteString withWebView:webView];
         
         return NO;
     }
-    
-    [self setLabel:@"Loading" andUrl:request.URL.absoluteString withWebView:webView];
-    
+        
     if (webView == self.webView) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     }
@@ -802,7 +803,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     NSString *sourceUrl = webView.request.URL.absoluteString;
     
     // print url and title
-    [self setLabel:label andUrl:sourceUrl withWebView:webView];
+    [self setLabel:label andUrl:nil withWebView:webView];
     
     BookmarkItem *historyItem = [[BookmarkItem alloc] initWithName:label
                                                                url:sourceUrl
@@ -830,9 +831,9 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     [self updateButtonsStatus:webView];
     
     NSString *logString = [NSString stringWithFormat:@"Error: %@", error.localizedDescription];
-    NSString *sourceUrl = webView.request.URL.absoluteString;
+    //NSString *sourceUrl = webView.request.URL.absoluteString;
 
-    [self setLabel:logString andUrl:sourceUrl withWebView:webView];
+    [self setLabel:logString andUrl:nil withWebView:webView];
     
     if (webView == self.webView) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
