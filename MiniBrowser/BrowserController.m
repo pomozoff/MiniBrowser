@@ -36,6 +36,8 @@
 @property (nonatomic, retain) NSMutableIndexSet *indexesToInsert;
 @property (nonatomic, retain) NSMutableIndexSet *indexesToReload;
 
+@property (nonatomic, assign) BOOL labelNeedsToBeUpdated;
+
 - (UIViewController *)headerInfoForPageAtIndex:(NSInteger)index;
 - (void)addPagesAtIndexSet:(NSIndexSet *)indexSet;
 - (void)addPagesAtIndexSet:(NSIndexSet *)indexSet animated:(BOOL)animated;
@@ -83,6 +85,8 @@
 @synthesize indexesToDelete = _indexesToDelete;
 @synthesize indexesToInsert = _indexesToInsert;
 @synthesize indexesToReload = _indexesToReload;
+
+@synthesize labelNeedsToBeUpdated = _labelNeedsToBeUpdated;
 
 BOOL userInitiatedJump = NO;
 NSString *const savedOpenedUrls = @"savedOpenedUrls";
@@ -777,6 +781,8 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
         [webView loadRequest:[NSURLRequest requestWithURL:theUrl]];
         [self setLabel:@"Loading" andUrl:request.URL.absoluteString withWebView:webView];
         
+        self.labelNeedsToBeUpdated = YES;
+        
         return NO;
     }
         
@@ -801,9 +807,11 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     
     NSString *label = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     NSString *sourceUrl = webView.request.URL.absoluteString;
-    
-    // print url and title
-    [self setLabel:label andUrl:nil withWebView:webView];
+
+    if (self.labelNeedsToBeUpdated) {
+        [self setLabel:label andUrl:sourceUrl withWebView:webView];
+        self.labelNeedsToBeUpdated = NO;
+    }
     
     BookmarkItem *historyItem = [[BookmarkItem alloc] initWithName:label
                                                                url:sourceUrl
@@ -830,10 +838,16 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 {
     [self updateButtonsStatus:webView];
     
-    NSString *logString = [NSString stringWithFormat:@"Error: %@", error.localizedDescription];
-    //NSString *sourceUrl = webView.request.URL.absoluteString;
+    NSString *label = [NSString stringWithFormat:@"Error: %@", error.localizedDescription];
 
-    [self setLabel:logString andUrl:nil withWebView:webView];
+    if (self.labelNeedsToBeUpdated) {
+        NSString *sourceUrl = webView.request.URL.absoluteString;
+        
+        [self setLabel:label andUrl:sourceUrl withWebView:webView];
+        self.labelNeedsToBeUpdated = NO;
+    }
+
+    [self setLabel:label andUrl:nil withWebView:webView];
     
     if (webView == self.webView) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
