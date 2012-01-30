@@ -163,14 +163,6 @@
 			<array class="NSMutableArray" key="connectionRecords">
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">closeButton</string>
-						<reference key="source" ref="596009750"/>
-						<reference key="destination" ref="1061843281"/>
-					</object>
-					<int key="connectionID">11</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">buttonNewTabView</string>
 						<reference key="source" ref="596009750"/>
 						<reference key="destination" ref="973076295"/>
@@ -184,6 +176,14 @@
 						<reference key="destination" ref="698823593"/>
 					</object>
 					<int key="connectionID">34</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">closeButton</string>
+						<reference key="source" ref="596009750"/>
+						<reference key="destination" ref="1061843281"/>
+					</object>
+					<int key="connectionID">11</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -225,12 +225,6 @@
 						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">9</int>
-						<reference key="object" ref="1061843281"/>
-						<reference key="parent" ref="596009750"/>
-						<string key="objectName">close button</string>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">27</int>
 						<reference key="object" ref="973076295"/>
 						<reference key="parent" ref="596009750"/>
@@ -250,6 +244,12 @@
 						<reference key="object" ref="130801263"/>
 						<reference key="parent" ref="698823593"/>
 						<string key="objectName">Title</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">9</int>
+						<reference key="object" ref="1061843281"/>
+						<reference key="parent" ref="596009750"/>
+						<string key="objectName">close button</string>
 					</object>
 				</array>
 			</object>

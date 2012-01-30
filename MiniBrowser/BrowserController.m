@@ -680,9 +680,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
             pageView.identityFrame = [self rotateFrame:pageView.identityFrame];
             pageData.pageViewSize = pageView.identityFrame.size;
             
-            [pageData makeScreenShotOfTheView:pageData.webView];
-            [self putPreview:pageData.previewImageView onPageView:pageView];
-            
             if (self.mainPageScrollView.viewMode == TabPageScrollViewModeDeck || self.mainPageScrollView.selectedPage != pageView) {
                 [self.mainPageScrollView setOriginForPage:pageView atIndex:index];
             }
@@ -1251,26 +1248,10 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 - (void)pageScrollView:(TabPageScrollView *)scrollView willDeselectPageAtIndex:(NSInteger)index
 {
+    [self finishEditing];
+    
     TabPageData *pageData = [self.tabPageDataArray objectAtIndex:index];
     
-    if (!pageData.navController) {
-        // disable scroll of the contents page to avoid conflict with horizonal scroll of the pageScrollView
-        /*
-        TabPageView *page = [scrollView pageAtIndex:index];
-        UIScrollView *scrollContentView = (UIScrollView *)[page viewWithTag:10];
-        UIScrollView *scrollContentView = (UIScrollView *)[self.webView.subviews objectAtIndex:0];
-        scrollContentView.scrollEnabled = NO;
-        
-        // remove "edit" button from toolbar
-        NSMutableArray *items = [NSMutableArray arrayWithArray:self.mainToolbar.items];
-        [items removeLastObject];
-        self.mainToolbar.items = items;
-        */
-    }
-    
-    // remove preview
-    //[pageData.previewImageView removeFromSuperview];
-
     TabPageView *pageView = [scrollView pageAtIndex:index];
     pageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
 
@@ -1285,6 +1266,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     pageData.pageViewSize = pageView.identityFrame.size;
     
     // place a preview on pageView
+    [pageData makeScreenShotOfTheView:pageData.webView];
     [self putPreview:pageData.previewImageView onPageView:pageView];
     
     [pageData.webView removeFromSuperview];

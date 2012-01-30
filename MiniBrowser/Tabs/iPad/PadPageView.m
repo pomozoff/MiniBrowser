@@ -14,7 +14,7 @@
 {
     UIView *result;
     
-    if (self.closeButton.alpha > 0.5f && CGRectContainsPoint(self.closeButton.frame, point)) {
+    if ([self.subviews containsObject:self.closeButton] && self.closeButton.alpha > 0.5f && CGRectContainsPoint(self.closeButton.frame, point)) {
         result = self.closeButton;
     } else {
         result = [super hitTest:point withEvent:event];
