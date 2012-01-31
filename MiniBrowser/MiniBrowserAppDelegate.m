@@ -8,6 +8,7 @@
 
 #import "MiniBrowserAppDelegate.h"
 
+
 @implementation MiniBrowserAppDelegate
 
 @synthesize window = _window;

@@ -88,7 +88,6 @@
 
 @synthesize labelNeedsToBeUpdated = _labelNeedsToBeUpdated;
 
-BOOL userInitiatedJump = NO;
 NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 // ******************************************************************************************************************************
@@ -358,6 +357,11 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     [self closeTabPressed:nil];
 }
 
+- (void)keyboardDidHide:(id)sender
+{
+    
+}
+
 // ******************************************************************************************************************************
 
 #pragma mark - toolbar Actions
@@ -482,7 +486,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 - (void)closePopupsAndLoadUrl:(NSString *)url
 {
-    userInitiatedJump = YES;
     [self dismissOpenPopoversAndActionSheet];
     [self loadUrl:url];
 }
@@ -547,6 +550,11 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
                selector:@selector(loadSettings)
                    name:UIApplicationWillEnterForegroundNotification
                  object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidHide:)
+                                                 name:UIKeyboardDidHideNotification
+                                               object:self.view.window];
 }
 
 - (void)removeObservers
@@ -730,8 +738,10 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
      Some other action occurred.
      */
     
-    NSString *outUrl = [NSString stringWithFormat:@"%@", sourceUrl];
-    //    NSString *outUrl = @"http://www.google.com/";
+    //NSString *outUrl = [NSString stringWithFormat:@"%@?&callback=yes", sourceUrl];
+    
+    //NSString *decodedUrl = [sourceUrl stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *outUrl = [@"http://www.google.com/" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     return outUrl;
 }
@@ -767,26 +777,24 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    if (userInitiatedJump || navigationType == UIWebViewNavigationTypeLinkClicked)
-    {
-        userInitiatedJump = NO;
-     
-        NSString *sourceUrl = request.URL.absoluteString;
-        NSString *callBackUrl = [self urlCallBack:sourceUrl navigationType:navigationType];
-        NSURL *theUrl = [NSURL URLWithString:callBackUrl];
-        
-        [webView loadRequest:[NSURLRequest requestWithURL:theUrl]];
+    NSString *callBackUrl = [self urlCallBack:request.URL.absoluteString navigationType:navigationType];
+    NSMutableURLRequest *newRequest = (NSMutableURLRequest *)request;
+    NSURL *theUrl = [NSURL URLWithString:callBackUrl];
+    NSURL *mainUrl = [NSURL URLWithString:callBackUrl];
+
+    newRequest.URL = theUrl;
+    newRequest.mainDocumentURL = mainUrl;
+    
+    if (!self.labelNeedsToBeUpdated) {
         [self setLabel:@"Loading" andUrl:request.URL.absoluteString withWebView:webView];
         
         self.labelNeedsToBeUpdated = YES;
-        
-        return NO;
     }
         
     if (webView == self.webView) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     }
-    
+    /*
     if (!webView.isThreaded) {
         NSArray *arguments = [NSArray arrayWithObjects:webView, request, nil];
         [NSThread setThreadPriority:0.5f];
@@ -794,6 +802,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
         return NO;
     }
+    */
 
     return YES;
 }
@@ -865,7 +874,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
-    userInitiatedJump = YES;
     
     [self loadUrl:textField.text];
 
@@ -894,8 +902,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 - (void)searchTheText:(NSString *)text
 {
-    userInitiatedJump = YES;
-    
     NSURL *searchUrl = [self.settingsController.currentSearchEngine searchUrlForText:text];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:searchUrl];
     [self.webView loadRequest:urlRequest];
