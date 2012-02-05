@@ -92,7 +92,6 @@ typedef enum {
 // Page display. Implementers should *always* try to reuse pageViews by setting each page's reuseIdentifier. 
 // This mechanism works the same as in UITableViewCells.  
 - (TabPageView *)pageScrollView:(TabPageScrollView *)scrollView viewForPageAtIndex:(NSInteger)index;
-
 - (NSUInteger)maxPagesAmount;
 
 @optional

@@ -37,6 +37,7 @@
 @property (nonatomic, retain) NSMutableIndexSet *indexesToReload;
 
 @property (nonatomic, assign) BOOL labelNeedsToBeUpdated;
+@property (nonatomic, retain) NSMutableDictionary *loadingUrlsList;
 
 - (UIViewController *)headerInfoForPageAtIndex:(NSInteger)index;
 - (void)addPagesAtIndexSet:(NSIndexSet *)indexSet;
@@ -87,6 +88,7 @@
 @synthesize indexesToReload = _indexesToReload;
 
 @synthesize labelNeedsToBeUpdated = _labelNeedsToBeUpdated;
+@synthesize loadingUrlsList = _loadingUrlsList;
 
 NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
@@ -173,6 +175,15 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     }
     
     return _mainPageScrollView;
+}
+
+- (NSMutableDictionary *)loadingUrlsList
+{
+    if (!_loadingUrlsList) {
+        _loadingUrlsList = [[NSMutableDictionary alloc] init];
+    }
+    
+    return _loadingUrlsList;
 }
 
 // ******************************************************************************************************************************
@@ -738,10 +749,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
      Some other action occurred.
      */
     
-    //NSString *outUrl = [NSString stringWithFormat:@"%@?&callback=yes", sourceUrl];
-    
-    //NSString *decodedUrl = [sourceUrl stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSString *outUrl = [@"http://www.google.com/" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *outUrl = sourceUrl;
     
     return outUrl;
 }
@@ -767,7 +775,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
     UIWebView *webView = (UIWebView *)[arguments objectAtIndex:0];
-    NSURLRequest *request=(NSURLRequest *)[arguments objectAtIndex:1];
+    NSURLRequest *request = (NSURLRequest *)[arguments objectAtIndex:1];
     
     webView.isThreaded = YES;
     [webView loadRequest:request];
@@ -775,15 +783,55 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     [pool drain];
 }
 
+- (BOOL)isTheUrl:(NSString *)urlString loadingInWebView:(UIWebView *)webView
+{
+    NSArray *urlsList = [self.loadingUrlsList objectForKey:webView.webViewId];
+    BOOL isUrlFound = urlsList && ([urlsList indexOfObject:urlString] != NSNotFound);
+
+    return isUrlFound;
+}
+
+- (void)addUrl:(NSString *)urlString toLoadingListForWebView:(UIWebView *)webView
+{
+    NSMutableArray *urlsList = [self.loadingUrlsList objectForKey:webView.webViewId];
+    if (!urlsList) {
+        urlsList = [[[NSMutableArray alloc] initWithObjects:urlString, nil] autorelease];
+    } else if (![urlsList containsObject:urlString]) {
+        [urlsList addObject:urlString];
+    }
+    
+    [self.loadingUrlsList setObject:urlsList forKey:webView.webViewId];
+}
+
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    NSString *callBackUrl = [self urlCallBack:request.URL.absoluteString navigationType:navigationType];
-    NSMutableURLRequest *newRequest = (NSMutableURLRequest *)request;
-    NSURL *theUrl = [NSURL URLWithString:callBackUrl];
-    NSURL *mainUrl = [NSURL URLWithString:callBackUrl];
+    NSString *sourceUrl = request.URL.absoluteString;
+    NSString *decodedUrl = [sourceUrl stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *callBackUrl = [self urlCallBack:decodedUrl navigationType:navigationType];
 
-    newRequest.URL = theUrl;
-    newRequest.mainDocumentURL = mainUrl;
+    if (decodedUrl != callBackUrl) {
+        [self loadUrl:callBackUrl];
+        
+        return NO;
+    }
+    
+    /*
+    if (![self isTheUrl:decodedUrl loadingInWebView:webView]) {
+        NSString *callBackUrl = [self urlCallBack:decodedUrl navigationType:navigationType];
+        [self addUrl:callBackUrl toLoadingListForWebView:webView];
+        [self loadUrl:callBackUrl];
+        
+        return NO;
+    }
+    */
+
+    if (!webView.isThreaded) {
+        NSArray *arguments = [NSArray arrayWithObjects:webView, request, nil];
+        [NSThread setThreadPriority:0.5f];
+        [NSThread detachNewThreadSelector:@selector(loadWebView:) toTarget:self withObject:arguments];
+     
+        return NO;
+     }
     
     if (!self.labelNeedsToBeUpdated) {
         [self setLabel:@"Loading" andUrl:request.URL.absoluteString withWebView:webView];
@@ -794,15 +842,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     if (webView == self.webView) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     }
-    /*
-    if (!webView.isThreaded) {
-        NSArray *arguments = [NSArray arrayWithObjects:webView, request, nil];
-        [NSThread setThreadPriority:0.5f];
-        [NSThread detachNewThreadSelector:@selector(loadWebView:) toTarget:self withObject:arguments];
-
-        return NO;
-    }
-    */
 
     return YES;
 }

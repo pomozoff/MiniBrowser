@@ -11,5 +11,7 @@
 @interface UIWebView (Extended)
 
 @property (nonatomic, assign) BOOL isThreaded;
+@property (nonatomic, assign) NSInteger loadingUrlsCount;
+@property (nonatomic, readonly) NSString *webViewId;
 
 @end

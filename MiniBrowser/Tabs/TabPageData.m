@@ -38,6 +38,7 @@
         _webView.scalesPageToFit = YES;
         _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         _webView.isThreaded = NO;
+        _webView.allowsInlineMediaPlayback = YES;
     }
     
     return _webView;
@@ -87,7 +88,8 @@
         urlObject = [NSURL URLWithString:[@"http://" stringByAppendingString:urlObject.absoluteString]];
     }
     
-    [self.webView loadRequest:[NSURLRequest requestWithURL:urlObject]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:urlObject];
+    [self.webView loadRequest:request];
 }
 
 - (void)makeScreenShotOfTheView:(UIView *)view

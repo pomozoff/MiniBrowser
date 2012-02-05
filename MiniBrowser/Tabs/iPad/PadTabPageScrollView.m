@@ -517,7 +517,7 @@
 		for (int index = 0; index < self.numberOfPages; index++) {
 			TabPageView *page = [self loadPageAtIndex:index];
             
-            if (!self.selectedPage) {
+            if (page && !self.selectedPage) {
                 self.selectedPage = page;
             }
             
@@ -576,7 +576,7 @@
 - (TabPageView *)loadPageAtIndex:(NSInteger)index
 {
     TabPageView *visiblePage = nil;
-        
+    
     if (index < self.visiblePages.count) {
         visiblePage = [self.visiblePages objectAtIndex:index];
     } else {
