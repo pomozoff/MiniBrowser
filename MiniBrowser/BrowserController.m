@@ -36,6 +36,7 @@
 @property (nonatomic, retain) NSMutableIndexSet *indexesToInsert;
 @property (nonatomic, retain) NSMutableIndexSet *indexesToReload;
 
+@property (nonatomic, assign) BOOL isFromAddressBar;
 @property (nonatomic, assign) BOOL labelNeedsToBeUpdated;
 @property (nonatomic, retain) NSMutableDictionary *loadingUrlsList;
 
@@ -87,6 +88,7 @@
 @synthesize indexesToInsert = _indexesToInsert;
 @synthesize indexesToReload = _indexesToReload;
 
+@synthesize isFromAddressBar = _isFromAddressBar;
 @synthesize labelNeedsToBeUpdated = _labelNeedsToBeUpdated;
 @synthesize loadingUrlsList = _loadingUrlsList;
 
@@ -720,6 +722,8 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 - (NSString *)urlCallBack:(NSString *)sourceUrl navigationType:(UIWebViewNavigationType)navigationType
 {
     /*
+     self.isFromAddressBar - url is loading from address bar
+     
      UIWebViewNavigationType
      Constant indicating the user’s action.
      
@@ -809,6 +813,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     NSString *decodedUrl = [sourceUrl stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *callBackUrl = [self urlCallBack:decodedUrl navigationType:navigationType];
 
+    self.isFromAddressBar = NO;
     if (decodedUrl != callBackUrl) {
         [self loadUrl:callBackUrl];
         
@@ -831,7 +836,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
         [NSThread detachNewThreadSelector:@selector(loadWebView:) toTarget:self withObject:arguments];
      
         return NO;
-     }
+    }
     
     if (!self.labelNeedsToBeUpdated) {
         [self setLabel:@"Loading" andUrl:request.URL.absoluteString withWebView:webView];
@@ -914,6 +919,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 {
     [textField resignFirstResponder];
     
+    self.isFromAddressBar = YES;
     [self loadUrl:textField.text];
 
     /*
