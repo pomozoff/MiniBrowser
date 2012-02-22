@@ -17,6 +17,7 @@
 #import "PhonePageView.h"
 #import "PageHeaderInfo.h"
 #import "UIWebView+Extended.h"
+#import "NSURLRequest+Extended.h"
 
 @interface BrowserController()
 
@@ -36,7 +37,6 @@
 @property (nonatomic, retain) NSMutableIndexSet *indexesToInsert;
 @property (nonatomic, retain) NSMutableIndexSet *indexesToReload;
 
-@property (nonatomic, assign) BOOL isFromAddressBar;
 @property (nonatomic, assign) BOOL labelNeedsToBeUpdated;
 @property (nonatomic, retain) NSMutableDictionary *loadingUrlsList;
 
@@ -88,7 +88,6 @@
 @synthesize indexesToInsert = _indexesToInsert;
 @synthesize indexesToReload = _indexesToReload;
 
-@synthesize isFromAddressBar = _isFromAddressBar;
 @synthesize labelNeedsToBeUpdated = _labelNeedsToBeUpdated;
 @synthesize loadingUrlsList = _loadingUrlsList;
 
@@ -722,8 +721,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 - (NSString *)urlCallBack:(NSString *)sourceUrl navigationType:(UIWebViewNavigationType)navigationType
 {
     /*
-     self.isFromAddressBar - url is loading from address bar
-     
      UIWebViewNavigationType
      Constant indicating the user’s action.
      
@@ -809,13 +806,15 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    NSString *sourceUrl = request.URL.absoluteString;
-    NSString *decodedUrl = [sourceUrl stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSString *callBackUrl = [self urlCallBack:decodedUrl navigationType:navigationType];
-
-    self.isFromAddressBar = NO;
-    if (decodedUrl != callBackUrl) {
-        [self loadUrl:callBackUrl];
+    if (!request.isModified) {
+        NSString *sourceUrl = request.URL.absoluteString;
+        NSString *decodedUrl = [sourceUrl stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *callBackUrl = [self urlCallBack:decodedUrl navigationType:navigationType];
+        NSString *encodedCallBackUrl = [callBackUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        
+        NSURL *theURL = [NSURL URLWithString:encodedCallBackUrl];
+        NSURLRequest *modRequest = [NSURLRequest requestWithURL:theURL];
+        [webView loadRequest:modRequest];
         
         return NO;
     }
@@ -828,7 +827,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
         
         return NO;
     }
-    */
 
     if (!webView.isThreaded) {
         NSArray *arguments = [NSArray arrayWithObjects:webView, request, nil];
@@ -837,6 +835,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
      
         return NO;
     }
+    */
     
     if (!self.labelNeedsToBeUpdated) {
         [self setLabel:@"Loading" andUrl:request.URL.absoluteString withWebView:webView];
@@ -919,7 +918,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 {
     [textField resignFirstResponder];
     
-    self.isFromAddressBar = YES;
     [self loadUrl:textField.text];
 
     /*

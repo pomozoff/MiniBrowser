@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		260D68B01441B6C700093012 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 260D68AF1441B6C700093012 /* plus.png */; };
+		2615030014F4E63600132E9B /* NSURLRequest+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 261502FF14F4E63600132E9B /* NSURLRequest+Extended.m */; };
 		2620E7EF149B35C800518C02 /* closebox.png in Resources */ = {isa = PBXBuildFile; fileRef = 2620E7EE149B35C800518C02 /* closebox.png */; };
 		2626A2B314939C30002FD652 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2626A2B214939C30002FD652 /* QuartzCore.framework */; };
 		262C020714A4AB73002D9FE9 /* UIWebView+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 262C020614A4AB73002D9FE9 /* UIWebView+Extended.m */; };
@@ -85,6 +86,8 @@
 
 /* Begin PBXFileReference section */
 		260D68AF1441B6C700093012 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
+		261502FE14F4E63600132E9B /* NSURLRequest+Extended.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLRequest+Extended.h"; sourceTree = "<group>"; };
+		261502FF14F4E63600132E9B /* NSURLRequest+Extended.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLRequest+Extended.m"; sourceTree = "<group>"; };
 		2620E7EE149B35C800518C02 /* closebox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = closebox.png; sourceTree = "<group>"; };
 		2626A2B214939C30002FD652 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		262C020514A4AB73002D9FE9 /* UIWebView+Extended.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+Extended.h"; sourceTree = "<group>"; };
@@ -295,6 +298,8 @@
 				26A268D2148E10B40087E147 /* NSDate+Extended.m */,
 				262C020514A4AB73002D9FE9 /* UIWebView+Extended.h */,
 				262C020614A4AB73002D9FE9 /* UIWebView+Extended.m */,
+				261502FE14F4E63600132E9B /* NSURLRequest+Extended.h */,
+				261502FF14F4E63600132E9B /* NSURLRequest+Extended.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -593,6 +598,7 @@
 				262C020714A4AB73002D9FE9 /* UIWebView+Extended.m in Sources */,
 				26DA65BE14B4FE3D000EBBAE /* PadPageView.m in Sources */,
 				26DA65D014B5040C000EBBAE /* PadTabPageScrollView.m in Sources */,
+				2615030014F4E63600132E9B /* NSURLRequest+Extended.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

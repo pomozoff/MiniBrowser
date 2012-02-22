@@ -24,7 +24,7 @@
 - (NSURL *)searchUrlForText:(NSString *)text
 {
     NSString *encodedText = [text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    self.searchUrl = [@"http://search.yahoo.com/search?p=%@" stringByAppendingString:encodedText];
+    self.searchUrl = [@"http://search.yahoo.com/search?p=" stringByAppendingString:encodedText];
     NSURL *theUrl = [NSURL URLWithString:self.searchUrl];
     
     return theUrl;
