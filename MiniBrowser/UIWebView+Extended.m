@@ -10,13 +10,11 @@
 #import <objc/runtime.h>
 
 static char const * const isThreadedKey = "IsThreaded";
-static char const * const loadingUrlsCountKey = "LoadingUrlsCount";
 static char const * const webViewIdKey = "WebViewID";
 
 @implementation UIWebView (Extended)
 
 @dynamic isThreaded;
-@dynamic loadingUrlsCount;
 @dynamic webViewId;
 
 - (BOOL)isThreaded
@@ -31,20 +29,6 @@ static char const * const webViewIdKey = "WebViewID";
 {
     NSNumber *object = [NSNumber numberWithBool:isThreadedValue];
     objc_setAssociatedObject(self, isThreadedKey, object, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (NSInteger)loadingUrlsCount
-{
-    id object = objc_getAssociatedObject(self, loadingUrlsCountKey);
-    NSInteger result = [object intValue];
-    
-    return result;
-}
-
-- (void)setLoadingUrlsCount:(NSInteger)loadingUrlsCount
-{
-    NSNumber *object = [NSNumber numberWithInt:loadingUrlsCount];
-    objc_setAssociatedObject(self, loadingUrlsCountKey, object, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (NSString *)generateUuidString

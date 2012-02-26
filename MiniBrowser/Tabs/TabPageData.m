@@ -18,12 +18,13 @@
 @synthesize previewImageView = _previewImageView;
 @synthesize webView = _webView;
 @synthesize webViewDelegate = _webViewDelegate;
+@synthesize callbackDelegate = _callbackDelegate;
 
 @synthesize title = _title;
 @synthesize subtitle = _subtitle;
 @synthesize navController = _navController;
 
-//@synthesize pageView = _pageView;
+NSString *const requestMarker = @"123";
 
 // ******************************************************************************************************************************
 
@@ -67,31 +68,6 @@
 #pragma mark - Page Data Delegate
 
 
-- (void)loadUrl
-{
-    [self loadUrl:self.subtitle];
-}
-
-- (void)loadUrl:(NSString *)url
-{
-    NSString *trimmedUrl = [url stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    BOOL isUrlEmpty = !trimmedUrl || [trimmedUrl isEqualToString:@""];
-    
-    if (isUrlEmpty) {
-        return;
-    }
-    
-    NSString *readyUrl = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSURL *urlObject = [NSURL URLWithString:readyUrl];
-    
-    if (!urlObject.scheme) {
-        urlObject = [NSURL URLWithString:[@"http://" stringByAppendingString:urlObject.absoluteString]];
-    }
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:urlObject];
-    [self.webView loadRequest:request];
-}
-
 - (void)makeScreenShotOfTheView:(UIView *)view
 {
     if (CGSizeEqualToSize(view.frame.size, CGSizeZero)) {
@@ -104,6 +80,11 @@
         UIGraphicsBeginImageContext(self.pageViewSize);
     
     CGContextRef context = UIGraphicsGetCurrentContext();
+    if (!context) {
+        UIGraphicsEndImageContext();
+        return;
+    }
+    
     [view.layer renderInContext:context];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -125,6 +106,48 @@
     [self.webViewDelegate placeScreenshotOnPageViewFromPageData:self];
 }
 
+- (void)loadUrl:(NSString *)url withRequest:(NSURLRequest *)request
+{
+    [self.webView stopLoading];
+    NSString *trimmedUrl = [url stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (!trimmedUrl || [trimmedUrl isEqualToString:@""]) {
+        return;
+    }
+    
+    NSString *decodedUrl = [trimmedUrl stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *modUrl = [self.callbackDelegate urlCallBack:decodedUrl navigationType:UIWebViewNavigationTypeOther];
+    NSString *readyUrl = [modUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURL *urlObject = [NSURL URLWithString:readyUrl];
+    
+    if (!urlObject.scheme) {
+        urlObject = [NSURL URLWithString:[@"http://" stringByAppendingString:urlObject.absoluteString]];
+    }
+    
+    //    NSMutableURLRequest *modRequest = [NSMutableURLRequest requestWithURL:urlObject];
+    NSMutableURLRequest *modRequest;
+    if (request) {
+        modRequest = [request mutableCopy];
+        modRequest.URL = urlObject;
+    } else {
+        modRequest = [NSMutableURLRequest requestWithURL:urlObject];
+    }
+    
+    [modRequest addValue:requestMarker forHTTPHeaderField:requestMarker];
+    NSURLRequest *readyRequest = modRequest;
+    
+    [self.webView loadRequest:readyRequest];
+}
+
+- (void)loadUrl:(NSString *)url
+{
+    [self loadUrl:url withRequest:nil];
+}
+     
+- (void)loadUrl
+{
+    [self loadUrl:self.subtitle];
+}
+     
 // ******************************************************************************************************************************
 
 #pragma mark - WebView Delegate
@@ -138,17 +161,25 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
+    NSString *value = [request valueForHTTPHeaderField:requestMarker];
+    if (![value isEqualToString:requestMarker]) {
+        NSString *sourceUrl = request.URL.absoluteString;
+        [self loadUrl:sourceUrl withRequest:request];
+        
+        return NO;
+    }
+
     BOOL result = [self.webViewDelegate webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
     if (result) {
         [self setLabel:@"Loading" andUrl:request.URL.absoluteString];
     }
-    
+
     if (CGSizeEqualToSize(webView.frame.size, CGSizeZero)) {
         CGRect frame = webView.frame;
         frame.size = self.pageViewSize;
         webView.frame = frame;
     }
-    
+
     return result;
 }
 
@@ -173,7 +204,7 @@
     [self.webViewDelegate webView:webView didFailLoadWithError:error];
     
     // make screenshot loaded page
-    [self makeScreenShotOfTheView:webView];
+    //[self makeScreenShotOfTheView:webView];
 }
 
 // ******************************************************************************************************************************

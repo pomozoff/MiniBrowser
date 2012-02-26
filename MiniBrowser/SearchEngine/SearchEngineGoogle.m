@@ -21,13 +21,19 @@
     return _name;
 }
 
-- (NSURL *)searchUrlForText:(NSString *)text
+- (NSString *)searchUrlForText:(NSString *)text
 {
-    NSString *encodedText = [text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    self.searchUrl = [@"http://www.google.com/search?ie=utf-8&oe=utf-8&q=" stringByAppendingString:encodedText];
-    NSURL *theUrl = [NSURL URLWithString:self.searchUrl];
+    NSString *searchUrl = [@"http://www.google.com/search?ie=utf-8&oe=utf-8&q=" stringByAppendingString:text];
     
-    return theUrl;
+    return searchUrl;
+}
+
+- (void)dealloc
+{
+    [_name release];
+    _name = nil;
+    
+    [super dealloc];
 }
 
 @end

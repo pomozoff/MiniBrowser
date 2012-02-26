@@ -16,7 +16,7 @@
 
 NSString *const settingSearchEngine = @"setting_search_engine";
 
-- (SearchEngine *)currentSearchEngine
+- (id<SearchEngineProtocol>)currentSearchEngine
 {
     if (!_currentSearchEngine) {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

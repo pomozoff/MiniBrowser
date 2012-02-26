@@ -6,8 +6,8 @@
 //  Copyright 2011 Alma. All rights reserved.
 //
 
-#import "SearchEngine.h"
+#import "SearchEngineProtocol.h"
 
-@interface SearchEngineGoogle : SearchEngine
+@interface SearchEngineGoogle : NSObject <SearchEngineProtocol>
 
 @end

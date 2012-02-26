@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BrowserControllerProtocol.h"
 #import "TabPageScrollView.h"
+#import "CallbackDelegate.h"
 
 @interface BrowserController : UIViewController <UIWebViewDelegate,
                                                  UISearchBarDelegate,
@@ -18,6 +19,7 @@
                                                  UITextFieldDelegate,
                                                  UINavigationControllerDelegate,
                                                  BrowserControllerDelegate,
+                                                 CallbackDelegate,
                                                  TabPageScrollViewDelegate,
                                                  TabPageScrollViewDataSource>
 

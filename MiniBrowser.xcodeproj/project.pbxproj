@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		260D68B01441B6C700093012 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 260D68AF1441B6C700093012 /* plus.png */; };
-		2615030014F4E63600132E9B /* NSURLRequest+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 261502FF14F4E63600132E9B /* NSURLRequest+Extended.m */; };
 		2620E7EF149B35C800518C02 /* closebox.png in Resources */ = {isa = PBXBuildFile; fileRef = 2620E7EE149B35C800518C02 /* closebox.png */; };
 		2626A2B314939C30002FD652 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2626A2B214939C30002FD652 /* QuartzCore.framework */; };
 		262C020714A4AB73002D9FE9 /* UIWebView+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = 262C020614A4AB73002D9FE9 /* UIWebView+Extended.m */; };
@@ -45,7 +44,6 @@
 		26A26897148E0E0A0087E147 /* BookmarkTreePermanent.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26A26881148E0E0A0087E147 /* BookmarkTreePermanent.plist */; };
 		26A2689E148E0E2A0087E147 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 26A2689A148E0E2A0087E147 /* Settings.bundle */; };
 		26A268A1148E0E2A0087E147 /* SettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2689C148E0E2A0087E147 /* SettingsController.m */; };
-		26A268AB148E0E5C0087E147 /* SearchEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268A5148E0E5C0087E147 /* SearchEngine.m */; };
 		26A268AE148E0E5C0087E147 /* SearchEngineGoogle.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268A7148E0E5C0087E147 /* SearchEngineGoogle.m */; };
 		26A268B1148E0E5C0087E147 /* SearchEngineYahoo.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A268AA148E0E5C0087E147 /* SearchEngineYahoo.m */; };
 		26A268CA148E0FE40087E147 /* BookmarksStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 26A2687D148E0E0A0087E147 /* BookmarksStorage.m */; };
@@ -86,8 +84,6 @@
 
 /* Begin PBXFileReference section */
 		260D68AF1441B6C700093012 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
-		261502FE14F4E63600132E9B /* NSURLRequest+Extended.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLRequest+Extended.h"; sourceTree = "<group>"; };
-		261502FF14F4E63600132E9B /* NSURLRequest+Extended.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLRequest+Extended.m"; sourceTree = "<group>"; };
 		2620E7EE149B35C800518C02 /* closebox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = closebox.png; sourceTree = "<group>"; };
 		2626A2B214939C30002FD652 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		262C020514A4AB73002D9FE9 /* UIWebView+Extended.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+Extended.h"; sourceTree = "<group>"; };
@@ -117,6 +113,7 @@
 		266D67C6143CCE8E0025F929 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = iPad/en.lproj/MainWindow_iPad.xib; sourceTree = "<group>"; };
 		266D67CD143CCF720025F929 /* BrowserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserController.h; sourceTree = "<group>"; };
 		266D67CE143CCF720025F929 /* BrowserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserController.m; sourceTree = "<group>"; };
+		2674A48014F8F430007F929A /* CallbackDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallbackDelegate.h; sourceTree = "<group>"; };
 		267E13621495E1E100F319B8 /* PhonePageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhonePageView.h; path = Tabs/iPhone/PhonePageView.h; sourceTree = "<group>"; };
 		267E13631495E1E100F319B8 /* PhonePageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhonePageView.m; path = Tabs/iPhone/PhonePageView.m; sourceTree = "<group>"; };
 		267E13641495E1E100F319B8 /* iPhonePageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = iPhonePageView.xib; path = Tabs/iPhone/iPhonePageView.xib; sourceTree = "<group>"; };
@@ -144,8 +141,6 @@
 		26A2689B148E0E2A0087E147 /* SettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsController.h; path = Settings/SettingsController.h; sourceTree = "<group>"; };
 		26A2689C148E0E2A0087E147 /* SettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsController.m; path = Settings/SettingsController.m; sourceTree = "<group>"; };
 		26A2689D148E0E2A0087E147 /* SettingsControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsControllerProtocol.h; path = Settings/SettingsControllerProtocol.h; sourceTree = "<group>"; };
-		26A268A4148E0E5C0087E147 /* SearchEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchEngine.h; path = SearchEngine/SearchEngine.h; sourceTree = "<group>"; };
-		26A268A5148E0E5C0087E147 /* SearchEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchEngine.m; path = SearchEngine/SearchEngine.m; sourceTree = "<group>"; };
 		26A268A6148E0E5C0087E147 /* SearchEngineGoogle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchEngineGoogle.h; path = SearchEngine/SearchEngineGoogle.h; sourceTree = "<group>"; };
 		26A268A7148E0E5C0087E147 /* SearchEngineGoogle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchEngineGoogle.m; path = SearchEngine/SearchEngineGoogle.m; sourceTree = "<group>"; };
 		26A268A8148E0E5C0087E147 /* SearchEngineProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchEngineProtocol.h; path = SearchEngine/SearchEngineProtocol.h; sourceTree = "<group>"; };
@@ -272,6 +267,7 @@
 				266D67B8143CCE8D0025F929 /* MiniBrowserAppDelegate.m */,
 				266D67BA143CCE8D0025F929 /* iPhone */,
 				266D67C1143CCE8D0025F929 /* iPad */,
+				2674A48014F8F430007F929A /* CallbackDelegate.h */,
 				266102DC1445A2F0000730FA /* BrowserControllerProtocol.h */,
 				266D67CD143CCF720025F929 /* BrowserController.h */,
 				266D67CE143CCF720025F929 /* BrowserController.m */,
@@ -298,8 +294,6 @@
 				26A268D2148E10B40087E147 /* NSDate+Extended.m */,
 				262C020514A4AB73002D9FE9 /* UIWebView+Extended.h */,
 				262C020614A4AB73002D9FE9 /* UIWebView+Extended.m */,
-				261502FE14F4E63600132E9B /* NSURLRequest+Extended.h */,
-				261502FF14F4E63600132E9B /* NSURLRequest+Extended.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -374,11 +368,9 @@
 		26C083AD1448209F0056B37A /* SearchEngine */ = {
 			isa = PBXGroup;
 			children = (
-				26A268A4148E0E5C0087E147 /* SearchEngine.h */,
-				26A268A5148E0E5C0087E147 /* SearchEngine.m */,
+				26A268A8148E0E5C0087E147 /* SearchEngineProtocol.h */,
 				26A268A6148E0E5C0087E147 /* SearchEngineGoogle.h */,
 				26A268A7148E0E5C0087E147 /* SearchEngineGoogle.m */,
-				26A268A8148E0E5C0087E147 /* SearchEngineProtocol.h */,
 				26A268A9148E0E5C0087E147 /* SearchEngineYahoo.h */,
 				26A268AA148E0E5C0087E147 /* SearchEngineYahoo.m */,
 			);
@@ -486,7 +478,7 @@
 		266D679B143CCE8D0025F929 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 				ORGANIZATIONNAME = Alma;
 			};
 			buildConfigurationList = 266D679E143CCE8D0025F929 /* Build configuration list for PBXProject "MiniBrowser" */;
@@ -584,7 +576,6 @@
 				26A26891148E0E0A0087E147 /* BookmarksStorage.m in Sources */,
 				26A26894148E0E0A0087E147 /* BookmarksTableViewController.m in Sources */,
 				26A268A1148E0E2A0087E147 /* SettingsController.m in Sources */,
-				26A268AB148E0E5C0087E147 /* SearchEngine.m in Sources */,
 				26A268AE148E0E5C0087E147 /* SearchEngineGoogle.m in Sources */,
 				26A268B1148E0E5C0087E147 /* SearchEngineYahoo.m in Sources */,
 				26A268D3148E10B40087E147 /* main.m in Sources */,
@@ -598,7 +589,6 @@
 				262C020714A4AB73002D9FE9 /* UIWebView+Extended.m in Sources */,
 				26DA65BE14B4FE3D000EBBAE /* PadPageView.m in Sources */,
 				26DA65D014B5040C000EBBAE /* PadTabPageScrollView.m in Sources */,
-				2615030014F4E63600132E9B /* NSURLRequest+Extended.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

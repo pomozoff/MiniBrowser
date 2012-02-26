@@ -17,7 +17,6 @@
 #import "PhonePageView.h"
 #import "PageHeaderInfo.h"
 #import "UIWebView+Extended.h"
-#import "NSURLRequest+Extended.h"
 
 @interface BrowserController()
 
@@ -390,6 +389,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     [indexSet enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
         TabPageData *pageData = [[TabPageData alloc] init];
         pageData.webViewDelegate = self;
+        pageData.callbackDelegate = self;
         pageData.index = index;
         [self.tabPageDataArray insertObject:pageData atIndex:index];
         [pageData release];
@@ -536,6 +536,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     for (NSString *url in urlList) {
         TabPageData *pageData = [[TabPageData alloc] init];
         pageData.webViewDelegate = self;
+        pageData.callbackDelegate = self;
         pageData.title = @"";
         pageData.subtitle = url;
 
@@ -592,6 +593,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     if (self.tabPageDataArray.count == 0) {
         TabPageData *pageData = [[TabPageData alloc] init];
         pageData.webViewDelegate = self;
+        pageData.callbackDelegate = self;
         pageData.title = @"Unitiled";
         pageData.subtitle = @"";
         [self.tabPageDataArray addObject:pageData];
@@ -806,15 +808,20 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    if (!request.isModified) {
+    /*
+    NSString *value = [request valueForHTTPHeaderField:@"123"];
+    if (![value isEqualToString:@"123"]) {
         NSString *sourceUrl = request.URL.absoluteString;
         NSString *decodedUrl = [sourceUrl stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSString *callBackUrl = [self urlCallBack:decodedUrl navigationType:navigationType];
         NSString *encodedCallBackUrl = [callBackUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         
         NSURL *theURL = [NSURL URLWithString:encodedCallBackUrl];
-        NSURLRequest *modRequest = [NSURLRequest requestWithURL:theURL];
+        NSMutableURLRequest *modRequest = [request mutableCopy];
+        modRequest.URL = theURL;
+        [modRequest addValue:@"123" forHTTPHeaderField:@"123"];
         [webView loadRequest:modRequest];
+        [modRequest release];
         
         return NO;
     }
@@ -827,6 +834,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
         
         return NO;
     }
+     */
 
     if (!webView.isThreaded) {
         NSArray *arguments = [NSArray arrayWithObjects:webView, request, nil];
@@ -835,7 +843,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
      
         return NO;
     }
-    */
     
     if (!self.labelNeedsToBeUpdated) {
         [self setLabel:@"Loading" andUrl:request.URL.absoluteString withWebView:webView];
@@ -943,17 +950,11 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     return YES;
 }
 
-- (void)searchTheText:(NSString *)text
-{
-    NSURL *searchUrl = [self.settingsController.currentSearchEngine searchUrlForText:text];
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:searchUrl];
-    [self.webView loadRequest:urlRequest];
-}
-
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     [searchBar resignFirstResponder];
-    [self searchTheText:self.searchBar.text];
+    NSString *searchUrl = [self.settingsController.currentSearchEngine searchUrlForText:self.searchBar.text];
+    [self loadUrl:searchUrl];
 }
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar

@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SearchEngine.h"
+#import "SearchEngineProtocol.h"
 
 @protocol SettingsControllerProtocol <NSObject>
 
-@property (nonatomic, retain) SearchEngine *currentSearchEngine;
+@property (nonatomic, retain) id<SearchEngineProtocol> currentSearchEngine;
 
 @end

@@ -10,6 +10,7 @@
 #import "PageHeaderInfo.h"
 #import "TabPageView.h"
 #import "BrowserControllerProtocol.h"
+#import "CallbackDelegate.h"
 
 @interface TabPageData : NSObject <UIWebViewDelegate, PageHeaderInfo>
 
@@ -18,6 +19,7 @@
 @property (nonatomic, retain) UIImageView *previewImageView;
 @property (nonatomic, retain) UIWebView *webView;
 @property (nonatomic, retain) id<UIWebViewDelegate, BrowserControllerDelegate> webViewDelegate;
+@property (nonatomic, retain) id<CallbackDelegate> callbackDelegate;
 
 // an example of using UINavigationController as the owner of the page. 
 @property (nonatomic, retain) UINavigationController *navController; 
