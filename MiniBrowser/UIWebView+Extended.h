@@ -11,6 +11,7 @@
 @interface UIWebView (Extended)
 
 @property (nonatomic, assign) BOOL isThreaded;
-@property (nonatomic, readonly) NSString *webViewId;
+@property (nonatomic, copy, readonly) NSString *webViewId;
+@property (nonatomic, copy) NSString *currentUrl;
 
 @end

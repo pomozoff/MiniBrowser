@@ -11,11 +11,13 @@
 
 static char const * const isThreadedKey = "IsThreaded";
 static char const * const webViewIdKey = "WebViewID";
+static char const * const currentUrlKey = "CurrentUrl";
 
 @implementation UIWebView (Extended)
 
 @dynamic isThreaded;
 @dynamic webViewId;
+@dynamic currentUrl;
 
 - (BOOL)isThreaded
 {
@@ -24,7 +26,6 @@ static char const * const webViewIdKey = "WebViewID";
     
     return result;
 }
-
 - (void)setIsThreaded:(BOOL)isThreadedValue
 {
     NSNumber *object = [NSNumber numberWithBool:isThreadedValue];
@@ -49,7 +50,6 @@ static char const * const webViewIdKey = "WebViewID";
     
     return uuidString;
 }
-
 - (NSString *)webViewId
 {
     id object = objc_getAssociatedObject(self, webViewIdKey);
@@ -61,6 +61,16 @@ static char const * const webViewIdKey = "WebViewID";
     }
     
     return webViewId;
+}
+
+- (NSString *)currentUrl
+{
+    NSString *currentUrlValue = objc_getAssociatedObject(self, currentUrlKey);
+    return currentUrlValue;
+}
+- (void)setCurrentUrl:(NSString *)currentUrlValue
+{
+    objc_setAssociatedObject(self, currentUrlKey, currentUrlValue, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
 @end

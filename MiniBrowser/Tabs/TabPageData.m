@@ -114,16 +114,19 @@ NSString *const requestMarker = @"123";
         return;
     }
     
-    NSString *decodedUrl = [trimmedUrl stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSString *modUrl = [self.callbackDelegate urlCallBack:decodedUrl navigationType:UIWebViewNavigationTypeOther];
-    NSString *readyUrl = [modUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSURL *urlObject = [NSURL URLWithString:readyUrl];
+    //NSString *decodedUrl = [trimmedUrl stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *modUrl = [self.callbackDelegate urlCallBack:trimmedUrl navigationType:UIWebViewNavigationTypeOther];
+    //NSString *readyUrl = [modUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    //NSString *finishUrl = [readyUrl stringByReplacingOccurrencesOfString:@"%23" withString:@"#"];
+    NSURL *urlObject = [NSURL URLWithString:modUrl];
+    
+    NSLog(@"Callback URL: \"%@\"", modUrl);
     
     if (!urlObject.scheme) {
         urlObject = [NSURL URLWithString:[@"http://" stringByAppendingString:urlObject.absoluteString]];
     }
     
-    //    NSMutableURLRequest *modRequest = [NSMutableURLRequest requestWithURL:urlObject];
+    //NSMutableURLRequest *modRequest = [NSMutableURLRequest requestWithURL:urlObject];
     NSMutableURLRequest *modRequest;
     if (request) {
         modRequest = [request mutableCopy];
@@ -161,14 +164,36 @@ NSString *const requestMarker = @"123";
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    NSString *value = [request valueForHTTPHeaderField:requestMarker];
-    if (![value isEqualToString:requestMarker]) {
-        NSString *sourceUrl = request.URL.absoluteString;
-        [self loadUrl:sourceUrl withRequest:request];
+    NSLog(@"Start loading URL: \"%@\"", request.URL.absoluteString);
+    
+    if ([request.URL.absoluteString isEqualToString:request.mainDocumentURL.absoluteString]) {
         
-        return NO;
+        NSLog(@"Same main URL: \"%@\" in request URL: \"%@\"", request.mainDocumentURL.absoluteString, request.URL.absoluteString);
+
+        if (![webView.currentUrl isEqualToString:request.URL.absoluteString]) {
+            
+            NSLog(@"New URL \"%@\" in webView: \"%@\"", request.URL.absoluteString, webView.currentUrl);
+            
+            webView.currentUrl = request.URL.absoluteString;
+
+            NSString *value = [request valueForHTTPHeaderField:requestMarker];
+            if (![value isEqualToString:requestMarker]) {
+                NSString *sourceUrl = request.URL.absoluteString;
+                
+                NSLog(@"Load URL: \"%@\"", sourceUrl);
+
+                [self loadUrl:sourceUrl withRequest:request];
+                
+                return NO;
+            }
+            
+            NSLog(@"Got marker");
+            
+        }
     }
 
+    NSLog(@"Continue loading URL: \"%@\"", request.URL.absoluteString);
+    
     BOOL result = [self.webViewDelegate webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
     if (result) {
         [self setLabel:@"Loading" andUrl:request.URL.absoluteString];
@@ -188,7 +213,14 @@ NSString *const requestMarker = @"123";
     NSString *label = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     NSString *sourceUrl = webView.request.URL.absoluteString;
     
-    [self setLabel:label andUrl:sourceUrl];
+    NSLog(@"Finished url: %@", sourceUrl);
+
+    if (![webView.currentUrl isEqualToString:webView.request.URL.absoluteString]) {
+        if ([webView.request.URL.absoluteString isEqualToString:webView.request.mainDocumentURL.absoluteString]) {
+            [self setLabel:label andUrl:sourceUrl];
+        }
+    }
+    
     [self.webViewDelegate webViewDidFinishLoad:webView];
     
     // make screenshot loaded page
@@ -199,8 +231,15 @@ NSString *const requestMarker = @"123";
 {
     NSString *logString = [NSString stringWithFormat:@"Error: %@", error.localizedDescription];
     NSString *sourceUrl = webView.request.URL.absoluteString;
+
+    NSLog(@"Error url: %@", sourceUrl);
+
+    if (![webView.currentUrl isEqualToString:webView.request.URL.absoluteString]) {
+        if ([webView.request.URL.absoluteString isEqualToString:webView.request.mainDocumentURL.absoluteString]) {
+            [self setLabel:logString andUrl:sourceUrl];
+        }
+    }
     
-    [self setLabel:logString andUrl:sourceUrl];
     [self.webViewDelegate webView:webView didFailLoadWithError:error];
     
     // make screenshot loaded page

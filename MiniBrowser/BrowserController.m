@@ -809,33 +809,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     /*
-    NSString *value = [request valueForHTTPHeaderField:@"123"];
-    if (![value isEqualToString:@"123"]) {
-        NSString *sourceUrl = request.URL.absoluteString;
-        NSString *decodedUrl = [sourceUrl stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSString *callBackUrl = [self urlCallBack:decodedUrl navigationType:navigationType];
-        NSString *encodedCallBackUrl = [callBackUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        
-        NSURL *theURL = [NSURL URLWithString:encodedCallBackUrl];
-        NSMutableURLRequest *modRequest = [request mutableCopy];
-        modRequest.URL = theURL;
-        [modRequest addValue:@"123" forHTTPHeaderField:@"123"];
-        [webView loadRequest:modRequest];
-        [modRequest release];
-        
-        return NO;
-    }
-    
-    /*
-    if (![self isTheUrl:decodedUrl loadingInWebView:webView]) {
-        NSString *callBackUrl = [self urlCallBack:decodedUrl navigationType:navigationType];
-        [self addUrl:callBackUrl toLoadingListForWebView:webView];
-        [self loadUrl:callBackUrl];
-        
-        return NO;
-    }
-     */
-
     if (!webView.isThreaded) {
         NSArray *arguments = [NSArray arrayWithObjects:webView, request, nil];
         [NSThread setThreadPriority:0.5f];
@@ -843,6 +816,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
      
         return NO;
     }
+    */
     
     if (!self.labelNeedsToBeUpdated) {
         [self setLabel:@"Loading" andUrl:request.URL.absoluteString withWebView:webView];

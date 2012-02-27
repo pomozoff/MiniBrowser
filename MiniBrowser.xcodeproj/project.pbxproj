@@ -381,9 +381,9 @@
 			isa = PBXGroup;
 			children = (
 				26A2689A148E0E2A0087E147 /* Settings.bundle */,
+				26A2689D148E0E2A0087E147 /* SettingsControllerProtocol.h */,
 				26A2689B148E0E2A0087E147 /* SettingsController.h */,
 				26A2689C148E0E2A0087E147 /* SettingsController.m */,
-				26A2689D148E0E2A0087E147 /* SettingsControllerProtocol.h */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
