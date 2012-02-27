@@ -490,10 +490,12 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 - (void)loadUrl:(NSString *)url
 {
+    NSString *encodedUrl = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
     NSInteger selectedIndex = [self.mainPageScrollView indexForSelectedPage];
     TabPageData *pageData = [self.tabPageDataArray objectAtIndex:selectedIndex]; 
-
-    [pageData loadUrl:url];
+    [pageData.webView stopLoading];
+    [pageData loadUrl:encodedUrl];
 }
 
 - (void)closePopupsAndLoadUrl:(NSString *)url
@@ -808,7 +810,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    /*
     if (!webView.isThreaded) {
         NSArray *arguments = [NSArray arrayWithObjects:webView, request, nil];
         [NSThread setThreadPriority:0.5f];
@@ -816,7 +817,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
      
         return NO;
     }
-    */
     
     if (!self.labelNeedsToBeUpdated) {
         [self setLabel:@"Loading" andUrl:request.URL.absoluteString withWebView:webView];
@@ -898,28 +898,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
-    
     [self loadUrl:textField.text];
-
-    /*
-     TabPageScrollView *pageScrollView = [self.view.subviews lastObject];
-     NSInteger selectedIndex = [pageScrollView indexForSelectedPage];
-     TabPageData *pageData = [self.tabPageDataArray objectAtIndex:selectedIndex]; 
-     
-     pageData.title = textField.text;   
-     
-     [textField resignFirstResponder];
-     textField.hidden = YES;
-     textField.delegate = nil;
-     
-     self.indexesToReload = [[NSMutableIndexSet alloc] initWithIndex:selectedIndex];
-     
-     if (pageScrollView.viewMode == TabPageScrollViewModePage) {
-         [pageScrollView deselectPageAnimated:YES];
-     } else {
-         [self reloadPagesAtIndexSet:self.indexesToReload];
-     }
-    */
     
     return YES;
 }

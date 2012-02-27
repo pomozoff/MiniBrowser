@@ -108,19 +108,13 @@ NSString *const requestMarker = @"123";
 
 - (void)loadUrl:(NSString *)url withRequest:(NSURLRequest *)request
 {
-    [self.webView stopLoading];
     NSString *trimmedUrl = [url stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     if (!trimmedUrl || [trimmedUrl isEqualToString:@""]) {
         return;
     }
     
-    //NSString *decodedUrl = [trimmedUrl stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *modUrl = [self.callbackDelegate urlCallBack:trimmedUrl navigationType:UIWebViewNavigationTypeOther];
-    //NSString *readyUrl = [modUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    //NSString *finishUrl = [readyUrl stringByReplacingOccurrencesOfString:@"%23" withString:@"#"];
     NSURL *urlObject = [NSURL URLWithString:modUrl];
-    
-    NSLog(@"Callback URL: \"%@\"", modUrl);
     
     if (!urlObject.scheme) {
         urlObject = [NSURL URLWithString:[@"http://" stringByAppendingString:urlObject.absoluteString]];
@@ -164,36 +158,16 @@ NSString *const requestMarker = @"123";
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    NSLog(@"Start loading URL: \"%@\"", request.URL.absoluteString);
-    
     if ([request.URL.absoluteString isEqualToString:request.mainDocumentURL.absoluteString]) {
-        
-        NSLog(@"Same main URL: \"%@\" in request URL: \"%@\"", request.mainDocumentURL.absoluteString, request.URL.absoluteString);
-
-        if (![webView.currentUrl isEqualToString:request.URL.absoluteString]) {
+        NSString *value = [request valueForHTTPHeaderField:requestMarker];
+        if (![value isEqualToString:requestMarker]) {
+            NSString *sourceUrl = request.URL.absoluteString;
+            [self loadUrl:sourceUrl withRequest:request];
             
-            NSLog(@"New URL \"%@\" in webView: \"%@\"", request.URL.absoluteString, webView.currentUrl);
-            
-            webView.currentUrl = request.URL.absoluteString;
-
-            NSString *value = [request valueForHTTPHeaderField:requestMarker];
-            if (![value isEqualToString:requestMarker]) {
-                NSString *sourceUrl = request.URL.absoluteString;
-                
-                NSLog(@"Load URL: \"%@\"", sourceUrl);
-
-                [self loadUrl:sourceUrl withRequest:request];
-                
-                return NO;
-            }
-            
-            NSLog(@"Got marker");
-            
+            return NO;
         }
     }
 
-    NSLog(@"Continue loading URL: \"%@\"", request.URL.absoluteString);
-    
     BOOL result = [self.webViewDelegate webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
     if (result) {
         [self setLabel:@"Loading" andUrl:request.URL.absoluteString];
@@ -213,8 +187,6 @@ NSString *const requestMarker = @"123";
     NSString *label = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     NSString *sourceUrl = webView.request.URL.absoluteString;
     
-    NSLog(@"Finished url: %@", sourceUrl);
-
     if (![webView.currentUrl isEqualToString:webView.request.URL.absoluteString]) {
         if ([webView.request.URL.absoluteString isEqualToString:webView.request.mainDocumentURL.absoluteString]) {
             [self setLabel:label andUrl:sourceUrl];
@@ -231,8 +203,6 @@ NSString *const requestMarker = @"123";
 {
     NSString *logString = [NSString stringWithFormat:@"Error: %@", error.localizedDescription];
     NSString *sourceUrl = webView.request.URL.absoluteString;
-
-    NSLog(@"Error url: %@", sourceUrl);
 
     if (![webView.currentUrl isEqualToString:webView.request.URL.absoluteString]) {
         if ([webView.request.URL.absoluteString isEqualToString:webView.request.mainDocumentURL.absoluteString]) {
