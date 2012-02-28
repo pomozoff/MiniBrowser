@@ -16,6 +16,7 @@
 @property (nonatomic, retain) IBOutlet UIImageView *buttonNewTabView;
 @property (nonatomic, retain) IBOutlet UIButton *closeButton;
 @property (nonatomic, retain) IBOutlet UIView *bottomView;
+@property (nonatomic, retain) IBOutlet UIView *addTabView;
 
 @property (nonatomic, assign) BOOL isNewTabButton;
 @property (nonatomic, assign) BOOL isInitialized;

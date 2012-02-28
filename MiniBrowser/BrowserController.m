@@ -1162,7 +1162,7 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 - (void)putPreview:(UIImageView *)preview onPageView:(TabPageView *)pageView
 {
-    [pageView insertSubview:preview belowSubview:pageView.closeButton];
+    [pageView insertSubview:preview belowSubview:pageView.bottomView];
 }
 
 - (void)placeScreenshotOnPageViewFromPageData:(TabPageData *)pageData
