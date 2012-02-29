@@ -40,7 +40,6 @@ NSString *const requestMarker = @"123";
         _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         _webView.isThreaded = NO;
         _webView.allowsInlineMediaPlayback = YES;
-        _webView.backgroundColor = [UIColor greenColor];
     }
     
     return _webView;
