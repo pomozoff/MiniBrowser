@@ -21,7 +21,7 @@ static char const * const historyKey = "History";
 @dynamic currentUrl;
 @dynamic history;
 
-NSUInteger currentHistoryIndex = -1;
+NSUInteger currentHistoryIndex = 0;
 
 - (BOOL)isThreaded
 {
@@ -77,28 +77,72 @@ NSUInteger currentHistoryIndex = -1;
     objc_setAssociatedObject(self, currentUrlKey, currentUrlValue, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
-- (NSMutableArray *)history
+- (NSArray *)history
 {
-    NSMutableArray *historyValue = objc_getAssociatedObject(self, historyKey);
+    NSArray *historyValue = objc_getAssociatedObject(self, historyKey);
     
     if (!historyValue) {
-        historyValue = [[NSMutableArray alloc] init];
+        historyValue = [[NSArray alloc] init];
+        objc_setAssociatedObject(self, historyKey, historyValue, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     
     return historyValue;
 }
-- (void)setHistory:(NSMutableArray *)historyValue
+- (void)setHistory:(NSArray *)historyValue
 {
     objc_setAssociatedObject(self, historyKey, historyValue, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (BOOL)canGoForwardExt
 {
-    
+    return (self.history.count > 0) && (currentHistoryIndex < (self.history.count - 1));
 }
 - (BOOL)canGoBackExt
 {
+    return (self.history.count > 1) && (currentHistoryIndex > 0);
+}
+
+- (void)goForwardExt
+{
+    if (![self canGoForwardExt]) {
+        return;
+    }
     
+    NSString *stringUrl = [self.history objectAtIndex:++currentHistoryIndex];
+    NSURL *url = [NSURL URLWithString:stringUrl];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [self loadRequest:request];
+}
+- (void)goBackExt
+{
+    if (![self canGoBackExt]) {
+        return;
+    }
+    
+    NSString *stringUrl = [self.history objectAtIndex:--currentHistoryIndex];
+    NSURL *url = [NSURL URLWithString:stringUrl];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [self loadRequest:request];
+}
+
+- (void)addURLToHistory:(NSString *)stringUrl
+{
+    if ([self.history.lastObject isEqualToString:stringUrl]) {
+        return;
+    }
+    
+    NSMutableArray *history = [self.history mutableCopy];
+    
+    if ((currentHistoryIndex + 1) < history.count) {
+        NSRange range = NSMakeRange(currentHistoryIndex + 1, history.count - currentHistoryIndex - 1);
+        [history removeObjectsInRange:range];
+    }
+    
+    [history addObject:stringUrl];
+    currentHistoryIndex = history.count - 1;
+    
+    self.history = history;
+    [history release];
 }
 
 @end

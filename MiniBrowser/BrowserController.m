@@ -775,19 +775,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
     }
 }
 
-- (void)loadWebView:(NSArray *)arguments
-{
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    
-    UIWebView *webView = (UIWebView *)[arguments objectAtIndex:0];
-    NSURLRequest *request = (NSURLRequest *)[arguments objectAtIndex:1];
-    
-    webView.isThreaded = YES;
-    [webView loadRequest:request];
-    
-    [pool drain];
-}
-
 - (BOOL)isTheUrl:(NSString *)urlString loadingInWebView:(UIWebView *)webView
 {
     NSArray *urlsList = [self.loadingUrlsList objectForKey:webView.webViewId];
@@ -810,16 +797,6 @@ NSString *const savedOpenedUrls = @"savedOpenedUrls";
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    /*
-    if (!webView.isThreaded) {
-        NSArray *arguments = [NSArray arrayWithObjects:webView, request, nil];
-        [NSThread setThreadPriority:0.5f];
-        [NSThread detachNewThreadSelector:@selector(loadWebView:) toTarget:self withObject:arguments];
-     
-        return NO;
-    }
-    */
-    
     if (!self.labelNeedsToBeUpdated) {
         [self setLabel:@"Loading" andUrl:request.URL.absoluteString withWebView:webView];
         
