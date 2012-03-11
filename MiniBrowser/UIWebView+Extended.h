@@ -13,5 +13,9 @@
 @property (nonatomic, assign) BOOL isThreaded;
 @property (nonatomic, copy, readonly) NSString *webViewId;
 @property (nonatomic, copy) NSString *currentUrl;
+@property (nonatomic, retain) NSMutableArray *history;
+
+- (BOOL)canGoForwardExt;
+- (BOOL)canGoBackExt;
 
 @end

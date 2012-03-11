@@ -12,12 +12,16 @@
 static char const * const isThreadedKey = "IsThreaded";
 static char const * const webViewIdKey = "WebViewID";
 static char const * const currentUrlKey = "CurrentUrl";
+static char const * const historyKey = "History";
 
 @implementation UIWebView (Extended)
 
 @dynamic isThreaded;
 @dynamic webViewId;
 @dynamic currentUrl;
+@dynamic history;
+
+NSUInteger currentHistoryIndex = -1;
 
 - (BOOL)isThreaded
 {
@@ -71,6 +75,30 @@ static char const * const currentUrlKey = "CurrentUrl";
 - (void)setCurrentUrl:(NSString *)currentUrlValue
 {
     objc_setAssociatedObject(self, currentUrlKey, currentUrlValue, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
+- (NSMutableArray *)history
+{
+    NSMutableArray *historyValue = objc_getAssociatedObject(self, historyKey);
+    
+    if (!historyValue) {
+        historyValue = [[NSMutableArray alloc] init];
+    }
+    
+    return historyValue;
+}
+- (void)setHistory:(NSMutableArray *)historyValue
+{
+    objc_setAssociatedObject(self, historyKey, historyValue, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (BOOL)canGoForwardExt
+{
+    
+}
+- (BOOL)canGoBackExt
+{
+    
 }
 
 @end
