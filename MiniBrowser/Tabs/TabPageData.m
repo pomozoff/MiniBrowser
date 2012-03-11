@@ -156,15 +156,39 @@ NSString *const requestMarker = @"123";
     self.subtitle = url;
 }
 
+- (void)loadWebView:(NSArray *)arguments
+{
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    UIWebView *webView = (UIWebView *)[arguments objectAtIndex:0];
+    NSURLRequest *request = (NSURLRequest *)[arguments objectAtIndex:1];
+    
+    webView.isThreaded = YES;
+    [webView loadRequest:request];
+    
+    [pool drain];
+}
+
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    if ([request.URL.absoluteString isEqualToString:request.mainDocumentURL.absoluteString]) {
-        NSString *value = [request valueForHTTPHeaderField:requestMarker];
-        if (![value isEqualToString:requestMarker]) {
-            NSString *sourceUrl = request.URL.absoluteString;
-            [self loadUrl:sourceUrl withRequest:request];
-            
-            return NO;
+    if (!webView.isThreaded) {
+        NSArray *arguments = [NSArray arrayWithObjects:webView, request, nil];
+        [NSThread setThreadPriority:0.5f];
+        [NSThread detachNewThreadSelector:@selector(loadWebView:) toTarget:self withObject:arguments];
+        
+        return NO;
+    }
+    
+    if (navigationType != UIWebViewNavigationTypeBackForward) {
+        BOOL isURLSameAsMain = [request.URL.absoluteString isEqualToString:request.mainDocumentURL.absoluteString];
+        if (isURLSameAsMain) {
+            NSString *value = [request valueForHTTPHeaderField:requestMarker];
+            if (![value isEqualToString:requestMarker]) {
+                NSString *sourceUrl = request.URL.absoluteString;
+                [self loadUrl:sourceUrl withRequest:request];
+                
+                return NO;
+            }
         }
     }
 
