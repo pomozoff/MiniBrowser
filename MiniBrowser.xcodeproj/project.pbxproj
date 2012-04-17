@@ -178,6 +178,7 @@
 		26DB36B4144EC19C001C4CBC /* UnitTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UnitTests.h; sourceTree = "<group>"; };
 		26DB36B6144EC19C001C4CBC /* UnitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UnitTests.m; sourceTree = "<group>"; };
 		26DB36B8144EC19C001C4CBC /* UnitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnitTests-Prefix.pch"; sourceTree = "<group>"; };
+		26F869C6153C1A52002D01EA /* MiniBrowser.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = MiniBrowser.entitlements; sourceTree = "<group>"; };
 		26FDCADB1473C48600744D07 /* newtab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newtab.png; sourceTree = "<group>"; };
 		26FE56BC1443269D001622F2 /* bookmark-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bookmark-iPad.png"; sourceTree = "<group>"; };
 		26FE56BE144326FB001622F2 /* bookmark-iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bookmark-iPhone.png"; sourceTree = "<group>"; };
@@ -263,6 +264,7 @@
 		266D67AE143CCE8D0025F929 /* MiniBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				26F869C6153C1A52002D01EA /* MiniBrowser.entitlements */,
 				266D67B7143CCE8D0025F929 /* MiniBrowserAppDelegate.h */,
 				266D67B8143CCE8D0025F929 /* MiniBrowserAppDelegate.m */,
 				266D67BA143CCE8D0025F929 /* iPhone */,
@@ -676,11 +678,13 @@
 		263157FD145574E5006F6368 /* Distibution for testing */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MiniBrowser/MiniBrowser.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MiniBrowser/MiniBrowser-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "MiniBrowser/MiniBrowser-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv6 armv7";
@@ -763,10 +767,12 @@
 		266D67CB143CCE8E0025F929 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MiniBrowser/MiniBrowser.entitlements;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MiniBrowser/MiniBrowser-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "MiniBrowser/MiniBrowser-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALID_ARCHS = "armv6 armv7";
 				WRAPPER_EXTENSION = app;
@@ -776,10 +782,12 @@
 		266D67CC143CCE8E0025F929 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MiniBrowser/MiniBrowser.entitlements;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MiniBrowser/MiniBrowser-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "MiniBrowser/MiniBrowser-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALID_ARCHS = "armv6 armv7";
 				WRAPPER_EXTENSION = app;
