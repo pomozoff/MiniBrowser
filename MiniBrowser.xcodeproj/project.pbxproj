@@ -67,6 +67,7 @@
 		26DB36AD144EC19C001C4CBC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266D67AC143CCE8D0025F929 /* CoreGraphics.framework */; };
 		26DB36B3144EC19C001C4CBC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26DB36B1144EC19C001C4CBC /* InfoPlist.strings */; };
 		26DB36B5144EC19C001C4CBC /* UnitTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 26DB36B4144EC19C001C4CBC /* UnitTests.h */; };
+		26F10A1E164BBF99006015C8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 26F10A1D164BBF99006015C8 /* Default-568h@2x.png */; };
 		26FDCADC1473C48600744D07 /* newtab.png in Resources */ = {isa = PBXBuildFile; fileRef = 26FDCADB1473C48600744D07 /* newtab.png */; };
 		26FE56BD1443269D001622F2 /* bookmark-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 26FE56BC1443269D001622F2 /* bookmark-iPad.png */; };
 		26FE56BF144326FB001622F2 /* bookmark-iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 26FE56BE144326FB001622F2 /* bookmark-iPhone.png */; };
@@ -178,6 +179,7 @@
 		26DB36B4144EC19C001C4CBC /* UnitTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UnitTests.h; sourceTree = "<group>"; };
 		26DB36B6144EC19C001C4CBC /* UnitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UnitTests.m; sourceTree = "<group>"; };
 		26DB36B8144EC19C001C4CBC /* UnitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnitTests-Prefix.pch"; sourceTree = "<group>"; };
+		26F10A1D164BBF99006015C8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		26F869C6153C1A52002D01EA /* MiniBrowser.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = MiniBrowser.entitlements; sourceTree = "<group>"; };
 		26FDCADB1473C48600744D07 /* newtab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newtab.png; sourceTree = "<group>"; };
 		26FE56BC1443269D001622F2 /* bookmark-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bookmark-iPad.png"; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 		266D6799143CCE8D0025F929 = {
 			isa = PBXGroup;
 			children = (
+				26F10A1D164BBF99006015C8 /* Default-568h@2x.png */,
 				266D67AE143CCE8D0025F929 /* MiniBrowser */,
 				26DB36AE144EC19C001C4CBC /* UnitTests */,
 				266D67A7143CCE8D0025F929 /* Frameworks */,
@@ -480,7 +483,7 @@
 		266D679B143CCE8D0025F929 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = Alma;
 			};
 			buildConfigurationList = 266D679E143CCE8D0025F929 /* Build configuration list for PBXProject "MiniBrowser" */;
@@ -531,6 +534,7 @@
 				2620E7EF149B35C800518C02 /* closebox.png in Resources */,
 				26DA65C314B4FE5E000EBBAE /* iPadPageView.xib in Resources */,
 				26DA65C714B4FF3E000EBBAE /* iPadTabPageScrollView.xib in Resources */,
+				26F10A1E164BBF99006015C8 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

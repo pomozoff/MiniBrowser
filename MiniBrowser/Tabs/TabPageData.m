@@ -257,7 +257,7 @@ NSString *const requestMarker = @"123";
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"%@ 0x%x: %@", [self class], self, self.title];
+    return [NSString stringWithFormat:@"%@ 0x%@: %@", [self class], self, self.title];
 }
 
 - (void)dealloc
